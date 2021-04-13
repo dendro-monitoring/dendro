@@ -1,9 +1,18 @@
-const AWS = require('aws-sdk');
+/* eslint-disable unicorn/filename-case */
 
-AWS.config.update({region: 'us-east-1'});
+const AWS = require('aws-sdk')
 
-const lambda = new AWS.Lambda();
+AWS.config.update({region: 'us-east-1'})
 
-lambda.listFunctions((err, data) => {
-  console.log(data.Functions);
-})
+const lambda = new AWS.Lambda()
+
+function listLambdas() {
+  return new Promise(resolve => {
+    lambda.listFunctions((err, data) => {
+      resolve([err, data])
+    })
+  })
+}
+
+module.exports = listLambdas
+

@@ -1,7 +1,13 @@
-var AWS = require("aws-sdk");
+/* eslint-disable unicorn/filename-case */
 
-async function isAuthenticated(callback) {
-  AWS.config.getCredentials(callback);
+const AWS = require('aws-sdk')
+
+async function isAuthenticated() {
+  return new Promise(resolve => {
+    AWS.config.getCredentials((err, data) => {
+      resolve([err, data])
+    })
+  })
 }
 
 module.exports = isAuthenticated

@@ -8,23 +8,26 @@ function createTimestreamTable(
   MagneticStoreRetentionPeriodInDays = '30',
   MemoryStoreRetentionPeriodInHours = '720',
   Tags = [],
-  callback,
   region = 'us-east-1',
 ) {
-  AWS.config.update({region})
+  return new Promise(resolve => {
+    AWS.config.update({region})
 
-  const Timestream = new AWS.TimestreamWrite()
+    const Timestream = new AWS.TimestreamWrite()
 
-  const params = {
-    DatabaseName, /* required */
-    TableName, /* required */
-    RetentionProperties: {
-      MagneticStoreRetentionPeriodInDays, /* required */
-      MemoryStoreRetentionPeriodInHours, /* required */
-    },
-    Tags,
-  }
-  Timestream.createTable(params, callback)
+    const params = {
+      DatabaseName, /* required */
+      TableName, /* required */
+      RetentionProperties: {
+        MagneticStoreRetentionPeriodInDays, /* required */
+        MemoryStoreRetentionPeriodInHours, /* required */
+      },
+      Tags,
+    }
+    Timestream.createTable(params, (err, data) => {
+      resolve([err, data])
+    })
+  })
 }
 
 module.exports = createTimestreamTable

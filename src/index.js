@@ -1,34 +1,36 @@
-const AWSWrapper = require('./aws')
+/* eslint-disable no-console */
 
-AWSWrapper.createBucket('angelbtestbuc', (err, data) => {
-  console.log(err)
-  console.log(data)
-})
+const AWSWrapper = require('./aws');
 
-AWSWrapper.createLambda('./aws/_deployableLambdaFunction.js', 'arn:aws:iam::141351053848:role/lambda_role', (err, data) => {
-  console.log(err)
-  console.log(data)
-})
+(async () => {
+  const [bucketErr, bucketData] = await AWSWrapper.createBucket('angelbtestbuc2')
+  console.log(bucketErr)
+  console.log(bucketData)
 
-AWSWrapper.setLambdaInvokePolicy('arn:aws:lambda:us-east-1:141351053848:function:getCredentials', (err, data) => {
-  console.log(err)
-  console.log(data)
-})
+  const [lambdaErr, lambdaData] = await AWSWrapper.createLambda('./aws/uploadToBucket.js', 'arn:aws:iam::141351053848:role/lambda_role')
+  console.log(lambdaErr)
+  console.log(lambdaData)
 
-AWSWrapper.createS3LambdaTrigger('angelbtestbuc', 'arn:aws:lambda:us-east-1:141351053848:function:getCredentials', (err, data) => {
-  console.log(err)
-  console.log(data)
-})
+  const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy('arn:aws:lambda:us-east-1:141351053848:function:uploadToBucket')
+  console.log(policyErr)
+  console.log(policyData)
 
-AWSWrapper.uploadToBucket('angelbtestbuc', './aws/listLambdas.js', (err, data) => {
-  console.log(err)
-  console.log(data)
-})
+  const [triggerErr, triggerData] = await AWSWrapper.createS3LambdaTrigger('angelbtestbuc', 'arn:aws:lambda:us-east-1:141351053848:function:uploadToBucket')
+  console.log(triggerErr)
+  console.log(triggerData)
 
-AWSWrapper.getCredentials((err, data) => {
-  console.log(err)
-  console.log(data)
-})
+  const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket('angelbtestbuc', './aws/listLambdas.js')
+  console.log(uploadErr)
+  console.log(uploadData)
+
+  const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
+  console.log(credentialsErr)
+  console.log(credentials)
+
+  const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
+  console.log(listLambdaErr)
+  console.log(lamdas)
+})()
 
 module.exports = require('@oclif/command')
 
