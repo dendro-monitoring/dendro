@@ -1,35 +1,46 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
-const AWSWrapper = require('./aws');
+const AWSWrapper = require('./aws')
+
+const newBucketName = 'dendrodefaultbucket2'
+const pathToLambdaFunc = './aws/_deployableLambdaFunction.js'
+const fileToUpload = './aws/uploadToBucket.js';
 
 (async () => {
-  const [bucketErr, bucketData] = await AWSWrapper.createBucket('angelbtestbuc2')
-  console.log(bucketErr)
-  console.log(bucketData)
+  console.log('Creating new bucket...')
+  const [bucketErr, bucketData] = await AWSWrapper.createBucket(newBucketName)
+  // console.log(bucketErr)
+  // console.log(bucketData)
 
-  const [lambdaErr, lambdaData] = await AWSWrapper.createLambda('./aws/uploadToBucket.js', 'arn:aws:iam::141351053848:role/lambda_role')
-  console.log(lambdaErr)
-  console.log(lambdaData)
+  console.log('Creating new lambda...')
+  const [lambdaErr, lambdaData] = await AWSWrapper.createLambda(pathToLambdaFunc, 'arn:aws:iam::141351053848:role/lambda_role')
+  // console.log(lambdaErr)
+  // console.log(lambdaData)
 
-  const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy('arn:aws:lambda:us-east-1:141351053848:function:uploadToBucket')
-  console.log(policyErr)
-  console.log(policyData)
+  console.log('Setting lambda policy...')
+  const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn)
+  // console.log(policyErr)
+  // console.log(policyData)
 
-  const [triggerErr, triggerData] = await AWSWrapper.createS3LambdaTrigger('angelbtestbuc', 'arn:aws:lambda:us-east-1:141351053848:function:uploadToBucket')
-  console.log(triggerErr)
-  console.log(triggerData)
+  console.log('Creating S3 trigger...')
+  const [triggerErr, triggerData] = await AWSWrapper.createS3LambdaTrigger(newBucketName, lambdaData.FunctionArn)
+  // console.log(triggerErr)
+  // console.log(triggerData)
 
-  const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket('angelbtestbuc', './aws/listLambdas.js')
-  console.log(uploadErr)
-  console.log(uploadData)
+  console.log('Uploading to S3...')
+  const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket(newBucketName, fileToUpload)
+  // console.log(uploadErr)
+  // console.log(uploadData)
 
-  const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
-  console.log(credentialsErr)
-  console.log(credentials)
+  // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
+  // // console.log(credentialsErr)
+  // console.log(credentials)
 
-  const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
-  console.log(listLambdaErr)
-  console.log(lamdas)
+  // const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
+  // // console.log(listLambdaErr)
+  // console.log(lamdas)
 })()
 
 module.exports = require('@oclif/command')
