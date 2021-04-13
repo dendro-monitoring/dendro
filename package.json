@@ -1,0 +1,14 @@
+{
+  "name": "dendro-core-cli",
+  "version": "1.0.0",
+  "description": "Core CLI to dendroflumechuck",
+  "main": "index.js",
+  "dependencies": {
+    "adm-zip": "^0.5.5",
+    "aws-sdk": "^2.884.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "",
+  "license": "ISC"
+}
