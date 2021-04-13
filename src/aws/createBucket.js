@@ -1,31 +1,30 @@
-var AWS = require("aws-sdk");
+const AWS = require('aws-sdk')
+
 const s3 = new AWS.S3()
 
-AWS.config.getCredentials(async function(err) {
-  if (err) console.log(err.stack);
+AWS.config.getCredentials(async err => {
+  if (err) console.log(err.stack)
   // credentials not loaded
   else {
-    console.log("Access key:", AWS.config.credentials.profile);
-    console.log("Region: ", AWS.config.region);
-
+    console.log('Access key:', AWS.config.credentials.profile)
+    console.log('Region: ', AWS.config.region)
   }
-
-});
+})
 
 // Set the region
-AWS.config.update({region: 'us-east-1'});
+AWS.config.update({region: 'us-east-1'})
 
 // Create the parameters for calling createBucket
-var bucketParams = {
-  Bucket : process.argv[2]
-};
+const bucketParams = {
+  Bucket: process.argv[2],
+}
 
 // call S3 to create the bucket
-s3.createBucket(bucketParams, async function(err, data) {
+s3.createBucket(bucketParams, async (err, data) => {
   if (err) {
-    console.log("Error", err);
+    console.log('Error', err)
   } else {
-    console.log("Success", data.Location);
+    console.log('Success', data.Location)
   }
-  console.log(await s3.listBuckets().promise());
-});
+  console.log(await s3.listBuckets().promise())
+})
