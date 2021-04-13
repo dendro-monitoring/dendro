@@ -4,7 +4,7 @@
 
 const AWSWrapper = require('./aws')
 
-const newBucketName = 'dendrodefaultbucket2'
+const newBucketName = 'dendrodefaultbucket'
 const pathToLambdaFunc = './aws/_deployableLambdaFunction.js'
 const fileToUpload = './aws/uploadToBucket.js';
 
@@ -34,6 +34,7 @@ const fileToUpload = './aws/uploadToBucket.js';
   // console.log(uploadErr)
   // console.log(uploadData)
 
+  // checks if AWS credentials are set
   // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
   // // console.log(credentialsErr)
   // console.log(credentials)
