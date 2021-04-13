@@ -1,14 +1,16 @@
+/* eslint-disable unicorn/filename-case */
+
 const AWS = require('aws-sdk')
 
-function createTimestreamDatabase(DatabaseName, region = "us-east-1") {
-  AWS.config.update({region});
-  
+function createTimestreamDatabase(DatabaseName, callback, region = 'us-east-1') {
+  AWS.config.update({region})
+
   const Timestream = new AWS.TimestreamWrite()
-  
+
   const params = {
-    DatabaseName
+    DatabaseName,
   }
-  
+
   Timestream.createDatabase(params, callback)
 }
 
