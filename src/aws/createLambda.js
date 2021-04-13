@@ -1,34 +1,33 @@
-// Load the AWS SDK for Node.js
-var AWS = require('aws-sdk');
-var AdmZip = require('adm-zip');
+const fs = require('fs');
+const path = require('path')
+const AWS = require('aws-sdk');
+const AdmZip = require('adm-zip');
 
-AWS.config.update({region: 'us-east-1'});
+function createLambda(lambdaFile, Role, callback, Runtime = "nodejs12.x", Description = "", region = "us-east-1") {
+  AWS.config.update({region});
 
-const zip = new AdmZip();
-const lambdaFile = process.argv[2]
-const lambdaName = lambdaFile.replace(/\.js/, '')
+  const lambdaName = lambdaFile.replace(/\.js/, '')
 
-zip.addLocalFile(lambdaFile);
+  if (!fs.existsSync(lambdaFile)) { throw new Error("Can't find lambda file") }
 
-// Create the IAM service object
-var lambda = new AWS.Lambda();
+  const zip = new AdmZip();
 
+  zip.addLocalFile(lambdaFile);
 
-var params = {
-  Code: { /* required */
-    ZipFile: zip.toBuffer()
-  },
-  FunctionName: lambdaName, /* required */
-  Handler: `${lambdaName}.handler`, /* required */
-  Role: 'arn:aws:iam::141351053848:role/lambda_role', /* required */
-  Runtime: 'nodejs12.x', /* required */
-  Description: 'Slot machine game results generator',
-};
-lambda.createFunction(params, function(err, data) {
-  if (err) console.log(err); 
-  else     console.log(data);         
-});
+  var lambda = new AWS.Lambda();
 
-lambda.listFunctions((err, data) => {
-  console.log(data.Functions);
-})
+  var params = {
+    Code: { /* required */
+      ZipFile: zip.toBuffer()
+    },
+    FunctionName: path.basename(lambdaName), /* required */
+    Handler: `${lambdaName}.handler`, /* required */
+    Role, /* required */
+    Runtime: Runtime, /* required */
+    Description,
+  };
+
+  lambda.createFunction(params, callback);
+}
+
+module.exports = createLambda
