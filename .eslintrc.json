@@ -6,7 +6,8 @@
     },
     "extends": [
         "airbnb-base",
-        "oclif"
+        "oclif",
+        "oclif-typescript"
     ],
     "parserOptions": {
         "ecmaVersion": 12
