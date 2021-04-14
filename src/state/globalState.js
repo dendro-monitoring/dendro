@@ -2,6 +2,7 @@ const Lambda = require('./lambda')
 const S3 = require('./s3')
 const Firehose = require('./firehose')
 const Timestream = require('./timestream')
+const Vector = require('./vector')
 
 /*
  * GlobalState is an singleton that will contain all data over the lifetime
@@ -15,11 +16,13 @@ class GlobalState {
     s3,
     firehose,
     timestream,
+    vector,
   }) {
     this.Lambda = new Lambda(lambda)
     this.S3 = new S3(s3)
     this.Firehose = new Firehose(firehose)
     this.Timestream = new Timestream(timestream)
+    this.Vector = new Vector(vector)
   }
 
   /*
@@ -37,6 +40,7 @@ const cache = {
   s3: {},
   firehose: {},
   timestream: {},
+  vector: {},
 }
 const globalState = new GlobalState(cache)
 
