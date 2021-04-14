@@ -1,16 +1,22 @@
 import Postgres, { PostgresData } from './postgres'
+import Nginx, { NginxData } from './nginx'
 
 export interface VectorData {
   postgres?: PostgresData;
+  nginx?: NginxData;
 }
 
 class Vector {
-  Postgres?: Postgres;
+  Postgres: Postgres;
 
-  constructor({ postgres }: VectorData) {
-    if (postgres) {
-      this.Postgres = new Postgres(postgres)
-    }
+  Nginx: Nginx;
+
+  constructor({
+    postgres = {},
+    nginx = {},
+  }: VectorData) {
+    this.Postgres = new Postgres(postgres)
+    this.Nginx = new Nginx(nginx)
   }
 }
 

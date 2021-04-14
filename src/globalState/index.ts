@@ -34,15 +34,23 @@ interface CacheData {
   vector: VectorData;
 }
 
-// TODO: Load state from cache if it exists
+/*
+ * TODO: Load state from cache if it exists.
+ * This hardcoded data will be removed and the cache data or
+ * an empty object will be passed into `new GlobalState(cache)`.
+ */
 const cache: CacheData = {
   aws: {
+    credentials: {},
     lambda: {},
     s3: {},
     firehose: {},
     timestream: {},
   },
-  vector: {},
+  vector: {
+    postgres: {},
+    nginx: {},
+  },
 }
 
 export default new GlobalState(cache)

@@ -1,4 +1,5 @@
-import globalState from '../../state/globalState'
+import globalState from '../../globalState'
+import { ensureCredentials } from '../../utils/aws'
 
 const logConfig = () => {
   return `
@@ -7,11 +8,10 @@ const logConfig = () => {
 [sources.nginx_access_logs]
 type = "file"
 include = [
-  ${globalState.Vector.Nginx?.accessLog ? '"/var/log/nginx/access_log.log",' : null}
-  ${globalState.Vector.Nginx?.errorLog ? '"/var/log/nginx/error_log.log"' : null}
+  ${globalState.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access_log.log",' : null}
+  ${globalState.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error_log.log"' : null}
 ]
 read_from = "beginning"
-ignore_checkpoints = true
 
 [transforms.nginx_access_logs_add_transform]
 type = "remap"
@@ -25,9 +25,9 @@ source = '''
 type = "aws_kinesis_firehose" # required
 inputs = ["nginx_access_logs_add_transform"] # required
 region = "us-east-2" # required, required when endpoint = null
-stream_name = "DendroTestStream" # required
-auth.access_key_id = "${globalState.AWS.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.secretAccessKey}"
+stream_name = "NginxDendroStream" # required
+auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
 # Encoding
 encoding.codec = "json" # required
 # Healthcheck
@@ -40,15 +40,17 @@ healthcheck.enabled = true # optional, default
 const metricConfig = () => {}
 
 export const buildNginxConfig = () => {
+  ensureCredentials('Tried writing Nginx vector config without aws credentials existing.')
+
   let config = ''
 
-  if (globalState.Vector.Nginx?.monitorMetrics) {
+  if (globalState.Vector.Nginx.monitorMetrics) {
     config += metricConfig()
   }
 
   if (
-    globalState.Vector.Nginx?.monitorAccessLogs ||
-    globalState.Vector.Nginx?.monitorErrorLogs
+    globalState.Vector.Nginx.monitorAccessLogs ||
+    globalState.Vector.Nginx.monitorErrorLogs
   ) {
     config += logConfig()
   }
