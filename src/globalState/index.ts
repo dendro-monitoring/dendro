@@ -1,7 +1,4 @@
-import Lambda, { LambdaData } from './lambda'
-import S3, { S3Data } from './s3'
-import Firehose, { FirehoseData } from './firehose'
-import Timestream, { TimestreamData } from './timestream'
+import AWS, { AWSData } from './aws'
 import Vector, { VectorData } from './vector'
 
 /*
@@ -11,27 +8,15 @@ import Vector, { VectorData } from './vector'
  * during initialization.
  */
 class GlobalState {
-  Lambda: Lambda;
-
-  S3: S3;
-
-  Firehose: Firehose;
-
-  Timestream: Timestream;
+  AWS: AWS
 
   Vector: Vector;
 
   constructor({
-    lambda,
-    s3,
-    firehose,
-    timestream,
+    aws,
     vector,
   }: CacheData) {
-    this.Lambda = new Lambda(lambda)
-    this.S3 = new S3(s3)
-    this.Firehose = new Firehose(firehose)
-    this.Timestream = new Timestream(timestream)
+    this.AWS = new AWS(aws)
     this.Vector = new Vector(vector)
   }
 
@@ -45,19 +30,18 @@ class GlobalState {
 }
 
 interface CacheData {
-  lambda: LambdaData;
-  s3: S3Data;
-  firehose: FirehoseData;
-  timestream: TimestreamData;
+  aws: AWSData;
   vector: VectorData;
 }
 
 // TODO: Load state from cache if it exists
 const cache: CacheData = {
-  lambda: {},
-  s3: {},
-  firehose: {},
-  timestream: {},
+  aws: {
+    lambda: {},
+    s3: {},
+    firehose: {},
+    timestream: {},
+  },
   vector: {},
 }
 
