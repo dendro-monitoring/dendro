@@ -1,3 +1,5 @@
+export interface LambdaData {}
+
 /*
  * TODO: Document Class
  */
@@ -9,11 +11,11 @@ class Lambda {
     Role,
     Policy,
     FunctionData,
-  }) {
+  }: LambdaData) {
     this.Role = Role
     this.Policy = Policy
     this.FunctionData = FunctionData
   }
 }
 
-module.exports = Lambda
+export default Lambda

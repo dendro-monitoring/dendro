@@ -1,3 +1,5 @@
+export interface S3Data {}
+
 /*
  * TODO: Document Class
  */
@@ -5,7 +7,7 @@ class S3 {
   /*
    * TODO: Document descriptions & data types for properties
    */
-  constructor() {}
+  constructor({}: S3Data) {}
 }
 
-module.exports = S3
+export default S3
