@@ -1,50 +1,40 @@
-export interface PostgresData {
-  username?: string;
-  password?: string;
+export interface ApacheData {
   port?: string;
   url?: string;
-  databaseName?: string;
   scrapeInterval?: number;
+  monitorAccessLogs?: boolean;
   monitorErrorLogs?: boolean;
   monitorMetrics?: boolean;
 }
 
-class Postgres {
-  username: string;
-
-  password: string;
-
+class Apache {
   port: string;
 
   url: string;
 
-  databaseName: string;
-
   scrapeInterval: number;
+
+  monitorAccessLogs: boolean;
 
   monitorErrorLogs: boolean;
 
   monitorMetrics: boolean;
 
   constructor({
-    username = 'postgres',
-    password = 'postgres',
-    port = '5432',
+    port = '80',
     url = 'localhost',
-    databaseName = 'postgres',
     scrapeInterval = 15,
+    monitorAccessLogs = false,
     monitorErrorLogs = false,
     monitorMetrics = false,
-  }: PostgresData) {
-    this.username = username
-    this.password = password
+  }: ApacheData) {
     this.port = port
     this.url = url
-    this.databaseName = databaseName
     this.scrapeInterval = scrapeInterval
+    this.monitorAccessLogs = monitorAccessLogs
     this.monitorErrorLogs = monitorErrorLogs
     this.monitorMetrics = monitorMetrics
   }
 }
 
-export default Postgres
+export default Apache
