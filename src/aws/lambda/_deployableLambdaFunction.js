@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 /* eslint-disable node/no-missing-require */
 /* eslint-disable import/no-unresolved */
-/* eslint-disable unicorn/filename-case */
 
 console.log('Loading function')
 
