@@ -34,6 +34,14 @@ class GlobalState {
     this.Firehose = new Firehose()
     this.Timestream = new Timestream()
   }
+
+  /*
+   * Call this function when an error occurs and you plan to exit.
+   * This function will dump the current state to the cache to prevent data loss.
+   */
+  dump() {
+    console.log(this)
+  }
 }
 
 const globalState = new GlobalState()
