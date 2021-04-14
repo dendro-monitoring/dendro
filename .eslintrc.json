@@ -12,5 +12,6 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "unicorn/filename-case": ["error", {"case": "camelCase"}]
     }
 }

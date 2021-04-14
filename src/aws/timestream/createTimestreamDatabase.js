@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/filename-case */
-
 const AWS = require('aws-sdk')
 
 function createTimestreamDatabase(DatabaseName, region = 'us-east-1') {
