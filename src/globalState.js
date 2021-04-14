@@ -28,11 +28,16 @@ class Timestream {}
  * during initialization.
  */
 class GlobalState {
-  constructor() {
-    this.Lambda = new Lambda()
-    this.S3 = new S3()
-    this.Firehose = new Firehose()
-    this.Timestream = new Timestream()
+  constructor({
+    lambda,
+    s3,
+    firehose,
+    timestream,
+  }) {
+    this.Lambda = new Lambda(lambda)
+    this.S3 = new S3(s3)
+    this.Firehose = new Firehose(firehose)
+    this.Timestream = new Timestream(timestream)
   }
 
   /*
@@ -44,6 +49,13 @@ class GlobalState {
   }
 }
 
-const globalState = new GlobalState()
+// TODO: Load state from cache if it exists
+const cache = {
+  lambda: {},
+  s3: {},
+  firehose: {},
+  timestream: {},
+}
+const globalState = new GlobalState(cache)
 
 module.exports = globalState
