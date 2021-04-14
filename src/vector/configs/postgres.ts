@@ -36,7 +36,7 @@ healthcheck.enabled = true # optional, default
 
 const metricConfig = () => {}
 
-export const buildConfig = () => {
+export const buildPostgresConfig = () => {
   let config = ''
 
   if (globalState.Vector.Postgres?.monitorMetrics) {

@@ -39,7 +39,7 @@ healthcheck.enabled = true # optional, default
 
 const metricConfig = () => {}
 
-export const buildConfig = () => {
+export const buildNginxConfig = () => {
   let config = ''
 
   if (globalState.Vector.Nginx?.monitorMetrics) {
