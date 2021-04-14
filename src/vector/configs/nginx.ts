@@ -3,6 +3,8 @@ import globalState from '../../state/globalState'
 export default {
   accessLogs: () => {
     return `
+################ Nginx Logs #############################
+
 [sources.nginx_access_logs]
 type = "file"
 include = [
@@ -31,6 +33,8 @@ auth.secret_access_key = "${globalState.AWS.secretAccessKey}"
 encoding.codec = "json" # required
 # Healthcheck
 healthcheck.enabled = true # optional, default
+
+#############################################
     `
   },
 }
