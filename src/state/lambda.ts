@@ -1,4 +1,4 @@
-export type LambdaData = {}
+export interface LambdaData {}
 
 /*
  * TODO: Document Class

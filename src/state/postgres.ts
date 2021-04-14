@@ -1,4 +1,4 @@
-export type PostgresData = {
+export interface PostgresData {
   username: string;
   password: string;
   port: number;

@@ -1,4 +1,4 @@
-export type TimestreamData = {}
+export interface TimestreamData {}
 
 /*
  * TODO: Document Class

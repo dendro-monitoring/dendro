@@ -1,6 +1,6 @@
 import Postgres, { PostgresData } from './postgres'
 
-export type VectorData = {
+export interface VectorData {
   postgres?: PostgresData;
 }
 

@@ -1,4 +1,4 @@
-export type S3Data = {}
+export interface S3Data {}
 
 /*
  * TODO: Document Class

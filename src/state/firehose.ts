@@ -1,4 +1,4 @@
-export type FirehoseData = {}
+export interface FirehoseData {}
 
 /*
  * TODO: Document Class

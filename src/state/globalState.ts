@@ -44,7 +44,7 @@ class GlobalState {
   }
 }
 
-type CacheData = {
+interface CacheData {
   lambda: LambdaData;
   s3: S3Data;
   firehose: FirehoseData;
