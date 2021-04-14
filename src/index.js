@@ -85,4 +85,3 @@ const fileToUpload = './aws/s3/uploadToBucket.js';
 })()
 
 module.exports = require('@oclif/command')
-
