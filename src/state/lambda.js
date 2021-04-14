@@ -1,4 +1,10 @@
+/*
+ * TODO: Document Class
+ */
 class Lambda {
+  /*
+   * TODO: Document descriptions & data types for properties
+   */
   constructor({
     Role,
     Policy,
