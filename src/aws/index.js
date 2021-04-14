@@ -1,13 +1,13 @@
-const createBucket = require('./createBucket')
-const deleteBucket = require('./deleteBucket')
-const createLambda = require('./createLambda')
-const listLambdas = require('./listLambdas')
-const setLambdaInvokePolicy = require('./setLambdaInvokePolicy')
-const createS3LambdaTrigger = require('./createS3LambdaTrigger')
-const uploadToBucket = require('./uploadToBucket')
+const createBucket = require('./s3/createBucket')
+const deleteBucket = require('./s3/deleteBucket')
+const createLambda = require('./lambda/createLambda')
+const listLambdas = require('./lambda/listLambdas')
+const setLambdaInvokePolicy = require('./lambda/setLambdaInvokePolicy')
+const createS3LambdaTrigger = require('./s3/createS3LambdaTrigger')
+const uploadToBucket = require('./s3/uploadToBucket')
 const getCredentials = require('./getCredentials')
-const createTimestreamDatabase = require('./createTimestreamDatabase')
-const createTimestreamTable = require('./createTimestreamTable')
+const createTimestreamDatabase = require('./timestream/createTimestreamDatabase')
+const createTimestreamTable = require('./timestream/createTimestreamTable')
 
 module.exports = {
   createBucket,

@@ -5,33 +5,54 @@
 const AWSWrapper = require('./aws')
 
 const newBucketName = 'dendrodefaultbucket'
-const pathToLambdaFunc = './aws/_deployableLambdaFunction.js'
-const fileToUpload = './aws/uploadToBucket.js';
+const pathToLambdaFunc = './aws/lambda/_deployableLambdaFunction.js'
+const fileToUpload = './aws/s3/uploadToBucket.js';
 
 (async () => {
   console.log('Creating new bucket...')
+
   const [bucketErr, bucketData] = await AWSWrapper.createBucket(newBucketName)
-  // console.log(bucketErr)
+  if (bucketErr) {
+    console.error(bucketErr)
+  } else {
+    console.log('success')
+  }
   // console.log(bucketData)
 
   console.log('Creating new lambda...')
   const [lambdaErr, lambdaData] = await AWSWrapper.createLambda(pathToLambdaFunc, 'arn:aws:iam::141351053848:role/lambda_role')
-  // console.log(lambdaErr)
+  if (lambdaErr) {
+    console.error(lambdaErr)
+  } else {
+    console.log('success')
+  }
   // console.log(lambdaData)
 
   console.log('Setting lambda policy...')
   const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn)
-  // console.log(policyErr)
+  if (policyErr) {
+    console.error(policyErr)
+  } else {
+    console.log('success')
+  }
   // console.log(policyData)
 
   console.log('Creating S3 trigger...')
   const [triggerErr, triggerData] = await AWSWrapper.createS3LambdaTrigger(newBucketName, lambdaData.FunctionArn)
-  // console.log(triggerErr)
+  if (triggerErr) {
+    console.error(triggerErr)
+  } else {
+    console.log('success')
+  }
   // console.log(triggerData)
 
   console.log('Uploading to S3...')
   const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket(newBucketName, fileToUpload)
-  // console.log(uploadErr)
+  if (uploadErr) {
+    console.error(uploadErr)
+  } else {
+    console.log('success')
+  }
   // console.log(uploadData)
 
   // checks if AWS credentials are set
