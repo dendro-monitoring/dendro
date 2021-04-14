@@ -36,7 +36,10 @@ class TestCommand extends Command {
     // console.log(attachPolicyData)
 
     console.log('Creating new lambda...')
-    const [lambdaErr, lambdaData] = await AWSWrapper.createLambda(PATH_TO_LAMBDA_FUNCTION, 'arn:aws:iam::141351053848:role/dendro-lambda-role')
+    const [lambdaErr, lambdaData] = await AWSWrapper.createLambda({
+      lambdaFile: PATH_TO_LAMBDA_FUNCTION,
+      Role: 'arn:aws:iam::141351053848:role/dendro-lambda-role',
+    })
     if (lambdaErr) {
       console.error(lambdaErr)
     } else {

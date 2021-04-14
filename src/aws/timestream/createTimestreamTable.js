@@ -1,13 +1,13 @@
 const AWS = require('aws-sdk')
 
-function createTimestreamTable(
+function createTimestreamTable({
   DatabaseName,
   TableName,
   MagneticStoreRetentionPeriodInDays = '30',
   MemoryStoreRetentionPeriodInHours = '720',
   Tags = [],
   region = 'us-east-1',
-) {
+}) {
   return new Promise(resolve => {
     AWS.config.update({region})
 

@@ -4,13 +4,13 @@ const path = require('path')
 const AWS = require('aws-sdk')
 const AdmZip = require('adm-zip')
 
-function createLambda(
+function createLambda({
   lambdaFile,
   Role,
   Runtime = 'nodejs12.x',
-  Description = '',
   region = 'us-east-1',
-) {
+  Description = '',
+}) {
   return new Promise(resolve => {
     AWS.config.update({region})
 
