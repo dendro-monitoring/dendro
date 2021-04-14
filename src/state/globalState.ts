@@ -1,8 +1,8 @@
-const Lambda = require('./lambda')
-const S3 = require('./s3')
-const Firehose = require('./firehose')
-const Timestream = require('./timestream')
-const Vector = require('./vector')
+import Lambda, { LambdaData } from './lambda'
+import S3, { S3Data } from './s3'
+import Firehose, { FirehoseData } from './firehose'
+import Timestream, { TimestreamData } from './timestream'
+import Vector, { VectorData } from './vector'
 
 /*
  * GlobalState is an singleton that will contain all data over the lifetime
@@ -11,13 +11,23 @@ const Vector = require('./vector')
  * during initialization.
  */
 class GlobalState {
+  Lambda: Lambda;
+
+  S3: S3;
+
+  Firehose: Firehose;
+
+  Timestream: Timestream;
+
+  Vector: Vector;
+
   constructor({
     lambda,
     s3,
     firehose,
     timestream,
     vector,
-  }) {
+  }: CacheData) {
     this.Lambda = new Lambda(lambda)
     this.S3 = new S3(s3)
     this.Firehose = new Firehose(firehose)
@@ -34,14 +44,21 @@ class GlobalState {
   }
 }
 
+type CacheData = {
+  lambda: LambdaData;
+  s3: S3Data;
+  firehose: FirehoseData;
+  timestream: TimestreamData;
+  vector: VectorData;
+}
+
 // TODO: Load state from cache if it exists
-const cache = {
+const cache: CacheData = {
   lambda: {},
   s3: {},
   firehose: {},
   timestream: {},
   vector: {},
 }
-const globalState = new GlobalState(cache)
 
-module.exports = globalState
+export default new GlobalState(cache)

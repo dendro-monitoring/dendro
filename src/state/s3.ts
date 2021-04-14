@@ -1,11 +1,13 @@
+export type S3Data = {}
+
 /*
  * TODO: Document Class
  */
-class Firehose {
+class S3 {
   /*
    * TODO: Document descriptions & data types for properties
    */
-  constructor() {}
+  constructor({}: S3Data) {}
 }
 
-module.exports = Firehose
+export default S3
