@@ -1,9 +1,8 @@
 import globalState from '../../state/globalState'
 
-export default {
-  accessLogs: () => {
-    return `
-################ Nginx Logs #############################
+const accessLogs = () => {
+  return `
+\n################ Nginx Logs #############################
 
 [sources.nginx_access_logs]
 type = "file"
@@ -34,7 +33,25 @@ encoding.codec = "json" # required
 # Healthcheck
 healthcheck.enabled = true # optional, default
 
-#############################################
+#############################################\n
     `
-  },
+}
+
+const metrics = () => {}
+
+export const buildConfig = () => {
+  let config = ''
+
+  if (globalState.Vector.Nginx.metrics) {
+    config += metrics()
+  }
+
+  if (
+    globalState.Vector.Nginx.accessLog ||
+    globalState.Vector.Nginx.errorLog
+  ) {
+    config += accessLogs
+  }
+
+  return config
 }
