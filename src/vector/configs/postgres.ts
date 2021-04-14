@@ -1,15 +1,12 @@
 import globalState from '../../state/globalState'
 
-const accessLogs = () => {
+const logConfig = () => {
   return `
 \n################ Postgres Logs #############################
 
 [sources.nginx_access_logs]
 type = "file"
-include = [
-  ${globalState.Vector.Postgres?.accessLog ? '"/var/log/nginx/access_log.log",' : null}
-  ${globalState.Vector.Postgres?.errorLog ? '"/var/log/nginx/error_log.log"' : null}
-]
+include = ["/var/log/postgresql/*.log"]
 read_from = "beginning"
 ignore_checkpoints = true
 
@@ -37,20 +34,17 @@ healthcheck.enabled = true # optional, default
     `
 }
 
-const metrics = () => {}
+const metricConfig = () => {}
 
 export const buildConfig = () => {
   let config = ''
 
-  if (globalState.Vector.Postgres?.metrics) {
-    config += metrics()
+  if (globalState.Vector.Postgres?.monitorMetrics) {
+    config += metricConfig()
   }
 
-  if (
-    globalState.Vector.Postgres?.accessLog ||
-    globalState.Vector.Postgres?.errorLog
-  ) {
-    config += accessLogs
+  if (globalState.Vector.Postgres?.monitorErrorLogs) {
+    config += logConfig()
   }
 
   return config

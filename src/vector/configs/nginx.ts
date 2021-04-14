@@ -1,14 +1,14 @@
 import globalState from '../../state/globalState'
 
-const accessLogs = () => {
+const logConfig = () => {
   return `
 \n################ Nginx Logs #############################
 
 [sources.nginx_access_logs]
 type = "file"
 include = [
-  ${globalState.Vector.Nginx.accessLog ? '"/var/log/nginx/access_log.log",' : null}
-  ${globalState.Vector.Nginx.errorLog ? '"/var/log/nginx/error_log.log"' : null}
+  ${globalState.Vector.Nginx?.accessLog ? '"/var/log/nginx/access_log.log",' : null}
+  ${globalState.Vector.Nginx?.errorLog ? '"/var/log/nginx/error_log.log"' : null}
 ]
 read_from = "beginning"
 ignore_checkpoints = true
@@ -37,20 +37,20 @@ healthcheck.enabled = true # optional, default
     `
 }
 
-const metrics = () => {}
+const metricConfig = () => {}
 
 export const buildConfig = () => {
   let config = ''
 
-  if (globalState.Vector.Nginx.metrics) {
-    config += metrics()
+  if (globalState.Vector.Nginx?.monitorMetrics) {
+    config += metricConfig()
   }
 
   if (
-    globalState.Vector.Nginx.accessLog ||
-    globalState.Vector.Nginx.errorLog
+    globalState.Vector.Nginx?.monitorAccessLogs ||
+    globalState.Vector.Nginx?.monitorErrorLogs
   ) {
-    config += accessLogs
+    config += logConfig()
   }
 
   return config

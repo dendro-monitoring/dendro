@@ -5,6 +5,8 @@ export interface PostgresData {
   url: string;
   databaseName: string;
   scrapeInterval: number;
+  monitorErrorLogs: boolean;
+  monitorMetrics: boolean;
 }
 
 class Postgres {
@@ -20,6 +22,10 @@ class Postgres {
 
   scrapeInterval: number;
 
+  monitorErrorLogs: boolean;
+
+  monitorMetrics: boolean;
+
   constructor({
     username,
     password,
@@ -27,6 +33,8 @@ class Postgres {
     url,
     databaseName,
     scrapeInterval,
+    monitorErrorLogs,
+    monitorMetrics,
   }: PostgresData) {
     this.username = username
     this.password = password
@@ -34,6 +42,8 @@ class Postgres {
     this.url = url
     this.databaseName = databaseName
     this.scrapeInterval = scrapeInterval
+    this.monitorErrorLogs = monitorErrorLogs
+    this.monitorMetrics = monitorMetrics
   }
 }
 
