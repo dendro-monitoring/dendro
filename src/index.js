@@ -4,11 +4,39 @@
 
 const AWSWrapper = require('./aws')
 
+const newRoleName = 'dendro-lambda-role'
 const newBucketName = 'dendrodefaultbucket'
 const pathToLambdaFunc = './aws/lambda/_deployableLambdaFunction.js'
 const fileToUpload = './aws/s3/uploadToBucket.js';
 
 (async () => {
+  console.log('Creating new lambda role...')
+  const [lambdaRoleErr, lambdaRole] = await AWSWrapper.createLambdaRole(newRoleName)
+  if (lambdaRoleErr) {
+    console.error(lambdaRoleErr)
+  } else {
+    console.log('success')
+  }
+  console.log(lambdaRole.Role.Arn)
+
+  console.log('Attaching AWSLambdaBasicExecutionRole...')
+  const [attachPolicyErr, attachPolicyData] = await AWSWrapper.attachLambdaBasicExecutionPolicy(newRoleName)
+  if (attachPolicyErr) {
+    console.error(attachPolicyErr)
+  } else {
+    console.log('success')
+  }
+  // console.log(attachPolicyData)
+
+  console.log('Creating new lambda...')
+  const [lambdaErr, lambdaData] = await AWSWrapper.createLambda(pathToLambdaFunc, 'arn:aws:iam::141351053848:role/dendro-lambda-role')
+  if (lambdaErr) {
+    console.error(lambdaErr)
+  } else {
+    console.log('success')
+  }
+  console.log(lambdaData)
+
   console.log('Creating new bucket...')
 
   const [bucketErr, bucketData] = await AWSWrapper.createBucket(newBucketName)
@@ -19,16 +47,7 @@ const fileToUpload = './aws/s3/uploadToBucket.js';
   }
   // console.log(bucketData)
 
-  console.log('Creating new lambda...')
-  const [lambdaErr, lambdaData] = await AWSWrapper.createLambda(pathToLambdaFunc, 'arn:aws:iam::141351053848:role/lambda_role')
-  if (lambdaErr) {
-    console.error(lambdaErr)
-  } else {
-    console.log('success')
-  }
-  // console.log(lambdaData)
-
-  console.log('Setting lambda policy...')
+  console.log('Setting lambda invoke policy...')
   const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn)
   if (policyErr) {
     console.error(policyErr)
@@ -55,7 +74,7 @@ const fileToUpload = './aws/s3/uploadToBucket.js';
   }
   // console.log(uploadData)
 
-  // checks if AWS credentials are set
+  // // checks if AWS credentials are set
   // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
   // // console.log(credentialsErr)
   // console.log(credentials)
@@ -66,4 +85,3 @@ const fileToUpload = './aws/s3/uploadToBucket.js';
 })()
 
 module.exports = require('@oclif/command')
-
