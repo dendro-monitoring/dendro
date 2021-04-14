@@ -1,7 +1,6 @@
 import globalState from '../../globalState'
-import { ensureCredentials } from '../../utils/aws'
 
-const logConfig = () => {
+const logConfig = (): string => {
   return `
 \n################ Nginx Logs #############################
 
@@ -37,11 +36,13 @@ healthcheck.enabled = true # optional, default
     `
 }
 
-const metricConfig = () => {}
+// TODO
+const metricConfig = (): string => {
+  console.log('Not Implemented')
+  return ''
+}
 
-export const buildNginxConfig = () => {
-  ensureCredentials('Tried writing Nginx vector config without aws credentials existing.')
-
+export const buildNginxConfig = (): string => {
   let config = ''
 
   if (globalState.Vector.Nginx.monitorMetrics) {

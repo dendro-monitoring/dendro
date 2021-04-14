@@ -1,7 +1,6 @@
 import globalState from '../../globalState'
-import { ensureCredentials } from '../../utils/aws'
 
-const logConfig = () => {
+const logConfig = (): string => {
   return `
 \n################ Postgres Logs #############################
 
@@ -34,11 +33,13 @@ healthcheck.enabled = true # optional, default
     `
 }
 
-const metricConfig = () => {}
+// TODO
+const metricConfig = (): string => {
+  console.log('Not Implemented')
+  return ''
+}
 
-export const buildPostgresConfig = () => {
-  ensureCredentials('Tried writing Postgres vector config without aws credentials existing.')
-
+export const buildPostgresConfig = (): string => {
   let config = ''
 
   if (globalState.Vector.Postgres?.monitorMetrics) {

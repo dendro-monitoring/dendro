@@ -12,17 +12,14 @@ const metricConfig = (): string => {
   return ''
 }
 
-export const buildApacheConfig = (): string => {
+export const buildMongoConfig = (): string => {
   let config = ''
 
-  if (globalState.Vector.Apache.monitorMetrics) {
+  if (globalState.Vector.Mongo.monitorMetrics) {
     config += metricConfig()
   }
 
-  if (
-    globalState.Vector.Apache.monitorAccessLogs ||
-    globalState.Vector.Apache.monitorErrorLogs
-  ) {
+  if (globalState.Vector.Mongo.monitorLogs) {
     config += logConfig()
   }
 
