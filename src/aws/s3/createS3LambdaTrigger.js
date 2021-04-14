@@ -1,7 +1,6 @@
-/* eslint-disable unicorn/filename-case */
-
-/* WARNING: This overwrites previous triggers. As of right now, each bucket can only
-    trigger one lambda
+/*
+ * WARNING: This overwrites previous triggers. As of right now, each bucket can only
+ * trigger one lambda
 */
 
 const AWS = require('aws-sdk')

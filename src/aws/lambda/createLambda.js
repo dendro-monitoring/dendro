@@ -1,12 +1,16 @@
-/* eslint-disable unicorn/filename-case */
-
 const fs = require('fs')
 
 const path = require('path')
 const AWS = require('aws-sdk')
 const AdmZip = require('adm-zip')
 
-function createLambda(lambdaFile, Role, Runtime = 'nodejs12.x', Description = '', region = 'us-east-1') {
+function createLambda(
+  lambdaFile,
+  Role,
+  Runtime = 'nodejs12.x',
+  Description = '',
+  region = 'us-east-1',
+) {
   return new Promise(resolve => {
     AWS.config.update({region})
 

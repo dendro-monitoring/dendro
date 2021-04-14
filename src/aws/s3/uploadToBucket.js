@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/filename-case */
-
 const path = require('path')
 const fs = require('fs')
 

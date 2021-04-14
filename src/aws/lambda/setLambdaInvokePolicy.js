@@ -1,8 +1,10 @@
-/* eslint-disable unicorn/filename-case */
-
 const AWS = require('aws-sdk')
 
-function setLambdaInvokePolicy(Arn, StatementId = 'example-S3-permission', region = 'us-east-1') {
+function setLambdaInvokePolicy(
+  Arn,
+  StatementId = 'example-S3-permission',
+  region = 'us-east-1',
+) {
   return new Promise(resolve => {
     AWS.config.update({region})
 
