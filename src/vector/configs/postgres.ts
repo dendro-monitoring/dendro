@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 const logConfig = (): string => {
   return `
@@ -22,8 +22,8 @@ type = "aws_kinesis_firehose" # required
 inputs = ["postgres_logs_add_transform"] # required
 region = "us-east-2" # required, required when endpoint = null
 stream_name = "PostgresDendroStream" # required
-auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
+auth.access_key_id = "${store.AWS.Credentials?.accessKeyId}"
+auth.secret_access_key = "${store.AWS.Credentials?.secretAccessKey}"
 # Encoding
 encoding.codec = "json" # required
 # Healthcheck
@@ -42,11 +42,11 @@ const metricConfig = (): string => {
 export const buildPostgresConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.Postgres?.monitorMetrics) {
+  if (store.Vector.Postgres?.monitorMetrics) {
     config += metricConfig();
   }
 
-  if (globalState.Vector.Postgres?.monitorErrorLogs) {
+  if (store.Vector.Postgres?.monitorErrorLogs) {
     config += logConfig();
   }
 

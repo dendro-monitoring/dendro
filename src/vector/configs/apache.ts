@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 // TODO
 const logConfig = (): string => {
@@ -15,13 +15,13 @@ const metricConfig = (): string => {
 export const buildApacheConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.Apache.monitorMetrics) {
+  if (store.Vector.Apache.monitorMetrics) {
     config += metricConfig();
   }
 
   if (
-    globalState.Vector.Apache.monitorAccessLogs ||
-    globalState.Vector.Apache.monitorErrorLogs
+    store.Vector.Apache.monitorAccessLogs ||
+    store.Vector.Apache.monitorErrorLogs
   ) {
     config += logConfig();
   }

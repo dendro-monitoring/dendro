@@ -1,5 +1,5 @@
-import globalState from '../../globalState';
-import { CustomApplicationData } from '../../globalState/vector/customApplication';
+import store from '../../store';
+import { CustomApplicationData } from '../../store/vector/customApplication';
 
 // TODO
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
@@ -10,8 +10,8 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
 export const buildHostConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.CustomApplications) {
-    globalState.Vector.CustomApplications.forEach(customApp => {
+  if (store.Vector.CustomApplications) {
+    store.Vector.CustomApplications.forEach(customApp => {
       config += logConfig(customApp);
     });
   }
