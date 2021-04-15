@@ -46,6 +46,7 @@ const cache: CacheData = {
     s3: {},
     firehose: {},
     timestream: {},
+    iam: { role: {} },
   },
   vector: {
     postgres: {},

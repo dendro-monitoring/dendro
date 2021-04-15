@@ -3,6 +3,7 @@ import Lambda, { LambdaData } from './lambda';
 import S3, { S3Data } from './s3';
 import Firehose, { FirehoseData } from './firehose';
 import Timestream, { TimestreamData } from './timestream';
+import IAM, { AWSIAMData } from './iam';
 
 export interface AWSData {
   credentials: CredentialsData;
@@ -10,6 +11,7 @@ export interface AWSData {
   s3: S3Data;
   firehose: FirehoseData;
   timestream: TimestreamData;
+  iam: AWSIAMData;
 }
 
 class AWS {
@@ -23,18 +25,22 @@ class AWS {
 
   Timestream: Timestream;
 
+  IAM: IAM;
+
   constructor({
     credentials = {},
     lambda = {},
     s3 = {},
     firehose = {},
     timestream = {},
+    iam = { role: {} },
   }: AWSData) {
     this.Credentials = new Credentials(credentials);
     this.Lambda = new Lambda(lambda);
     this.S3 = new S3(s3);
     this.Firehose = new Firehose(firehose);
     this.Timestream = new Timestream(timestream);
+    this.IAM = new IAM(iam);
   }
 }
 
