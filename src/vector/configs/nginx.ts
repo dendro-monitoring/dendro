@@ -39,10 +39,50 @@ encoding.codec = "json"
 `;
 };
 
-// TODO
 const metricConfig = (): string => {
-  console.log('Not Implemented');
-  return '';
+  const {
+    url,
+    port,
+    scrapeIntervalSeconds
+  } = globalState.Vector.Nginx;
+
+  return `
+################ Nginx Metrics #############################
+
+[sources.nginx_metrics]
+  type = "nginx_metrics"
+  endpoints = ["http://${url}:${port}/basic_status"]
+  scrape_interval_secs = ${scrapeIntervalSeconds}
+
+[transforms.nginx_metrics_to_logs]
+  type = "metric_to_log"
+  inputs = ["nginx_metrics"]
+
+[transforms.nginx_metrics_transform]
+type = "remap"
+inputs = ["nginx_metrics_to_logs"]
+source = '''
+.type = "nginx-metrics"
+'''
+
+[sinks.nginx_metrics_firehose_stream_sink]
+# General
+type = "aws_kinesis_firehose"
+inputs = ["nginx_metrics_transform"]
+
+# AWS
+region = "us-east-2"
+stream_name = "NginxMetricsDendroStream"
+
+## Auth
+auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+
+# Encoding
+encoding.codec = "json"
+
+#############################################
+`;
 };
 
 export const buildNginxConfig = (): string => {
