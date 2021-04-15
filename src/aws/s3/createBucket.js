@@ -4,7 +4,7 @@ const s3 = new AWS.S3()
 
 function createBucket(bucketName, region = 'us-east-1') {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region })
 
     const bucketParams = {
       Bucket: bucketName,

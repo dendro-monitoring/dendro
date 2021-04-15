@@ -2,10 +2,10 @@ const AWS = require('aws-sdk')
 
 const iam = new AWS.IAM()
 
-function attachLambdaBasicExecutionPolicy(RoleName) {
+function attachRolePolicy(RoleName, PolicyArn) {
   return new Promise(resolve => {
     const params = {
-      PolicyArn: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+      PolicyArn,
       RoleName,
     }
 
@@ -15,4 +15,4 @@ function attachLambdaBasicExecutionPolicy(RoleName) {
   })
 }
 
-module.exports = attachLambdaBasicExecutionPolicy
+module.exports = attachRolePolicy

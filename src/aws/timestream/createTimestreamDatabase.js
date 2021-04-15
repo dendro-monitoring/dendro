@@ -2,7 +2,7 @@ const AWS = require('aws-sdk')
 
 function createTimestreamDatabase(DatabaseName, region = 'us-east-1') {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region })
 
     const Timestream = new AWS.TimestreamWrite()
 

@@ -12,7 +12,7 @@ function createLambda({
   Description = '',
 }) {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region })
 
     const lambdaName = lambdaFile.replace(/\.js/, '')
 
@@ -27,7 +27,7 @@ function createLambda({
     const lambda = new AWS.Lambda()
 
     const params = {
-      Code: {/* required */
+      Code: { /* required */
         ZipFile: zip.toBuffer(),
       },
       FunctionName: path.basename(lambdaName), /* required */
