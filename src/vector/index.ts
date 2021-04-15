@@ -8,8 +8,8 @@ import { buildNginxConfig } from './configs/nginx';
 import { buildPostgresConfig } from './configs/postgres';
 
 /**
- * Build the vector config file based on the current global state
- * @returns The vector config file ready to write to disk
+ * Build the vector config file based on the current store
+ * @returns {String} The vector config file ready to write to disk
  */
 export const buildVectorConfig = (): string => {
   ensureCredentials('Tried writing vector configs without aws credentials existing.');

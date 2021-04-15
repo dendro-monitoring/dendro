@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 const logConfig = (): string => {
   return `
@@ -26,8 +26,8 @@ const logConfig = (): string => {
   stream_name = "PostgresLogsDendroStream"
 
   ## Auth
-  auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
-  auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
+  auth.access_key_id = "${store.AWS.Credentials?.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials?.secretAccessKey}"
 
   # Encoding
   encoding.codec = "json"
@@ -76,8 +76,8 @@ const metricConfig = (): string => {
   stream_name = "PostgresMetricsDendroStream"
   
   ## Auth
-  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
 
   # Encoding
   encoding.codec = "json"
@@ -89,11 +89,11 @@ const metricConfig = (): string => {
 export const buildPostgresConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.Postgres.monitorMetrics) {
+  if (store.Vector.Postgres?.monitorMetrics) {
     config += metricConfig();
   }
 
-  if (globalState.Vector.Postgres.monitorErrorLogs) {
+  if (store.Vector.Postgres?.monitorErrorLogs) {
     config += logConfig();
   }
 

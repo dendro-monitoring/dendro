@@ -1,5 +1,5 @@
-import globalState from '../../globalState';
-import { CustomApplicationData } from '../../globalState/vector/customApplication';
+import store from '../../store';
+import { CustomApplicationData } from '../../store/vector/customApplication';
 
 // TODO
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
@@ -28,8 +28,8 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   stream_name = "${name}CustomAppDendroStream"
 
   ## Auth
-  auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
-  auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
+  auth.access_key_id = "${store.AWS.Credentials?.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials?.secretAccessKey}"
 
   # Encoding
   encoding.codec = "json"
@@ -44,8 +44,8 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
 export const buildCustomApplications = (): string => {
   let config = '';
 
-  if (globalState.Vector.CustomApplications) {
-    globalState.Vector.CustomApplications.forEach(customApp => {
+  if (store.Vector.CustomApplications) {
+    store.Vector.CustomApplications.forEach(customApp => {
       config += logConfig(customApp);
     });
   }

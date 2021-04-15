@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 const logConfig = (): string => {
   return `
@@ -7,8 +7,8 @@ const logConfig = (): string => {
 [sources.nginx_logs]
 type = "file"
 include = [
-  ${globalState.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access_log.log",' : null}
-  ${globalState.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error_log.log"' : null}
+  ${store.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access_log.log",' : null}
+  ${store.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error_log.log"' : null}
 ]
 read_from = "beginning"
 
@@ -29,8 +29,8 @@ region = "us-east-2", required when endpoint = null
 stream_name = "NginxLogsDendroStream"
 
 ## Auth
-auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
 
 # Encoding
 encoding.codec = "json"
@@ -44,7 +44,7 @@ const metricConfig = (): string => {
     url,
     port,
     scrapeIntervalSeconds
-  } = globalState.Vector.Nginx;
+  } = store.Vector.Nginx;
 
   return `
 ################ Nginx Metrics #############################
@@ -75,8 +75,8 @@ const metricConfig = (): string => {
   stream_name = "NginxMetricsDendroStream"
 
   ## Auth
-  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
 
   # Encoding
   encoding.codec = "json"
@@ -88,13 +88,13 @@ const metricConfig = (): string => {
 export const buildNginxConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.Nginx.monitorMetrics) {
+  if (store.Vector.Nginx.monitorMetrics) {
     config += metricConfig();
   }
 
   if (
-    globalState.Vector.Nginx.monitorAccessLogs ||
-    globalState.Vector.Nginx.monitorErrorLogs
+    store.Vector.Nginx.monitorAccessLogs ||
+    store.Vector.Nginx.monitorErrorLogs
   ) {
     config += logConfig();
   }

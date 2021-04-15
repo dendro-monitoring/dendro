@@ -2,12 +2,12 @@ import AWS, { AWSData } from './aws';
 import Vector, { VectorData } from './vector';
 
 /*
- * GlobalState is an singleton that will contain all data over the lifetime
+ * Store is an singleton that will contain all data over the lifetime
  * of the CLI command. Currently, it is initialized to no data, however after
  * we start making the CLI stateful, it should handle fetching the cache data
  * during initialization.
  */
-class GlobalState {
+class Store {
   AWS: AWS;
 
   Vector: Vector;
@@ -37,7 +37,7 @@ interface CacheData {
 /*
  * TODO: Load state from cache if it exists.
  * This hardcoded data will be removed and the cache data or
- * an empty object will be passed into `new GlobalState(cache)`.
+ * an empty object will be passed into `new store(cache)`.
  */
 const cache: CacheData = {
   aws: {
@@ -53,4 +53,4 @@ const cache: CacheData = {
   },
 };
 
-export default new GlobalState(cache);
+export default new Store(cache);

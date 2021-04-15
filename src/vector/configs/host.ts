@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 const config = (): string => {
   return `
@@ -7,15 +7,15 @@ const config = (): string => {
 [sources.host_metrics]
 type = "host_metrics"
 collectors = [
-  ${globalState.Vector.Host.cpu ? "cpu," : null}
-  ${globalState.Vector.Host.cpu ? "disk," : null}
-  ${globalState.Vector.Host.cpu ? "filesystem," : null}
-  ${globalState.Vector.Host.cpu ? "load," : null}
-  ${globalState.Vector.Host.cpu ? "host," : null}
-  ${globalState.Vector.Host.cpu ? "memory," : null}
-  ${globalState.Vector.Host.cpu ? "network," : null}
+  ${store.Vector.Host.cpu ? "cpu," : null}
+  ${store.Vector.Host.cpu ? "disk," : null}
+  ${store.Vector.Host.cpu ? "filesystem," : null}
+  ${store.Vector.Host.cpu ? "load," : null}
+  ${store.Vector.Host.cpu ? "host," : null}
+  ${store.Vector.Host.cpu ? "memory," : null}
+  ${store.Vector.Host.cpu ? "network," : null}
 ]
-scrape_interval_secs = ${globalState.Vector.Host.scrapeIntervalSeconds}
+scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
 
 [transforms.host_metrics_to_logs]
   type = "metric_to_log"
@@ -38,8 +38,8 @@ scrape_interval_secs = ${globalState.Vector.Host.scrapeIntervalSeconds}
   stream_name = "HostMetricsDendroStream"
 
   ## Auth
-  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
 
   # Encoding
   encoding.codec = "json"
@@ -49,7 +49,7 @@ scrape_interval_secs = ${globalState.Vector.Host.scrapeIntervalSeconds}
 };
 
 export const buildHostConfig = (): string => {
-  if (globalState.Vector.Host.shouldBuildConfig()) {
+  if (store.Vector.Host.shouldBuildConfig()) {
     return config();
   }
 
