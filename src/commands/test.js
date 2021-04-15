@@ -24,6 +24,7 @@ const FILE_TO_UPLOAD = path.resolve(`${__dirname}/../aws/s3/uploadToBucket.js`)
 const LAMBDA_POLICY_ARN = 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
 const FIREHOSE_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess'
 const TIMESTREAM_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonTimestreamFullAccess'
+const S3_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
 
 class TestCommand extends Command {
   async run() {
@@ -32,13 +33,13 @@ class TestCommand extends Command {
     this.log(`test ${name} from ./src/commands/test.js`)
 
     console.log('Creating new role for dendroflumechuck pipeline...')
-    const [firehoseRoleErr, firehoseRole] = await AWSWrapper.createRole(NEW_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com'])
-    if (firehoseRoleErr) {
-      console.error(firehoseRoleErr)
+    const [newRoleErr, newRole] = await AWSWrapper.createRole(NEW_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com'])
+    if (newRoleErr) {
+      console.error(newRoleErr)
     } else {
       console.log('success')
     }
-    // console.log(firehoseRole)
+    // console.log(newRole)
 
     console.log('Attaching AmazonKinesisFirehoseFullAccess policy...')
     const [firehosePolicyErr, firehosePolicyData] = await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, FIREHOSE_POLICY_ARN)
@@ -67,6 +68,15 @@ class TestCommand extends Command {
     }
     // console.log(timestreamPolicyData)
 
+    console.log('Attaching AmazonS3FullAccess policy...')
+    const [s3PolicyErr, s3PolicyData] = await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, S3_POLICY_ARN)
+    if (s3PolicyErr) {
+      console.error(s3PolicyErr)
+    } else {
+      console.log('success')
+    }
+    // console.log(s3PolicyData)
+
     console.log('Creating new bucket...')
 
     const [bucketErr, bucketData] = await AWSWrapper.createBucket(NEW_BUCKET_NAME)
@@ -81,7 +91,7 @@ class TestCommand extends Command {
 
     await new Promise(r => setTimeout(r, 10000)) // TODO don't do this
 
-    const deliveryStreamData = await AWSWrapper.createDeliveryStream(DELIVERY_STREAM_NAME, NEW_BUCKET_NAME, firehoseRole.Role.Arn)
+    const deliveryStreamData = await AWSWrapper.createDeliveryStream(DELIVERY_STREAM_NAME, NEW_BUCKET_NAME, newRole.Role.Arn)
     console.log('success')
     // console.log(deliveryStreamData)
 
@@ -100,7 +110,7 @@ class TestCommand extends Command {
     console.log('Creating new lambda...')
     const [lambdaErr, lambdaData] = await AWSWrapper.createLambda({
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
-      Role: firehoseRole.Role.Arn,
+      Role: newRole.Role.Arn,
       DATABASE_NAME,
       DATABASE_TABLE: TABLE_NAME,
     })
@@ -138,14 +148,14 @@ class TestCommand extends Command {
     }
     // console.log(uploadData)
 
-    // // // checks if AWS credentials are set
-    // // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
-    // // // console.log(credentialsErr)
-    // // console.log(credentials)
+    // // checks if AWS credentials are set
+    // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
+    // // console.log(credentialsErr)
+    // console.log(credentials)
 
-    // // const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
-    // // // console.log(listLambdaErr)
-    // // console.log(lamdas)
+    // const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
+    // // console.log(listLambdaErr)
+    // console.log(lamdas)
   }
 }
 
