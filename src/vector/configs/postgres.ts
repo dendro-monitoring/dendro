@@ -22,7 +22,7 @@ type = "aws_kinesis_firehose"
 inputs = ["postgres_logs_transform"]
 
 # AWS
-region = "us-east-2", required when endpoint = null
+region = "us-east-2"
 stream_name = "PostgresLogsDendroStream"
 
 ## Auth
@@ -48,7 +48,7 @@ const metricConfig = (): string => {
   } = globalState.Vector.Postgres;
 
   return `
-################ Postgres Logs #############################
+################ Postgres Metrics #############################
 
 [sources.postgres_metric]
   type = "postgresql_metrics"
@@ -72,7 +72,7 @@ type = "aws_kinesis_firehose"
 inputs = ["postgres_metrics_transform"]
 
 # AWS
-region = "us-east-2", required when endpoint = null
+region = "us-east-2"
 stream_name = "PostgresMetricsDendroStream"
 
 ## Auth
