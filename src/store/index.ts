@@ -1,6 +1,7 @@
 import AWS, { AWSData } from './aws';
 import Vector, { VectorData } from './vector';
 import Conf from 'conf';
+import log from '../utils/log';
 
 const config = new Conf();
 
@@ -44,11 +45,28 @@ interface CacheData {
   Vector: VectorData;
 }
 
+const diskCache = config.get('state') as CacheData;
+
+/**
+ * Helper function to run debug logs for the store.
+ * Log level cannot be set until after this code would run.
+ * So this code is wrapped into a function and exported instead.
+ */
+export const debugLogs = (): void => {
+  if (diskCache) {
+    log.debug('Found cache data');
+    log.debug(`Store data:`);
+    log.debug(diskCache as unknown as string);
+  } else {
+    log.debug('No cache data found');
+  }
+}; 
+
 /*
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
-const cache: CacheData = config.get('state') as CacheData || {
+const cache: CacheData = diskCache|| {
   AWS: {
     Credentials: {},
     Lambda: {},

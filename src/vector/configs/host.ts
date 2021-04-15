@@ -1,8 +1,10 @@
 import store from '../../store';
+import log from '../../utils/log';
 
 const config = (): string => {
+  log.debug('Writing Host vector log config');
   return `
-################ Nginx Logs #############################
+################ Host Logs #############################
 
 [sources.host_metrics]
 type = "host_metrics"

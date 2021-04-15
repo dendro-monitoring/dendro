@@ -1,6 +1,8 @@
 import store from '../../store';
+import log from '../../utils/log';
 
 const logConfig = (): string => {
+  log.debug('Writing Postgres vector log config');
   return `
 ################ Postgres Logs #############################
 
@@ -38,6 +40,7 @@ const logConfig = (): string => {
 
 
 const metricConfig = (): string => {
+  log.debug('Writing Postgres vector metric config');
   const {
     username,
     password,
@@ -45,7 +48,7 @@ const metricConfig = (): string => {
     port,
     databaseName,
     scrapeIntervalSeconds
-  } = globalState.Vector.Postgres;
+  } = store.Vector.Postgres;
 
   return `
 ################ Postgres Metrics #############################

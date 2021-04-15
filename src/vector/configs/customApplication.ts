@@ -1,8 +1,10 @@
 import store from '../../store';
+import log from '../../utils/log';
 import { CustomApplicationData } from '../../store/vector/customApplication';
 
 // TODO
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
+  log.debug(`Writing custom application vector log config for application ${name}`);
   return `
 ################ ${name} - Custom Application #############################
 
