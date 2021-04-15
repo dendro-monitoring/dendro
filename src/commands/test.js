@@ -74,8 +74,8 @@ class TestCommand extends Command {
 
       console.log('Creating S3 trigger...')
       const triggerData = await AWSWrapper.createS3LambdaTrigger(NEW_BUCKET_NAME, lambdaData.FunctionArn)
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      console.log(error)
     }
   }
 }
