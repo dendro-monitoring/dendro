@@ -1,7 +1,7 @@
 // const globalState = require('../globalState')
 const AWSWrapper = require('../aws');
 
-const NEW_ROLE_NAME = 'dendroflumechuck-role';
+const NEW_ROLE_NAME = 'dendroflumechuck-role2';
 
 const LAMBDA_POLICY_ARN = 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole';
 const FIREHOSE_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess';
@@ -11,8 +11,6 @@ const S3_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonS3FullAccess';
 function createRole() {
   return new Promise(resolve => {
     const promises = [];
-
-    console.log('Setting up new role...');
 
     AWSWrapper.createRole(NEW_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(newRole => {
       promises.push(AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, FIREHOSE_POLICY_ARN));

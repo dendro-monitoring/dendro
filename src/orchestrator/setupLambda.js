@@ -7,7 +7,6 @@ const DATABASE_TABLE = 'default-table';
 
 function setupLambda( newRole ) {
   return new Promise( resolve => {
-    console.log('Setting up lambda...');
       AWSWrapper.createLambda({
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: newRole.Role.Arn,
