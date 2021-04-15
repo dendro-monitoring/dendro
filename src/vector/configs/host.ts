@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 // TODO
 const config = (): string => {
@@ -7,7 +7,7 @@ const config = (): string => {
 };
 
 export const buildHostConfig = (): string => {
-  if (globalState.Vector.Host.shouldBuildConfig()) {
+  if (store.Vector.Host.shouldBuildConfig()) {
     return config();
   }
 
