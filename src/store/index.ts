@@ -23,12 +23,19 @@ class Store {
     this.Vector = new Vector(vector);
   }
 
-  /*
+  /** 
    * Call this function when an error occurs and you plan to exit.
    * This function will dump the current state to the cache to prevent data loss.
    */
   dump() {
     config.set('state', this);
+  }
+
+  /**
+   * Clears the persistent cache .
+   */
+  clean() {
+    config.delete('state');
   }
 }
 
@@ -58,6 +65,5 @@ const cache: CacheData = config.get('state') as CacheData || {
     CustomApplications: []
   },
 };
-
 
 export default new Store(cache);
