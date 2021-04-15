@@ -1,17 +1,17 @@
-import globalState from '../globalState';
+import store from '../store';
 
 /**
  * Used to ensure aws credentials exist prior to doing some operation
  * that would require them.
  *
- * @param {string} msg the eror message
+ * @param {string} msg the error message
  */
-export const ensureCredentials = (msg: string) => {
+export const ensureCredentials = (msg: string): void => {
   if (
-    !globalState.AWS.Credentials.accessKeyId ||
-    !globalState.AWS.Credentials.secretAccessKey
+    !store.AWS.Credentials.accessKeyId ||
+    !store.AWS.Credentials.secretAccessKey
   ) {
-    console.log(globalState.AWS);
+    console.log(store.AWS);
     throw new Error(msg);
   }
 };

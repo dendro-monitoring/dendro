@@ -7,7 +7,7 @@ import { buildNginxConfig } from './configs/nginx';
 import { buildPostgresConfig } from './configs/postgres';
 
 /**
- * Build the vector config file based on the current global state
+ * Build the vector config file based on the current store
  * @returns {String} the vector config file ready to write to disk
  */
 export const buildVectorConfig = (): string => {

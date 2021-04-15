@@ -1,4 +1,4 @@
-import globalState from '../../globalState';
+import store from '../../store';
 
 // TODO
 const logConfig = (): string => {
@@ -15,11 +15,11 @@ const metricConfig = (): string => {
 export const buildMongoConfig = (): string => {
   let config = '';
 
-  if (globalState.Vector.Mongo.monitorMetrics) {
+  if (store.Vector.Mongo.monitorMetrics) {
     config += metricConfig();
   }
 
-  if (globalState.Vector.Mongo.monitorLogs) {
+  if (store.Vector.Mongo.monitorLogs) {
     config += logConfig();
   }
 
