@@ -6,7 +6,7 @@ import globalState from '../globalState';
  *
  * @param {string} msg the eror message
  */
-export const ensureCredentials = (msg: string) => {
+export const ensureCredentials = (msg: string): void => {
   if (
     !globalState.AWS.Credentials.accessKeyId ||
     !globalState.AWS.Credentials.secretAccessKey
