@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable node/no-missing-require */
-/* eslint-disable import/no-unresolved */
 
 console.log('Loading function')
 
 const aws = require('aws-sdk')
 
-const s3 = new aws.S3({apiVersion: '2006-03-01'})
+const s3 = new aws.S3({ apiVersion: '2006-03-01' })
 const https = require('https')
 
 const REGEX = /}{/gm

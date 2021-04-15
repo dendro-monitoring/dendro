@@ -7,12 +7,14 @@ const AdmZip = require('adm-zip')
 function createLambda({
   lambdaFile,
   Role,
+  DATABASE_NAME,
+  DATABASE_TABLE,
   Runtime = 'nodejs12.x',
   region = 'us-east-1',
   Description = '',
 }) {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region })
 
     const lambdaName = lambdaFile.replace(/\.js/, '')
 
@@ -27,7 +29,7 @@ function createLambda({
     const lambda = new AWS.Lambda()
 
     const params = {
-      Code: {/* required */
+      Code: { /* required */
         ZipFile: zip.toBuffer(),
       },
       FunctionName: path.basename(lambdaName), /* required */
@@ -35,6 +37,12 @@ function createLambda({
       Role, /* required */
       Runtime, /* required */
       Description,
+      Environment: {
+        Variables: {
+          DATABASE_NAME,
+          DATABASE_TABLE,
+        },
+      },
     }
 
     lambda.createFunction(params, (err, data) => {

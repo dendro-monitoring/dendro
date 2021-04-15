@@ -1,27 +1,41 @@
 const createBucket = require('./s3/createBucket')
 const deleteBucket = require('./s3/deleteBucket')
+const createS3LambdaTrigger = require('./s3/createS3LambdaTrigger')
+
 const createLambda = require('./lambda/createLambda')
-const createLambdaRole = require('./lambda/createLambdaRole')
 const listLambdas = require('./lambda/listLambdas')
 const setLambdaInvokePolicy = require('./lambda/setLambdaInvokePolicy')
-const attachLambdaBasicExecutionPolicy = require('./lambda/attachLambdaBasicExecutionPolicy')
-const createS3LambdaTrigger = require('./s3/createS3LambdaTrigger')
+
 const uploadToBucket = require('./s3/uploadToBucket')
-const getCredentials = require('./getCredentials')
+
 const createTimestreamDatabase = require('./timestream/createTimestreamDatabase')
 const createTimestreamTable = require('./timestream/createTimestreamTable')
+
+const createDeliveryStream = require('./firehose/createDeliveryStream')
+
+const createRole = require('./iam/createRole')
+const attachRolePolicy = require('./iam/attachRolePolicy')
+
+const getCredentials = require('./getCredentials')
 
 module.exports = {
   createBucket,
   deleteBucket,
+  createS3LambdaTrigger,
+
   createLambda,
-  createLambdaRole,
   listLambdas,
   setLambdaInvokePolicy,
-  attachLambdaBasicExecutionPolicy,
-  createS3LambdaTrigger,
+
   uploadToBucket,
-  getCredentials,
+
   createTimestreamDatabase,
   createTimestreamTable,
+
+  createDeliveryStream,
+
+  createRole,
+  attachRolePolicy,
+
+  getCredentials,
 }
