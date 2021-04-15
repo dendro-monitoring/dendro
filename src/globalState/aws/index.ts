@@ -1,8 +1,8 @@
-import Credentials, { CredentialsData } from './credentials'
-import Lambda, { LambdaData } from './lambda'
-import S3, { S3Data } from './s3'
-import Firehose, { FirehoseData } from './firehose'
-import Timestream, { TimestreamData } from './timestream'
+import Credentials, { CredentialsData } from './credentials';
+import Lambda, { LambdaData } from './lambda';
+import S3, { S3Data } from './s3';
+import Firehose, { FirehoseData } from './firehose';
+import Timestream, { TimestreamData } from './timestream';
 
 export interface AWSData {
   credentials: CredentialsData;
@@ -13,7 +13,7 @@ export interface AWSData {
 }
 
 class AWS {
-  Credentials: Credentials
+  Credentials: Credentials;
 
   Lambda: Lambda;
 
@@ -30,12 +30,12 @@ class AWS {
     firehose = {},
     timestream = {},
   }: AWSData) {
-    this.Credentials = new Credentials(credentials)
-    this.Lambda = new Lambda(lambda)
-    this.S3 = new S3(s3)
-    this.Firehose = new Firehose(firehose)
-    this.Timestream = new Timestream(timestream)
+    this.Credentials = new Credentials(credentials);
+    this.Lambda = new Lambda(lambda);
+    this.S3 = new S3(s3);
+    this.Firehose = new Firehose(firehose);
+    this.Timestream = new Timestream(timestream);
   }
 }
 
-export default AWS
+export default AWS;

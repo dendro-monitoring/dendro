@@ -9,9 +9,9 @@ class CustomApplication {
   filepath: string;
 
   constructor({ name, filepath }: CustomApplicationData) {
-    this.name = name
-    this.filepath = filepath
+    this.name = name;
+    this.filepath = filepath;
   }
 }
 
-export default CustomApplication
+export default CustomApplication;

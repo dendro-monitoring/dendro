@@ -1,4 +1,4 @@
-import globalState from '../../globalState'
+import globalState from '../../globalState';
 
 const logConfig = (): string => {
   return `
@@ -33,28 +33,28 @@ encoding.codec = "json" # required
 healthcheck.enabled = true # optional, default
 
 #############################################\n
-    `
-}
+    `;
+};
 
 // TODO
 const metricConfig = (): string => {
-  console.log('Not Implemented')
-  return ''
-}
+  console.log('Not Implemented');
+  return '';
+};
 
 export const buildNginxConfig = (): string => {
-  let config = ''
+  let config = '';
 
   if (globalState.Vector.Nginx.monitorMetrics) {
-    config += metricConfig()
+    config += metricConfig();
   }
 
   if (
     globalState.Vector.Nginx.monitorAccessLogs ||
     globalState.Vector.Nginx.monitorErrorLogs
   ) {
-    config += logConfig()
+    config += logConfig();
   }
 
-  return config
-}
+  return config;
+};

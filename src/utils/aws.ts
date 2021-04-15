@@ -1,4 +1,4 @@
-import globalState from '../globalState'
+import globalState from '../globalState';
 
 /**
  * Used to ensure aws credentials exist prior to doing some operation
@@ -11,7 +11,7 @@ export const ensureCredentials = (msg: string) => {
     !globalState.AWS.Credentials.accessKeyId ||
     !globalState.AWS.Credentials.secretAccessKey
   ) {
-    console.log(globalState.AWS)
-    throw new Error(msg)
+    console.log(globalState.AWS);
+    throw new Error(msg);
   }
-}
+};

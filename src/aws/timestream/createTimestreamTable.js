@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
 function createTimestreamTable({
   DatabaseName,
@@ -9,9 +9,9 @@ function createTimestreamTable({
   region = 'us-east-1',
 }) {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region });
 
-    const Timestream = new AWS.TimestreamWrite()
+    const Timestream = new AWS.TimestreamWrite();
 
     const params = {
       DatabaseName, /* required */
@@ -21,11 +21,11 @@ function createTimestreamTable({
         MemoryStoreRetentionPeriodInHours, /* required */
       },
       Tags,
-    }
+    };
     Timestream.createTable(params, (err, data) => {
-      resolve([err, data])
-    })
-  })
+      resolve([err, data]);
+    });
+  });
 }
 
-module.exports = createTimestreamTable
+module.exports = createTimestreamTable;

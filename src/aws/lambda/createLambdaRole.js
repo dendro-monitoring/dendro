@@ -1,6 +1,6 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
-const iam = new AWS.IAM()
+const iam = new AWS.IAM();
 
 function createLambdaRole(RoleName) {
   return new Promise(resolve => {
@@ -23,12 +23,12 @@ function createLambdaRole(RoleName) {
       }),
       Path: '/',
       RoleName,
-    }
+    };
 
     iam.createRole(params, (err, data) => {
-      resolve([err, data])
-    })
-  })
+      resolve([err, data]);
+    });
+  });
 }
 
-module.exports = createLambdaRole
+module.exports = createLambdaRole;

@@ -10,4 +10,4 @@ class S3 {
   constructor({}: S3Data) {}
 }
 
-export default S3
+export default S3;

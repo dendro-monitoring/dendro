@@ -12,9 +12,9 @@ class Credentials {
   secretAccessKey?: string;
 
   constructor({ accessKeyId, secretAccessKey }: CredentialsData) {
-    this.accessKeyId = accessKeyId
-    this.secretAccessKey = secretAccessKey
+    this.accessKeyId = accessKeyId;
+    this.secretAccessKey = secretAccessKey;
   }
 }
 
-export default Credentials
+export default Credentials;

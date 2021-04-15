@@ -3,28 +3,28 @@
 /* eslint-disable node/no-missing-require */
 /* eslint-disable import/no-unresolved */
 
-console.log('Loading function')
+console.log('Loading function');
 
-const aws = require('aws-sdk')
+const aws = require('aws-sdk');
 
-const s3 = new aws.S3({apiVersion: '2006-03-01'})
-const https = require('https')
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+const https = require('https');
 
-const REGEX = /}{/gm
+const REGEX = /}{/gm;
 
 /*
  * Configure timestream writeclient
  */
 const agent = new https.Agent({
   maxSockets: 5000,
-})
+});
 const writeClient = new aws.TimestreamWrite({
   maxRetries: 10,
   httpOptions: {
     timeout: 20000,
     agent,
   },
-})
+});
 
 /**
  * Writes upto a 100 records to Timstream. Timestream can only accept upto
@@ -38,25 +38,25 @@ async function write100Records(records) {
     DatabaseName: process.env.DATABASE_NAME,
     TableName: process.env.DATABASE_TABLE,
     Records: records,
-  }
+  };
 
-  const request = writeClient.writeRecords(params)
+  const request = writeClient.writeRecords(params);
 
   await request.promise().then(
     _data => {
-      console.log('Write records successful')
+      console.log('Write records successful');
     },
     err => {
-      console.log('Error writing records:', err)
+      console.log('Error writing records:', err);
       if (err.code === 'RejectedRecordsException') {
         const responsePayload = JSON.parse(
           request.response.httpResponse.body.toString(),
-        )
-        console.log('RejectedRecords: ', responsePayload.RejectedRecords)
-        console.log('Other records were written successfully. ')
+        );
+        console.log('RejectedRecords: ', responsePayload.RejectedRecords);
+        console.log('Other records were written successfully. ');
       }
     },
-  )
+  );
 }
 
 /**
@@ -66,10 +66,10 @@ async function write100Records(records) {
  * @returns {undefined}
  */
 async function writeRecords(rawData) {
-  console.log('Writing records')
-  const currentTime = Date.now().toString() // Unix time in milliseconds
+  console.log('Writing records');
+  const currentTime = Date.now().toString(); // Unix time in milliseconds
 
-  let records = []
+  let records = [];
 
   rawData.forEach(evt => {
     records = records.concat({
@@ -95,58 +95,58 @@ async function writeRecords(rawData) {
       MeasureValue: JSON.stringify(evt), // vector value
       MeasureValueType: 'VARCHAR',
       Time: currentTime.toString(),
-    })
-  })
+    });
+  });
 
-  const promises = []
+  const promises = [];
   for (let i = 0; i <= records.length; i += 100) {
-    promises.push(write100Records(records.slice(i, i + 100)))
+    promises.push(write100Records(records.slice(i, i + 100)));
   }
 
-  await Promise.all(promises)
+  await Promise.all(promises);
 }
 
-const getBucketName = event => event.Records[0].s3.bucket.name
-const getKey = event => decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '))
+const getBucketName = event => event.Records[0].s3.bucket.name;
+const getKey = event => decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
 
-const getS3ObjectBody = s3Obj => s3Obj.Body.toString()
+const getS3ObjectBody = s3Obj => s3Obj.Body.toString();
 const getParsableS3ObjectBody = s3Obj => {
-  const data = getS3ObjectBody(s3Obj).replace(REGEX, '},\n{')
-  return `[${data}]`
-}
+  const data = getS3ObjectBody(s3Obj).replace(REGEX, '},\n{');
+  return `[${data}]`;
+};
 
-const getParsedS3ObjectBody = s3Obj => JSON.parse(getParsableS3ObjectBody(s3Obj))
+const getParsedS3ObjectBody = s3Obj => JSON.parse(getParsableS3ObjectBody(s3Obj));
 
 exports.handler = async (event, _context) => {
-  console.log('Received event:', JSON.stringify(event, null, 2))
+  console.log('Received event:', JSON.stringify(event, null, 2));
 
   /*
    * Get the object from the event and show its content type
    */
-  const bucket = getBucketName(event)
-  const key = getKey(event)
+  const bucket = getBucketName(event);
+  const key = getKey(event);
   const params = {
     Bucket: bucket,
     Key: key,
-  }
+  };
 
-  let s3Obj
+  let s3Obj;
   try {
     /*
      * Fetch obj from s3
      */
-    s3Obj = await s3.getObject(params).promise()
+    s3Obj = await s3.getObject(params).promise();
   } catch (error) {
-    console.log(error)
+    console.log(error);
 
-    const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`
-    console.log(message)
+    const message = `Error getting object ${key} from bucket ${bucket}. Make sure they exist and your bucket is in the same region as this function.`;
+    console.log(message);
 
-    throw new Error(message)
+    throw new Error(message);
   }
 
-  const body = getParsedS3ObjectBody(s3Obj)
-  await writeRecords(body)
+  const body = getParsedS3ObjectBody(s3Obj);
+  await writeRecords(body);
 
-  return ''
-}
+  return '';
+};

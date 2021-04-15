@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
 function setLambdaInvokePolicy(
   Arn,
@@ -6,23 +6,23 @@ function setLambdaInvokePolicy(
   region = 'us-east-1',
 ) {
   return new Promise(resolve => {
-    AWS.config.update({region})
+    AWS.config.update({ region });
 
     // Creates Lambda Function Policy which must be created once for each Lambda function
     // Must be done before calling s3.putBucketNotificationConfiguration(...)
-    const lambda = new AWS.Lambda()
+    const lambda = new AWS.Lambda();
 
     const params = {
       Action: 'lambda:InvokeFunction',
       FunctionName: Arn,
       Principal: 's3.amazonaws.com',
       StatementId,
-    }
+    };
 
     lambda.addPermission(params, (err, data) => {
-      resolve([err, data])
-    })
-  })
+      resolve([err, data]);
+    });
+  });
 }
 
-module.exports = setLambdaInvokePolicy
+module.exports = setLambdaInvokePolicy;
