@@ -10,7 +10,7 @@ const AWSWrapper = require('../aws')
 
 const NEW_ROLE_NAME = 'dendroflumechuck-role'
 
-const DELIVERY_STREAM_NAME = 'newStreamTest'
+const DELIVERY_STREAM_NAME = 'dendroflumechuck-stream'
 
 const NEW_BUCKET_NAME = 'dendrodefaultbucket'
 
@@ -139,14 +139,14 @@ class TestCommand extends Command {
     }
     // console.log(triggerData)
 
-    console.log('Uploading to S3...')
-    const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket(NEW_BUCKET_NAME, FILE_TO_UPLOAD)
-    if (uploadErr) {
-      console.error(uploadErr)
-    } else {
-      console.log('success')
-    }
-    // console.log(uploadData)
+    // console.log('Uploading to S3...')
+    // const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket(NEW_BUCKET_NAME, FILE_TO_UPLOAD)
+    // if (uploadErr) {
+    //   console.error(uploadErr)
+    // } else {
+    //   console.log('success')
+    // }
+    // // console.log(uploadData)
 
     // // checks if AWS credentials are set
     // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
