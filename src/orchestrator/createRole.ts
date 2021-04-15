@@ -7,7 +7,7 @@ const FIREHOSE_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAc
 const TIMESTREAM_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonTimestreamFullAccess';
 const S3_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonS3FullAccess';
 
-export default function createRole() {
+export default function createRole(): Promise<any> {
   return new Promise(resolve => {
     const promises: Promise<any>[] = [];
 

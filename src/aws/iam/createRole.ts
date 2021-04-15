@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 const iam = new AWS.IAM();
 
-export default function createRole(RoleName: string, Service: string): Promise<any> {
+export default function createRole(RoleName: string, Service: string[]): Promise<any> {
   return new Promise(resolve => {
     const params = {
       AssumeRolePolicyDocument: JSON.stringify({

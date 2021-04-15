@@ -9,7 +9,7 @@ import orchestrator from '../orchestrator';
 // TODO put & use constants in globalState. Right now, constants aren't being shared between services
 //  so the connections are broken
 
-class TestCommand extends Command {
+export default class TestCommand extends Command {
   static flags = {
     help: flags.help({ char: 'h' }),
     // flag with a value (-n, --name=VALUE)
@@ -71,9 +71,3 @@ TestCommand.description = `Describe the command here
 ...
 Extra documentation goes here
 `;
-
-TestCommand.flags = {
-  name: flags.string({ char: 'n', description: 'name to print' }),
-};
-
-module.exports = TestCommand;
