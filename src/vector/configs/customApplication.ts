@@ -18,7 +18,7 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   .type = "custom-application"
   '''
 
-  [sinks.custom_application_${name}_logs_firehose_stream_sink]
+[sinks.custom_application_${name}_logs_firehose_stream_sink]
   # General
   type = "aws_kinesis_firehose"
   inputs = ["custom_application_${name}_logs_transform"]
