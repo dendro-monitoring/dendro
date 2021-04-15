@@ -13,6 +13,7 @@
     "@oclif/plugin-help": "^3.2.2",
     "adm-zip": "^0.5.5",
     "aws-sdk": "^2.884.0",
+    "enquirer": "^2.3.6",
     "tslib": "^1.14.1"
   },
   "devDependencies": {
