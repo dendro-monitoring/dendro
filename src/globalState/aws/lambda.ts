@@ -12,10 +12,10 @@ class Lambda {
     Policy,
     FunctionData,
   }: LambdaData) {
-    this.Role = Role
-    this.Policy = Policy
-    this.FunctionData = FunctionData
+    this.Role = Role;
+    this.Policy = Policy;
+    this.FunctionData = FunctionData;
   }
 }
 
-export default Lambda
+export default Lambda;

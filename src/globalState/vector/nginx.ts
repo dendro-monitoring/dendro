@@ -28,13 +28,13 @@ class Nginx {
     monitorErrorLogs = false,
     monitorMetrics = false,
   }: NginxData) {
-    this.port = port
-    this.url = url
-    this.scrapeInterval = scrapeInterval
-    this.monitorAccessLogs = monitorAccessLogs
-    this.monitorErrorLogs = monitorErrorLogs
-    this.monitorMetrics = monitorMetrics
+    this.port = port;
+    this.url = url;
+    this.scrapeInterval = scrapeInterval;
+    this.monitorAccessLogs = monitorAccessLogs;
+    this.monitorErrorLogs = monitorErrorLogs;
+    this.monitorMetrics = monitorMetrics;
   }
 }
 
-export default Nginx
+export default Nginx;

@@ -24,12 +24,12 @@ class Mongo {
     monitorLogs = false,
     monitorMetrics = false,
   }: MongoData) {
-    this.port = port
-    this.url = url
-    this.scrapeInterval = scrapeInterval
-    this.monitorLogs = monitorLogs
-    this.monitorMetrics = monitorMetrics
+    this.port = port;
+    this.url = url;
+    this.scrapeInterval = scrapeInterval;
+    this.monitorLogs = monitorLogs;
+    this.monitorMetrics = monitorMetrics;
   }
 }
 
-export default Mongo
+export default Mongo;

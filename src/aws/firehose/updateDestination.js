@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk')
-const firehose = new AWS.Firehose()
+const AWS = require('aws-sdk');
+const firehose = new AWS.Firehose();
 
 function updateDestination() { // TODO Finish
   return new Promise(resolve => {
@@ -19,12 +19,12 @@ function updateDestination() { // TODO Finish
         CompressionFormat: 'GZIP',
 
       },
-    }
+    };
     firehose.updateDestination(params, function (err, data) {
-      if (err) throw new Error(err) // an error occurred
-      else resolve(data)         // successful response
-    })
-  })
+      if (err) throw new Error(err); // an error occurred
+      else resolve(data);         // successful response
+    });
+  });
 }
 
-module.exports = updateDestination
+module.exports = updateDestination;

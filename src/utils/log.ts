@@ -1,7 +1,7 @@
-import * as ora from 'ora'
-import * as chalk from 'chalk'
+import * as ora from 'ora';
+import * as chalk from 'chalk';
 
-export type LevelNames = 'debug' | 'info' | 'warn' | 'error' | 'fatal'
+export type LevelNames = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
 
 export enum Level {
   Debug = 0,
@@ -16,25 +16,25 @@ interface SpinnerOpts {
 }
 
 export class Logger {
-  #level: Level = Level.Info
+  #level: Level = Level.Info;
 
   setLevel(level: LevelNames): void {
     switch (level) {
     case 'debug':
-      this.#level = Level.Debug
-      break
+      this.#level = Level.Debug;
+      break;
     case 'info':
-      this.#level = Level.Info
-      break
+      this.#level = Level.Info;
+      break;
     case 'warn':
-      this.#level = Level.Warn
-      break
+      this.#level = Level.Warn;
+      break;
     case 'error':
-      this.#level = Level.Error
-      break
+      this.#level = Level.Error;
+      break;
     case 'fatal':
-      this.#level = Level.Fatal
-      break
+      this.#level = Level.Fatal;
+      break;
     }
   }
 
@@ -55,44 +55,44 @@ export class Logger {
     msg: string,
     opts?: SpinnerOpts,
   ): ora.Ora {
-    const spinner = ora(msg)
-    spinner.color = opts?.color || 'cyan'
-    return spinner.start()
+    const spinner = ora(msg);
+    spinner.color = opts?.color || 'cyan';
+    return spinner.start();
   }
 
   debug(msg: string): void {
     if (this.#level <= Level.Debug) {
-      console.log(chalk.blue('DEBUG'), msg)
+      console.log(chalk.blue('DEBUG'), msg);
     }
   }
 
   info(msg: string): void {
     if (this.#level <= Level.Info) {
       // console.log(chalk.green('INFO'), ...args)
-      ora().info(msg)
+      ora().info(msg);
     }
   }
 
   warn(msg: string): void {
     if (this.#level <= Level.Warn) {
       // console.log(chalk.yellow('WARN'), ...args)
-      ora().warn(msg)
+      ora().warn(msg);
     }
   }
 
   error(msg: string): void {
     if (this.#level <= Level.Error) {
       // console.log(chalk.red('ERROR'), ...args)
-      ora().fail(msg)
+      ora().fail(msg);
     }
   }
 
   fatal({ msg, err }: {msg: string, err?: string}): void {
     if (this.#level <= Level.Fatal) {
-      console.log(chalk.red('FATAL'), msg)
-      throw new Error(err || 'Some error occurred.')
+      console.log(chalk.red('FATAL'), msg);
+      throw new Error(err || 'Some error occurred.');
     }
   }
 }
 
-export default new Logger()
+export default new Logger();

@@ -1,5 +1,5 @@
-import AWS, { AWSData } from './aws'
-import Vector, { VectorData } from './vector'
+import AWS, { AWSData } from './aws';
+import Vector, { VectorData } from './vector';
 
 /*
  * GlobalState is an singleton that will contain all data over the lifetime
@@ -8,7 +8,7 @@ import Vector, { VectorData } from './vector'
  * during initialization.
  */
 class GlobalState {
-  AWS: AWS
+  AWS: AWS;
 
   Vector: Vector;
 
@@ -16,8 +16,8 @@ class GlobalState {
     aws,
     vector,
   }: CacheData) {
-    this.AWS = new AWS(aws)
-    this.Vector = new Vector(vector)
+    this.AWS = new AWS(aws);
+    this.Vector = new Vector(vector);
   }
 
   /*
@@ -25,7 +25,7 @@ class GlobalState {
    * This function will dump the current state to the cache to prevent data loss.
    */
   dump() {
-    console.log(this)
+    console.log(this);
   }
 }
 
@@ -51,6 +51,6 @@ const cache: CacheData = {
     postgres: {},
     nginx: {},
   },
-}
+};
 
-export default new GlobalState(cache)
+export default new GlobalState(cache);

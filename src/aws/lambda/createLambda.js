@@ -1,8 +1,8 @@
-const fs = require('fs')
+const fs = require('fs');
 
-const path = require('path')
-const AWS = require('aws-sdk')
-const AdmZip = require('adm-zip')
+const path = require('path');
+const AWS = require('aws-sdk');
+const AdmZip = require('adm-zip');
 
 function createLambda({
   lambdaFile,
@@ -14,19 +14,19 @@ function createLambda({
   Description = '',
 }) {
   return new Promise(resolve => {
-    AWS.config.update({ region })
+    AWS.config.update({ region });
 
-    const lambdaName = lambdaFile.replace(/\.js/, '')
+    const lambdaName = lambdaFile.replace(/\.js/, '');
 
     if (!fs.existsSync(lambdaFile)) {
-      throw new Error("Can't find lambda file")
+      throw new Error("Can't find lambda file");
     }
 
-    const zip = new AdmZip()
+    const zip = new AdmZip();
 
-    zip.addLocalFile(lambdaFile)
+    zip.addLocalFile(lambdaFile);
 
-    const lambda = new AWS.Lambda()
+    const lambda = new AWS.Lambda();
 
     const params = {
       Code: { /* required */
@@ -43,13 +43,13 @@ function createLambda({
           DATABASE_TABLE,
         },
       },
-    }
+    };
 
     lambda.createFunction(params, (err, data) => {
-      if (err) throw new Error(err)
-      else resolve(data)
-    })
-  })
+      if (err) throw new Error(err);
+      else resolve(data);
+    });
+  });
 }
 
-module.exports = createLambda
+module.exports = createLambda;

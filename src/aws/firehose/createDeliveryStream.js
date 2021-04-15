@@ -1,6 +1,6 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
-const firehose = new AWS.Firehose()
+const firehose = new AWS.Firehose();
 
 function createDeliveryStream(DeliveryStreamName, BucketName, RoleARN) {
   return new Promise(resolve => {
@@ -11,12 +11,12 @@ function createDeliveryStream(DeliveryStreamName, BucketName, RoleARN) {
         BucketARN: `arn:aws:s3:::${BucketName}`, /* required */
         RoleARN,
       },
-    }
+    };
     firehose.createDeliveryStream(params, (err, data) => {
-      if (err) throw new Error(err) // an error occurred
-      else resolve(data)     // successful response
-    })
-  })
+      if (err) throw new Error(err); // an error occurred
+      else resolve(data);     // successful response
+    });
+  });
 }
 
-module.exports = createDeliveryStream
+module.exports = createDeliveryStream;

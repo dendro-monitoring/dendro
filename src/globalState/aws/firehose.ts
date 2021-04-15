@@ -10,4 +10,4 @@ class Firehose {
   constructor({}: FirehoseData) {}
 }
 
-export default Firehose
+export default Firehose;

@@ -1,14 +1,14 @@
-import { Command, flags } from '@oclif/command'
-import log, { LevelNames } from '../utils/log'
+import { Command, flags } from '@oclif/command';
+import log, { LevelNames } from '../utils/log';
 
 export default class Hello extends Command {
-  static description = 'describe the command here'
+  static description = 'describe the command here';
 
   static examples = [
     `$ dendro hello
 hello world from ./src/hello.ts!
 `,
-  ]
+  ];
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -28,38 +28,38 @@ hello world from ./src/hello.ts!
       ],
       default: 'info',
     }),
-  }
+  };
 
   static args = [
     // { name: 'file' }
-  ]
+  ];
 
   async run() {
-    const { /* args, */ flags: cliFlags } = this.parse(Hello)
+    const { /* args, */ flags: cliFlags } = this.parse(Hello);
 
-    const { level } = cliFlags
+    const { level } = cliFlags;
     log.info(
       `Log level is ${level}. Run this command with -L set to either:
       debug, info, warn, error or fatal\n`,
-    )
+    );
 
-    log.setLevel(level as LevelNames)
-    log.debug('I am a debug statement. I only run when flag -L >= debug')
-    log.info('I am a info statement. I only run when flag -L >= info')
-    log.warn('I am a warn statement. I only run when flag -L >= warn')
-    log.error('I am a error statement. I only run when flag -L >= error')
+    log.setLevel(level as LevelNames);
+    log.debug('I am a debug statement. I only run when flag -L >= debug');
+    log.info('I am a info statement. I only run when flag -L >= info');
+    log.warn('I am a warn statement. I only run when flag -L >= warn');
+    log.error('I am a error statement. I only run when flag -L >= error');
 
-    const spinner = log.spin('Creating Lambda', { color: 'yellow' })
+    const spinner = log.spin('Creating Lambda', { color: 'yellow' });
 
     setTimeout(() => {
-      spinner.color = 'magenta'
+      spinner.color = 'magenta';
       setTimeout(() => {
-        spinner.succeed()
+        spinner.succeed();
         log.fatal({
           msg: 'I am a fatal error. I crash the cli.',
           err: 'You suck',
-        })
-      }, 3000)
-    }, 3000)
+        });
+      }, 3000);
+    }, 3000);
   }
 }

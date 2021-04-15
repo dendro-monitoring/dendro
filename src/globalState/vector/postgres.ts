@@ -36,15 +36,15 @@ class Postgres {
     monitorErrorLogs = false,
     monitorMetrics = false,
   }: PostgresData) {
-    this.username = username
-    this.password = password
-    this.port = port
-    this.url = url
-    this.databaseName = databaseName
-    this.scrapeInterval = scrapeInterval
-    this.monitorErrorLogs = monitorErrorLogs
-    this.monitorMetrics = monitorMetrics
+    this.username = username;
+    this.password = password;
+    this.port = port;
+    this.url = url;
+    this.databaseName = databaseName;
+    this.scrapeInterval = scrapeInterval;
+    this.monitorErrorLogs = monitorErrorLogs;
+    this.monitorMetrics = monitorMetrics;
   }
 }
 
-export default Postgres
+export default Postgres;

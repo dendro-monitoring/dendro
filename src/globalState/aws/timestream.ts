@@ -10,4 +10,4 @@ class Timestream {
   constructor({}: TimestreamData) {}
 }
 
-export default Timestream
+export default Timestream;
