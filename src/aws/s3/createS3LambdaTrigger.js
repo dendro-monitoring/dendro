@@ -23,7 +23,8 @@ function createS3LambdaTrigger(Bucket, LambdaFunctionArn) {
     }
 
     s3.putBucketNotificationConfiguration(params, (err, data) => {
-      resolve([err, data])
+      if (err) throw new Error(err)
+      else resolve(data)
     })
   })
 }

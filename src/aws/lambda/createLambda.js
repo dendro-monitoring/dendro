@@ -46,7 +46,8 @@ function createLambda({
     }
 
     lambda.createFunction(params, (err, data) => {
-      resolve([err, data])
+      if (err) throw new Error(err)
+      else resolve(data)
     })
   })
 }

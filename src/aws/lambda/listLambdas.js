@@ -7,7 +7,8 @@ const lambda = new AWS.Lambda()
 function listLambdas() {
   return new Promise(resolve => {
     lambda.listFunctions((err, data) => {
-      resolve([err, data])
+      if (err) throw new Error(err)
+      else resolve(data)
     })
   })
 }
