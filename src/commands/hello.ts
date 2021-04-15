@@ -1,5 +1,6 @@
 import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
+import store from '../store';
 
 export default class Hello extends Command {
   static description = 'describe the command here';
@@ -35,6 +36,7 @@ hello world from ./src/hello.ts!
   ];
 
   async run() {
+    console.log(store);
     const { /* args, */ flags: cliFlags } = this.parse(Hello);
 
     const { level } = cliFlags;

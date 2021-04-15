@@ -1,11 +1,14 @@
 import AWS, { AWSData } from './aws';
 import Vector, { VectorData } from './vector';
+import Conf from 'conf';
+
+const config = new Conf();
 
 /*
  * Store is an singleton that will contain all data over the lifetime
- * of the CLI command. Currently, it is initialized to no data, however after
- * we start making the CLI stateful, it should handle fetching the cache data
- * during initialization.
+ * of the CLI command. Handles loading the state from disk
+ * if it exists, keeping track of the current state, and writing the
+ * state to disk prior to exiting.
  */
 class Store {
   AWS: AWS;
@@ -13,8 +16,8 @@ class Store {
   Vector: Vector;
 
   constructor({
-    aws,
-    vector,
+    AWS: aws,
+    Vector: vector,
   }: CacheData) {
     this.AWS = new AWS(aws);
     this.Vector = new Vector(vector);
@@ -25,32 +28,36 @@ class Store {
    * This function will dump the current state to the cache to prevent data loss.
    */
   dump() {
-    console.log(this);
+    config.set('state', this);
   }
 }
 
 interface CacheData {
-  aws: AWSData;
-  vector: VectorData;
+  AWS: AWSData;
+  Vector: VectorData;
 }
 
 /*
- * TODO: Load state from cache if it exists.
- * This hardcoded data will be removed and the cache data or
- * an empty object will be passed into `new store(cache)`.
+ * Load state from cache if it exists.
+ * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
-const cache: CacheData = {
-  aws: {
-    credentials: {},
-    lambda: {},
-    s3: {},
-    firehose: {},
-    timestream: {},
+const cache: CacheData = config.get('state') as CacheData || {
+  AWS: {
+    Credentials: {},
+    Lambda: {},
+    S3: {},
+    Firehose: {},
+    Timestream: {},
   },
-  vector: {
-    postgres: {},
-    nginx: {},
+  Vector: {
+    Postgres: {},
+    Nginx: {},
+    Apache: {},
+    Host: {},
+    Mongo: {},
+    CustomApplications: []
   },
 };
+
 
 export default new Store(cache);

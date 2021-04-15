@@ -6,11 +6,12 @@ import Mongo, { MongoData } from './mongo';
 import CustomApplication, { CustomApplicationData } from './customApplication';
 
 export interface VectorData {
-  postgres?: PostgresData;
-  nginx?: NginxData;
-  apache?: ApacheData;
-  host?: HostData;
-  mongo?: MongoData;
+  Postgres: PostgresData;
+  Nginx: NginxData;
+  Apache: ApacheData;
+  Host: HostData;
+  Mongo: MongoData;
+  CustomApplications: CustomApplication[];
 }
 
 class Vector {
@@ -27,21 +28,26 @@ class Vector {
   CustomApplications: CustomApplication[];
 
   constructor({
-    postgres = {},
-    nginx = {},
-    apache = {},
-    host = {},
-    mongo = {},
+    Postgres: postgres = {},
+    Nginx: nginx = {},
+    Apache: apache = {},
+    Host: host = {},
+    Mongo: mongo = {},
+    CustomApplications: customApplications = []
   }: VectorData) {
     this.Postgres = new Postgres(postgres);
     this.Nginx = new Nginx(nginx);
     this.Apache = new Apache(apache);
     this.Host = new Host(host);
     this.Mongo = new Mongo(mongo);
-    this.CustomApplications = [];
+    this.CustomApplications = customApplications;
   }
 
-  setCustomApp(data: CustomApplicationData) {
+  /**
+   * Adds a custom application to the storage array.
+   * @param data The custom application you would like to add
+   */
+  setCustomApp(data: CustomApplicationData): void {
     this.CustomApplications.push(
       new CustomApplication(data),
     );
