@@ -12,7 +12,7 @@ function createRole() {
   return new Promise(resolve => {
     const promises = [];
 
-    console.log('Creating new role for dendroflumechuck pipeline...');
+    console.log('Setting up new role...');
 
     AWSWrapper.createRole(NEW_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(newRole => {
       promises.push(AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, FIREHOSE_POLICY_ARN));
