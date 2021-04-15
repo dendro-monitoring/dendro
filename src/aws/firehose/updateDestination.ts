@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 const firehose = new AWS.Firehose();
 
-export default function updateDestination(): Promise<{}> { // TODO Finish
+export default function updateDestination(): Promise<any> { // TODO Finish
   return new Promise(resolve => {
     const params = {
       CurrentDeliveryStreamVersionId: 'STRING_VALUE', /* required */
@@ -22,7 +22,7 @@ export default function updateDestination(): Promise<{}> { // TODO Finish
 
       },
     };
-    firehose.updateDestination(params, function (err: AWSError, data: {}) {
+    firehose.updateDestination(params, function (err: AWSError, data) {
       if (err) throw new Error(String(err)); // an error occurred
       else resolve(data);         // successful response
     });

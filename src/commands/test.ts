@@ -43,7 +43,7 @@ class TestCommand extends Command {
       spinner.succeed();
 
       spinner = log.default.spin('Creating a new bucket...');
-      await orchestrator.createBucket(NEW_BUCKET_NAME);
+      await orchestrator.createBucket();
       spinner.succeed();
 
       // spinner = log.default.spin('Setting up firehose...');

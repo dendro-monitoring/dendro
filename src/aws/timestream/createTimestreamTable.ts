@@ -15,7 +15,7 @@ export default function createTimestreamTable({
   MagneticStoreRetentionPeriodInDays = '30',
   MemoryStoreRetentionPeriodInHours = '720',
   region = 'us-east-1',
-}: TimestreamTableData ): Promise<{}> {
+}: TimestreamTableData ): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -29,7 +29,7 @@ export default function createTimestreamTable({
         MemoryStoreRetentionPeriodInHours, /* required */
       },
     };
-    Timestream.createTable(params, (err: AWSError, data: {}) => {
+    Timestream.createTable(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve([err, data]);
     });

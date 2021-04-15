@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 const firehose = new AWS.Firehose();
 
-export default function createDeliveryStream(DeliveryStreamName: string, BucketName: string, RoleARN: string): Promise<{}> {
+export default function createDeliveryStream(DeliveryStreamName: string, BucketName: string, RoleARN: string): Promise<any> {
   return new Promise(resolve => {
     const params = {
       DeliveryStreamName, /* required */
@@ -13,7 +13,7 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
         RoleARN,
       },
     };
-    firehose.createDeliveryStream(params, (err: AWSError, data: {}) => {
+    firehose.createDeliveryStream(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err)); // an error occurred
       else resolve(data);     // successful response
     });

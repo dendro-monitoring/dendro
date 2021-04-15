@@ -23,7 +23,7 @@ export default function createLambda({
   Runtime = 'nodejs12.x',
   region = 'us-east-1',
   Description = '',
-}: LambdaData ): Promise<{}> {
+}: LambdaData ): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -56,7 +56,7 @@ export default function createLambda({
       },
     };
 
-    lambda.createFunction(params, (err: AWSError, data: {}) => {
+    lambda.createFunction(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

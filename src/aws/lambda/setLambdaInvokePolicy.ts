@@ -5,7 +5,7 @@ export default function setLambdaInvokePolicy(
   Arn: string,
   StatementId = 'example-S3-permission',
   region = 'us-east-1',
-): Promise<{}> {
+): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -20,7 +20,7 @@ export default function setLambdaInvokePolicy(
       StatementId,
     };
 
-    lambda.addPermission(params, (err: AWSError, data: {}) => {
+    lambda.addPermission(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

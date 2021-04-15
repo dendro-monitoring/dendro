@@ -9,7 +9,7 @@ import { AWSError } from 'aws-sdk';
 
 const s3 = new AWS.S3();
 
-export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<{}> {
+export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<any> {
   return new Promise(resolve => {
     const params = {
       Bucket,
@@ -24,7 +24,7 @@ export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn:
       },
     };
 
-    s3.putBucketNotificationConfiguration(params, (err: AWSError, data: {}) => {
+    s3.putBucketNotificationConfiguration(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });
