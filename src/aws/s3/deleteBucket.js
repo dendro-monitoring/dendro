@@ -11,7 +11,8 @@ function deleteBucket(Bucket, region = 'us-east-1') {
     }
 
     s3.deleteBucket(bucketParams, (err, data) => {
-      resolve([err, data])
+      if (err) throw new Error(err)
+      else resolve(data)
     })
   })
 }

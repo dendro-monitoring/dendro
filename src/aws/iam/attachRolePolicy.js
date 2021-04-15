@@ -10,7 +10,8 @@ function attachRolePolicy(RoleName, PolicyArn) {
     }
 
     iam.attachRolePolicy(params, (err, data) => {
-      resolve([err, data])
+      if (err) throw new Error(err)
+      else resolve(data)
     })
   })
 }
