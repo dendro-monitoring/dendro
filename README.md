@@ -28,26 +28,45 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`dendro clean [FILE]`](#dendro-clean-file)
 * [`dendro hello`](#dendro-hello)
 * [`dendro help [COMMAND]`](#dendro-help-command)
+* [`dendro test`](#dendro-test)
+
+## `dendro clean [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ dendro clean [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/clean.ts)_
 
 ## `dendro hello`
 
-Describe the command here
+describe the command here
 
 ```
 USAGE
   $ dendro hello
 
 OPTIONS
-  -n, --name=name  name to print
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
 
-DESCRIPTION
-  ...
-  Extra documentation goes here
+EXAMPLE
+  $ dendro hello
+  hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.js](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/hello.js)_
+_See code: [src/commands/hello.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/hello.ts)_
 
 ## `dendro help [COMMAND]`
 
@@ -65,4 +84,22 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `dendro test`
+
+Describe the command here
+
+```
+USAGE
+  $ dendro test
+
+OPTIONS
+  -n, --name=name  name to print
+
+DESCRIPTION
+  ...
+  Extra documentation goes here
+```
+
+_See code: [src/commands/test.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/test.ts)_
 <!-- commandsstop -->
