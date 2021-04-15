@@ -1,7 +1,7 @@
 export interface ApacheData {
   port?: string;
   url?: string;
-  scrapeInterval?: number;
+  scrapeIntervalSeconds?: number;
   monitorAccessLogs?: boolean;
   monitorErrorLogs?: boolean;
   monitorMetrics?: boolean;
@@ -12,7 +12,7 @@ class Apache {
 
   url: string;
 
-  scrapeInterval: number;
+  scrapeIntervalSeconds: number;
 
   monitorAccessLogs: boolean;
 
@@ -23,14 +23,14 @@ class Apache {
   constructor({
     port = '80',
     url = 'localhost',
-    scrapeInterval = 15,
+    scrapeIntervalSeconds = 15,
     monitorAccessLogs = false,
     monitorErrorLogs = false,
     monitorMetrics = false,
   }: ApacheData) {
     this.port = port;
     this.url = url;
-    this.scrapeInterval = scrapeInterval;
+    this.scrapeIntervalSeconds = scrapeIntervalSeconds;
     this.monitorAccessLogs = monitorAccessLogs;
     this.monitorErrorLogs = monitorErrorLogs;
     this.monitorMetrics = monitorMetrics;

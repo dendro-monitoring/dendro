@@ -4,7 +4,7 @@ export interface PostgresData {
   port?: string;
   url?: string;
   databaseName?: string;
-  scrapeInterval?: number;
+  scrapeIntervalSeconds?: number;
   monitorErrorLogs?: boolean;
   monitorMetrics?: boolean;
 }
@@ -20,7 +20,7 @@ class Postgres {
 
   databaseName: string;
 
-  scrapeInterval: number;
+  scrapeIntervalSeconds: number;
 
   monitorErrorLogs: boolean;
 
@@ -32,7 +32,7 @@ class Postgres {
     port = '5432',
     url = 'localhost',
     databaseName = 'postgres',
-    scrapeInterval = 15,
+    scrapeIntervalSeconds = 15,
     monitorErrorLogs = false,
     monitorMetrics = false,
   }: PostgresData) {
@@ -41,7 +41,7 @@ class Postgres {
     this.port = port;
     this.url = url;
     this.databaseName = databaseName;
-    this.scrapeInterval = scrapeInterval;
+    this.scrapeIntervalSeconds = scrapeIntervalSeconds;
     this.monitorErrorLogs = monitorErrorLogs;
     this.monitorMetrics = monitorMetrics;
   }
