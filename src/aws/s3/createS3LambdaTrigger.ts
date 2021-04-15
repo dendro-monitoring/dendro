@@ -3,11 +3,13 @@
  * trigger one lambda
 */
 
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
+
 
 const s3 = new AWS.S3();
 
-function createS3LambdaTrigger(Bucket, LambdaFunctionArn) {
+function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<{}> {
   return new Promise(resolve => {
     const params = {
       Bucket,
@@ -22,8 +24,8 @@ function createS3LambdaTrigger(Bucket, LambdaFunctionArn) {
       },
     };
 
-    s3.putBucketNotificationConfiguration(params, (err, data) => {
-      if (err) throw new Error(err);
+    s3.putBucketNotificationConfiguration(params, (err: AWSError, data: {}) => {
+      if (err) throw new Error(String(err));
       else resolve(data);
     });
   });

@@ -1,8 +1,9 @@
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
 
 const iam = new AWS.IAM();
 
-function createRole(RoleName, Service) {
+export default function createRole(RoleName: string, Service: string): Promise<{}> {
   return new Promise(resolve => {
     const params = {
       AssumeRolePolicyDocument: JSON.stringify({
@@ -23,11 +24,9 @@ function createRole(RoleName, Service) {
       RoleName,
     };
 
-    iam.createRole(params, (err, data) => {
-      if (err) throw new Error(err);
+    iam.createRole(params, (err: AWSError, data: {}) => {
+      if (err) throw new Error(String(err));
       else resolve(data);
     });
   });
 }
-
-module.exports = createRole;

@@ -1,7 +1,9 @@
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
+
 const firehose = new AWS.Firehose();
 
-function updateDestination() { // TODO Finish
+function updateDestination(): Promise<{}> { // TODO Finish
   return new Promise(resolve => {
     const params = {
       CurrentDeliveryStreamVersionId: 'STRING_VALUE', /* required */
@@ -20,11 +22,9 @@ function updateDestination() { // TODO Finish
 
       },
     };
-    firehose.updateDestination(params, function (err, data) {
-      if (err) throw new Error(err); // an error occurred
+    firehose.updateDestination(params, function (err: AWSError, data: {}) {
+      if (err) throw new Error(String(err)); // an error occurred
       else resolve(data);         // successful response
     });
   });
 }
-
-module.exports = updateDestination;

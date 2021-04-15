@@ -1,4 +1,5 @@
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
 
 function createTimestreamTable({
   DatabaseName,
@@ -6,7 +7,7 @@ function createTimestreamTable({
   MagneticStoreRetentionPeriodInDays = '30',
   MemoryStoreRetentionPeriodInHours = '720',
   region = 'us-east-1',
-}) {
+}: any): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -20,8 +21,8 @@ function createTimestreamTable({
         MemoryStoreRetentionPeriodInHours, /* required */
       },
     };
-    Timestream.createTable(params, (err, data) => {
-      if (err) throw new Error(err);
+    Timestream.createTable(params, (err: AWSError, data: {}) => {
+      if (err) throw new Error(String(err));
       else resolve([err, data]);
     });
   });

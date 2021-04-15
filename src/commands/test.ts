@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
-const path = require('path');
-const { Command, flags } = require('@oclif/command');
+import path = require('path');
+import { Command, flags } from '@oclif/command';
 
-const AWSWrapper = require('../aws');
+import AWSWrapper = require('../aws');
 
 const NEW_ROLE_NAME = 'dendroflumechuck-role';
 
