@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-console */
-
 const { Command, flags } = require('@oclif/command');
 
 const orchestrator = require('../orchestrator');
@@ -27,7 +24,7 @@ class TestCommand extends Command {
       await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
 
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
