@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-/* eslint-disable node/no-missing-require */
-/* eslint-disable import/no-unresolved */
 
 console.log('Loading function');
 

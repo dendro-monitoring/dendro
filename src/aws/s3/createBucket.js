@@ -11,7 +11,8 @@ function createBucket(bucketName, region = 'us-east-1') {
     };
 
     s3.createBucket(bucketParams, (err, data) => {
-      resolve([err, data]);
+      if (err) throw new Error(err);
+      else resolve(data);
     });
   });
 }

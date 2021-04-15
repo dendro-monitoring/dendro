@@ -1,15 +1,27 @@
 /* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 
+const path = require('path');
 const { Command, flags } = require('@oclif/command');
 
 const AWSWrapper = require('../aws');
 
-const NEW_ROLE_NAME = 'dendro-lambda-role';
+const NEW_ROLE_NAME = 'dendroflumechuck-role';
+
+const DELIVERY_STREAM_NAME = 'dendroflumechuck-stream';
+
 const NEW_BUCKET_NAME = 'dendrodefaultbucket';
-const PATH_TO_LAMBDA_FUNCTION = './aws/lambda/_deployableLambdaFunction.js';
-const FILE_TO_UPLOAD = './aws/s3/uploadToBucket.js';
+
+const DATABASE_NAME = 'dendroflumechuck-timestream';
+const TABLE_NAME = 'default-table';
+
+const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../aws/lambda/_deployableLambdaFunction.js`);
+
+// TODO: Extract to global state, or like somewhere else
+const LAMBDA_POLICY_ARN = 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole';
+const FIREHOSE_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess';
+const TIMESTREAM_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonTimestreamFullAccess';
+const S3_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonS3FullAccess';
 
 class TestCommand extends Command {
   async run() {
@@ -17,81 +29,51 @@ class TestCommand extends Command {
     const name = parsed.flags.name || 'world';
     this.log(`test ${name} from ./src/commands/test.js`);
 
-    console.log('Creating new lambda role...');
-    const [lambdaRoleErr, lambdaRole] = await AWSWrapper.createLambdaRole(NEW_ROLE_NAME);
-    if (lambdaRoleErr) {
-      console.error(lambdaRoleErr);
-    } else {
-      console.log('success');
+    try {
+      console.log('Creating new role for dendroflumechuck pipeline...');
+      const newRole = await AWSWrapper.createRole(NEW_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com']);
+
+      console.log('\nAttaching AmazonKinesisFirehoseFullAccess policy...');
+      await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, FIREHOSE_POLICY_ARN);
+
+      console.log('\nAttaching AWSLambdaBasicExecutionRole policy...');
+      await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, LAMBDA_POLICY_ARN);
+
+      console.log('\nAttaching AmazonTimestreamFullAccess policy...');
+      await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, TIMESTREAM_POLICY_ARN);
+
+      console.log('\nAttaching AmazonS3FullAccess policy...');
+      await AWSWrapper.attachRolePolicy(NEW_ROLE_NAME, S3_POLICY_ARN);
+
+      console.log('\nCreating new bucket...');
+      await AWSWrapper.createBucket(NEW_BUCKET_NAME);
+
+      console.log('\nCreating firehose delivery stream...');
+      await new Promise(r => setTimeout(r, 10000)); // TODO don't do this
+      await AWSWrapper.createDeliveryStream(DELIVERY_STREAM_NAME, NEW_BUCKET_NAME, newRole.Role.Arn);
+
+      console.log('\nCreating new timestream database...');
+      await AWSWrapper.createTimestreamDatabase(DATABASE_NAME);
+
+      console.log('\nCreating new timestream table...');
+      await AWSWrapper.createTimestreamTable({ DatabaseName: DATABASE_NAME, TableName: TABLE_NAME });
+
+      console.log('\nCreating new lambda...');
+      const lambdaData = await AWSWrapper.createLambda({
+        lambdaFile: PATH_TO_LAMBDA_FUNCTION,
+        Role: newRole.Role.Arn,
+        DATABASE_NAME,
+        DATABASE_TABLE: TABLE_NAME,
+      });
+
+      console.log('Setting lambda invoke policy...');
+      await AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn);
+
+      console.log('Creating S3 trigger...');
+      await AWSWrapper.createS3LambdaTrigger(NEW_BUCKET_NAME, lambdaData.FunctionArn);
+    } catch (error) {
+      console.log(error);
     }
-    console.log(lambdaRole.Role.Arn);
-
-    console.log('Attaching AWSLambdaBasicExecutionRole...');
-    const [attachPolicyErr, attachPolicyData] = await AWSWrapper.attachLambdaBasicExecutionPolicy(NEW_ROLE_NAME);
-    if (attachPolicyErr) {
-      console.error(attachPolicyErr);
-    } else {
-      console.log('success');
-    }
-    // console.log(attachPolicyData)
-
-    console.log('Creating new lambda...');
-    const [lambdaErr, lambdaData] = await AWSWrapper.createLambda({
-      lambdaFile: PATH_TO_LAMBDA_FUNCTION,
-      Role: 'arn:aws:iam::141351053848:role/dendro-lambda-role',
-    });
-    if (lambdaErr) {
-      console.error(lambdaErr);
-    } else {
-      console.log('success');
-    }
-    console.log(lambdaData);
-
-    console.log('Creating new bucket...');
-
-    const [bucketErr, bucketData] = await AWSWrapper.createBucket(NEW_BUCKET_NAME);
-    if (bucketErr) {
-      console.error(bucketErr);
-    } else {
-      console.log('success');
-    }
-    // console.log(bucketData)
-
-    console.log('Setting lambda invoke policy...');
-    const [policyErr, policyData] = await AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn);
-    if (policyErr) {
-      console.error(policyErr);
-    } else {
-      console.log('success');
-    }
-    // console.log(policyData)
-
-    console.log('Creating S3 trigger...');
-    const [triggerErr, triggerData] = await AWSWrapper.createS3LambdaTrigger(NEW_BUCKET_NAME, lambdaData.FunctionArn);
-    if (triggerErr) {
-      console.error(triggerErr);
-    } else {
-      console.log('success');
-    }
-    // console.log(triggerData)
-
-    console.log('Uploading to S3...');
-    const [uploadErr, uploadData] = await AWSWrapper.uploadToBucket(NEW_BUCKET_NAME, FILE_TO_UPLOAD);
-    if (uploadErr) {
-      console.error(uploadErr);
-    } else {
-      console.log('success');
-    }
-    // console.log(uploadData)
-
-    // // checks if AWS credentials are set
-    // const [credentialsErr, credentials] = await AWSWrapper.getCredentials()
-    // // console.log(credentialsErr)
-    // console.log(credentials)
-
-    // const [listLambdaErr, lamdas] = await AWSWrapper.listLambdas()
-    // // console.log(listLambdaErr)
-    // console.log(lamdas)
   }
 }
 

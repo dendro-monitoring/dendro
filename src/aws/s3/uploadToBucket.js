@@ -23,7 +23,8 @@ function uploadToBucket(Bucket, file, region = 'us-east-1') {
     uploadParams.Key = path.basename(file);
 
     s3.upload(uploadParams, (err, data) => {
-      resolve([err, data]);
+      if (err) throw new Error(err);
+      else resolve(data);
     });
   });
 }
