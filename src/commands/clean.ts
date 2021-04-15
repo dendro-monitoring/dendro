@@ -3,7 +3,7 @@ import log, { LevelNames } from '../utils/log';
 import store from '../store';
 
 export default class Clean extends Command {
-  static description = 'describe the command here';
+  static description = 'removes the existing cache from disk';
 
   static flags = {
     help: flags.help({ char: 'h' }),
