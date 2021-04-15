@@ -51,8 +51,24 @@ const diskCache = config.get('state') as CacheData;
  * Helper function to run debug logs for the store.
  * Log level cannot be set until after this code would run.
  * So this code is wrapped into a function and exported instead.
+ * 
+ * Usage:
+ * 
+ * ```
+ * // Some command file
+ * import log from '../utils/log';
+ * import { storeDebugLogs } from '../store';
+ * 
+ * class Command {
+ *   async run() {
+ *     const { flags } = this.parse(Command);
+ *     log.setLevel(flags.level as LevelNames);
+ *     storeDebugLogs();
+ *   };
+ * };
+ * ```
  */
-export const debugLogs = (): void => {
+export const storeDebugLogs = (): void => {
   if (diskCache) {
     log.debug('Found cache data');
     log.debug(`Store data:`);

@@ -1,6 +1,6 @@
 import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
-import { debugLogs } from '../store';
+import { storeDebugLogs } from '../store';
 
 export default class Hello extends Command {
   static description = 'describe the command here';
@@ -40,7 +40,7 @@ hello world from ./src/hello.ts!
 
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);
-    debugLogs();
+    storeDebugLogs();
 
     log.info(
       `Log level is ${level}. Run this command with -L set to either:
