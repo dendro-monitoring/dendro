@@ -2,9 +2,9 @@ import globalState from '../../globalState';
 
 const logConfig = (): string => {
   return `
-\n################ Nginx Logs #############################
+################ Nginx Logs #############################
 
-[sources.nginx_access_logs]
+[sources.nginx_logs]
 type = "file"
 include = [
   ${globalState.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access_log.log",' : null}
@@ -12,28 +12,31 @@ include = [
 ]
 read_from = "beginning"
 
-[transforms.nginx_access_logs_add_transform]
+[transforms.nginx_logs_transform]
 type = "remap"
-inputs = ["nginx_access_logs"]
+inputs = ["nginx_logs"]
 source = '''
-.type = "nginx-access"
+.type = "nginx-logs"
 '''
 
-[sinks.nginx_access_logs_firehose_stream_sink]
+[sinks.nginx_logs_firehose_stream_sink]
 # General
-type = "aws_kinesis_firehose" # required
-inputs = ["nginx_access_logs_add_transform"] # required
-region = "us-east-2" # required, required when endpoint = null
-stream_name = "NginxDendroStream" # required
+type = "aws_kinesis_firehose"
+inputs = ["nginx_logs_transform"]
+
+# AWS
+region = "us-east-2", required when endpoint = null
+stream_name = "NginxLogsDendroStream"
+
+## Auth
 auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
 auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
-# Encoding
-encoding.codec = "json" # required
-# Healthcheck
-healthcheck.enabled = true # optional, default
 
-#############################################\n
-    `;
+# Encoding
+encoding.codec = "json"
+
+#############################################
+`;
 };
 
 // TODO

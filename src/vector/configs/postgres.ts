@@ -38,13 +38,22 @@ encoding.codec = "json"
 
 
 const metricConfig = (): string => {
+  const {
+    username,
+    password,
+    url,
+    port,
+    databaseName,
+    scrapeIntervalSeconds
+  } = globalState.Vector.Postgres;
+
   return `
 ################ Postgres Logs #############################
 
-[sources.postgres_metrics]
-type = "file"
-include = ["/var/log/postgresql/*.log"]
-read_from = "beginning"
+[sources.postgres_metric]
+  type = "postgresql_metrics"
+  endpoints = ["postgresql://${username}:${password}@${url}:${port}/${databaseName}"]
+  scrape_interval_secs = ${scrapeIntervalSeconds}
 
 [transforms.postgres_metrics_to_logs]
   type = "metric_to_log"
@@ -67,8 +76,8 @@ region = "us-east-2", required when endpoint = null
 stream_name = "PostgresMetricsDendroStream"
 
 ## Auth
-auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
+auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
 
 # Encoding
 encoding.codec = "json"
