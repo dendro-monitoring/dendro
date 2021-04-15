@@ -1,6 +1,6 @@
 const AWSWrapper = require('../aws');
 
-const DELIVERY_STREAM_NAME = 'dendroflumechuck-stream2';
+const DELIVERY_STREAM_NAME = 'dendroflumechuck-stream3';
 const NEW_BUCKET_NAME = 'dendrodefaultbucket';
 
 function setupFirehose( newRole ) {

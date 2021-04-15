@@ -31,37 +31,37 @@ class TestCommand extends Command {
   async run() {
     const parsed = this.parse(TestCommand);
     const { level } = parsed.flags;
-    log.setLevel(level);
+    log.default.setLevel(level);
     let spinner;
     try {
-      spinner = log.spin('Setting up a new role...');
+      spinner = log.default.spin('Setting up a new role...');
       const newRole = await orchestrator.createRole();
-      spinner.success();
+      spinner.succeed();
 
-      spinner = log.spin('Creating a new bucket...');
+      spinner = log.default.spin('Creating a new bucket...');
       await orchestrator.createBucket(NEW_BUCKET_NAME);
-      spinner.success();
+      spinner.succeed();
       
-      spinner = log.spin('Creating a new bucket...');
+      spinner = log.default.spin('Setting up firehose...');
       await orchestrator.setupFirehose(newRole);
-      spinner.success();
+      spinner.succeed();
 
-      spinner = log.spin('Creating a new bucket...');
+      spinner = log.default.spin('Setting up timestream...');
       await orchestrator.setupTimestream();
-      spinner.success();
+      spinner.succeed();
 
       
-      spinner = log.spin('Creating a new bucket...');
+      spinner = log.default.spin('Setting up lambda...');
       const lambdaData = await orchestrator.setupLambda(newRole);
-      spinner.success();
+      spinner.succeed();
 
-      spinner = log.spin('Creating a new bucket...');
+      spinner = log.default.spin('Linking bucket to lambda...');
       await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
-      spinner.success();
+      spinner.succeed();
 
     } catch (error) {
       spinner.fail();
-      log.fatal(error);
+      log.default.fatal(error);
     }
   }
 }
