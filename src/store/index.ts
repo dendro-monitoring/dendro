@@ -50,12 +50,12 @@ interface CacheData {
  */
 const cache: CacheData = config.get('state') as CacheData || {
   AWS: {
-    credentials: {},
-    lambda: {},
-    s3: { bucketName: 'dendrodefaultbucket1' },
-    firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
-    timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
-    iam: { role: { RoleName: 'dendroflumechuck-role453', Arn: '' } },
+    Credentials: {},
+    Lambda: {},
+    S3: { bucketName: 'dendrodefaultbucket1' },
+    Firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
+    Timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
+    IAM: { role: { RoleName: 'dendroflumechuck-role455', Arn: '' } },
   },
   Vector: {
     Postgres: {},

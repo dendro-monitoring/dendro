@@ -1,13 +1,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
-import path = require('path');
 import { Command, flags } from '@oclif/command';
 
-import log = require("../utils/log");
+import log, { LevelNames } from "../utils/log";
 import orchestrator from '../orchestrator';
-
-const NEW_BUCKET_NAME = 'dendrodefaultbucket';
 
 // TODO put & use constants in globalState. Right now, constants aren't being shared between services
 //  so the connections are broken
@@ -35,31 +32,31 @@ class TestCommand extends Command {
   async run() {
     const parsed = this.parse(TestCommand);
     const { level } = parsed.flags;
-    log.default.setLevel(level);
+    log.setLevel(level as LevelNames);
     let spinner;
     try {
-      spinner = log.default.spin('Setting up a new role...');
-      const newRole = await orchestrator.createRole();
+      spinner = log.spin('Setting up a new role...');
+      await orchestrator.createRole();
       spinner.succeed();
 
-      spinner = log.default.spin('Creating a new bucket...');
+      spinner = log.spin('Creating a new bucket...');
       await orchestrator.createBucket();
       spinner.succeed();
 
-      // spinner = log.default.spin('Setting up firehose...');
+      // spinner = log.spin('Setting up firehose...');
       // await orchestrator.setupFirehose(newRole);
       // spinner.succeed();
 
-      // spinner = log.default.spin('Setting up timestream...');
+      // spinner = log.spin('Setting up timestream...');
       // await orchestrator.setupTimestream();
       // spinner.succeed();
 
 
-      // spinner = log.default.spin('Setting up lambda...');
+      // spinner = log.spin('Setting up lambda...');
       // const lambdaData = await orchestrator.setupLambda(newRole);
       // spinner.succeed();
 
-      // spinner = log.default.spin('Linking bucket to lambda...');
+      // spinner = log.spin('Linking bucket to lambda...');
       // await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
       // spinner.succeed();
 
