@@ -18,7 +18,7 @@ class Mongo {
   monitorMetrics: boolean;
 
   constructor({
-    port = '80',
+    port = '27017',
     url = 'localhost',
     scrapeIntervalSeconds = 15,
     monitorLogs = false,
