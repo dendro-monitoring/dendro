@@ -10,10 +10,6 @@ function createDeliveryStream(DeliveryStreamName, BucketName, RoleARN) {
       ExtendedS3DestinationConfiguration: {
         BucketARN: `arn:aws:s3:::${BucketName}`, /* required */
         RoleARN,
-        BufferingHints: {
-          IntervalInSeconds: '60',
-        },
-        CompressionFormat: 'GZIP',
       },
     }
     firehose.createDeliveryStream(params, (err, data) => {
