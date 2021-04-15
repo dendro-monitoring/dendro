@@ -1,7 +1,7 @@
 import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
 
-function createTimestreamDatabase(DatabaseName: string, region = 'us-east-1'): Promise<{}> {
+export default function createTimestreamDatabase(DatabaseName: string, region = 'us-east-1'): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -17,5 +17,3 @@ function createTimestreamDatabase(DatabaseName: string, region = 'us-east-1'): P
     });
   });
 }
-
-module.exports = createTimestreamDatabase;

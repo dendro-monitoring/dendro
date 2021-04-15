@@ -5,7 +5,7 @@ import AWS = require('aws-sdk');
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-function uploadToBucket(Bucket: string, file: string, region = 'us-east-1'): Promise<{}> {
+export default function uploadToBucket(Bucket: string, file: string, region = 'us-east-1'): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -28,5 +28,3 @@ function uploadToBucket(Bucket: string, file: string, region = 'us-east-1'): Pro
     });
   });
 }
-
-module.exports = uploadToBucket;

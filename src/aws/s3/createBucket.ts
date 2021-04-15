@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 const s3 = new AWS.S3();
 
-function createBucket(bucketName: string, region = 'us-east-1'): Promise<{}> {
+export default function createBucket(bucketName: string, region = 'us-east-1'): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -17,6 +17,4 @@ function createBucket(bucketName: string, region = 'us-east-1'): Promise<{}> {
     });
   });
 }
-
-module.exports = createBucket;
 

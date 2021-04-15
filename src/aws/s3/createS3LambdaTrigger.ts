@@ -9,7 +9,7 @@ import { AWSError } from 'aws-sdk';
 
 const s3 = new AWS.S3();
 
-function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<{}> {
+export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<{}> {
   return new Promise(resolve => {
     const params = {
       Bucket,
@@ -30,5 +30,3 @@ function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promi
     });
   });
 }
-
-module.exports = createS3LambdaTrigger;

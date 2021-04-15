@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 const firehose = new AWS.Firehose();
 
-function updateDestination(): Promise<{}> { // TODO Finish
+export default function updateDestination(): Promise<{}> { // TODO Finish
   return new Promise(resolve => {
     const params = {
       CurrentDeliveryStreamVersionId: 'STRING_VALUE', /* required */

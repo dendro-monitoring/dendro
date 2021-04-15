@@ -1,10 +1,11 @@
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
 
-function setLambdaInvokePolicy(
-  Arn,
+export default function setLambdaInvokePolicy(
+  Arn: string,
   StatementId = 'example-S3-permission',
   region = 'us-east-1',
-) {
+): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -19,11 +20,9 @@ function setLambdaInvokePolicy(
       StatementId,
     };
 
-    lambda.addPermission(params, (err, data) => {
-      if (err) throw new Error(err);
+    lambda.addPermission(params, (err: AWSError, data: {}) => {
+      if (err) throw new Error(String(err));
       else resolve(data);
     });
   });
 }
-
-module.exports = setLambdaInvokePolicy;

@@ -4,7 +4,7 @@ import { AWSError } from 'aws-sdk';
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-function deleteBucket(Bucket: string, region = 'us-east-1'): Promise<{}> {
+export default function deleteBucket(Bucket: string, region = 'us-east-1'): Promise<{}> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -18,5 +18,3 @@ function deleteBucket(Bucket: string, region = 'us-east-1'): Promise<{}> {
     });
   });
 }
-
-module.exports = deleteBucket;

@@ -1,18 +1,18 @@
-const AWS = require('aws-sdk');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
 
 const iam = new AWS.IAM();
 
-function attachLambdaBasicExecutionPolicy(RoleName) {
+export default function attachLambdaBasicExecutionPolicy(RoleName: string): Promise<{}> {
   return new Promise(resolve => {
     const params = {
       PolicyArn: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
       RoleName,
     };
 
-    iam.attachRolePolicy(params, (err, data) => {
+    iam.attachRolePolicy(params, (err: AWSError, data: {}) => {
       resolve([err, data]);
     });
   });
 }
 
-module.exports = attachLambdaBasicExecutionPolicy;
