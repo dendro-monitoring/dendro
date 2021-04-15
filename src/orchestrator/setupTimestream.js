@@ -1,6 +1,6 @@
 const AWSWrapper = require('../aws');
 
-const DATABASE_NAME = 'dendroflumechuck-timestream2';
+const DATABASE_NAME = 'dendroflumechuck-timestream12';
 const TABLE_NAME = 'default-table';
 
 function setupTimestream() {

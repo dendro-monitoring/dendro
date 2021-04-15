@@ -1,7 +1,7 @@
 // const globalState = require('../globalState')
 const AWSWrapper = require('../aws');
 
-const NEW_ROLE_NAME = 'dendroflumechuck-role2';
+const NEW_ROLE_NAME = 'dendroflumechuck-role5';
 
 const LAMBDA_POLICY_ARN = 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole';
 const FIREHOSE_POLICY_ARN = 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess';
