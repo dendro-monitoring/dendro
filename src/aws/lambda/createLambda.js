@@ -7,6 +7,8 @@ const AdmZip = require('adm-zip')
 function createLambda({
   lambdaFile,
   Role,
+  DATABASE_NAME,
+  DATABASE_TABLE,
   Runtime = 'nodejs12.x',
   region = 'us-east-1',
   Description = '',
@@ -35,6 +37,12 @@ function createLambda({
       Role, /* required */
       Runtime, /* required */
       Description,
+      Environment: {
+        Variables: {
+          DATABASE_NAME,
+          DATABASE_TABLE,
+        },
+      },
     }
 
     lambda.createFunction(params, (err, data) => {

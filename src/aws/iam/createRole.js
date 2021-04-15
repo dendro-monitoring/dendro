@@ -11,7 +11,7 @@ function createRole(RoleName, Service) {
           {
             Effect: 'Allow',
             Principal: {
-              Service: [Service],
+              Service,
             },
             Action: [
               'sts:AssumeRole',
