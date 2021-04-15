@@ -5,11 +5,11 @@ import Firehose, { FirehoseData } from './firehose';
 import Timestream, { TimestreamData } from './timestream';
 
 export interface AWSData {
-  credentials: CredentialsData;
-  lambda: LambdaData;
-  s3: S3Data;
-  firehose: FirehoseData;
-  timestream: TimestreamData;
+  Credentials: CredentialsData;
+  Lambda: LambdaData;
+  S3: S3Data;
+  Firehose: FirehoseData;
+  Timestream: TimestreamData;
 }
 
 class AWS {
@@ -24,11 +24,11 @@ class AWS {
   Timestream: Timestream;
 
   constructor({
-    credentials = {},
-    lambda = {},
-    s3 = {},
-    firehose = {},
-    timestream = {},
+    Credentials: credentials = {},
+    Lambda: lambda = {},
+    S3: s3 = {},
+    Firehose: firehose = {},
+    Timestream: timestream = {},
   }: AWSData) {
     this.Credentials = new Credentials(credentials);
     this.Lambda = new Lambda(lambda);
