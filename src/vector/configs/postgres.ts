@@ -5,32 +5,32 @@ const logConfig = (): string => {
 ################ Postgres Logs #############################
 
 [sources.postgres_logs]
-type = "file"
-include = ["/var/log/postgresql/*.log"]
-read_from = "beginning"
+  type = "file"
+  include = ["/var/log/postgresql/*.log"]
+  read_from = "beginning"
 
 [transforms.postgres_logs_transform]
-type = "remap"
-inputs = ["postgres_logs"]
-source = '''
-.type = "postgres-logs"
-'''
+  type = "remap"
+  inputs = ["postgres_logs"]
+  source = '''
+  .type = "postgres-logs"
+  '''
 
 [sinks.postgres_logs_firehose_stream_sink]
-# General
-type = "aws_kinesis_firehose"
-inputs = ["postgres_logs_transform"]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["postgres_logs_transform"]
 
-# AWS
-region = "us-east-2"
-stream_name = "PostgresLogsDendroStream"
+  # AWS
+  region = "us-east-2"
+  stream_name = "PostgresLogsDendroStream"
 
-## Auth
-auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
+  ## Auth
+  auth.access_key_id = "${globalState.AWS.Credentials?.accessKeyId}"
+  auth.secret_access_key = "${globalState.AWS.Credentials?.secretAccessKey}"
 
-# Encoding
-encoding.codec = "json"
+  # Encoding
+  encoding.codec = "json"
 
 #############################################
 `;

@@ -22,27 +22,27 @@ scrape_interval_secs = ${globalState.Vector.Host.scrapeIntervalSeconds}
   inputs = ["host_metrics"]
 
 [transforms.host_metrics_transform]
-type = "remap"
-inputs = ["host_metrics_to_logs"]
-source = '''
-.type = "host-metrics"
-'''
+  type = "remap"
+  inputs = ["host_metrics_to_logs"]
+  source = '''
+  .type = "host-metrics"
+  '''
 
 [sinks.host_metrics_firehose_stream_sink]
-# General
-type = "aws_kinesis_firehose"
-inputs = ["host_metrics_transform"]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["host_metrics_transform"]
 
-# AWS
-region = "us-east-2", required when endpoint = null
-stream_name = "HostMetricsDendroStream"
+  # AWS
+  region = "us-east-2", required when endpoint = null
+  stream_name = "HostMetricsDendroStream"
 
-## Auth
-auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+  ## Auth
+  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
 
-# Encoding
-encoding.codec = "json"
+  # Encoding
+  encoding.codec = "json"
 
 #############################################
 `;

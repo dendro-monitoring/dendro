@@ -59,27 +59,27 @@ const metricConfig = (): string => {
   inputs = ["nginx_metrics"]
 
 [transforms.nginx_metrics_transform]
-type = "remap"
-inputs = ["nginx_metrics_to_logs"]
-source = '''
-.type = "nginx-metrics"
-'''
+  type = "remap"
+  inputs = ["nginx_metrics_to_logs"]
+  source = '''
+  .type = "nginx-metrics"
+  '''
 
 [sinks.nginx_metrics_firehose_stream_sink]
-# General
-type = "aws_kinesis_firehose"
-inputs = ["nginx_metrics_transform"]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["nginx_metrics_transform"]
 
-# AWS
-region = "us-east-2"
-stream_name = "NginxMetricsDendroStream"
+  # AWS
+  region = "us-east-2"
+  stream_name = "NginxMetricsDendroStream"
 
-## Auth
-auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
+  ## Auth
+  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
 
-# Encoding
-encoding.codec = "json"
+  # Encoding
+  encoding.codec = "json"
 
 #############################################
 `;
