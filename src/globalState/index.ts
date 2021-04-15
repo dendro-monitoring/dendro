@@ -43,10 +43,10 @@ const cache: CacheData = {
   aws: {
     credentials: {},
     lambda: {},
-    s3: {},
+    s3: { bucketName: 'dendrodefaultbucket1' },
     firehose: {},
     timestream: {},
-    iam: { role: {} },
+    iam: { role: { RoleName: 'dendroflumechuck-role5', Arn: '' } },
   },
   vector: {
     postgres: {},

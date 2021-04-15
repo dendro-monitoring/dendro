@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 const { Command, flags } = require('@oclif/command');
 
 const log = require("../utils/log");
@@ -41,27 +42,27 @@ class TestCommand extends Command {
       spinner = log.default.spin('Creating a new bucket...');
       await orchestrator.createBucket(NEW_BUCKET_NAME);
       spinner.succeed();
-      
-      spinner = log.default.spin('Setting up firehose...');
-      await orchestrator.setupFirehose(newRole);
-      spinner.succeed();
 
-      spinner = log.default.spin('Setting up timestream...');
-      await orchestrator.setupTimestream();
-      spinner.succeed();
+      // spinner = log.default.spin('Setting up firehose...');
+      // await orchestrator.setupFirehose(newRole);
+      // spinner.succeed();
 
-      
-      spinner = log.default.spin('Setting up lambda...');
-      const lambdaData = await orchestrator.setupLambda(newRole);
-      spinner.succeed();
+      // spinner = log.default.spin('Setting up timestream...');
+      // await orchestrator.setupTimestream();
+      // spinner.succeed();
 
-      spinner = log.default.spin('Linking bucket to lambda...');
-      await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
-      spinner.succeed();
+
+      // spinner = log.default.spin('Setting up lambda...');
+      // const lambdaData = await orchestrator.setupLambda(newRole);
+      // spinner.succeed();
+
+      // spinner = log.default.spin('Linking bucket to lambda...');
+      // await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
+      // spinner.succeed();
 
     } catch (error) {
-      spinner.fail();
-      log.default.fatal(error);
+      // spinner.fail();
+      console.log(error);
     }
   }
 }

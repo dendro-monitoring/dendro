@@ -1,12 +1,12 @@
-const AWSWrapper = require('../aws');
 
-const NEW_BUCKET_NAME = 'dendrodefaultbucket';
+const globalState = require('../globalState');
+const AWSWrapper = require('../aws');
 
 function createBucket() {
   return new Promise(resolve => {
-      AWSWrapper.createBucket(NEW_BUCKET_NAME).then(() => {
-        resolve();
-      });
+    AWSWrapper.createBucket(globalState.default.AWS.s3.bucketName).then(() => {
+      resolve();
+    });
   });
 }
 

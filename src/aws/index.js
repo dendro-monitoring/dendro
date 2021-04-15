@@ -18,7 +18,7 @@ const attachRolePolicy = require('./iam/attachRolePolicy');
 
 const getCredentials = require('./getCredentials');
 
-module.exports = {
+export default {
   createBucket,
   deleteBucket,
   createS3LambdaTrigger,
