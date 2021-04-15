@@ -60,27 +60,27 @@ const metricConfig = (): string => {
   inputs = ["postgres_metrics"]
 
 [transforms.postgres_metrics_transform]
-type = "remap"
-inputs = ["postgres_metrics_to_logs"]
-source = '''
-.type = "postgres-metrics"
-'''
+  type = "remap"
+  inputs = ["postgres_metrics_to_logs"]
+  source = '''
+  .type = "postgres-metrics"
+  '''
 
 [sinks.postgres_metrics_firehose_stream_sink]
-# General
-type = "aws_kinesis_firehose"
-inputs = ["postgres_metrics_transform"]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["postgres_metrics_transform"]
 
-# AWS
-region = "us-east-2"
-stream_name = "PostgresMetricsDendroStream"
+  # AWS
+  region = "us-east-2"
+  stream_name = "PostgresMetricsDendroStream"
+  
+  ## Auth
+  auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
 
-## Auth
-auth.access_key_id = "${globalState.AWS.Credentials.accessKeyId}"
-auth.secret_access_key = "${globalState.AWS.Credentials.secretAccessKey}"
-
-# Encoding
-encoding.codec = "json"
+  # Encoding
+  encoding.codec = "json"
 
 #############################################
 `;
