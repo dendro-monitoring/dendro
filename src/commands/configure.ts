@@ -1,31 +1,30 @@
-import { Command, flags } from '@oclif/command'
-import { MultiSelect }  from 'enquirer'
+import { Command, flags } from '@oclif/command';
+import { MultiSelect }  from 'enquirer';
+import log, { LevelNames } from '../utils/log';
+import store from '../store';
+import { servicesToMonitor, nginxPrompt } from '../prompts'
 
 export default class Configure extends Command {
   static description = 'configuring collector/agent setup of log sources';
-
   static examples = [];
-
   static flags = {};
 
   async run() {
     const { args, flags } = this.parse(Configure)
 
-    const prompt: any = new MultiSelect({
-      name: 'sources',
-      message: 'What would you like to monitor? Press Space to select and Enter to submit',
-      choices: [
-        { name: 'nginx' },
-        { name: 'Apache' },
-        { name: 'Postgres' },
-        { name: 'MongoDB' },
-        { name: 'Host machine health' },
-        { name: 'Custom application (other)' },
-      ],
-    })
+    const monitoringSelections: string[] = await servicesToMonitor.run()
 
-    prompt.run()
-    .then(answer => console.log('Answer: ', answer))
-    .catch(console.error)
+    if (monitoringSelections.includes('nginx')) {
+      const nginxServices: string[] = await nginxPrompt.run()
+      console.log(nginxServices)
+    }
+    
+    // 
+    // store.Vector.Nginx.monitorMetrics = true
+
+    // if Health Metrics is selected, go to form prompt and ask for:
+    // scrape interval (default: 15s)
+    // URL (default: localhost)
+    // port (default: 80)
   }
 }
