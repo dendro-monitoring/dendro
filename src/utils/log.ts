@@ -11,14 +11,14 @@ export enum Level {
   Fatal = 4,
 }
 
-interface Spinner {
+interface SpinnerOpts {
   color: ora.Color;
 }
 
 export class Logger {
   #level: Level = Level.Info
 
-  setLevel(level: LevelNames) {
+  setLevel(level: LevelNames): void {
     switch (level) {
     case 'debug':
       this.#level = Level.Debug
@@ -39,52 +39,58 @@ export class Logger {
   }
 
   /**
-   * Usage: const spinner = log.spin('Hello world')
+   * Log to stdout and create a spinner.
    *
-   * @param {String} msg the string to print to console
-   * @param {Spinner} opts options for the spinner
-   * @returns {ora} spinner instance
+   * ```
+   * const spinner = log.spin('Hello world', { color: 'yellow' })
+   * try {
+   *   // do some task
+   *   spinner.succeed()
+   * } catch (e) {
+   *   spinner.fail(e.msg)
+   * }
+   * ```
    */
   spin(
     msg: string,
-    opts?: Spinner,
-  ) {
+    opts?: SpinnerOpts,
+  ): ora.Ora {
     const spinner = ora(msg)
     spinner.color = opts?.color || 'cyan'
     return spinner.start()
   }
 
-  debug(msg: string) {
+  debug(msg: string): void {
     if (this.#level <= Level.Debug) {
       console.log(chalk.blue('DEBUG'), msg)
     }
   }
 
-  info(msg: string) {
+  info(msg: string): void {
     if (this.#level <= Level.Info) {
       // console.log(chalk.green('INFO'), ...args)
       ora().info(msg)
     }
   }
 
-  warn(msg: string) {
+  warn(msg: string): void {
     if (this.#level <= Level.Warn) {
       // console.log(chalk.yellow('WARN'), ...args)
       ora().warn(msg)
     }
   }
 
-  error(msg: string) {
+  error(msg: string): void {
     if (this.#level <= Level.Error) {
       // console.log(chalk.red('ERROR'), ...args)
       ora().fail(msg)
     }
   }
 
-  fatal(msg: string) {
+  fatal({ msg, err }: {msg: string, err?: string}): void {
     if (this.#level <= Level.Fatal) {
       console.log(chalk.red('FATAL'), msg)
-      throw new Error('Some error occurred.')
+      throw new Error(err || 'Some error occurred.')
     }
   }
 }

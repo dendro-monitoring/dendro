@@ -22,6 +22,9 @@ hello world from ./src/hello.ts!
       options: [
         'debug',
         'info',
+        'warn',
+        'error',
+        'fatal',
       ],
       default: 'info',
     }),
@@ -35,19 +38,28 @@ hello world from ./src/hello.ts!
     const { /* args, */ flags: cliFlags } = this.parse(Hello)
 
     const { level } = cliFlags
-    this.log(`Log level is ${level}`)
+    log.info(
+      `Log level is ${level}. Run this command with -L set to either:
+      debug, info, warn, error or fatal\n`,
+    )
 
     log.setLevel(level as LevelNames)
-    log.debug('hi')
-    log.info('hi')
-    log.warn('hi')
-    log.error('hi')
+    log.debug('I am a debug statement. I only run when flag -L >= debug')
+    log.info('I am a info statement. I only run when flag -L >= info')
+    log.warn('I am a warn statement. I only run when flag -L >= warn')
+    log.error('I am a error statement. I only run when flag -L >= error')
 
     const spinner = log.spin('Creating Lambda', { color: 'yellow' })
 
     setTimeout(() => {
-      spinner.color = 'green'
-      setTimeout(() => spinner.succeed(), 2000)
-    }, 2000)
+      spinner.color = 'magenta'
+      setTimeout(() => {
+        spinner.succeed()
+        log.fatal({
+          msg: 'I am a fatal error. I crash the cli.',
+          err: 'You suck',
+        })
+      }, 3000)
+    }, 3000)
   }
 }
