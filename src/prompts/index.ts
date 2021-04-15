@@ -1,5 +1,6 @@
 import { MultiSelect }  from 'enquirer';
-import { nginxPrompt } from './nginx/nginxPrompt';
+import { nginxPrompt, nginxHealthPrompt } from './nginx/nginx';
+import { apachePrompt, apacheHealthPrompt } from './apache/apache';
 
 const servicesToMonitor: any = new MultiSelect({
   name: 'sources',
@@ -13,6 +14,10 @@ const servicesToMonitor: any = new MultiSelect({
     { name: 'Host machine health' },
     { name: 'Custom application (other)' },
   ],
-})
+});
 
-export { servicesToMonitor, nginxPrompt }
+export {
+  servicesToMonitor,
+  nginxPrompt, nginxHealthPrompt,
+  apachePrompt, apacheHealthPrompt,
+};
