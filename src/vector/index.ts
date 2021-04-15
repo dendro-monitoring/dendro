@@ -1,4 +1,5 @@
 import { ensureCredentials } from '../utils/aws';
+import log from '../utils/log';
 
 import { buildApacheConfig } from './configs/apache';
 import { buildCustomApplications } from './configs/customApplication';
@@ -12,6 +13,7 @@ import { buildPostgresConfig } from './configs/postgres';
  * @returns {String} The vector config file ready to write to disk
  */
 export const buildVectorConfig = (): string => {
+  log.debug('Writing vector config');
   ensureCredentials('Tried writing vector configs without aws credentials existing.');
 
   let config = '';
@@ -21,6 +23,8 @@ export const buildVectorConfig = (): string => {
   config += buildMongoConfig();
   config += buildNginxConfig();
   config += buildPostgresConfig();
+
+  log.debug(`Vector config file: \n${config}`);
 
   return config;
 };

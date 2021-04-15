@@ -1,6 +1,6 @@
 import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
-import store from '../store';
+import { storeDebugLogs } from '../store';
 
 export default class Hello extends Command {
   static description = 'describe the command here';
@@ -36,16 +36,18 @@ hello world from ./src/hello.ts!
   ];
 
   async run() {
-    console.log(store);
     const { /* args, */ flags: cliFlags } = this.parse(Hello);
 
     const { level } = cliFlags;
+    log.setLevel(level as LevelNames);
+    storeDebugLogs();
+
     log.info(
       `Log level is ${level}. Run this command with -L set to either:
       debug, info, warn, error or fatal\n`,
     );
 
-    log.setLevel(level as LevelNames);
+    
     log.debug('I am a debug statement. I only run when flag -L >= debug');
     log.info('I am a info statement. I only run when flag -L >= info');
     log.warn('I am a warn statement. I only run when flag -L >= warn');
