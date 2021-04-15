@@ -1,8 +1,8 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
-const iam = new AWS.IAM()
+const iam = new AWS.IAM();
 
-function createLambdaRole(RoleName) {
+function createRole(RoleName, Service) {
   return new Promise(resolve => {
     const params = {
       AssumeRolePolicyDocument: JSON.stringify({
@@ -11,9 +11,7 @@ function createLambdaRole(RoleName) {
           {
             Effect: 'Allow',
             Principal: {
-              Service: [
-                'lambda.amazonaws.com',
-              ],
+              Service,
             },
             Action: [
               'sts:AssumeRole',
@@ -23,12 +21,13 @@ function createLambdaRole(RoleName) {
       }),
       Path: '/',
       RoleName,
-    }
+    };
 
     iam.createRole(params, (err, data) => {
-      resolve([err, data])
-    })
-  })
+      if (err) throw new Error(err);
+      else resolve(data);
+    });
+  });
 }
 
-module.exports = createLambdaRole
+module.exports = createRole;

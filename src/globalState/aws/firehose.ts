@@ -1,3 +1,5 @@
+export interface FirehoseData {}
+
 /*
  * TODO: Document Class
  */
@@ -5,7 +7,7 @@ class Firehose {
   /*
    * TODO: Document descriptions & data types for properties
    */
-  constructor() {}
+  constructor({}: FirehoseData) {}
 }
 
-module.exports = Firehose
+export default Firehose;

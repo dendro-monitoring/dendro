@@ -1,11 +1,13 @@
+export interface S3Data {}
+
 /*
  * TODO: Document Class
  */
-class Timestream {
+class S3 {
   /*
    * TODO: Document descriptions & data types for properties
    */
-  constructor() {}
+  constructor({}: S3Data) {}
 }
 
-module.exports = Timestream
+export default S3;

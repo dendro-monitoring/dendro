@@ -1,11 +1,12 @@
-const AWS = require('aws-sdk')
+const AWS = require('aws-sdk');
 
 async function isAuthenticated() {
   return new Promise(resolve => {
     AWS.config.getCredentials((err, data) => {
-      resolve([err, data])
-    })
-  })
+      if (err) throw new Error(err);
+      resolve(data);
+    });
+  });
 }
 
-module.exports = isAuthenticated
+module.exports = isAuthenticated;
