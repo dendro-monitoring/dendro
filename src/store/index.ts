@@ -29,6 +29,8 @@ class Store {
    * This function will dump the current state to the cache to prevent data loss.
    */
   dump() {
+    log.debug(`Dumping store data:`);
+    log.debug(this as unknown as string);
     config.set('state', this);
   }
 
