@@ -28,7 +28,6 @@ export default class Clean extends Command {
     log.setLevel(level as LevelNames);
 
     const spinner = log.spin('Clearing cache');
-    
 
     setTimeout(() => {
       store.clean();

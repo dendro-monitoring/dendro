@@ -51,7 +51,6 @@ export default class TestCommand extends Command {
       // await orchestrator.setupTimestream();
       // spinner.succeed();
 
-
       // spinner = log.spin('Setting up lambda...');
       // const lambdaData = await orchestrator.setupLambda(newRole);
       // spinner.succeed();
