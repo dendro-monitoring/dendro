@@ -18,6 +18,9 @@ import attachRolePolicy from './iam/attachRolePolicy';
 
 import getCredentials from './getCredentials';
 
+import describeLogStreams from './cloudwatch/describeLogStreams';
+import getLogEvents from './cloudwatch/getLogEvents';
+
 export default {
   createBucket,
   deleteBucket,
@@ -38,4 +41,7 @@ export default {
   attachRolePolicy,
 
   getCredentials,
+
+  describeLogStreams,
+  getLogEvents
 };
