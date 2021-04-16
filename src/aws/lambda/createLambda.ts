@@ -1,10 +1,21 @@
-const fs = require('fs');
+import fs = require('fs');
 
-const path = require('path');
-const AWS = require('aws-sdk');
-const AdmZip = require('adm-zip');
+import path = require('path');
+import AWS = require('aws-sdk');
+import { AWSError } from 'aws-sdk';
+import AdmZip = require('adm-zip');
 
-function createLambda({
+interface LambdaData {
+  lambdaFile: string,
+  Role: string,
+  DATABASE_NAME: string, 
+  DATABASE_TABLE: string,
+  Runtime: string,
+  region: string,
+  Description: string
+}
+
+export default function createLambda({
   lambdaFile,
   Role,
   DATABASE_NAME,
@@ -12,7 +23,7 @@ function createLambda({
   Runtime = 'nodejs12.x',
   region = 'us-east-1',
   Description = '',
-}) {
+}: LambdaData ): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 
@@ -45,11 +56,10 @@ function createLambda({
       },
     };
 
-    lambda.createFunction(params, (err, data) => {
-      if (err) throw new Error(err);
+    lambda.createFunction(params, (err: AWSError, data) => {
+      if (err) throw new Error(String(err));
       else resolve(data);
     });
   });
 }
 
-module.exports = createLambda;

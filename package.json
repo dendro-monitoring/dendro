@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
+    "@types/adm-zip": "^0.4.34",
     "@types/node": "^10.17.56",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
@@ -60,6 +61,7 @@
     "posttest": "eslint .",
     "prepack": "oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "build:configs": "node lib/vector/index.js"
   }
 }

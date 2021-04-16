@@ -19,6 +19,9 @@
         "semi": "off",
         "@typescript-eslint/semi": ["error"],
         "node/no-unsupported-features/es-syntax": 0,
-        "@typescript-eslint/no-var-requires": 0
+        "@typescript-eslint/no-var-requires": 0,
+        "indent": ["error", 2],
+        "eol-last": ["error", "always"],
+        "no-multiple-empty-lines": ["error", {"max": 1}]
     }
 }
