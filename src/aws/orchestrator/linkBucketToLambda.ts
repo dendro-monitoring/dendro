@@ -1,4 +1,4 @@
-import AWSWrapper from '../aws';
+import AWSWrapper from '..';
 
 export default function linkBucketToLambda(bucketName: string, lambdaData: { FunctionArn: string}): Promise<any> {
   return new Promise(resolve => {

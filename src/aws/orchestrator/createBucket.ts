@@ -1,6 +1,6 @@
 
-import store from '../store';
-import AWSWrapper from '../aws';
+import store from '../../store';
+import AWSWrapper from '..';
 
 export default function createBucket(): Promise<any> {
   console.log('====================================');
