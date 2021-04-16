@@ -23,7 +23,7 @@ class Store {
     this.Vector = new Vector(vector);
   }
 
-  /** 
+  /**
    * Call this function when an error occurs and you plan to exit.
    * This function will dump the current state to the cache to prevent data loss.
    */
@@ -53,9 +53,9 @@ const cache: CacheData = config.get('state') as CacheData || {
     Credentials: {},
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket1' },
-    Firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
-    Timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
-    IAM: { role: { RoleName: 'dendroflumechuck-role455', Arn: '' } },
+    Firehose: { deliveryStreamName: 'dendroflumechuck-stream887' },
+    Timestream: { DatabaseName: 'dendroflumechuck-timestream223', TableName: 'default-table' },
+    IAM: { RoleName: 'dendroflumechuck-role4792' },
   },
   Vector: {
     Postgres: {},

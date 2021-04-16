@@ -1,19 +1,22 @@
 import path = require('path');
 import AWSWrapper from '../aws';
+import store from '../store';
 
 const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../aws/lambda/_deployableLambdaFunction.js`);
-const DATABASE_NAME = 'dendroflumechuck-timestream';
-const DATABASE_TABLE = 'default-table';
 
-export default function setupLambda( newRole: { Role: { Arn: string }} ): Promise<any> {
+export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
-      AWSWrapper.createLambda({
+    AWSWrapper.createLambda({
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
-      Role: newRole.Role.Arn,
-      DATABASE_NAME,
-      DATABASE_TABLE,
+      Role: store.AWS.IAM.RoleData.Arn,
+      DATABASE_NAME: store.AWS.Timestream.DatabaseName,
+      DATABASE_TABLE: store.AWS.Timestream.TableName,
     } as any).then( (lambdaData) => {
-      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( () => resolve(lambdaData) );
+      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( () => {
+        store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
+        console.log(store.AWS.Lambda.FunctionArn);
+        resolve();
+      });
     });
   });
 }

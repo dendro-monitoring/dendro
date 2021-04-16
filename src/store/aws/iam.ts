@@ -1,13 +1,17 @@
+// TODO: we have the rolename string, which is user input? And then we have the data from the API creation call, which I'm storing in RoleData. Is there a better
+
 export interface AWSIAMData {
-  role: any;
+  RoleName?: string;
+  RoleData?: Record<string, any>;
 }
 
 class IAM {
-  Role: any
+  RoleName?: string;
+  RoleData?: Record<string, any>;
 
-  constructor({ role }: AWSIAMData) {
-    this.Role = role
+  constructor({ RoleName }: AWSIAMData) {
+    this.RoleName = RoleName;
   }
 }
 
-export default IAM
+export default IAM;

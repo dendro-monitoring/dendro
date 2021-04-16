@@ -3,22 +3,22 @@ import AWSWrapper from '../aws';
 import store from '../store';
 import constants from '../constants';
 
-export default function createRole(): Promise<any> {
+export default function createRole(): Promise<void> {
   return new Promise(resolve => {
     const promises: Promise<any>[] = [];
 
-    AWSWrapper.createRole(store.AWS.IAM.Role.RoleName, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(newRole => {
+    AWSWrapper.createRole(store.AWS.IAM.RoleName, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(newRole => {
+      console.log(store.AWS.IAM.RoleName);
 
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.Role.RoleName, constants.FIREHOSE_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.Role.RoleName, constants.LAMBDA_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.Role.RoleName, constants.TIMESTREAM_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.Role.RoleName, constants.S3_POLICY_ARN));
+      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.FIREHOSE_POLICY_ARN));
+      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.LAMBDA_POLICY_ARN));
+      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.TIMESTREAM_POLICY_ARN));
+      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.S3_POLICY_ARN));
 
-      // store.IAM.Role = newRole
 
       Promise.all(promises).then(() => {
-        store.AWS.IAM.Role = newRole;
-        resolve(newRole);
+        store.AWS.IAM.RoleData = newRole.Role;
+        resolve();
       });
     });
   });
