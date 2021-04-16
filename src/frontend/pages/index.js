@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Sidebar from '../components/sidebar/Sidebar';
-import TrafficList from "../components/traffic/TrafficList";
+import Sidebar from '../components/sidebar';
+import TrafficList from "../components/traffic";
+import ConfigList from "../components/ConfigList";
 
 export default function Home() {
-  const styles = {};
   return (
     <div className="App h-screen flex overflow-hidden bg-gray-100">
       <Head>
@@ -34,7 +34,7 @@ export default function Home() {
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
             <div className="py-4">
-              {/* <ConfigsList /> */}
+              <ConfigList />
             </div>
           </div>
         </div>
