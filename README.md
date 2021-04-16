@@ -28,26 +28,37 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`dendro clean [FILE]`](#dendro-clean-file)
+* [`dendro clean`](#dendro-clean)
+* [`dendro deleteResources`](#dendro-deleteresources)
 * [`dendro hello`](#dendro-hello)
 * [`dendro help [COMMAND]`](#dendro-help-command)
+* [`dendro listExistingResources`](#dendro-listexistingresources)
+* [`dendro start:server [FILE]`](#dendro-startserver-file)
 * [`dendro test`](#dendro-test)
 
-## `dendro clean [FILE]`
+## `dendro clean`
 
-describe the command here
+removes the existing cache from disk
 
 ```
 USAGE
-  $ dendro clean [FILE]
+  $ dendro clean
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
 ```
 
 _See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/clean.ts)_
+
+## `dendro deleteResources`
+
+```
+USAGE
+  $ dendro deleteResources
+```
+
+_See code: [src/commands/deleteResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/deleteResources.ts)_
 
 ## `dendro hello`
 
@@ -85,6 +96,31 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
+## `dendro listExistingResources`
+
+```
+USAGE
+  $ dendro listExistingResources
+```
+
+_See code: [src/commands/listExistingResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/listExistingResources.ts)_
+
+## `dendro start:server [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ dendro start:server [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/start/server.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/start/server.ts)_
+
 ## `dendro test`
 
 Describe the command here
@@ -94,7 +130,8 @@ USAGE
   $ dendro test
 
 OPTIONS
-  -n, --name=name  name to print
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
 
 DESCRIPTION
   ...
