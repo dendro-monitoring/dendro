@@ -63,4 +63,7 @@ export default function createLambda({
   });
 }
 
+<<<<<<< HEAD:src/aws/lambda/createLambda.ts
 
+=======
+>>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a:src/aws/lambda/createLambda.js

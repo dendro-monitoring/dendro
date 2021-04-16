@@ -1,6 +1,8 @@
 import store from '../../store';
+import log from '../../utils/log';
 
 const logConfig = (): string => {
+  log.debug('Writing Apache vector log config');
   return `
 ################ Apache Logs #############################
 
@@ -40,6 +42,7 @@ const logConfig = (): string => {
 };
 
 const metricConfig = (): string => {
+  log.debug('Writing Apache vector metric config');
   const {
     url,
     port,

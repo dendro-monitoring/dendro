@@ -1,6 +1,7 @@
 import AWS, { AWSData } from './aws';
 import Vector, { VectorData } from './vector';
 import Conf from 'conf';
+import log from '../utils/log';
 
 const config = new Conf();
 
@@ -28,6 +29,8 @@ class Store {
    * This function will dump the current state to the cache to prevent data loss.
    */
   dump() {
+    log.debug(`Dumping store data:`);
+    log.debug(this as unknown as string);
     config.set('state', this);
   }
 
@@ -44,18 +47,57 @@ interface CacheData {
   Vector: VectorData;
 }
 
+const diskCache = config.get('state') as CacheData;
+
+/**
+ * Helper function to run debug logs for the store.
+ * Log level cannot be set until after this code would run.
+ * So this code is wrapped into a function and exported instead.
+ * 
+ * Usage:
+ * 
+ * ```
+ * // Some command file
+ * import log from '../utils/log';
+ * import { storeDebugLogs } from '../store';
+ * 
+ * class Command {
+ *   async run() {
+ *     const { flags } = this.parse(Command);
+ *     log.setLevel(flags.level as LevelNames);
+ *     storeDebugLogs();
+ *   };
+ * };
+ * ```
+ */
+export const storeDebugLogs = (): void => {
+  if (diskCache) {
+    log.debug('Found cache data');
+    log.debug(`Store data:`);
+    log.debug(diskCache as unknown as string);
+  } else {
+    log.debug('No cache data found');
+  }
+}; 
+
 /*
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
-const cache: CacheData = config.get('state') as CacheData || {
+const cache: CacheData = diskCache|| {
   AWS: {
     Credentials: {},
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket1' },
+<<<<<<< HEAD
     Firehose: { deliveryStreamName: 'dendroflumechuck-stream696' },
     Timestream: { DatabaseName: 'dendroflumechuck-timestream2923', TableName: 'default-table' },
     IAM: { RoleName: 'dendroflumechuck-role9982' },
+=======
+    Firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
+    Timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
+    IAM: { role: { RoleName: 'dendroflumechuck-role455', Arn: '' } },
+>>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a
   },
   Vector: {
     Postgres: {},

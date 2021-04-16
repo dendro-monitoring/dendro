@@ -1,6 +1,8 @@
 import store from '../../store';
+import log from '../../utils/log';
 
 const logConfig = (): string => {
+  log.debug('Writing Mongo vector log config');
   return `
 ################ Mongo Logs #############################
 
@@ -39,6 +41,7 @@ const logConfig = (): string => {
 };
 
 const metricConfig = (): string => {
+  log.debug('Writing Mongo vector metric config');
   const {
     url,
     port,
