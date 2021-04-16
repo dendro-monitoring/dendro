@@ -53,9 +53,9 @@ const cache: CacheData = config.get('state') as CacheData || {
     Credentials: {},
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket1' },
-    Firehose: { deliveryStreamName: 'dendroflumechuck-stream887' },
-    Timestream: { DatabaseName: 'dendroflumechuck-timestream223', TableName: 'default-table' },
-    IAM: { RoleName: 'dendroflumechuck-role4792' },
+    Firehose: { deliveryStreamName: 'dendroflumechuck-stream696' },
+    Timestream: { DatabaseName: 'dendroflumechuck-timestream2923', TableName: 'default-table' },
+    IAM: { RoleName: 'dendroflumechuck-role9982' },
   },
   Vector: {
     Postgres: {},

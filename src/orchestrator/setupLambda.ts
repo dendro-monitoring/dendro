@@ -14,7 +14,6 @@ export default function setupLambda(): Promise<void> {
     } as any).then( (lambdaData) => {
       AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( () => {
         store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
-        console.log(store.AWS.Lambda.FunctionArn);
         resolve();
       });
     });
