@@ -4,7 +4,7 @@
 import { Command, flags } from '@oclif/command';
 
 import log, { LevelNames } from "../utils/log";
-import orchestrator from '../orchestrator';
+import orchestrator from '../aws/orchestrator';
 
 // TODO put & use constants in globalState. Right now, constants aren't being shared between services
 //  so the connections are broken

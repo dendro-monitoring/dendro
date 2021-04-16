@@ -1,4 +1,4 @@
-import AWSWrapper from '../aws';
+import AWSWrapper from '..';
 
 const DELIVERY_STREAM_NAME = 'dendroflumechuck-stream3';
 const NEW_BUCKET_NAME = 'dendrodefaultbucket';

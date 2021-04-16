@@ -1,5 +1,5 @@
 import path = require('path');
-import AWSWrapper from '../aws';
+import AWSWrapper from '..';
 
 const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../aws/lambda/_deployableLambdaFunction.js`);
 const DATABASE_NAME = 'dendroflumechuck-timestream';

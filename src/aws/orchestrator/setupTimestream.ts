@@ -1,4 +1,4 @@
-import AWSWrapper from '../aws';
+import AWSWrapper from '..';
 
 const DATABASE_NAME = 'dendroflumechuck-timestream12';
 const TABLE_NAME = 'default-table';
