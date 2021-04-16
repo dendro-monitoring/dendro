@@ -1,4 +1,4 @@
-// TODO: we have the rolename string, which is user input? And then we have the data from the API creation call, which I'm storing in RoleData. Is there a better
+// TODO: we have the rolename string, which is user input? And then we have the data from the API creation call, which I'm storing in RoleData. Is there a better way?
 
 export interface AWSIAMData {
   RoleName?: string;

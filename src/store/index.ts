@@ -53,14 +53,14 @@ const diskCache = config.get('state') as CacheData;
  * Helper function to run debug logs for the store.
  * Log level cannot be set until after this code would run.
  * So this code is wrapped into a function and exported instead.
- * 
+ *
  * Usage:
- * 
+ *
  * ```
  * // Some command file
  * import log from '../utils/log';
  * import { storeDebugLogs } from '../store';
- * 
+ *
  * class Command {
  *   async run() {
  *     const { flags } = this.parse(Command);
@@ -78,20 +78,20 @@ export const storeDebugLogs = (): void => {
   } else {
     log.debug('No cache data found');
   }
-}; 
+};
 
 /*
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
-const cache: CacheData = diskCache|| {
+const cache: CacheData = diskCache || {
   AWS: {
     Credentials: {},
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket1' },
     Firehose: { deliveryStreamName: 'dendroflumechuck-stream696' },
     Timestream: { DatabaseName: 'dendroflumechuck-timestream2923', TableName: 'default-table' },
-    IAM: { RoleName: 'dendroflumechuck-role9982' },
+    IAM: { RoleName: 'dendroflumechuck-role9582' },
   },
   Vector: {
     Postgres: {},

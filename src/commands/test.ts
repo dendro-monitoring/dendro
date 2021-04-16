@@ -39,9 +39,9 @@ export default class TestCommand extends Command {
       await orchestrator.createRole();
       spinner.succeed();
 
-      spinner = log.spin('Creating a new bucket...');
-      await orchestrator.createBucket();
-      spinner.succeed();
+      // spinner = log.spin('Creating a new bucket...');
+      // await orchestrator.createBucket();
+      // spinner.succeed();
 
       // spinner = log.spin('Setting up firehose...');
       // await orchestrator.setupFirehose(newRole);
