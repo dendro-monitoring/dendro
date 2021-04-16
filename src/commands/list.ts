@@ -74,7 +74,7 @@ Timestream
       log.info('No lambdas created!');
       return;
     }
-  
+    log.error('Bug here!!!');
     lambdas.forEach( async lambda => await cli.url(`- ${lambda.FunctionName}`, `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`));
 
   }
