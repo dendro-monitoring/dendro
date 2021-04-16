@@ -8,7 +8,7 @@ import AdmZip = require('adm-zip');
 interface LambdaData {
   lambdaFile: string,
   Role: string,
-  DATABASE_NAME: string, 
+  DATABASE_NAME: string,
   DATABASE_TABLE: string,
   Runtime: string,
   region: string,
@@ -63,7 +63,3 @@ export default function createLambda({
   });
 }
 
-<<<<<<< HEAD:src/aws/lambda/createLambda.ts
-
-=======
->>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a:src/aws/lambda/createLambda.js

@@ -5,10 +5,6 @@
 
 import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
-<<<<<<< HEAD:src/aws/s3/createS3LambdaTrigger.ts
-
-=======
->>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a:src/aws/s3/createS3LambdaTrigger.js
 
 const s3 = new AWS.S3();
 

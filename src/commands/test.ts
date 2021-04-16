@@ -4,11 +4,7 @@
 import { Command, flags } from '@oclif/command';
 
 import log, { LevelNames } from "../utils/log";
-<<<<<<< HEAD
-import orchestrator from '../orchestrator';
-=======
 import orchestrator from '../aws/orchestrator';
->>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a
 
 // TODO put & use constants in globalState. Right now, constants aren't being shared between services
 //  so the connections are broken
@@ -47,24 +43,6 @@ export default class TestCommand extends Command {
       await orchestrator.createBucket();
       spinner.succeed();
 
-<<<<<<< HEAD
-      spinner = log.spin('Setting up firehose...');
-      await orchestrator.setupFirehose();
-      spinner.succeed();
-
-      spinner = log.spin('Setting up timestream...');
-      await orchestrator.setupTimestream();
-      spinner.succeed();
-
-
-      spinner = log.spin('Setting up lambda...');
-      await orchestrator.setupLambda();
-      spinner.succeed();
-
-      spinner = log.spin('Linking bucket to lambda...');
-      await orchestrator.linkBucketToLambda();
-      spinner.succeed();
-=======
       // spinner = log.spin('Setting up firehose...');
       // await orchestrator.setupFirehose(newRole);
       // spinner.succeed();
@@ -80,7 +58,6 @@ export default class TestCommand extends Command {
       // spinner = log.spin('Linking bucket to lambda...');
       // await orchestrator.linkBucketToLambda(NEW_BUCKET_NAME, lambdaData);
       // spinner.succeed();
->>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a
 
     } catch (error) {
       // spinner.fail();
