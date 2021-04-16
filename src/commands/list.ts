@@ -1,4 +1,5 @@
 import { Command, flags } from '@oclif/command';
+import cli from 'cli-ux';
 
 import log, { LevelNames } from "../utils/log";
 import AWSWrapper from '../aws';
@@ -8,7 +9,7 @@ export default class ListCommand extends Command {
 
   static examples = [
     `$ dendro list
-Roles...
+Roles
 Buckets
 Firehose streams
 Lambda
@@ -46,7 +47,8 @@ Timestream
       return;
     }
     
-    roles.forEach( role => log.info(`- ${role.RoleName}`));
+    roles.forEach( async role => await cli.url(`- ${role.RoleName}`, `https://console.aws.amazon.com/iam/home?region=us-east-1#/roles/${role.RoleName}`)
+    );
   }
   
   static printBuckets(buckets: { Name: string}[]): void {
@@ -55,7 +57,7 @@ Timestream
       return;
     }
     
-    buckets.forEach( bucket => log.info(`- ${bucket.Name}`));
+    buckets.forEach( async bucket => await cli.url(`- ${bucket.Name}`, `https://s3.console.aws.amazon.com/s3/buckets/${bucket.Name}?region=us-east-2&tab=objects`));
   }
   
   static printDeliveryStreams(streams: string[]): void {
@@ -64,7 +66,7 @@ Timestream
       return;
     }
 
-    streams.forEach( stream => log.info(`- ${stream}`)); 
+    streams.forEach( async stream =>  await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`)); 
   }
   
   async printLambdas(lambdas: string[]): Promise<void> {
@@ -73,7 +75,7 @@ Timestream
       return;
     }
   
-    lambdas.forEach( lambda => console.log(lambda.FunctionName));
+    lambdas.forEach( async lambda => await cli.url(`- ${lambda.FunctionName}`, `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`));
 
   }
   
@@ -83,7 +85,7 @@ Timestream
       return;
     }
     
-    streams.forEach( stream => log.info(`- ${stream.DatabaseName}`)); 
+    streams.forEach( async stream => await cli.url(`- ${stream.DatabaseName}`, `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`)); 
   }
 
   async run() {
