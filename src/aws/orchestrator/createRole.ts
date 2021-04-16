@@ -1,7 +1,7 @@
 // const store = require('../store')
-import AWSWrapper from '../aws';
-import store from '../store';
-import constants from '../constants';
+import AWSWrapper from '..';
+import store from '../../store';
+import constants from '../../constants';
 
 export default function createRole(): Promise<any> {
   return new Promise(resolve => {
