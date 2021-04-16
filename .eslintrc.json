@@ -5,7 +5,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
@@ -22,6 +23,7 @@
         "@typescript-eslint/no-var-requires": 0,
         "indent": ["error", 2],
         "eol-last": ["error", "always"],
-        "no-multiple-empty-lines": ["error", {"max": 1}]
+        "no-multiple-empty-lines": ["error", {"max": 1}],
+        "react/react-in-jsx-scope": "off"
     }
 }

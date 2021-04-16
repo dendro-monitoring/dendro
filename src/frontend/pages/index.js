@@ -1,65 +1,54 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Sidebar from '../components/sidebar/Sidebar';
+import TrafficList from "../components/traffic/TrafficList";
 
 export default function Home() {
+  const styles = {};
   return (
-    <div className={styles.container}>
+    <div className="App h-screen flex overflow-hidden bg-gray-100">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <Sidebar />
+      <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+        
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-semibold text-gray-900">
+            Performance Snapshot
+            </h1>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="py-4">
+              <TrafficList />
+            </div>
+          </div>
+        </div>
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-semibold text-gray-900">
+            Protected Endpoints
+            </h1>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="py-4">
+              {/* <ConfigsList /> */}
+            </div>
+          </div>
+        </div>
+        <div className="py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-2xl font-semibold text-gray-900">Activity Log</h1>
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="py-4">
+              {/* <EventsList /> */}
+            </div>
+          </div>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   );
 }
