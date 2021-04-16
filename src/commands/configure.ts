@@ -8,6 +8,7 @@ import {
   nginxPrompt, nginxHealthPrompt,
   apachePrompt, apacheHealthPrompt,
   postgresPrompt, postgresCredentialsPrompt,
+  mongoPrompt, mongoCredentialsPrompt
 } from '../prompts';
 
 export default class Configure extends Command {
@@ -17,35 +18,37 @@ export default class Configure extends Command {
 
   static nginxConfig: any = async () => {
     const nginxServices: string[] = await nginxPrompt.run();
-      if (nginxServices.includes('Access log')) { store.Vector.Nginx.monitorAccessLogs = true; }
-      if (nginxServices.includes('Error log')) { store.Vector.Nginx.monitorErrorLogs = true; }
-      if (nginxServices.includes('Health metrics')) {
-        const nginxHealth: any = await nginxHealthPrompt.run();
 
-        store.Vector.Nginx.monitorMetrics = true;
-        Object.assign(store.Vector.Nginx, nginxHealth);
-      }
+    if (nginxServices.includes('Access log')) { store.Vector.Nginx.monitorAccessLogs = true; }
+    if (nginxServices.includes('Error log')) { store.Vector.Nginx.monitorErrorLogs = true; }
+    if (nginxServices.includes('Health metrics')) {
+      const nginxHealth: any = await nginxHealthPrompt.run();
+
+      store.Vector.Nginx.monitorMetrics = true;
+      Object.assign(store.Vector.Nginx, nginxHealth);
+    }
   };
 
   static apacheConfig: any = async () => {
     const apacheServices: string[] = await apachePrompt.run();
 
-      if (apacheServices.includes('Access log')) { store.Vector.Apache.monitorAccessLogs = true; }
-      if (apacheServices.includes('Error log')) { store.Vector.Apache.monitorErrorLogs = true; }
-      if (apacheServices.includes('Health metrics')) {
-        const apacheHealth: any = await apacheHealthPrompt.run();
+    if (apacheServices.includes('Access log')) { store.Vector.Apache.monitorAccessLogs = true; }
+    if (apacheServices.includes('Error log')) { store.Vector.Apache.monitorErrorLogs = true; }
+    if (apacheServices.includes('Health metrics')) {
+      const apacheHealth: any = await apacheHealthPrompt.run();
 
-        store.Vector.Apache.monitorMetrics = true;
-        Object.assign(store.Vector.Apache, apacheHealth);
-      }
+      store.Vector.Apache.monitorMetrics = true;
+      Object.assign(store.Vector.Apache, apacheHealth);
+    }
   };
 
   static postgresConfig: any = async () => {
     const postgresServices: any = await postgresPrompt.run();
-    if (postgresServices.includes('Error log')) { store.Vector.Postgres.monitorErrorLogs = true; }
 
+    if (postgresServices.includes('Error log')) { store.Vector.Postgres.monitorErrorLogs = true; }
     if (postgresServices.includes('Health metrics')) {
       const pgCreds: any = await postgresCredentialsPrompt.run();
+
       store.Vector.Postgres.monitorMetrics = true;
       Object.assign(store.Vector.Postgres, pgCreds);
     }
@@ -53,13 +56,13 @@ export default class Configure extends Command {
 
   static mongoConfig: any = async () => {
     const mongoServices: any = await mongoPrompt.run();
-    if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
-    if (mongoServices.includes('Health metrics')) { store.Vector.Mongo.monitorMetrics = true; }
 
-    if (postgresServices.includes('Health metrics')) {
-      const pgCreds: any = await postgresCredentialsPrompt.run();
-      store.Vector.Postgres.monitorMetrics = true;
-      Object.assign(store.Vector.Postgres, pgCreds);
+    if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
+    if (mongoServices.includes('Health metrics')) { 
+      const mongoCreds: any = await mongoCredentialsPrompt.run();
+
+      store.Vector.Mongo.monitorMetrics = true;
+      Object.assign(store.Vector.Mongo, mongoCreds);
     }
   };
 
