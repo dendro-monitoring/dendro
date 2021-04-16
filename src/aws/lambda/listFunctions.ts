@@ -6,7 +6,7 @@ const lambda = new AWS.Lambda();
 
 export default function listFunctions(): Promise<any> {
   return new Promise(resolve => {
-    lambda.listFunctions({}, (err: AWSError, data: any) => {
+    lambda.listFunctions({}, (err: AWSError, data) => {
       if (err) throw new Error(err as unknown as string);
       else resolve(data);
     });

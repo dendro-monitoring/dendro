@@ -5,7 +5,7 @@ const iam = new AWS.IAM();
 
 export default function listRoles(): Promise<any> {
   return new Promise(resolve => {
-    iam.listRoles({}, (err: AWSError, data: any) => {
+    iam.listRoles({}, (err: AWSError, data) => {
       if (err) resolve(err);
       else resolve(data);
     });
