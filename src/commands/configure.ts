@@ -1,6 +1,7 @@
+// import log, { LevelNames } from '../utils/log';
 const { MultiSelect, Form } = require('enquirer');
-import { Command, flags } from '@oclif/command';
-import log, { LevelNames } from '../utils/log';
+// import { Command, flags } from '@oclif/command';
+import { Command } from '@oclif/command';
 import store from '../store';
 
 import { 
@@ -27,6 +28,7 @@ export default class Configure extends Command {
     if (nginxServices.includes('Health metrics')) {
       console.clear();
       const nginxHealth: any = await nginxHealthPrompt.run();
+      nginxHealth.scrapeIntervalSeconds = parseInt(nginxHealth.scrapeIntervalSeconds, 10);
 
       store.Vector.Nginx.monitorMetrics = true;
       Object.assign(store.Vector.Nginx, nginxHealth);
@@ -43,6 +45,7 @@ export default class Configure extends Command {
     if (apacheServices.includes('Health metrics')) {
       console.clear();
       const apacheHealth: any = await apacheHealthPrompt.run();
+      apacheHealth.scrapeIntervalSeconds = parseInt(apacheHealth.scrapeIntervalSeconds, 10);
 
       store.Vector.Apache.monitorMetrics = true;
       Object.assign(store.Vector.Apache, apacheHealth);
@@ -58,6 +61,7 @@ export default class Configure extends Command {
     if (postgresServices.includes('Health metrics')) {
       console.clear();
       const pgCreds: any = await postgresCredentialsPrompt.run();
+      pgCreds.scrapeIntervalSeconds = parseInt(pgCreds.scrapeIntervalSeconds, 10);
 
       store.Vector.Postgres.monitorMetrics = true;
       Object.assign(store.Vector.Postgres, pgCreds);
@@ -73,6 +77,7 @@ export default class Configure extends Command {
     if (mongoServices.includes('Health metrics')) { 
       console.clear();
       const mongoCreds: any = await mongoCredentialsPrompt.run();
+      mongoCreds.scrapeIntervalSeconds = parseInt(mongoCreds.scrapeIntervalSeconds, 10);
 
       store.Vector.Mongo.monitorMetrics = true;
       Object.assign(store.Vector.Mongo, mongoCreds);
@@ -92,7 +97,7 @@ export default class Configure extends Command {
   }
 
   async run(): Promise<void> {
-    const { args, flags } = this.parse(Configure);
+    // const { args, flags } = this.parse(Configure);
     const monitoringSelections = await servicesToMonitor.run();
 
     if (monitoringSelections.includes('nginx')) { await this.nginxConfig(); }
@@ -100,5 +105,8 @@ export default class Configure extends Command {
     if (monitoringSelections.includes('Postgres')) { await this.postgresConfig(); }
     if (monitoringSelections.includes('MongoDB')) { await this.mongoConfig(); }
     if (monitoringSelections.includes('Host machine health')) { await this.hostConfig(); }
+
+    console.log(store);
+    // store.dump();
   }
 }

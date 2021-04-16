@@ -5,7 +5,7 @@ import { postgresPrompt, postgresCredentialsPrompt } from './Postgres';
 import { mongoPrompt, mongoCredentialsPrompt } from './MongoDB';
 import { hostPrompt } from './Host';
 
-const servicesToMonitor: string[] = new MultiSelect({
+const servicesToMonitor: any = new MultiSelect({
   name: 'sources',
   message: 'What would you like to monitor?\n' +
            'Press: Space to select one, A to select all, and Enter to submit.',

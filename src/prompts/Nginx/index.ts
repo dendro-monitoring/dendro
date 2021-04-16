@@ -18,6 +18,6 @@ export const nginxHealthPrompt: any = new Form({
   choices: [
     { name: 'url', message: 'nginx URL', initial: 'localhost' },
     { name: 'port', message: 'nginx Port', initial: '80' },
-    { name: 'scrapeInterval', message: 'Scrape Interval (s)', initial: '15' },
+    { name: 'scrapeIntervalSeconds', message: 'Scrape Interval (s)', initial: '15' },
   ]
 });

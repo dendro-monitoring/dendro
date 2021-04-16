@@ -16,8 +16,9 @@ export const postgresCredentialsPrompt: any = new Form({
   choices: [
     { name: 'url', message: 'URL', initial: 'localhost' },
     { name: 'port', message: 'Port', initial: '5432' },
+    { name: 'dbName', message: 'Database name', initial: 'postgres' },
     { name: 'username', message: 'Username', initial: 'postgres' },
     { name: 'password', message: 'Password', initial: '' },
-    { name: 'scrapeInterval', message: 'Scrape Interval (s)', initial: '15' },
+    { name: 'scrapeIntervalSeconds', message: 'Scrape Interval (s)', initial: '15' },
   ]
 });
