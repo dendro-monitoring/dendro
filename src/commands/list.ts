@@ -69,7 +69,7 @@ Timestream
     streams.forEach( async stream =>  await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`)); 
   }
   
-  async printLambdas(lambdas: string[]): Promise<void> {
+  async printLambdas(lambdas: { FunctionName: string }[]): Promise<void> {
     if (lambdas.length == 0) { 
       log.info('No lambdas created!');
       return;
@@ -96,12 +96,12 @@ Timestream
 
     spinner = log.spin('Listing roles...\n');
     const { Roles } = await AWSWrapper.listRoles();
-    ListCommand.printRoles(Roles as unknown as string[]);
+    ListCommand.printRoles(Roles);
     spinner.succeed(' ');
 
     spinner = log.spin('Listing S3 buckets...\n');
     const { Buckets } = await AWSWrapper.listBuckets();
-    ListCommand.printBuckets(Buckets as unknown as string[]);
+    ListCommand.printBuckets(Buckets);
     spinner.succeed(' ');
 
     spinner = log.spin('Listing Firehose delivery streams...\n');
@@ -111,12 +111,12 @@ Timestream
 
     spinner = log.spin('Listing Lambda functions...\n');
     const { Functions } = await AWSWrapper.listFunctions();
-    await this.printLambdas(Functions as unknown as string[]);
+    await this.printLambdas(Functions);
     spinner.succeed();
 
     spinner = log.spin('Listing Timestream databases...\n');
     const { Databases } = await AWSWrapper.listDatabases();
-    ListCommand.printTimestream(Databases as unknown as string[]);
+    ListCommand.printTimestream(Databases);
     spinner.succeed();
   }
 }
