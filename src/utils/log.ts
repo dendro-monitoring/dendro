@@ -87,7 +87,7 @@ export class Logger {
     }
   }
 
-  fatal({ msg, err }: {msg: string, err?: string}): void {
+  fatal({ msg, err }: {msg: string; err?: string}): void {
     if (this.#level <= Level.Fatal) {
       console.log(chalk.red('FATAL'), msg);
       throw new Error(err || 'Some error occurred.');
