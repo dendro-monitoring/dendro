@@ -7,7 +7,7 @@ const DATABASE_TABLE = 'default-table';
 
 export default function setupLambda( newRole: { Role: { Arn: string }} ): Promise<any> {
   return new Promise( resolve => {
-      AWSWrapper.createLambda({
+    AWSWrapper.createLambda({
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: newRole.Role.Arn,
       DATABASE_NAME,

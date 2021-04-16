@@ -6,7 +6,6 @@
 import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
 
-
 const s3 = new AWS.S3();
 
 export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<any> {
