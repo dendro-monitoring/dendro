@@ -8,7 +8,8 @@ import {
   nginxPrompt, nginxHealthPrompt,
   apachePrompt, apacheHealthPrompt,
   postgresPrompt, postgresCredentialsPrompt,
-  mongoPrompt, mongoCredentialsPrompt
+  mongoPrompt, mongoCredentialsPrompt,
+  hostPrompt
 } from '../prompts';
 
 export default class Configure extends Command {
@@ -66,6 +67,19 @@ export default class Configure extends Command {
     }
   };
 
+  static hostConfig: any = async () => {
+    const hostServices: any = await hostPrompt.run();
+
+    const hostSelections = hostServices.reduce((map: any, obj: string) => {
+      map[obj.toLowerCase()] = true;
+      return map;
+    }, {});
+
+    console.log('Before:\n', store.Vector.Host);
+    Object.assign(store.Vector.Host, hostSelections);
+    console.log('After:\n', store.Vector.Host);
+  };
+
   async run() {
     const { args, flags } = this.parse(Configure);
     const monitoringSelections = await servicesToMonitor.run();
@@ -74,5 +88,6 @@ export default class Configure extends Command {
     if (monitoringSelections.includes('Apache')) { await Configure.apacheConfig(); }
     if (monitoringSelections.includes('Postgres')) { await Configure.postgresConfig(); }
     if (monitoringSelections.includes('MongoDB')) { await Configure.mongoConfig(); }
+    if (monitoringSelections.includes('Host machine health')) { await Configure.hostConfig(); }
   }
 }
