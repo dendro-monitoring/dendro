@@ -17,7 +17,7 @@ export default class Configure extends Command {
   static examples = [];
   static flags = {};
 
-  static nginxConfig: any = async () => {
+  nginxConfig: any = async () => {
     const nginxServices: string[] = await nginxPrompt.run();
 
     if (nginxServices.includes('Access log')) { store.Vector.Nginx.monitorAccessLogs = true; }
@@ -30,7 +30,7 @@ export default class Configure extends Command {
     }
   };
 
-  static apacheConfig: any = async () => {
+  apacheConfig: any = async () => {
     const apacheServices: string[] = await apachePrompt.run();
 
     if (apacheServices.includes('Access log')) { store.Vector.Apache.monitorAccessLogs = true; }
@@ -43,7 +43,7 @@ export default class Configure extends Command {
     }
   };
 
-  static postgresConfig: any = async () => {
+  postgresConfig: any = async () => {
     const postgresServices: any = await postgresPrompt.run();
 
     if (postgresServices.includes('Error log')) { store.Vector.Postgres.monitorErrorLogs = true; }
@@ -55,7 +55,7 @@ export default class Configure extends Command {
     }
   };
 
-  static mongoConfig: any = async () => {
+  mongoConfig: any = async () => {
     const mongoServices: any = await mongoPrompt.run();
 
     if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
@@ -67,7 +67,7 @@ export default class Configure extends Command {
     }
   };
 
-  static hostConfig: any = async () => {
+  hostConfig: any = async () => {
     const hostServices: any = await hostPrompt.run();
 
     const hostSelections = hostServices.reduce((map: any, obj: string) => {
@@ -75,19 +75,17 @@ export default class Configure extends Command {
       return map;
     }, {});
 
-    console.log('Before:\n', store.Vector.Host);
     Object.assign(store.Vector.Host, hostSelections);
-    console.log('After:\n', store.Vector.Host);
   };
 
   async run() {
     const { args, flags } = this.parse(Configure);
     const monitoringSelections = await servicesToMonitor.run();
 
-    if (monitoringSelections.includes('nginx')) { await Configure.nginxConfig(); }
-    if (monitoringSelections.includes('Apache')) { await Configure.apacheConfig(); }
-    if (monitoringSelections.includes('Postgres')) { await Configure.postgresConfig(); }
-    if (monitoringSelections.includes('MongoDB')) { await Configure.mongoConfig(); }
-    if (monitoringSelections.includes('Host machine health')) { await Configure.hostConfig(); }
+    if (monitoringSelections.includes('nginx')) { await this.nginxConfig(); }
+    if (monitoringSelections.includes('Apache')) { await this.apacheConfig(); }
+    if (monitoringSelections.includes('Postgres')) { await this.postgresConfig(); }
+    if (monitoringSelections.includes('MongoDB')) { await this.mongoConfig(); }
+    if (monitoringSelections.includes('Host machine health')) { await this.hostConfig(); }
   }
 }
