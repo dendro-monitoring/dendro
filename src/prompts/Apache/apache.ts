@@ -1,4 +1,5 @@
-import { MultiSelect, Form }  from 'enquirer';
+// import { MultiSelect, Form }  from 'enquirer';
+const { MultiSelect, Form } = require('enquirer');
 
 export const apachePrompt: any = new MultiSelect({
   name: 'apache',

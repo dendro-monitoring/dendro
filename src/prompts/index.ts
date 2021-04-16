@@ -1,6 +1,8 @@
-import { MultiSelect }  from 'enquirer';
+const { MultiSelect }  = require('enquirer');
 import { nginxPrompt, nginxHealthPrompt } from './nginx/nginx';
 import { apachePrompt, apacheHealthPrompt } from './apache/apache';
+import { postgresPrompt, postgresCredentialsPrompt } from './postgres/postgres';
+import { mongoPrompt } from './MongoDB/mongodb';
 
 const servicesToMonitor: any = new MultiSelect({
   name: 'sources',
@@ -20,4 +22,6 @@ export {
   servicesToMonitor,
   nginxPrompt, nginxHealthPrompt,
   apachePrompt, apacheHealthPrompt,
+  postgresPrompt, postgresCredentialsPrompt,
+  mongoPrompt,
 };

@@ -1,4 +1,5 @@
-import { MultiSelect, Form }  from 'enquirer';
+// import { MultiSelect, Form }  from 'enquirer';
+const { MultiSelect, Form } = require('enquirer');
 
 export const nginxPrompt: any = new MultiSelect({
   name: 'nginx',
