@@ -1,24 +1,22 @@
 // const store = require('../store')
 import AWSWrapper from '../../aws';
 import store from '../../store';
-import constants from '../../constants';
+import listRoles from '../iam/listRoles';
+
+import attachRolePolicies from './attachRolePolicies';
 
 export default function createRole(): Promise<void> {
   return new Promise(resolve => {
-    const promises: Promise<any>[] = [];
 
-    AWSWrapper.createRole(store.AWS.IAM.RoleName, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(newRole => {
-      console.log(store.AWS.IAM.RoleName);
-
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.FIREHOSE_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.LAMBDA_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.TIMESTREAM_POLICY_ARN));
-      promises.push(AWSWrapper.attachRolePolicy(store.AWS.IAM.RoleName, constants.S3_POLICY_ARN));
-
-      Promise.all(promises).then(() => {
-        store.AWS.IAM.RoleData = newRole.Role;
-        resolve();
-      });
+    AWSWrapper.createRole(store.AWS.IAM.RoleName, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(async newRole => {
+      if (newRole) {
+        attachRolePolicies(resolve);
+        console.log(newRole.Role);
+        store.AWS.IAM.Arn = newRole.Role.Arn;
+      } else {
+        const roles: any = await listRoles();
+        store.AWS.IAM.Arn = roles.filter(role => role.RoleName === store.AWS.IAM.RoleName)[0].Arn;
+      }
     });
   });
 }

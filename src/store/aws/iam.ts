@@ -2,12 +2,12 @@
 
 export interface AWSIAMData {
   RoleName?: string;
-  RoleData?: Record<string, any>;
+  Arn?: string;
 }
 
 class IAM {
   RoleName?: string;
-  RoleData?: Record<string, any>;
+  Arn?: string;
 
   constructor({ RoleName }: AWSIAMData) {
     this.RoleName = RoleName;
