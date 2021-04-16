@@ -1,7 +1,7 @@
 const { MultiSelect }  = require('enquirer');
 import { nginxPrompt, nginxHealthPrompt } from './nginx/nginx';
-import { apachePrompt, apacheHealthPrompt } from './apache/apache';
-import { postgresPrompt, postgresCredentialsPrompt } from './postgres/postgres';
+import { apachePrompt, apacheHealthPrompt } from './Apache/apache';
+import { postgresPrompt, postgresCredentialsPrompt } from './Postgres/postgres';
 import { mongoPrompt, mongoCredentialsPrompt } from './MongoDB/mongodb';
 import { hostPrompt } from './Host/host';
 
