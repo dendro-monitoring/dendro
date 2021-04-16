@@ -89,15 +89,9 @@ const cache: CacheData = diskCache|| {
     Credentials: {},
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket1' },
-<<<<<<< HEAD
     Firehose: { deliveryStreamName: 'dendroflumechuck-stream696' },
     Timestream: { DatabaseName: 'dendroflumechuck-timestream2923', TableName: 'default-table' },
     IAM: { RoleName: 'dendroflumechuck-role9982' },
-=======
-    Firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
-    Timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
-    IAM: { role: { RoleName: 'dendroflumechuck-role455', Arn: '' } },
->>>>>>> 0becc9cc1b4db997d07357e1fb3c471766f7922a
   },
   Vector: {
     Postgres: {},
