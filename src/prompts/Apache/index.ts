@@ -1,7 +1,7 @@
 // import { MultiSelect, Form }  from 'enquirer';
 const { MultiSelect, Form } = require('enquirer');
 
-export const apachePrompt: any = new MultiSelect({
+export const apachePrompt: string[] = new MultiSelect({
   name: 'apache',
   message: 'Which of the following aspects of Apache would you like to monitor?\n' + 
            'Press: Space to select one, A to select all, and Enter to submit.',

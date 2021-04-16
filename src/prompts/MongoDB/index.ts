@@ -1,8 +1,8 @@
 const { MultiSelect, Form } = require('enquirer');
 
-export const mongoPrompt: any = new MultiSelect({
+export const mongoPrompt: string[] = new MultiSelect({
   name: 'mongo',
-  message: 'Which of the following aspects of Postgres would you like to monitor?\n' + 
+  message: 'Which of the following aspects of MongoDB would you like to monitor?\n' + 
            'Press: Space to select one, A to select all, and Enter to submit.',
   choices: [
     { name: 'Log' },

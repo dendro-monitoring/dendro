@@ -91,7 +91,7 @@ export default class Configure extends Command {
     Object.assign(store.Vector.Host, hostSelections);
   }
 
-  async run() {
+  async run(): Promise<void> {
     const { args, flags } = this.parse(Configure);
     const monitoringSelections = await servicesToMonitor.run();
 
