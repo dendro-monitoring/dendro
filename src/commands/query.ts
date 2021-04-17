@@ -5,7 +5,7 @@ import log, { LevelNames } from '../utils/log';
 import AWSWrapper from '../aws';
 
 export default class QueryCommand extends Command {
-  static description = 'removes the existing cache from disk';
+  static description = 'queries the database';
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -33,6 +33,7 @@ export default class QueryCommand extends Command {
     log.setLevel(level as LevelNames);
     
     const result = await AWSWrapper.query(QueryString);
+
     result.Rows.forEach( data => console.log(data));
     
   }
