@@ -10,6 +10,7 @@ import uploadToBucket from './s3/uploadToBucket';
 
 import createTimestreamDatabase from './timestream/createTimestreamDatabase';
 import createTimestreamTable from './timestream/createTimestreamTable';
+import query from './timestream/query';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
 
@@ -31,6 +32,7 @@ export default {
 
   createTimestreamDatabase,
   createTimestreamTable,
+  query,
 
   createDeliveryStream,
 
