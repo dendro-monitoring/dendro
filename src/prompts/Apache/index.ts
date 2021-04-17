@@ -1,15 +1,30 @@
-// import { MultiSelect, Form }  from 'enquirer';
-const { MultiSelect, Form } = require('enquirer');
+const { Form } = require('enquirer');
+import prompts = require('prompts');
 
-export const apachePrompt: any = new MultiSelect({
-  name: 'apache',
-  message: 'Which of the following aspects of Apache would you like to monitor?\n' + 
-           'Press: Space to select one, A to select all, and Enter to submit.',
-  choices: [
-    { name: 'Access log' },
-    { name: 'Error log' },
-    { name: 'Health metrics' },
-  ],
+export const apachePrompt = (async (): Promise<prompts.Answers<"apache">> => {
+  return await prompts({
+    type: 'multiselect',
+    name: 'apache',
+    message: 'Which of the following aspects of Apache would you like to monitor?\n',
+    instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
+    choices: [
+      { 
+        title: 'Access log',
+        value: 'Access log',
+        description: "hello"  
+      },
+      { 
+        title: 'Error log',
+        value: 'Error log',
+        description: 'world'  
+      },
+      { 
+        title: 'Health metrics',
+        value: 'Health metrics',
+        description: 'world' 
+      },
+    ],
+  });
 });
 
 export const apacheHealthPrompt: any = new Form({

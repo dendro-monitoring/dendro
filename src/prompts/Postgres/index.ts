@@ -1,13 +1,25 @@
 const { MultiSelect, Form } = require('enquirer');
+import prompts = require('prompts');
 
-export const postgresPrompt: any = new MultiSelect({
-  name: 'postgres',
-  message: 'Which of the following aspects of Postgres would you like to monitor?\n' + 
-           'Press: Space to select one, A to select all, and Enter to submit.',
-  choices: [
-    { name: 'Error log' },
-    { name: 'Health metrics' },
-  ],
+export const postgresPrompt = (async (): Promise<prompts.Answers<"postgres">> => {
+  return await prompts({
+    type: 'multiselect',
+    name: 'postgres',
+    message: 'Which of the following aspects of Postgres would you like to monitor?\n',
+    instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
+    choices: [
+      { 
+        title: 'Error Log',
+        value: 'Error Log',
+        description: "hello"  
+      },
+      { 
+        title: 'Health metrics',
+        value: 'Health metrics',
+        description: 'world' 
+      },
+    ],
+  });
 });
 
 export const postgresCredentialsPrompt: any = new Form({

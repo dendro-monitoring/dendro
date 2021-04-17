@@ -16,12 +16,14 @@
     "chalk": "^4.1.0",
     "conf": "^9.0.2",
     "ora": "^5.4.0",
+    "prompts": "^2.4.1",
     "tslib": "^1.14.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@types/adm-zip": "^0.4.34",
     "@types/node": "^10.17.56",
+    "@types/prompts": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "eslint": "^7.24.0",

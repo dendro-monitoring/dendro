@@ -1,13 +1,25 @@
 const { MultiSelect, Form } = require('enquirer');
+import prompts = require('prompts');
 
-export const mongoPrompt: any = new MultiSelect({
-  name: 'mongo',
-  message: 'Which of the following aspects of MongoDB would you like to monitor?\n' + 
-           'Press: Space to select one, A to select all, and Enter to submit.',
-  choices: [
-    { name: 'Log' },
-    { name: 'Health metrics' },
-  ],
+export const mongoPrompt = (async (): Promise<prompts.Answers<"mongo">> => {
+  return await prompts({
+    type: 'multiselect',
+    name: 'mongo',
+    message: 'Which of the following aspects of MongoDB would you like to monitor?\n',
+    instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
+    choices: [
+      { 
+        title: 'Log',
+        value: 'Log',
+        description: "hello"  
+      },
+      { 
+        title: 'Health metrics',
+        value: 'Health metrics',
+        description: 'world' 
+      },
+    ],
+  });
 });
 
 export const mongoCredentialsPrompt: any = new Form({

@@ -34,7 +34,7 @@ export default class Configure extends Command {
   async nginxConfig(): Promise<void> {
     console.clear();
 
-    const nginxServices: string[] = await nginxPrompt.run();
+    const nginxServices: string[] = (await nginxPrompt()).nginx;
 
     if (nginxServices.includes('Access log')) { store.Vector.Nginx.monitorAccessLogs = true; }
     if (nginxServices.includes('Error log')) { store.Vector.Nginx.monitorErrorLogs = true; }
@@ -50,7 +50,7 @@ export default class Configure extends Command {
   async apacheConfig(): Promise<void> {
     console.clear();
 
-    const apacheServices: string[] = await apachePrompt.run();
+    const apacheServices: string[] = (await apachePrompt()).apache;
 
     if (apacheServices.includes('Access log')) { store.Vector.Apache.monitorAccessLogs = true; }
     if (apacheServices.includes('Error log')) { store.Vector.Apache.monitorErrorLogs = true; }
@@ -66,7 +66,7 @@ export default class Configure extends Command {
   async postgresConfig(): Promise<void> {
     console.clear();
 
-    const postgresServices: string[] = await postgresPrompt.run();
+    const postgresServices: string[] = (await postgresPrompt()).postgres;
 
     if (postgresServices.includes('Error log')) { store.Vector.Postgres.monitorErrorLogs = true; }
     if (postgresServices.includes('Health metrics')) {
@@ -81,7 +81,7 @@ export default class Configure extends Command {
   async mongoConfig(): Promise<void> {
     console.clear();
     
-    const mongoServices: string[] = await mongoPrompt.run();
+    const mongoServices: string[] = (await mongoPrompt()).mongo;
 
     if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
     if (mongoServices.includes('Health metrics')) { 
@@ -96,7 +96,7 @@ export default class Configure extends Command {
   async hostConfig(): Promise<void> {
     console.clear();
 
-    const hostServices: string[] = await hostPrompt.run();
+    const hostServices: string[] = (await hostPrompt()).host;
     const hostSelections = hostServices.reduce((map: any, obj: string) => {
       map[obj.toLowerCase()] = true;
       return map;
