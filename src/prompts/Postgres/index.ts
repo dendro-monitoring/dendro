@@ -1,7 +1,7 @@
 const { MultiSelect, Form } = require('enquirer');
 import prompts = require('prompts');
 
-export const postgresPrompt = (async (): Promise<prompts.Answers<"postgres">> => {
+export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => {
   return await prompts({
     type: 'multiselect',
     name: 'postgres',
@@ -20,7 +20,7 @@ export const postgresPrompt = (async (): Promise<prompts.Answers<"postgres">> =>
       },
     ],
   });
-});
+};
 
 export const postgresCredentialsPrompt: any = new Form({
   name: 'user',

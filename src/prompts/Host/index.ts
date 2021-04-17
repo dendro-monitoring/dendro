@@ -1,6 +1,6 @@
 import prompts = require('prompts');
 
-export const hostPrompt = (async (): Promise<prompts.Answers<"host">> => {
+export const hostPrompt = async (): Promise<prompts.Answers<"host">> => {
   return await prompts({
     type: 'multiselect',
     name: 'host',
@@ -44,4 +44,4 @@ export const hostPrompt = (async (): Promise<prompts.Answers<"host">> => {
       },
     ],
   });
-});
+};

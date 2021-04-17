@@ -1,7 +1,7 @@
 const { MultiSelect, Form } = require('enquirer');
 import prompts = require('prompts');
 
-export const mongoPrompt = (async (): Promise<prompts.Answers<"mongo">> => {
+export const mongoPrompt = async (): Promise<prompts.Answers<"mongo">> => {
   return await prompts({
     type: 'multiselect',
     name: 'mongo',
@@ -20,7 +20,7 @@ export const mongoPrompt = (async (): Promise<prompts.Answers<"mongo">> => {
       },
     ],
   });
-});
+};
 
 export const mongoCredentialsPrompt: any = new Form({
   name: 'user',

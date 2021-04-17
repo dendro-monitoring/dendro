@@ -1,7 +1,7 @@
 const { Form } = require('enquirer');
 import prompts = require('prompts');
 
-export const nginxPrompt = (async (): Promise<prompts.Answers<"nginx">> => {
+export const nginxPrompt = async (): Promise<prompts.Answers<"nginx">> => {
   return await prompts({
     type: 'multiselect',
     name: 'nginx',
@@ -25,7 +25,7 @@ export const nginxPrompt = (async (): Promise<prompts.Answers<"nginx">> => {
       },
     ],
   });
-});
+};
 
 export const nginxHealthPrompt: any = new Form({
   name: 'user',

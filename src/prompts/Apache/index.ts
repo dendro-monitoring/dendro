@@ -1,7 +1,7 @@
 const { Form } = require('enquirer');
 import prompts = require('prompts');
 
-export const apachePrompt = (async (): Promise<prompts.Answers<"apache">> => {
+export const apachePrompt = async (): Promise<prompts.Answers<"apache">> => {
   return await prompts({
     type: 'multiselect',
     name: 'apache',
@@ -25,7 +25,7 @@ export const apachePrompt = (async (): Promise<prompts.Answers<"apache">> => {
       },
     ],
   });
-});
+};
 
 export const apacheHealthPrompt: any = new Form({
   name: 'user',
