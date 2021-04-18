@@ -26,7 +26,7 @@ export default class QueryCommand extends Command {
     { name: 'QueryString' },
   ];
 
-  async run() {
+  async run(): Promise<void> {
     const { flags: cliFlags, args: { QueryString } } = this.parse(QueryCommand);
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);
