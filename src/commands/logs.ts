@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command';
 
 import log, { LevelNames } from '../utils/log';
-import AWSWrapper from '../aws';
+import orchestrator from '../aws/orchestrator';
 
 export default class LogCommand extends Command {
   static description = 'logs cloudwatch logs';
@@ -28,10 +28,9 @@ export default class LogCommand extends Command {
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);
 
-    // const streams = await AWSWrapper.describeLogStreams('/aws/lambda/_deployableLambdaFunction');
-    const logs = await AWSWrapper.getLogEvents('/aws/lambda/_deployableLambdaFunction', '2021/04/15/[$LATEST]a197409bd49f4acf883d9e13444d3127');
-    console.log('====================================');
+    // const streams = await orchestrator.describeLogStreams('/aws/lambda/_deployableLambdaFunction');
+    const logs = await orchestrator.getLogEvents();
     console.log(logs);
-    console.log('====================================');
+    
   }
 }
