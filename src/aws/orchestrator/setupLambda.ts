@@ -12,6 +12,7 @@ export default function setupLambda(): Promise<void> {
       DATABASE_NAME: store.AWS.Timestream.DatabaseName,
       DATABASE_TABLE: store.AWS.Timestream.TableName,
     } as any).then( (lambdaData) => {
+      if (!lambdaData) return resolve(); // Lambda already exists
       AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( () => {
         store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
         resolve();

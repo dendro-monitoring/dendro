@@ -63,7 +63,7 @@ export default function createLambda({
     // resolve();
 
     lambda.createFunction(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
+      if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));
       else resolve(data);
     });
   });
