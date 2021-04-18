@@ -15,11 +15,7 @@ export default function query(QueryString: string): Promise<any> {
     timestreamquery.query(params as unknown as any, function(err: AWSError, data) {
       if (err) throw new Error(String(err)); // an error occurred
       else { 
-        if (data.NextToken) {
-          store.AWS.Timestream.NextToken = data.NextToken;
-        } else if (store.AWS.Timestream.NextToken && !data.NextToken) {
-          store.AWS.Timestream.NextToken = '';
-        }
+        store.AWS.Timestream.NextToken = data.NextToken || '';
         resolve(data);  
       }
     });
