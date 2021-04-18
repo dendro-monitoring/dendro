@@ -7,7 +7,7 @@ export default function listRoles(): Promise<any> {
   return new Promise(resolve => {
     iam.listRoles({}, (err: AWSError, data: any) => {
       if (err) resolve(err);
-      resolve(data.Roles);
+      resolve(data);
     });
   });
 }

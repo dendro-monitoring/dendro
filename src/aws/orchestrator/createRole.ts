@@ -16,6 +16,7 @@ export default function createRole(): Promise<void> {
       } else {
         const roles: any = await listRoles();
         store.AWS.IAM.Arn = roles.filter(role => role.RoleName === store.AWS.IAM.RoleName)[0].Arn;
+        resolve();
       }
     });
   });
