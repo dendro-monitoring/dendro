@@ -21,6 +21,9 @@ export default class Clean extends Command {
     }),
   };
 
+  /**
+   * Clears the cache from disk.
+   */
   async run() {
     const { flags: cliFlags } = this.parse(Clean);
 
