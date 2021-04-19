@@ -86,7 +86,10 @@ export const storeDebugLogs = (): void => {
  */
 const cache: CacheData = diskCache || {
   AWS: {
-    Credentials: {},
+    Credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    },
     Lambda: {},
     S3: { bucketName: 'dendrodefaultbucket' },
     Firehose: { deliveryStreamName: 'dendroflumechuck-stream' },

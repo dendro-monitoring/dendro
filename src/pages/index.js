@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Sidebar from '../components/sidebar';
 import TrafficList from "../components/traffic";
 import ServicesList from "../components/Services/List";
@@ -7,11 +6,6 @@ import EventList from '../components/Events/List';
 export default function Home({ logs }) {
   return (
     <div className="App h-screen flex overflow-hidden bg-gray-100">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Sidebar />
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         

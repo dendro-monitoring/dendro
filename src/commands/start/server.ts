@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-const startServer = require("../../frontend/startServer");
+const startServer = require("../../startServer");
 
 export default class StartServer extends Command {
   static description = 'describe the command here';
