@@ -30,7 +30,7 @@ export default function createTimestreamTable({
       },
     };
     Timestream.createTable(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
+      if (err && err.code !== 'ConflictException') throw new Error(String(err));
       else resolve([err, data]);
     });
   });
