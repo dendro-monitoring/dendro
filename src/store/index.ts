@@ -24,7 +24,7 @@ class Store {
     this.Vector = new Vector(vector);
   }
 
-  /** 
+  /**
    * Call this function when an error occurs and you plan to exit.
    * This function will dump the current state to the cache to prevent data loss.
    */
@@ -53,14 +53,14 @@ const diskCache = config.get('state') as CacheData;
  * Helper function to run debug logs for the store.
  * Log level cannot be set until after this code would run.
  * So this code is wrapped into a function and exported instead.
- * 
+ *
  * Usage:
- * 
+ *
  * ```
  * // Some command file
  * import log from '../utils/log';
  * import { storeDebugLogs } from '../store';
- * 
+ *
  * class Command {
  *   async run() {
  *     const { flags } = this.parse(Command);
@@ -78,20 +78,20 @@ export const storeDebugLogs = (): void => {
   } else {
     log.debug('No cache data found');
   }
-}; 
+};
 
 /*
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
-const cache: CacheData = diskCache|| {
+const cache: CacheData = diskCache || {
   AWS: {
     Credentials: {},
     Lambda: {},
-    S3: { bucketName: 'dendrodefaultbucket1' },
-    Firehose: { deliveryStreamName: 'dendroflumechuck-stream54' },
-    Timestream: { DatabaseName: 'dendroflumechuck-timestream22', TableName: 'default-table' },
-    IAM: { role: { RoleName: 'dendroflumechuck-role455', Arn: '' } },
+    S3: { bucketName: 'dendrodefaultbucket' },
+    Firehose: { deliveryStreamName: 'dendroflumechuck-stream' },
+    Timestream: { DatabaseName: 'dendroflumechuck-timestream', TableName: 'default-table' },
+    IAM: { RoleName: 'dendroflumechuck-role' },
   },
   Vector: {
     Postgres: {},

@@ -1,20 +1,19 @@
-export interface LambdaData {}
+export interface LambdaData {
+  FunctionArn?: string
+}
 
 /*
  * TODO: Document Class
  */
 class Lambda {
+  FunctionArn?: string;
   /*
    * TODO: Document descriptions & data types for properties
    */
   constructor({
-    Role,
-    Policy,
-    FunctionData,
+    FunctionArn
   }: LambdaData) {
-    this.Role = Role;
-    this.Policy = Policy;
-    this.FunctionData = FunctionData;
+    this.FunctionArn = FunctionArn;
   }
 }
 

@@ -5,10 +5,12 @@ import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
 import AdmZip = require('adm-zip');
 
+import store from '../../store';
+
 interface LambdaData {
   lambdaFile: string,
   Role: string,
-  DATABASE_NAME: string, 
+  DATABASE_NAME: string,
   DATABASE_TABLE: string,
   Runtime: string,
   region: string,
@@ -17,7 +19,7 @@ interface LambdaData {
 
 export default function createLambda({
   lambdaFile,
-  Role,
+  Role = store.AWS.IAM.Arn!,
   DATABASE_NAME,
   DATABASE_TABLE,
   Runtime = 'nodejs12.x',
@@ -55,9 +57,13 @@ export default function createLambda({
         },
       },
     };
+    // console.log('====================================');
+    // console.log(params.FunctionName);
+    // console.log('====================================');
+    // resolve();
 
     lambda.createFunction(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
+      if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));
       else resolve(data);
     });
   });

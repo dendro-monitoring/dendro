@@ -1,9 +1,6 @@
-import AWSWrapper from '..';
+import AWSWrapper from '../../aws';
+import store from '../../store';
 
-export default function linkBucketToLambda(bucketName: string, lambdaData: { FunctionArn: string}): Promise<any> {
-  return new Promise(resolve => {
-    AWSWrapper.createS3LambdaTrigger(bucketName, lambdaData.FunctionArn).then((triggerData) => {
-      resolve(triggerData);
-    });
-  });
+export default function linkBucketToLambda(): Promise<any> {
+  return AWSWrapper.createS3LambdaTrigger(store.AWS.S3.bucketName, store.AWS.Lambda.FunctionArn!);
 }
