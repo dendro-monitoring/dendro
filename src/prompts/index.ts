@@ -4,6 +4,7 @@ import { apachePrompt, apacheHealthPrompt } from './Apache';
 import { postgresPrompt, postgresCredentialsPrompt } from './Postgres';
 import { mongoPrompt, mongoCredentialsPrompt } from './MongoDB';
 import { hostPrompt } from './Host';
+import { customApplicationPromptOptions } from './CustomApplication';
 
 const servicesToMonitor: any = new MultiSelect({
   name: 'sources',
@@ -25,5 +26,6 @@ export {
   apachePrompt, apacheHealthPrompt,
   postgresPrompt, postgresCredentialsPrompt,
   mongoPrompt, mongoCredentialsPrompt,
-  hostPrompt
+  hostPrompt,
+  customApplicationPromptOptions
 };

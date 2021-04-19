@@ -1,6 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import store, { storeDebugLogs } from '../store';
 import log, { LevelNames } from '../utils/log';
+const { Confirm, Form } = require('enquirer');
 
 import { 
   servicesToMonitor,
@@ -8,7 +9,8 @@ import {
   apachePrompt, apacheHealthPrompt,
   postgresPrompt, postgresCredentialsPrompt,
   mongoPrompt, mongoCredentialsPrompt,
-  hostPrompt
+  hostPrompt,
+  customApplicationPromptOptions
 } from '../prompts';
 
 export default class Configure extends Command {
@@ -86,6 +88,7 @@ export default class Configure extends Command {
     if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
     if (mongoServices.includes('Health metrics')) { 
       console.clear();
+
       const mongoCreds: any = await mongoCredentialsPrompt.run();
       mongoCreds.monitorMetrics = true;
 
@@ -105,6 +108,24 @@ export default class Configure extends Command {
     Object.assign(store.Vector.Host, hostSelections);
   }
 
+  async customApplicationConfig(): Promise<void> {
+    console.clear();
+
+    let addAnother = true;
+    const customApps: { name: string, location: string}[] = [];
+
+    while (addAnother) {
+      customApps.push(await await new Form(customApplicationPromptOptions).run());
+
+      const confirm = new Confirm({
+        name: 'question',
+        message: 'Want to add another custom application log?',
+      });
+
+      addAnother = await confirm.run();
+    }
+  }
+
   async run(): Promise<void> {
     const { flags: cliFlags } = this.parse(Configure);
     const { level } = cliFlags;
@@ -120,6 +141,7 @@ export default class Configure extends Command {
     if (monitoringSelections.includes('Postgres')) { await this.postgresConfig(); }
     if (monitoringSelections.includes('MongoDB')) { await this.mongoConfig(); }
     if (monitoringSelections.includes('Host machine health')) { await this.hostConfig(); }
+    if (monitoringSelections.includes('Custom application (other)')) { await this.customApplicationConfig(); }
 
     store.dump();
   }
