@@ -1,9 +1,10 @@
 import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
-import store from '../store';
 
-export default class Clean extends Command {
-  static description = 'removes the existing cache from disk';
+import orchestrator from '../aws/orchestrator';
+
+export default class QueryCommand extends Command {
+  static description = 'queries the database';
 
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -21,17 +22,17 @@ export default class Clean extends Command {
     }),
   };
 
-  async run() {
-    const { flags: cliFlags } = this.parse(Clean);
+  static args = [
+    { name: 'QueryString' },
+  ];
 
+  async run(): Promise<void> {
+    const { flags: cliFlags, args: { QueryString } } = this.parse(QueryCommand);
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);
 
-    const spinner = log.spin('Clearing cache');
-
-    setTimeout(() => {
-      store.clean();
-      spinner.succeed('Cache cleared');
-    }, 1500);
+    const results = await orchestrator.query(QueryString);
+    console.log(results);
+    
   }
 }

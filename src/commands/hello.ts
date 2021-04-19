@@ -46,7 +46,6 @@ hello world from ./src/hello.ts!
       `Log level is ${level}. Run this command with -L set to either:
       debug, info, warn, error or fatal\n`,
     );
-
     
     log.debug('I am a debug statement. I only run when flag -L >= debug');
     log.info('I am a info statement. I only run when flag -L >= info');

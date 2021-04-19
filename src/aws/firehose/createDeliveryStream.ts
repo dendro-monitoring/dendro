@@ -14,7 +14,7 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
       },
     };
     firehose.createDeliveryStream(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err)); // an error occurred
+      if (err && err.code !== 'ResourceInUseException') throw new Error(String(err)); // an error occurred
       else resolve(data);     // successful response
     });
   });

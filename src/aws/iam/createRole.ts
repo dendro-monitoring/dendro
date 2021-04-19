@@ -25,8 +25,9 @@ export default function createRole(RoleName: string, Service: string[]): Promise
     };
 
     iam.createRole(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
-      else resolve(data);
+      if (err && err.code !== 'EntityAlreadyExists') {
+        throw new Error(String(err));
+      } else resolve(data);
     });
   });
 }
