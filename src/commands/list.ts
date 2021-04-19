@@ -42,35 +42,35 @@ Timestream
   ];
 
   static printRoles(roles: { RoleName: string}[]): void {
-    if (roles.length == 0) { 
+    if (roles.length == 0) {
       log.info('No roles created!');
       return;
     }
-    
+
     roles.forEach( async role => await cli.url(`- ${role.RoleName}`, `https://console.aws.amazon.com/iam/home?region=us-east-1#/roles/${role.RoleName}`)
     );
   }
-  
+
   static printBuckets(buckets: { Name: string}[]): void {
-    if (buckets.length == 0) { 
+    if (buckets.length == 0) {
       log.info('No buckets created!');
       return;
     }
-    
+
     buckets.forEach( async bucket => await cli.url(`- ${bucket.Name}`, `https://s3.console.aws.amazon.com/s3/buckets/${bucket.Name}?region=us-east-2&tab=objects`));
   }
-  
+
   static printDeliveryStreams(streams: string[]): void {
-    if (streams.length == 0) { 
+    if (streams.length == 0) {
       log.info('No streams created!');
       return;
     }
 
-    streams.forEach( async stream =>  await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`)); 
+    streams.forEach( async stream =>  await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`));
   }
-  
+
   async printLambdas(lambdas: { FunctionName: string }[]): Promise<void> {
-    if (lambdas.length == 0) { 
+    if (lambdas.length == 0) {
       log.info('No lambdas created!');
       return;
     }
@@ -78,14 +78,14 @@ Timestream
     lambdas.forEach( async lambda => await cli.url(`- ${lambda.FunctionName}`, `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`));
 
   }
-  
+
   static printTimestream(streams: { DatabaseName: string }[]): void {
-    if (streams.length == 0) { 
+    if (streams.length == 0) {
       log.info('No streams created!');
       return;
     }
-    
-    streams.forEach( async stream => await cli.url(`- ${stream.DatabaseName}`, `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`)); 
+
+    streams.forEach( async stream => await cli.url(`- ${stream.DatabaseName}`, `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`));
   }
 
   async run() {
@@ -95,7 +95,8 @@ Timestream
     let spinner;
 
     spinner = log.spin('Listing roles...\n');
-    const { Roles } = await AWSWrapper.listRoles();
+    const  Roles  = await AWSWrapper.listRoles();
+
     ListCommand.printRoles(Roles);
     spinner.succeed(' ');
 
