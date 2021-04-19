@@ -5,7 +5,7 @@ import log from '../utils/log';
 
 const config = new Conf();
 
-/*
+/**
  * Store is an singleton that will contain all data over the lifetime
  * of the CLI command. Handles loading the state from disk
  * if it exists, keeping track of the current state, and writing the
@@ -80,18 +80,30 @@ export const storeDebugLogs = (): void => {
   }
 };
 
-/*
+/**
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
 const cache: CacheData = diskCache || {
   AWS: {
-    Credentials: {},
+    Credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    },
     Lambda: {},
-    S3: { bucketName: 'dendrodefaultbucket' },
-    Firehose: { deliveryStreamName: 'dendroflumechuck-stream' },
-    Timestream: { DatabaseName: 'dendroflumechuck-timestream', TableName: 'default-table' },
-    IAM: { RoleName: 'dendroflumechuck-role' },
+    S3: { 
+      bucketName: 'dendro-bucket'
+    },
+    Firehose: {
+      deliveryStreamName: 'DendroFirehoseStream'
+    },
+    Timestream: {
+      DatabaseName: 'DendroTimestreamDB',
+      TableName: 'default-table-134'
+    },
+    IAM: {
+      RoleName: 'dendro-s3-lambda-role'
+    },
   },
   Vector: {
     Postgres: {},
