@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import EventsList from "../events/EventsList";
+import EventsList from "../Event/List";
 import TrafficList from "../traffic/TrafficList";
 import EndpointChart from "./EndpointChart";
 import EndpointHeader from "./EndpointHeader";

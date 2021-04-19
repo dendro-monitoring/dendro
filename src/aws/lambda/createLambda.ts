@@ -1,7 +1,7 @@
 import fs = require('fs');
 
 import path = require('path');
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip = require('adm-zip');
 

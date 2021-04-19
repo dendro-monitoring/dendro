@@ -1,4 +1,4 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 
 const cloudwatch = new AWS.CloudWatchLogs({ region: 'us-east-1' });

@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
 const s3 = new AWS.S3();
 

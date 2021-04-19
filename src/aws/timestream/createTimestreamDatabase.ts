@@ -1,4 +1,4 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 
 export default function createTimestreamDatabase(DatabaseName: string, region = 'us-east-1'): Promise<any> {

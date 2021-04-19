@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
 AWS.config.update({ region: 'us-east-1' });
 const lambda = new AWS.Lambda();

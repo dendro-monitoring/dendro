@@ -1,4 +1,4 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 // import { AWSError, IAM } from 'aws-sdk';
 import { Command, flags } from '@oclif/command';
 import store from '../store';

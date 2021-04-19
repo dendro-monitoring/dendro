@@ -1,4 +1,4 @@
-import EventsList from "./EventsList";
+import EventsList from "./List";
 
 export default function EventsPage() {
   return (

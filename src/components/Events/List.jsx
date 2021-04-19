@@ -1,21 +1,8 @@
 import React from "react";
-import Events from "./Events";
+import Events from ".";
 
-export default function EventsList({ endpointId }) {
-  // const dispatch = useDispatch();
-  // const eventStatus = useSelector((state) => state.events.status);
-  // let events = endpointId
-  //   ? useSelector((state) => state.events.endpoints[endpointId])
-  //   : useSelector(selectAllEvents);
-
-  // useEffect(() => {
-  //   if (eventStatus === "idle") {
-  //     dispatch(fetchEvents());
-  //   }
-  // }, [eventStatus, dispatch]);
-  let events;
-
-  if (!events) events = [];
+export default function List({ logs }) {
+  const eventStatus = 'open';
 
   return (
     <div className="flex flex-col">
@@ -35,13 +22,13 @@ export default function EventsList({ endpointId }) {
                     scope="col"
                     className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Name
+                    Type
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Event
+                    Status
                   </th>
                   <th
                     scope="col"
@@ -51,7 +38,7 @@ export default function EventsList({ endpointId }) {
                   </th>
                 </tr>
               </thead>
-              <Events events={events} status={eventStatus} />
+              <Events events={logs} />
             </table>
           </div>
         </div>

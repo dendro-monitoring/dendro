@@ -71,8 +71,8 @@
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
     "build:configs": "node lib/vector/index.js",
-    "dev": "node ./src/frontend/server.js",
+    "dev": "node ./src/server.js",
     "build": "next build",
-    "start": "NODE_ENV=production node ./src/frontend/server.js"
+    "start": "NODE_ENV=production node ./src/server.js"
   }
 }
