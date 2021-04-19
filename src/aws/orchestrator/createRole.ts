@@ -11,7 +11,6 @@ export default function createRole(): Promise<void> {
     AWSWrapper.createRole(store.AWS.IAM.RoleName!, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(async newRole => {
       if (newRole) {
         attachRolePolicies(resolve);
-        console.log(newRole.Role);
         store.AWS.IAM.Arn = newRole.Role.Arn;
       } else {
         const roles: any = await listRoles();

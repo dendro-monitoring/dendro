@@ -7,6 +7,7 @@ export interface AWSIAMData {
 
 class IAM {
   RoleName?: string;
+
   Arn?: string;
 
   constructor({ RoleName }: AWSIAMData) {

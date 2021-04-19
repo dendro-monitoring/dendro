@@ -13,6 +13,7 @@ import createTimestreamDatabase from './timestream/createTimestreamDatabase';
 import createTimestreamTable from './timestream/createTimestreamTable';
 import query from './timestream/query';
 import listDatabases from './timestream/listDatabases';
+import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
 import listDeliveryStreams from './firehose/listDeliveryStreams';
@@ -42,6 +43,7 @@ export default {
   createTimestreamTable,
   query,
   listDatabases,
+  listTables,
 
   createDeliveryStream,
   listDeliveryStreams,
