@@ -19,6 +19,5 @@ export default function listTables(): Promise<any> {
         resolve(data);
       }
     });
-
   });
 }
