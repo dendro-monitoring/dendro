@@ -80,7 +80,7 @@ export const storeDebugLogs = (): void => {
   }
 };
 
-/*
+/**
  * Load state from cache if it exists.
  * The file location is `~/.config/dendro-cli-nodejs/config.json`
  */
