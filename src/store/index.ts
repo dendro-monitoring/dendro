@@ -92,7 +92,7 @@ const cache: CacheData = diskCache || {
     },
     Lambda: {},
     S3: { 
-      bucketName: 'DendroS3'
+      bucketName: 'dendro-bucket'
     },
     Firehose: {
       deliveryStreamName: 'DendroFirehoseStream'

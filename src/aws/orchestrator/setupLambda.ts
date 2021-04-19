@@ -1,4 +1,3 @@
-import { string } from '@oclif/command/lib/flags';
 import path = require('path');
 import AWSWrapper from '..';
 import store from '../../store';
@@ -19,8 +18,9 @@ export default function setupLambda(): Promise<void> {
         store.AWS.Lambda.FunctionArn = funcs.Functions.find( (func: { FunctionName: string}) => path.basename(PATH_TO_LAMBDA_FUNCTION) === `${func.FunctionName}.js`).FunctionArn;
         return resolve();
       } 
-      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( () => {
+      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( async () => {
         store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
+        await AWSWrapper.createS3LambdaTrigger(store.AWS.S3.bucketName!, store.AWS.Lambda.FunctionArn!);
         resolve();
       });
     });

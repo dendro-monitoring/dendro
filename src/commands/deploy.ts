@@ -48,10 +48,6 @@ export default class DeployCommand extends Command {
       await orchestrator.setupLambda();
       spinner.succeed();
 
-      spinner = log.spin('Linking bucket to lambda...');
-      await orchestrator.linkBucketToLambda();
-      spinner.succeed();
-
     } catch (error) {
       spinner?.fail();
       console.log(error);
