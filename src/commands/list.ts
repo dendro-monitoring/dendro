@@ -84,7 +84,7 @@ Timestream
   }
 
   static printTimestream(streams: { DatabaseName: string }[]): void {
-    if (streams.length == 0) {
+    if (streams.length === 0) {
       log.info('No streams created!');
       return;
     }
