@@ -6,7 +6,7 @@ export interface FirehoseData {
  * TODO: Document Class
  */
 class Firehose {
-  deliveryStreamName: string;
+  deliveryStreamName?: string;
   /*
    * TODO: Document descriptions & data types for properties
    */

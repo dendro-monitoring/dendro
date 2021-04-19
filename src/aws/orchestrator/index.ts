@@ -5,7 +5,6 @@ import query from './query';
 import getLogEvents from './getLogEvents';
 import setupLambda from './setupLambda';
 import setupFirehose from './setupFirehose';
-import linkBucketToLambda from './linkBucketToLambda';
 
 export default {
   createRole,
@@ -15,5 +14,4 @@ export default {
   getLogEvents,
   setupLambda,
   setupFirehose, 
-  linkBucketToLambda
 };
