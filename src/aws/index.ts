@@ -23,6 +23,9 @@ import listRoles from './iam/listRoles';
 
 import getCredentials from './getCredentials';
 
+import describeLogStreams from './cloudwatch/describeLogStreams';
+import getLogEvents from './cloudwatch/getLogEvents';
+
 export default {
   createBucket,
   listBuckets,
@@ -48,4 +51,7 @@ export default {
   listRoles,
 
   getCredentials,
+
+  describeLogStreams,
+  getLogEvents
 };
