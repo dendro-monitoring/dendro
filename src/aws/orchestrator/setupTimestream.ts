@@ -1,17 +1,14 @@
-import AWSWrapper from '..';
+import AWSWrapper from '../../aws';
+import store from '../../store';
 
-const DATABASE_NAME = 'dendroflumechuck-timestream12';
-const TABLE_NAME = 'default-table';
-
-export default function setupTimestream(): Promise<any> {
-  return new Promise(resolve => {  
-    AWSWrapper.createTimestreamDatabase(DATABASE_NAME).then( (databaseData) => {
-      AWSWrapper.createTimestreamTable({ DatabaseName: DATABASE_NAME, TableName: TABLE_NAME } as any).then( () => {
-        resolve(databaseData);
+export default function setupTimestream(): Promise<void> {
+  return new Promise(resolve => {
+    AWSWrapper.createTimestreamDatabase(store.AWS.Timestream.DatabaseName!).then( (databaseData) => {
+      AWSWrapper.createTimestreamTable({ DatabaseName: store.AWS.Timestream.DatabaseName, TableName: store.AWS.Timestream.TableName } as any).then( (TableData) => {
+        store.AWS.Timestream.DatabaseData = databaseData;
+        resolve();
       });
     });
-  
+
   });
 }
-
-module.exports = setupTimestream;

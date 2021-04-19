@@ -12,7 +12,7 @@ export default function createTimestreamDatabase(DatabaseName: string, region = 
     };
 
     Timestream.createDatabase(params, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
+      if (err && err.code !== 'ConflictException') throw new Error(String(err));
       else resolve(data);
     });
   });
