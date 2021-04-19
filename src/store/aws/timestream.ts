@@ -2,6 +2,7 @@ export interface TimestreamData {
   DatabaseName?: string
   TableName?: string
   DatabaseData?: Record<string, any>
+  NextToken?: string;
 }
 
 /*
@@ -11,12 +12,12 @@ class Timestream {
   DatabaseName?: string;
   TableName?: string;
   DatabaseData?: Record<string, any>;
-  /*
-   * TODO: Document descriptions & data types for properties
-   */
-  constructor({ DatabaseName, TableName }: TimestreamData) {
+  NextToken?: string;
+  
+  constructor({ DatabaseName, TableName, NextToken }: TimestreamData) {
     this.DatabaseName = DatabaseName;
     this.TableName = TableName;
+    this.NextToken = NextToken;
   }
 }
 

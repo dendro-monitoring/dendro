@@ -11,6 +11,7 @@ import uploadToBucket from './s3/uploadToBucket';
 
 import createTimestreamDatabase from './timestream/createTimestreamDatabase';
 import createTimestreamTable from './timestream/createTimestreamTable';
+import query from './timestream/query';
 import listDatabases from './timestream/listDatabases';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
@@ -21,6 +22,9 @@ import attachRolePolicy from './iam/attachRolePolicy';
 import listRoles from './iam/listRoles';
 
 import getCredentials from './getCredentials';
+
+import describeLogStreams from './cloudwatch/describeLogStreams';
+import getLogEvents from './cloudwatch/getLogEvents';
 
 export default {
   createBucket,
@@ -36,6 +40,7 @@ export default {
 
   createTimestreamDatabase,
   createTimestreamTable,
+  query,
   listDatabases,
 
   createDeliveryStream,
@@ -46,4 +51,7 @@ export default {
   listRoles,
 
   getCredentials,
+
+  describeLogStreams,
+  getLogEvents
 };
