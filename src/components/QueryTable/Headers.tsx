@@ -1,4 +1,4 @@
-import { QueryHeader } from './Table';
+import { QueryHeader } from '../../constants/frontendTypes';
 
 function Header({ text }: { text: string }) {
   return (

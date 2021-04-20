@@ -1,6 +1,6 @@
-import { Log } from './Table';
+import { CloudWatchLog } from '../../constants/frontendTypes';
 
-export default function Row({ log }: { log: Log }) {
+export default function Row({ log }: { log: CloudWatchLog }) {
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap">

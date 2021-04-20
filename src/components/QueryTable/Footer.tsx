@@ -1,11 +1,21 @@
-export default function Footer({ page, setPage, rows, start, end }) {
+import { QueryData } from '../../constants/frontendTypes';
+
+interface Props {
+  page: number;
+  setPage: (page: number) => void;
+  rows: QueryData[];
+  start: number;
+  end: number;
+}
+
+export default function Footer({ page, setPage, rows, start, end }: Props) {
   const handleNext = () => {
     if (!isLastPage()) setPage(page + 1);
   };
   const handlePrev = () => {
     if (!isFirstPage()) setPage(page - 1);
   };
-  const isLastPage = () => page >= parseInt(rows.length / 10);
+  const isLastPage = () => page >= Math.floor(+(rows.length) / 10);
   const isFirstPage = () => page === 1;
 
   return (

@@ -1,9 +1,10 @@
 import Card from './Card';
+import { MonitoredService } from '../../constants/frontendTypes';
 
 const List = () => {
-  const services = [
-    { name: 'postgres-metrics' }, 
-    { name: 'nginx-logs' }, 
+  const services: MonitoredService[] = [
+    { name: 'postgres-metrics' },
+    { name: 'nginx-logs' },
     { name: 'custom-application' },
     { name: 'apache-logs' },
     { name: 'mongo-metrics' },

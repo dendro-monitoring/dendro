@@ -1,3 +1,5 @@
+import { MonitoredService } from '../../constants/frontendTypes';
+
 const COLORS = {
   "apache-metrics": "red-600",
   "apache-logs": "red-600",
@@ -11,7 +13,7 @@ const COLORS = {
   "postgres-logs": "indigo-600",
 };
 
-const Card = ({ service }) => {
+const Card = ({ service }: { service: MonitoredService }) => {
   // const backgroundColors = [
   //   "bg-pink-600",
   //   "bg-purple-600",

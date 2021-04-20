@@ -1,13 +1,8 @@
 import React from "react";
 import Row from "./Row";
+import { CloudWatchLog } from '../../constants/frontendTypes';
 
-export interface Log {
-  TIME: string;
-  ingestionTime: string;
-  message: string;
-}
-
-export default function Table({ logs }: { logs: Log[] }) {
+export default function Table({ logs }: { logs: CloudWatchLog[] }) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 sm:-mx-6 lg:-mx-8">

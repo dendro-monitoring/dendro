@@ -11,9 +11,9 @@ export default function Home() {
       // const res = await fetch('http://localhost:3000/api/logs');
       // const { logs: fetchedLogs } = await res.json();
 
-      const fetchedLogs = [
+      const fetchedLogs: any = [
         {
-          timestamp: 1618341535723,
+          TIME: 1618341535723,
           message: '2021-04-13T19:18:55.723Z\tundefined\tINFO\tLoading function\n',
           ingestionTime: 1618341544834
         }

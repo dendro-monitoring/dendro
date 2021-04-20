@@ -2,18 +2,7 @@ import { useState } from "react";
 import Row from "./Row";
 import Footer from "./Footer";
 import Headers from "./Headers";
-
-export interface QueryRow {
-  ScalarValue: string
-}
-
-export interface QueryData {
-  Data: QueryRow[]
-}
-
-export interface QueryHeader {
-  Name: string
-}
+import { QueryData, QueryHeader } from '../../constants/frontendTypes';
 
 interface Props {
   headers: QueryHeader[]

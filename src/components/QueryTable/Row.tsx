@@ -1,4 +1,4 @@
-import { QueryRow } from './Table';
+import { QueryRow } from '../../constants/frontendTypes';
 
 export default function Row({ row }: { row: QueryRow[] }) {
   return (
