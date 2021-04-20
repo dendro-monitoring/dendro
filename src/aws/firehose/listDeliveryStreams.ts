@@ -1,7 +1,9 @@
 import { AWSError } from 'aws-sdk';
 import AWS = require('aws-sdk');
 
-AWS.config.update({ region: 'us-east-1' });
+import store from '../../store';
+
+AWS.config.update({ region: store.AWS.region });
 const firehose = new AWS.Firehose();
 
 export default function listDeliveryStreams(): Promise<any> {

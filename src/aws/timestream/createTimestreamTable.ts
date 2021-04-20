@@ -1,6 +1,8 @@
 import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
 
+import store from '../../store';
+
 interface TimestreamTableData {
   DatabaseName: string,
   TableName: string,
@@ -14,10 +16,9 @@ export default function createTimestreamTable({
   TableName,
   MagneticStoreRetentionPeriodInDays = '30',
   MemoryStoreRetentionPeriodInHours = '720',
-  region = 'us-east-1',
 }: TimestreamTableData ): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
+    AWS.config.update({ region: store.AWS.region });
 
     const Timestream = new AWS.TimestreamWrite();
 

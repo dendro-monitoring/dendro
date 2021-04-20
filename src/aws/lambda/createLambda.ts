@@ -23,11 +23,10 @@ export default function createLambda({
   DATABASE_NAME,
   DATABASE_TABLE,
   Runtime = 'nodejs12.x',
-  region = 'us-east-1',
   Description = '',
 }: LambdaData ): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
+    AWS.config.update({ region: store.AWS.region });
 
     const lambdaName = lambdaFile.replace(/\.js/, '');
 

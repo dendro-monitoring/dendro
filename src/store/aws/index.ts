@@ -14,6 +14,7 @@ export interface AWSData {
   Timestream: TimestreamData;
   IAM: AWSIAMData;
   Cloudwatch: CloudwatchData;
+  region: string
 }
 
 class AWS {
@@ -31,14 +32,17 @@ class AWS {
 
   Cloudwatch: CloudwatchData;
 
+  region: string;
+
   constructor({
     Credentials: credentials = {},
     Lambda: lambda = {},
     S3: s3 = {},
     Firehose: firehose = {},
     Timestream: timestream = {},
-    IAM: iam = { role: {} },
-    Cloudwatch: cloudwatch = {}
+    IAM: iam = {},
+    Cloudwatch: cloudwatch = {},
+    region = ''
   }: AWSData) {
     this.Credentials = new Credentials(credentials);
     this.Lambda = new Lambda(lambda);
@@ -47,6 +51,7 @@ class AWS {
     this.Timestream = new Timestream(timestream);
     this.IAM = new IAM(iam);
     this.Cloudwatch = new Cloudwatch(cloudwatch);
+    this.region = region;
   }
 }
 

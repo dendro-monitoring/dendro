@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 
 import store from '../../store';
 
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update({ region: store.AWS.region });
 const timestreamquery = new AWS.TimestreamQuery();
 
 export default function query(QueryString: string): Promise<any> {

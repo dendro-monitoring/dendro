@@ -1,11 +1,13 @@
 import AWS = require('aws-sdk');
 import { AWSError } from 'aws-sdk';
 
+import store from '../../store';
+
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-export default function deleteBucket(Bucket: string, region = 'us-east-1'): Promise<any> {
+export default function deleteBucket(Bucket: string): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
+    AWS.config.update({ region: store.AWS.region });
 
     const bucketParams = {
       Bucket,

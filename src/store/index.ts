@@ -104,6 +104,7 @@ const cache: CacheData = diskCache || {
     IAM: {
       RoleName: 'dendro-s3-lambda-role'
     },
+    region: 'us-east-1'
   },
   Vector: {
     Postgres: {},

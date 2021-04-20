@@ -3,11 +3,13 @@ import fs = require('fs');
 
 import AWS = require('aws-sdk');
 
+import store from '../../store';
+
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-export default function uploadToBucket(Bucket: string, file: string, region = 'us-east-1'): Promise<any> {
+export default function uploadToBucket(Bucket: string, file: string): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
+    AWS.config.update({ region: store.AWS.region });
 
     const uploadParams = { Bucket, Key: '', Body: '' };
 
