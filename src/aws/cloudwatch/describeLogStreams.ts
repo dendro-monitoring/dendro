@@ -1,7 +1,8 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
+import { AWS_REGION } from '../../constants';
 
-const cloudwatch = new AWS.CloudWatchLogs({ region: 'us-east-1' });
+const cloudwatch = new AWS.CloudWatchLogs({ region: AWS_REGION });
 
 export default function describeLogStreams(logGroupName: string): Promise<any> {
   return new Promise(resolve => {

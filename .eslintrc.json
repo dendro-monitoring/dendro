@@ -5,7 +5,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended"
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint"],
@@ -20,9 +21,21 @@
         "@typescript-eslint/semi": ["error"],
         "node/no-unsupported-features/es-syntax": 0,
         "@typescript-eslint/no-var-requires": 0,
-        "indent": ["error", 2],
+        "@typescript-eslint/indent": ["error", 2],
         "eol-last": ["error", "always"],
         "no-multiple-empty-lines": ["error", {"max": 1}],
-        "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }]
-    }
+        "react/react-in-jsx-scope": "off",
+        "no-trailing-spaces": "error",
+        "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }],
+        "@typescript-eslint/explicit-module-boundary-types": "off"
+    },
+    "overrides": [
+        {
+          // enable the rule specifically for TypeScript files
+          "files": ["*.ts"],
+          "rules": {
+            "@typescript-eslint/explicit-module-boundary-types": ["warn"]
+          }
+        }
+      ]
 }
