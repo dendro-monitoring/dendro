@@ -6,7 +6,7 @@ export interface HostData {
   host?: boolean;
   memory?: boolean;
   network?: boolean;
-  scrapeIntervalSeconds?: number;
+  scrapeIntervalSeconds?: string;
 }
 
 class Host {
@@ -24,7 +24,7 @@ class Host {
 
   network: boolean;
 
-  scrapeIntervalSeconds: number;
+  scrapeIntervalSeconds: string;
 
   constructor({
     cpu = false,
@@ -34,7 +34,7 @@ class Host {
     host = false,
     memory = false,
     network = false,
-    scrapeIntervalSeconds = 15
+    scrapeIntervalSeconds = '15'
   }: HostData) {
     this.cpu = cpu;
     this.disk = disk;

@@ -1,7 +1,7 @@
 export interface NginxData {
   port?: string;
   url?: string;
-  scrapeIntervalSeconds?: number;
+  scrapeIntervalSeconds?: string;
   monitorAccessLogs?: boolean;
   monitorErrorLogs?: boolean;
   monitorMetrics?: boolean;
@@ -12,7 +12,7 @@ class Nginx {
 
   url: string;
 
-  scrapeIntervalSeconds: number;
+  scrapeIntervalSeconds: string;
 
   monitorAccessLogs: boolean;
 
@@ -23,7 +23,7 @@ class Nginx {
   constructor({
     port = '80',
     url = 'localhost',
-    scrapeIntervalSeconds = 15,
+    scrapeIntervalSeconds = '15',
     monitorAccessLogs = false,
     monitorErrorLogs = false,
     monitorMetrics = false,

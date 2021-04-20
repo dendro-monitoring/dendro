@@ -36,7 +36,7 @@ scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
   inputs = ["host_metrics_transform"]
 
   # AWS
-  region = "us-east-2", required when endpoint = null
+  region = "us-east-2"
   stream_name = "HostMetricsDendroStream"
 
   ## Auth
