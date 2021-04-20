@@ -19,7 +19,7 @@ $ npm install -g dendro-cli
 $ dendro COMMAND
 running command...
 $ dendro (-v|--version|version)
-dendro-cli/0.0.0 linux-x64 node-v14.15.3
+dendro-cli/0.0.1 linux-x64 node-v14.15.3
 $ dendro --help [COMMAND]
 USAGE
   $ dendro COMMAND
@@ -30,11 +30,12 @@ USAGE
 <!-- commands -->
 * [`dendro clean`](#dendro-clean)
 * [`dendro deleteResources`](#dendro-deleteresources)
-* [`dendro hello`](#dendro-hello)
+* [`dendro deploy`](#dendro-deploy)
 * [`dendro help [COMMAND]`](#dendro-help-command)
-* [`dendro listExistingResources`](#dendro-listexistingresources)
-* [`dendro start:server [FILE]`](#dendro-startserver-file)
-* [`dendro test`](#dendro-test)
+* [`dendro list`](#dendro-list)
+* [`dendro logs`](#dendro-logs)
+* [`dendro query [QUERYSTRING]`](#dendro-query-querystring)
+* [`dendro start:server`](#dendro-startserver)
 
 ## `dendro clean`
 
@@ -49,7 +50,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/clean.ts)_
+_See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/clean.ts)_
 
 ## `dendro deleteResources`
 
@@ -58,26 +59,26 @@ USAGE
   $ dendro deleteResources
 ```
 
-_See code: [src/commands/deleteResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/deleteResources.ts)_
+_See code: [src/commands/deleteResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/deleteResources.ts)_
 
-## `dendro hello`
+## `dendro deploy`
 
-describe the command here
+Describe the command here
 
 ```
 USAGE
-  $ dendro hello
+  $ dendro deploy
 
 OPTIONS
   -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
   -h, --help                               show CLI help
 
-EXAMPLE
-  $ dendro hello
-  hello world from ./src/hello.ts!
+DESCRIPTION
+  ...
+  Extra documentation goes here
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/deploy.ts)_
 
 ## `dendro help [COMMAND]`
 
@@ -96,47 +97,70 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `dendro listExistingResources`
-
-```
-USAGE
-  $ dendro listExistingResources
-```
-
-_See code: [src/commands/listExistingResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/listExistingResources.ts)_
-
-## `dendro start:server [FILE]`
+## `dendro list`
 
 describe the command here
 
 ```
 USAGE
-  $ dendro start:server [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-```
-
-_See code: [src/commands/start/server.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/start/server.ts)_
-
-## `dendro test`
-
-Describe the command here
-
-```
-USAGE
-  $ dendro test
+  $ dendro list
 
 OPTIONS
   -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
   -h, --help                               show CLI help
 
-DESCRIPTION
-  ...
-  Extra documentation goes here
+EXAMPLE
+  $ dendro list
+  Roles
+  Buckets
+  Firehose streams
+  Lambda
+  Timestream
 ```
 
-_See code: [src/commands/test.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.0/src/commands/test.ts)_
+_See code: [src/commands/list.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/list.ts)_
+
+## `dendro logs`
+
+logs cloudwatch logs
+
+```
+USAGE
+  $ dendro logs
+
+OPTIONS
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
+```
+
+_See code: [src/commands/logs.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/logs.ts)_
+
+## `dendro query [QUERYSTRING]`
+
+queries the database
+
+```
+USAGE
+  $ dendro query [QUERYSTRING]
+
+OPTIONS
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
+```
+
+_See code: [src/commands/query.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/query.ts)_
+
+## `dendro start:server`
+
+describe the command here
+
+```
+USAGE
+  $ dendro start:server
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src/commands/start/server.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.1/src/commands/start/server.ts)_
 <!-- commandsstop -->
