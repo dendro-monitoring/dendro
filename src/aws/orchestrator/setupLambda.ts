@@ -10,7 +10,7 @@ export default function setupLambda(): Promise<void> {
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: store.AWS.IAM.Arn,
       DATABASE_NAME: store.AWS.Timestream.DatabaseName,
-      DATABASE_TABLE: store.AWS.Timestream.TableName,
+      DATABASE_TABLE_PREFIX: store.AWS.Timestream.TablePrefix,
     } as any).then( async (lambdaData) => {
 
       if (!lambdaData) {

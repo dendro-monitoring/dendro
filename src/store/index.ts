@@ -98,8 +98,8 @@ const cache: CacheData = diskCache || {
       deliveryStreamName: 'DendroFirehoseStream'
     },
     Timestream: {
-      DatabaseName: 'DendroTimestreamDB',
-      TableName: 'default-table-134'
+      DatabaseName: 'dendro-timestream',
+      TablePrefix: 'default-table-134'
     },
     IAM: {
       RoleName: 'dendro-s3-lambda-role'
