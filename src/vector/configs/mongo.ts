@@ -26,7 +26,7 @@ const logConfig = (): string => {
   inputs = ["mongo_logs_transform"]
 
   # AWS
-  region = "us-east-2", required when endpoint = null
+  region = "us-east-2"
   stream_name = "MongoLogsDendroStream"
 
   ## Auth

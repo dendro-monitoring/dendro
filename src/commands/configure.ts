@@ -113,10 +113,11 @@ export default class Configure extends Command {
     console.clear();
 
     let addAnother = true;
-    const customApps: { name: string, location: string}[] = [];
-
     while (addAnother) {
-      customApps.push(await await new Form(customApplicationPromptOptions).run());
+      const customApp = await new Form(customApplicationPromptOptions).run();
+      customApp.name = customApp.name.replace(" ", "_");
+
+      store.Vector.setCustomApp(customApp);
 
       const confirm = new Confirm({
         name: 'question',
@@ -125,7 +126,6 @@ export default class Configure extends Command {
 
       addAnother = await confirm.run();
     }
-
   }
 
   async run(): Promise<void> {

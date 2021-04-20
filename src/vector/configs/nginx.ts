@@ -27,7 +27,7 @@ const logConfig = (): string => {
   inputs = ["nginx_logs_transform"]
 
   # AWS
-  region = "us-east-2", required when endpoint = null
+  region = "us-east-2"
   stream_name = "NginxLogsDendroStream"
 
   ## Auth
