@@ -3,10 +3,10 @@
 
 console.log('Loading function');
 
-const aws = require('aws-sdk');
+import aws = require('aws-sdk');
+import https = require('https');
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
-const https = require('https');
 
 const REGEX = /}{/gm;
 
@@ -31,14 +31,14 @@ const writeClient = new aws.TimestreamWrite({
  * @param {String[]} records The records that will be written
  * @returns {Promise} The promise that records will be written to Timestream
  */
-async function write100Records(records) {
+async function write100Records(records: Record<string, unknown>) {
   const params = {
     DatabaseName: process.env.DATABASE_NAME,
     TableName: process.env.DATABASE_TABLE,
     Records: records,
   };
 
-  const request = writeClient.writeRecords(params);
+  const request = writeClient.writeRecords(params as unknown as any);
 
   await request.promise().then(
     _data => {
@@ -63,11 +63,11 @@ async function write100Records(records) {
  * @param {Object[]} rawData - An array of records to write to Timestream
  * @returns {undefined}
  */
-async function writeRecords(rawData) {
+async function writeRecords(rawData: Array<any>) {
   console.log('Writing records');
   const currentTime = Date.now().toString(); // Unix time in milliseconds
 
-  let records = [];
+  let records: Array<any>= [];
 
   rawData.forEach(evt => {
     records = records.concat({
@@ -98,24 +98,24 @@ async function writeRecords(rawData) {
 
   const promises = [];
   for (let i = 0; i <= records.length; i += 100) {
-    promises.push(write100Records(records.slice(i, i + 100)));
+    promises.push(write100Records(records.slice(i, i + 100) as unknown as any));
   }
 
   await Promise.all(promises);
 }
 
-const getBucketName = event => event.Records[0].s3.bucket.name;
-const getKey = event => decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+const getBucketName = (event: any) => event.Records[0].s3.bucket.name;
+const getKey = (event: any) => decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
 
-const getS3ObjectBody = s3Obj => s3Obj.Body.toString();
-const getParsableS3ObjectBody = s3Obj => {
+const getS3ObjectBody = (s3Obj: any) => s3Obj.Body.toString();
+const getParsableS3ObjectBody = (s3Obj: any) => {
   const data = getS3ObjectBody(s3Obj).replace(REGEX, '},\n{');
   return `[${data}]`;
 };
 
-const getParsedS3ObjectBody = s3Obj => JSON.parse(getParsableS3ObjectBody(s3Obj));
+const getParsedS3ObjectBody = (s3Obj: any) => JSON.parse(getParsableS3ObjectBody(s3Obj));
 
-exports.handler = async (event, _context) => {
+exports.handler = async (event: any, _context: any) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   /*
