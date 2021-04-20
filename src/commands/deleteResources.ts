@@ -12,7 +12,7 @@ export default class DeleteResources extends Command {
 
   async run() {
     AWS.config.update({ region:'us-east-1' });
-    iam.listAttachedRolePolicies({ RoleName: store.AWS.IAM.RoleName }, (error, roleData) => console.log(error, roleData));
+    iam.listAttachedRolePolicies({ RoleName: store.AWS.IAM.RoleName || '' }, (error, roleData) => console.log(error, roleData));
     // iam.deleteRole({ RoleName: store.AWS.IAM.Role.RoleName }, (err, data) => console.log(err, data));
     // firehose.listDeliveryStreams({}, (err: AWSError, data: any) => console.log(err, data));
     // lambda.listFunctions({}, (err: AWSError, data: any) => console.log(err, data));

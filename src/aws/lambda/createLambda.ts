@@ -1,9 +1,8 @@
-import fs = require('fs');
-
-import path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-import AdmZip = require('adm-zip');
+import AdmZip from 'adm-zip';
 
 import store from '../../store';
 

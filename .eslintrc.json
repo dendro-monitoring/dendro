@@ -25,6 +25,7 @@
         "eol-last": ["error", "always"],
         "no-multiple-empty-lines": ["error", {"max": 1}],
         "react/react-in-jsx-scope": "off",
-        "no-trailing-spaces": "error"
+        "no-trailing-spaces": "error",
+        "object-property-newline": ["error", { "allowAllPropertiesOnSameLine": true }]
     }
 }
