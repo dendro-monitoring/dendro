@@ -91,7 +91,7 @@ const cache: CacheData = diskCache || {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
     Lambda: {},
-    S3: { 
+    S3: {
       bucketName: 'dendro-bucket'
     },
     Firehose: {

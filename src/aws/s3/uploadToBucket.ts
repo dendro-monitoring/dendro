@@ -1,7 +1,7 @@
-import path = require('path');
-import fs = require('fs');
+import * as path from 'path';
+import * as fs from 'fs';
 
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
