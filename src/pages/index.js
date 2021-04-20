@@ -8,7 +8,7 @@ export default function Home({ logs }) {
     <div className="App h-screen flex overflow-hidden bg-gray-100">
       <Sidebar />
       <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        
+
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">
@@ -49,7 +49,7 @@ export default function Home({ logs }) {
 }
 
 export async function getServerSideProps() {
-  // const res = await fetch('http://localhost:3000/api/hello');
+  // const res = await fetch('http://localhost:3000/api/logs');
   // const { logs } = await res.json();
   const logs = [
     {
