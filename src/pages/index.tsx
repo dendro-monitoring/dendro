@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
-import Sidebar from '../components/sidebar';
 import TrafficList from "../components/traffic";
 import ServicesList from "../components/Services/List";
 import LogTable from '../components/LogTable/Table';
 
-export default function Home() {
+import { MonitoredService } from '../constants/frontendTypes';
+
+interface Props {
+  services: MonitoredService[]
+}
+
+export default function Home({ services }: Props) {
   const [logs, setLogs] = useState([]);
   useEffect(() => {
     (async () => {
@@ -24,45 +29,41 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="App h-screen flex overflow-hidden bg-gray-100">
-      <Sidebar />
-      <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900">
+    <>
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Performance Snapshot
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="py-4">
-              <TrafficList />
-            </div>
+          </h1>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="py-4">
+            <TrafficList />
           </div>
         </div>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900">
+      </div>
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Monitored Services
-            </h1>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="py-4">
-              <ServicesList />
-            </div>
+          </h1>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="py-4">
+            <ServicesList services={services} />
           </div>
         </div>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-2xl font-semibold text-gray-900">Activity Log</h1>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-            <div className="py-4">
-              <LogTable logs={logs} />
-            </div>
+      </div>
+      <div className="py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-2xl font-semibold text-gray-900">Activity Log</h1>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="py-4">
+            <LogTable logs={logs} />
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   );
 }

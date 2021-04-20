@@ -1,16 +1,11 @@
 import Card from './Card';
 import { MonitoredService } from '../../constants/frontendTypes';
 
-const List = () => {
-  const services: MonitoredService[] = [
-    { name: 'postgres-metrics' },
-    { name: 'nginx-logs' },
-    { name: 'custom-application' },
-    { name: 'apache-logs' },
-    { name: 'mongo-metrics' },
-    { name: 'host-metrics' },
-  ];
+interface Props {
+  services: MonitoredService[]
+}
 
+const List = ({ services }: Props) => {
   return (
     <div>
       <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">

@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Service from './Service';
 
-const Sidebar = () => {
+import { MonitoredService } from '../../constants/frontendTypes';
+
+interface Props {
+  services: MonitoredService[]
+}
+
+const Sidebar = ({ services }: Props) => {
   const router = useRouter();
 
   const active =
@@ -49,6 +56,13 @@ const Sidebar = () => {
                   Query
                 </a>
               </Link>
+
+              {services.map((service) => <Service
+                service={service}
+                key={service.name}
+                active={active}
+                inactive={inactive}
+              />)}
             </nav>
           </div>
         </div>
