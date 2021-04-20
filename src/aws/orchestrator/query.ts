@@ -14,7 +14,7 @@ export default function query(QueryString: string): Promise<queryResults> {
 
       results.ColumnInfo = result.ColumnInfo;
       results.Rows = [...results.Rows, ...result.Rows];
-      
+
     } while (store.AWS.Timestream.NextToken);
 
     resolve(results);

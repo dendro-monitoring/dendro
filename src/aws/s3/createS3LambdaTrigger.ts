@@ -3,7 +3,7 @@
  * trigger one lambda
 */
 
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 
 const s3 = new AWS.S3();

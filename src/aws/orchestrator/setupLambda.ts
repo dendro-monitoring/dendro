@@ -1,4 +1,4 @@
-import path = require('path');
+import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';
 
@@ -17,7 +17,7 @@ export default function setupLambda(): Promise<void> {
         const funcs = await AWSWrapper.listFunctions();
         store.AWS.Lambda.FunctionArn = funcs.Functions.find( (func: { FunctionName: string}) => path.basename(PATH_TO_LAMBDA_FUNCTION) === `${func.FunctionName}.js`).FunctionArn;
         return resolve();
-      } 
+      }
       AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( async () => {
         store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
         await AWSWrapper.createS3LambdaTrigger(store.AWS.S3.bucketName!, store.AWS.Lambda.FunctionArn!);
