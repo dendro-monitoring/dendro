@@ -1,9 +1,13 @@
 import React from "react";
-import Events from ".";
+import Row from "./Row";
 
-export default function List({ logs }) {
-  const eventStatus = 'open';
+export interface Log {
+  TIME: string;
+  ingestionTime: string;
+  message: string;
+}
 
+export default function Table({ logs }: { logs: Log[] }) {
   return (
     <div className="flex flex-col">
       <div className="-my-2 sm:-mx-6 lg:-mx-8">
@@ -38,7 +42,11 @@ export default function List({ logs }) {
                   </th>
                 </tr>
               </thead>
-              <Events events={logs} />
+
+              <tbody className="bg-white divide-y divide-gray-200">
+                {logs.map((log) => <Row log={log} key={log.TIME} />)}
+              </tbody>
+
             </table>
           </div>
         </div>

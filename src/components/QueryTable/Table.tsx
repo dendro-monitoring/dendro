@@ -1,17 +1,26 @@
-import React, { useState } from "react";
-import QueryResults from ".";
+import { useState } from "react";
+import Row from "./Row";
 import Footer from "./Footer";
+import Headers from "./Headers";
 
-const Header = ({ text }) => (
-  <th
-    scope="col"
-    className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-  >
-    {text}
-  </th>
-);
+export interface QueryRow {
+  ScalarValue: string
+}
 
-export default function List({ headers, rows }) {
+export interface QueryData {
+  Data: QueryRow[]
+}
+
+export interface QueryHeader {
+  Name: string
+}
+
+interface Props {
+  headers: QueryHeader[]
+  rows: QueryData[]
+}
+
+export default function Table({ headers, rows }: Props) {
   const [page, setPage] = useState(1);
 
   const start = rows.length > 0 ? 10 * (page - 1) + 1 : 0;
@@ -24,13 +33,12 @@ export default function List({ headers, rows }) {
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
-                <tr>
-                  {headers.length > 0
-                    ? headers.map(({ Name }) => <Header text={Name} key={Name} />)
-                    : <Header text={"No Data"} />}
-                </tr>
+                <Headers headers={headers} />
               </thead>
-              <QueryResults rows={rows.slice(start - 1, end)} />
+
+              <tbody className="bg-white divide-y divide-gray-200">
+                {rows.slice(start - 1, end).map(({ Data }, idx) => <Row row={Data} key={idx} />)}
+              </tbody>
             </table>
 
             <Footer

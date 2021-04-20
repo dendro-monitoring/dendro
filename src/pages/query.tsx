@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/sidebar';
-import List from '../components/QueryResults/List';
+import List from '../components/QueryTable/Table';
 
 export default function Query() {
-  const [query, setQuery] = useState('SELECT * FROM DendroTestDb.testTable LIMIT 10');
+  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10');
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(query);
 
@@ -43,7 +43,7 @@ export default function Query() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <textarea
-                rows="12"
+                rows={12}
                 wrap="hard"
                 className="border rounded-md w-full px-2 py-1"
                 onChange={(e) => setQuery(e.target.value)}

@@ -1,4 +1,4 @@
-export default function TrafficList({ endpointId }) {
+export default function TrafficList() {
   return (
     <div>
       <h3 className="text-lg leading-6 font-medium text-gray-900">
