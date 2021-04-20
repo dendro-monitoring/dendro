@@ -124,6 +124,7 @@ export default class Configure extends Command {
 
       addAnother = await confirm.run();
     }
+    
   }
 
   async run(): Promise<void> {

@@ -9,8 +9,8 @@ export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => 
     instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
     choices: [
       { 
-        title: 'Error Log',
-        value: 'Error Log',
+        title: 'Error log',
+        value: 'Error log',
         description: "hello"  
       },
       { 
