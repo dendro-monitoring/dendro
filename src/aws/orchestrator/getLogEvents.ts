@@ -1,7 +1,7 @@
 import store from '../../store';
 import getEvents from '../cloudwatch/getLogEvents';
 
-export default function getLogEvents(): Promise<any>{
+export default function getLogEvents(): Promise<any> {
   return new Promise(async resolve => {
     let results: Array<any> = [];
     do {
@@ -9,7 +9,7 @@ export default function getLogEvents(): Promise<any>{
 
       results = [...results, ...events];
     } while (store.AWS.Cloudwatch.NextToken);
-    
+
     resolve(results);
   });
 }

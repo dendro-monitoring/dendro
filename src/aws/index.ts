@@ -20,6 +20,7 @@ import listDeliveryStreams from './firehose/listDeliveryStreams';
 import createRole from './iam/createRole';
 import attachRolePolicy from './iam/attachRolePolicy';
 import listRoles from './iam/listRoles';
+import arePoliciesAttached from './iam/arePoliciesAttached';
 
 import getCredentials from './getCredentials';
 
@@ -49,6 +50,7 @@ export default {
   createRole,
   attachRolePolicy,
   listRoles,
+  arePoliciesAttached,
 
   getCredentials,
 

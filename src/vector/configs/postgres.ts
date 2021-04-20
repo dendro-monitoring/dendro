@@ -38,7 +38,6 @@ const logConfig = (): string => {
 `;
 };
 
-
 const metricConfig = (): string => {
   log.debug('Writing Postgres vector metric config');
   const {

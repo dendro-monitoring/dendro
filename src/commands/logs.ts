@@ -31,6 +31,6 @@ export default class LogCommand extends Command {
     // const streams = await orchestrator.describeLogStreams('/aws/lambda/_deployableLambdaFunction');
     const logs = await orchestrator.getLogEvents();
     console.log(logs);
-    
+
   }
 }

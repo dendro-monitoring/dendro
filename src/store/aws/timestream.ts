@@ -13,7 +13,7 @@ class Timestream {
   TableName?: string;
   DatabaseData?: Record<string, any>;
   NextToken?: string;
-  
+
   constructor({ DatabaseName, TableName, NextToken }: TimestreamData) {
     this.DatabaseName = DatabaseName;
     this.TableName = TableName;
