@@ -1,7 +1,7 @@
 {
   "name": "dendro-cli",
   "description": "Core CLI for dendroflumechuck",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "team-naap",
   "bin": {
     "dendro": "./bin/run"
