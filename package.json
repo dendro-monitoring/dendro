@@ -1,7 +1,7 @@
 {
   "name": "dendro-cli",
   "description": "Core CLI for dendroflumechuck",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "author": "team-naap",
   "bin": {
     "dendro": "./bin/run"
@@ -49,16 +49,26 @@
     "/bin",
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json",
-    "/src"
+    "/lib",
+    ".next/server",
+    ".next/static",
+    ".next/BUILD_ID",
+    ".next/build-manifest.json",
+    ".next/export-marker.json",
+    ".next/images-manifest.json",
+    ".next/prerender-manifest.json",
+    ".next/react-loadable-manifest.json",
+    ".next/required-server-files.json",
+    ".next/routes-manifest.json"
   ],
   "homepage": "https://github.com/dendro-naap/dendro-cli",
   "keywords": [
     "oclif"
   ],
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "oclif": {
-    "commands": "./src/commands",
+    "commands": "./lib/commands",
     "bin": "dendro",
     "plugins": [
       "@oclif/plugin-help"
@@ -68,7 +78,7 @@
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint .",
-    "prepack": "oclif-dev manifest && oclif-dev readme",
+    "prepack": "oclif-dev manifest && oclif-dev readme && next build && tsc --noEmit false",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
     "build:configs": "node lib/vector/index.js",
