@@ -1,5 +1,10 @@
 import store from '../../store';
 import log from '../../utils/log';
+import {
+  AWS_REGION,
+  AWS_FIREHOSE_STREAM_NAME,
+  VECTOR_HOST_METRICS_TYPE,
+} from '../../constants';
 
 const config = (): string => {
   log.debug('Writing Host vector log config');
@@ -27,7 +32,7 @@ scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
   type = "remap"
   inputs = ["host_metrics_to_logs"]
   source = '''
-  .type = "host-metrics"
+  .type = "${VECTOR_HOST_METRICS_TYPE}"
   '''
 
 [sinks.host_metrics_firehose_stream_sink]
@@ -36,8 +41,8 @@ scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
   inputs = ["host_metrics_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "HostMetricsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
