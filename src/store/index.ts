@@ -91,19 +91,13 @@ const cache: CacheData = diskCache || {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
     Lambda: {},
-    S3: {
-      bucketName: 'dendro-bucket'
-    },
-    Firehose: {
-      deliveryStreamName: 'DendroFirehoseStream'
-    },
+    S3: {},
+    Firehose: {},
     Timestream: {
-      DatabaseName: 'DendroTimestreamDB',
+      // TODO:
       TableName: 'default-table-134'
     },
-    IAM: {
-      RoleName: 'dendro-s3-lambda-role'
-    },
+    IAM: {},
   },
   Vector: {
     Postgres: {},

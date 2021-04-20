@@ -1,6 +1,7 @@
 import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';
+import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME } from '../../constants';
 
 const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/_deployableLambdaFunction.js`);
 
@@ -9,7 +10,7 @@ export default function setupLambda(): Promise<void> {
     AWSWrapper.createLambda({
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: store.AWS.IAM.Arn,
-      DATABASE_NAME: store.AWS.Timestream.DatabaseName,
+      DATABASE_NAME: AWS_TIMESTREAM_DATABASE_NAME,
       DATABASE_TABLE: store.AWS.Timestream.TableName,
     } as any).then( async (lambdaData) => {
 
@@ -20,7 +21,7 @@ export default function setupLambda(): Promise<void> {
       }
       AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( async () => {
         store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
-        await AWSWrapper.createS3LambdaTrigger(store.AWS.S3.bucketName!, store.AWS.Lambda.FunctionArn!);
+        await AWSWrapper.createS3LambdaTrigger(AWS_S3_BUCKET_NAME, store.AWS.Lambda.FunctionArn!);
         resolve();
       });
     });

@@ -1,11 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
-
 import * as AWS from 'aws-sdk';
+import { AWS_REGION } from '../../constants';
 
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
-export default function uploadToBucket(Bucket: string, file: string, region = 'us-east-1'): Promise<any> {
+export default function uploadToBucket(Bucket: string, file: string, region = AWS_REGION): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 

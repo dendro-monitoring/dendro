@@ -1,6 +1,6 @@
 import * as AWS from 'aws-sdk';
 import store from '../../store';
-import { AWS_REGION } from '../../constants';
+import { AWS_REGION, AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
 
 AWS.config.update({ region: AWS_REGION });
 
@@ -8,7 +8,7 @@ const timestreamwrite = new AWS.TimestreamWrite();
 export default async function listTables(): Promise<any> {
   return new Promise(resolve => {
     const params = {
-      DatabaseName: store.AWS.Timestream.DatabaseName,
+      DatabaseName: AWS_TIMESTREAM_DATABASE_NAME,
       NextToken: store.AWS.Timestream.NextToken
     };
 
