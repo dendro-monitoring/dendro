@@ -11,17 +11,17 @@ export const nginxPrompt = async (): Promise<prompts.Answers<"nginx">> => {
       { 
         title: 'Access log',
         value: 'Access log',
-        description: "hello"  
+        description: 'Record all requests processed by the server.'
       },
       { 
         title: 'Error log',
         value: 'Error log',
-        description: 'world'  
+        description: 'Record diagnostic information and any errors nginx encounters.'  
       },
       { 
         title: 'Health metrics',
         value: 'Health metrics',
-        description: 'world' 
+        description: 'Record information on server status, access, connections, and more.\nFor more info, visit https://vector.dev/docs/reference/configuration/sources/nginx_metrics/' 
       },
     ],
   });

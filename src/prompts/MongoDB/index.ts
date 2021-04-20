@@ -11,12 +11,12 @@ export const mongoPrompt = async (): Promise<prompts.Answers<"mongo">> => {
       { 
         title: 'Log',
         value: 'Log',
-        description: "hello"  
+        description: 'Collect default MongoDB log messages. https://docs.mongodb.com/manual/reference/log-messages/' 
       },
       { 
         title: 'Health metrics',
         value: 'Health metrics',
-        description: 'world' 
+        description: 'For info on specific metrics collected, visit: https://vector.dev/docs/reference/configuration/sources/mongodb_metrics/'
       },
     ],
   });

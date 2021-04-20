@@ -4,43 +4,44 @@ export const hostPrompt = async (): Promise<prompts.Answers<"host">> => {
   return await prompts({
     type: 'multiselect',
     name: 'host',
-    message: 'Which of the following host metrics would you like to monitor?\n',
+    message: 'Which of the following host metrics would you like to monitor?\n For more info visit: https://vector.dev/docs/reference/configuration/sources/host_metrics/',
     instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
     choices: [
       { 
         title: 'CPU',
         value: 'CPU',
-        description: "hello"  
+        description: 'Count of CPU seconds accumulated in different operating modes'
+
       },
       { 
         title: 'Disk',
         value: 'Disk',
-        description: 'world'  
+        description: 'Count of read/write operations and how many bytes for each.'  
       },
       { 
         title: 'Filesystem',
         value: 'Filesystem',
-        description: 'world' 
+        description: 'Count of free/total/used bytes on the filesystem.' 
       },
       { 
         title: 'Load',
         value: 'Load',
-        description: 'world' 
+        description: 'System load averaged over the last 1/5/15 seconds.' 
       },
       { 
         title: 'Host',
         value: 'Host',
-        description: 'world' 
+        description: 'Uptime/boot time.'
       },
       { 
         title: 'Memory',
         value: 'Memory',
-        description: 'world' 
+        description: 'Measure bytes of active/available/buffered/free/inactive memory, etc.'
       },
       { 
         title: 'Network',
         value: 'Network',
-        description: 'world' 
+        description: 'Measure total number of bytes/packets sent/received over the network or dropped.'
       },
     ],
   });

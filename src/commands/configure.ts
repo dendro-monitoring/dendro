@@ -144,6 +144,9 @@ export default class Configure extends Command {
     if (monitoringSelections.includes('Host machine health')) { await this.hostConfig(); }
     if (monitoringSelections.includes('Custom application (other)')) { await this.customApplicationConfig(); }
 
+    console.log('Saving selections to cache...');
+    console.log('To review your selections, please run `dendro review`');
+    console.log('To clear your current configuration, please run `dendro clean`');
     store.dump();
   }
 }

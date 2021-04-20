@@ -11,12 +11,12 @@ export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => 
       { 
         title: 'Error log',
         value: 'Error log',
-        description: "hello"  
+        description: 'Collect Postgres logs per your `postgresql.conf` file.\nFor more information on defaults, visit: https://www.postgresql.org/docs/9.0/runtime-config-logging.html'
       },
       { 
         title: 'Health metrics',
         value: 'Health metrics',
-        description: 'world' 
+        description: 'Record information on status, database connections, and more.\nFor more info, visit https://vector.dev/docs/reference/configuration/sources/postgresql_metrics/'
       },
     ],
   });
