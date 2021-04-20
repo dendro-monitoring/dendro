@@ -21,6 +21,7 @@ import listDeliveryStreams from './firehose/listDeliveryStreams';
 import createRole from './iam/createRole';
 import attachRolePolicy from './iam/attachRolePolicy';
 import listRoles from './iam/listRoles';
+import detachRolePolicy from './iam/detachRolePolicy';
 
 import getCredentials from './getCredentials';
 

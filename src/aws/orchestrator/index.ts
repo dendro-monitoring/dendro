@@ -6,6 +6,9 @@ import listTables from './listTables';
 import getLogEvents from './getLogEvents';
 import setupLambda from './setupLambda';
 import setupFirehose from './setupFirehose';
+import detachRolePolicies from './detachRolePolicies';
+import deleteRole from './deleteRole';
+import deleteBucket from './deleteBucket';
 
 export default {
   createRole,
@@ -15,5 +18,8 @@ export default {
   listTables,
   getLogEvents,
   setupLambda,
-  setupFirehose, 
+  setupFirehose,
+  detachRolePolicies,
+  deleteRole,
+  deleteBucket,
 };

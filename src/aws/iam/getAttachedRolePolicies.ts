@@ -7,10 +7,11 @@ const iam = new AWS.IAM();
 export default function getAttachedRolePolicies(): Promise<any> {
   return new Promise(resolve => {
     iam.listAttachedRolePolicies({ RoleName: store.AWS.IAM.RoleName }, (error, roleData) => {
-      if (error) resolve(error);
-      if (roleData.AttachedPolicies) {
+      if (roleData && roleData.AttachedPolicies) {
         const policies = roleData.AttachedPolicies.map(policy => policy.PolicyArn);
         resolve(policies);
+      } else if (error.code !== "NoSuchEntity") {
+        throw new Error(error);
       } else resolve(null);
     });
   });
