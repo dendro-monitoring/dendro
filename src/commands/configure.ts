@@ -3,7 +3,7 @@ import store, { storeDebugLogs } from '../store';
 import log, { LevelNames } from '../utils/log';
 const { Confirm, Form } = require('enquirer');
 
-import { 
+import {
   servicesToMonitor,
   nginxPrompt, nginxHealthPrompt,
   apachePrompt, apacheHealthPrompt,
@@ -12,6 +12,7 @@ import {
   hostPrompt,
   customApplicationPromptOptions
 } from '../prompts';
+import { buildVectorConfig } from '../vector';
 
 export default class Configure extends Command {
   static description = 'configuring collector/agent setup of log sources';
@@ -82,11 +83,11 @@ export default class Configure extends Command {
 
   async mongoConfig(): Promise<void> {
     console.clear();
-    
+
     const mongoServices: string[] = (await mongoPrompt()).mongo;
 
     if (mongoServices.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
-    if (mongoServices.includes('Health metrics')) { 
+    if (mongoServices.includes('Health metrics')) {
       console.clear();
 
       const mongoCreds: any = await mongoCredentialsPrompt.run();
@@ -124,7 +125,7 @@ export default class Configure extends Command {
 
       addAnother = await confirm.run();
     }
-    
+
   }
 
   async run(): Promise<void> {
@@ -148,5 +149,7 @@ export default class Configure extends Command {
     console.log('To review your selections, please run `dendro review`');
     console.log('To clear your current configuration, please run `dendro clean`');
     store.dump();
+
+    console.log(buildVectorConfig());
   }
 }
