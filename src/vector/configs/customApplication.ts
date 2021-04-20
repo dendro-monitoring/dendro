@@ -1,8 +1,12 @@
 import store from '../../store';
 import log from '../../utils/log';
 import { CustomApplicationData } from '../../store/vector/customApplication';
+import {
+  AWS_REGION,
+  AWS_FIREHOSE_STREAM_NAME,
+  VECTOR_CUSTOM_APPLICATION_TYPE
+} from '../../constants';
 
-// TODO
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   log.debug(`Writing custom application vector log config for application ${name}`);
   return `
@@ -17,7 +21,7 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   type = "remap"
   inputs = ["custom_application_${name}_logs"]
   source = '''
-  .type = "custom-application"
+  .type = "${VECTOR_CUSTOM_APPLICATION_TYPE}"
   '''
 
 [sinks.custom_application_${name}_logs_firehose_stream_sink]
@@ -26,8 +30,8 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   inputs = ["custom_application_${name}_logs_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "${name}CustomAppDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials?.accessKeyId}"

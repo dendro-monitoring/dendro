@@ -1,5 +1,11 @@
 import store from '../../store';
 import log from '../../utils/log';
+import {
+  AWS_REGION,
+  AWS_FIREHOSE_STREAM_NAME,
+  VECTOR_MONGO_LOGS_TYPE,
+  VECTOR_MONGO_METRICS_TYPE,
+} from '../../constants';
 
 const logConfig = (): string => {
   log.debug('Writing Mongo vector log config');
@@ -17,7 +23,7 @@ const logConfig = (): string => {
   type = "remap"
   inputs = ["mongo_logs"]
   source = '''
-  .type = "mongo-logs"
+  .type = "${VECTOR_MONGO_LOGS_TYPE}"
   '''
 
 [sinks.mongo_logs_firehose_stream_sink]
@@ -26,8 +32,8 @@ const logConfig = (): string => {
   inputs = ["mongo_logs_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "MongoLogsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
@@ -64,7 +70,7 @@ const metricConfig = (): string => {
   type = "remap"
   inputs = ["mongo_metrics_to_logs"]
   source = '''
-  .type = "mongo-metrics"
+  .type = "${VECTOR_MONGO_METRICS_TYPE}"
   '''
 
 [sinks.mongo_metrics_firehose_stream_sink]
@@ -73,8 +79,8 @@ const metricConfig = (): string => {
   inputs = ["mongo_metrics_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "MongoMetricsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"

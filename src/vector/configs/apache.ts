@@ -1,5 +1,11 @@
 import store from '../../store';
 import log from '../../utils/log';
+import {
+  AWS_REGION,
+  AWS_FIREHOSE_STREAM_NAME,
+  VECTOR_APACHE_LOGS_TYPE,
+  VECTOR_APACHE_METRICS_TYPE
+} from '../../constants';
 
 const logConfig = (): string => {
   log.debug('Writing Apache vector log config');
@@ -18,7 +24,7 @@ const logConfig = (): string => {
   type = "remap"
   inputs = ["apache_logs"]
   source = '''
-  .type = "apache-logs"
+  .type = "${VECTOR_APACHE_LOGS_TYPE}"
   '''
 
 [sinks.apache_logs_firehose_stream_sink]
@@ -27,8 +33,8 @@ const logConfig = (): string => {
   inputs = ["apache_logs_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "ApacheLogsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
@@ -65,7 +71,7 @@ const metricConfig = (): string => {
   type = "remap"
   inputs = ["apache_metrics_to_logs"]
   source = '''
-  .type = "apache-metrics"
+  .type = ${VECTOR_APACHE_METRICS_TYPE}"
   '''
 
 [sinks.apache_metrics_firehose_stream_sink]
@@ -74,8 +80,8 @@ const metricConfig = (): string => {
   inputs = ["apache_metrics_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "ApacheMetricsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"

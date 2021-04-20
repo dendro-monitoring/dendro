@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
+import { AWS_REGION } from '../../constants';
 
 import store from '../../store';
 
@@ -22,9 +23,9 @@ export default function createLambda({
   DATABASE_NAME,
   DATABASE_TABLE,
   Runtime = 'nodejs12.x',
-  region = 'us-east-1',
+  region = AWS_REGION,
   Description = '',
-}: LambdaData ): Promise<any> {
+}: LambdaData): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
 

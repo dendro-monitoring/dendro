@@ -1,10 +1,11 @@
 import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
+import { AWS_REGION } from '../../constants';
 
 export default function setLambdaInvokePolicy(
   Arn: string,
   StatementId = 'example-S3-permission',
-  region = 'us-east-1',
+  region = AWS_REGION,
 ): Promise<any> {
   return new Promise(resolve => {
     AWS.config.update({ region });
