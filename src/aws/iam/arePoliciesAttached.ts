@@ -39,6 +39,12 @@ export default function arePoliciesAttached(): Promise<boolean> {
           isPolicyPresent = false;
         }
       }).then(() => {
+        console.log('====================================');
+        console.log('attached', isPolicyPresent);
+        console.log('====================================');
+        console.log('====================================');
+        console.log(returnedPolicyArns);
+        console.log('====================================');
         resolve(isPolicyPresent);
       });
     });

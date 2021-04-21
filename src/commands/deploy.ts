@@ -41,13 +41,13 @@ export default class DeployCommand extends Command {
       await orchestrator.setupFirehose();
       spinner.succeed();
 
-      spinner = log.spin('Setting up timestream...');
-      await orchestrator.setupTimestream();
-      spinner.succeed();
+      // spinner = log.spin('Setting up timestream...');
+      // await orchestrator.setupTimestream();
+      // spinner.succeed();
 
-      spinner = log.spin('Setting up lambda...');
-      await orchestrator.setupLambda();
-      spinner.succeed();
+      // spinner = log.spin('Setting up lambda...');
+      // await orchestrator.setupLambda();
+      // spinner.succeed();
 
     } catch (error) {
       spinner?.fail();

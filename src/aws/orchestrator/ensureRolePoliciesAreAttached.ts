@@ -18,6 +18,9 @@ export default function ensureRolePoliciesAreAttached(): Promise<boolean> {
     asyncRetry(5, isAttached, async () => {
       if (!isAttached) {
         isAttached = await arePoliciesAttached();
+        console.log('====================================');
+        console.log('here@@');
+        console.log('====================================');
         if (isAttached) resolve(isAttached);
       }
     }).then(() => {
