@@ -6,6 +6,25 @@ const aws = require('aws-sdk');
 const https = require('https');
 
 /**
+ * Set up s3 client
+ */
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+
+/**
+ * Configure timestream writeclient
+ */
+const agent = new https.Agent({
+  maxSockets: 5000,
+});
+const writeClient = new aws.TimestreamWrite({
+  maxRetries: 10,
+  httpOptions: {
+    timeout: 20000,
+    agent,
+  },
+});
+
+/**
  * The regex used to match individual records.
  * Records coming in have no `,` so we replace any
  * `}{` with `},{` to make them json parsable
@@ -87,31 +106,12 @@ const allRecords = [
 ];
 
 /**
- * Set up s3 client
- */
-const s3 = new aws.S3({ apiVersion: '2006-03-01' });
-
-/*
- * Configure timestream writeclient
- */
-const agent = new https.Agent({
-  maxSockets: 5000,
-});
-const writeClient = new aws.TimestreamWrite({
-  maxRetries: 10,
-  httpOptions: {
-    timeout: 20000,
-    agent,
-  },
-});
-
-/**
  * The time injected into each record
  * TODO: Replace this with a records unique timestamp
  */
 const currentTime = Date.now().toString();
 
-function buildGenericRecord(record) {
+const buildGenericRecord = (record) => {
   return {
     Dimensions: [
       {
@@ -122,10 +122,10 @@ function buildGenericRecord(record) {
         Name: 'IP',
         Value: '192.1.1.1',
       },
-      /*
-        * Generate a random number.
-        * Timestream will reject data with exact same dimensions.
-        */
+      /**
+       * Generate a random number.
+       * Timestream will reject data with exact same dimensions.
+       */
       {
         Name: 'RANDOMNUMBER',
         Value: `${Math.random() + Math.random() + Math.random()}`,
@@ -136,7 +136,7 @@ function buildGenericRecord(record) {
     MeasureValueType: 'VARCHAR',
     Time: currentTime.toString(),
   };
-}
+};
 
 const buildApacheLogRecord = (record) => {
   apacheLogRecords.push(buildGenericRecord(record));
@@ -183,7 +183,7 @@ const buildPostgresMetricRecord = (record) => {
  *
  * @param {Object[]} rawData Records that were written to S3
  */
-function buildRecordTypes(rawData) {
+const buildRecordTypes = (rawData) => {
   rawData.forEach(record => {
     switch(record.type) {
       case VECTOR_APACHE_LOGS_TYPE:
@@ -218,7 +218,7 @@ function buildRecordTypes(rawData) {
         break;
     }
   });
-}
+};
 
 /**
  * Writes upto a 100 records to Timstream. Timestream can only accept upto
@@ -227,7 +227,7 @@ function buildRecordTypes(rawData) {
  * @param {Object[]} records The records that will be written
  * @returns {Promise} The promise that records will be written to Timestream
  */
-async function write100Records(records,  tablename) {
+const write100Records = async (records, tablename) => {
   const params = {
     DatabaseName: DATABASE_NAME,
     TableName: tablename,
@@ -251,7 +251,7 @@ async function write100Records(records,  tablename) {
       }
     },
   );
-}
+};
 
 /**
  * Iterates on `allRecords`. If a record type contains records,
@@ -260,7 +260,7 @@ async function write100Records(records,  tablename) {
  * @param {Object[]} rawData - An array of records to write to Timestream
  * @returns {void}
  */
-async function writeRecords(rawData) {
+const writeRecords = async (rawData) => {
   console.log('Writing records');
   buildRecordTypes(rawData);
 
@@ -276,7 +276,7 @@ async function writeRecords(rawData) {
   });
 
   await Promise.all(promises);
-}
+};
 
 const getBucketName = event => event.Records[0].s3.bucket.name;
 const getKey = event => decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
@@ -292,7 +292,7 @@ const getParsedS3ObjectBody = s3Obj => JSON.parse(getParsableS3ObjectBody(s3Obj)
 exports.handler = async (event, _context) => {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
-  /*
+  /**
    * Get the object from the event and show its content type
    */
   const bucket = getBucketName(event);
@@ -304,7 +304,7 @@ exports.handler = async (event, _context) => {
 
   let s3Obj;
   try {
-    /*
+    /**
      * Fetch obj from s3
      */
     s3Obj = await s3.getObject(params).promise();
