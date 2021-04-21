@@ -23,6 +23,4 @@ export default {
   detachRolePolicies,
   deleteRole,
   deleteBucket,
-=======
->>>>>>> 6717b17772b50897f482603a497b7c6e2d9b7cf0
 };
