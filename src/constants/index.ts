@@ -5,7 +5,7 @@ export default {
   S3_POLICY_ARN:  'arn:aws:iam::aws:policy/AmazonS3FullAccess',
 };
 
-export const AWS_REGION = 'us-east-2';
+export const AWS_REGION = 'us-east-1';
 export const AWS_FIREHOSE_STREAM_NAME = "DendroFirehoseStream";
 export const AWS_S3_BUCKET_NAME = "dendro-s3-bucket";
 export const AWS_TIMESTREAM_DATABASE_NAME = "DendroTimestreamDB";
