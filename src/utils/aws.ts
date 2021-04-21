@@ -6,8 +6,6 @@ import { AWSCredentialsAnswers } from '../constants/cliTypes';
 /**
  * Used to ensure aws credentials exist prior to doing some operation
  * that would require them.
- *
- * @param {string} msg the error message
  */
 export const ensureCredentials = async (): Promise<void> => {
   if (
