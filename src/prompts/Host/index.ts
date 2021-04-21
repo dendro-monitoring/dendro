@@ -1,4 +1,4 @@
-import prompts = require('prompts');
+import prompts from 'prompts';
 
 export const hostPrompt = async (): Promise<prompts.Answers<"host">> => {
   return await prompts({

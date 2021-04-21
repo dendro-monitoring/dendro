@@ -7,7 +7,7 @@ export default {
 
 export const AWS_REGION = 'us-east-2';
 export const AWS_FIREHOSE_STREAM_NAME = "DendroFirehoseStream";
-export const AWS_S3_BUCKET_NAME = "DendroS3Bucket";
+export const AWS_S3_BUCKET_NAME = "dendro-s3-bucket";
 export const AWS_TIMESTREAM_DATABASE_NAME = "DendroTimestreamDB";
 export const AWS_IAM_ROLE_NAME ="dendro-s3-lambda-role";
 
