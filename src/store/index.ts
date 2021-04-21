@@ -27,6 +27,7 @@ class Store {
   /**
    * Call this function when an error occurs and you plan to exit.
    * This function will dump the current state to the cache to prevent data loss.
+   * Cache is located at `~/.config/dendro-cli/config.json`
    */
   dump() {
     log.debug(`Dumping store data:`);

@@ -1,5 +1,5 @@
 const { Form } = require('enquirer');
-import prompts = require('prompts');
+import prompts from 'prompts';
 
 export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => {
   return await prompts({

@@ -1,4 +1,4 @@
-import prompts = require('prompts');
+import prompts from 'prompts';
 
 import { nginxPrompt, nginxHealthPrompt } from './Nginx';
 import { apachePrompt, apacheHealthPrompt } from './Apache';

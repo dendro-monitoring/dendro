@@ -20,12 +20,12 @@ export const awsCredentialsFormInfo = {
   validate: (answers: AWSCredentialsAnswers): boolean => {
     if (answers['Access Key ID'].length < 16) {
       console.clear();
-      log.warn('That does not look like a AWS Acess Key ID. Length is typically 20\n');
+      log.warn('That does not look like a AWS Access Key ID. Length is typically 20 characters.\n');
 
       return false;
     } else if (answers['Secret Key'].length < 30) {
       console.clear();
-      log.warn('That does not look like a AWS Secret Key. Length is typically 40\n');
+      log.warn('That does not look like a AWS Secret Key. Length is typically 40 characters.\n');
 
       return false;
     }
