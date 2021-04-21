@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -31,9 +32,13 @@ const buildVectorConfig = (): string => {
 };
 
 export const writeVectorConfig = async (): Promise<void> => {
+  const configPath = path.resolve(process.cwd(), 'vector-config.toml');
+
   fs.writeFile(
-    path.resolve(process.cwd(), 'vector-config.toml'),
+    configPath,
     buildVectorConfig(),
     (err) => { if (err) throw err; }
   );
+
+  log.info(chalk.bold(`Vector config file written to: ${chalk.green(configPath)}`));
 };
