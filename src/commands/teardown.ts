@@ -3,6 +3,7 @@ import AWS = require('aws-sdk');
 import { Command, flags } from '@oclif/command';
 import orchestrator from '../aws/orchestrator';
 import log, { LevelNames } from "../utils/log";
+import { AWS_REGION } from '../constants';
 
 // const firehose = new AWS.Firehose();
 // const lambda = new AWS.Lambda();
@@ -26,7 +27,7 @@ export default class Teardown extends Command {
     }),
   };
   async run() {
-    AWS.config.update({ region:'us-east-1' });
+    AWS.config.update({ region: AWS_REGION });
     const parsed = this.parse(Teardown);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
