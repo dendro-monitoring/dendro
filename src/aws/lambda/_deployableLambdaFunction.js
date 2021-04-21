@@ -44,16 +44,46 @@ const postgresMetricRecords = [];
  * We iterate on this to write all records to the db easily.
  */
 const allRecords = [
-  apacheLogRecords,
-  apacheMetricRecords,
-  customAppRecords,
-  hostMetricRecords,
-  mongoLogRecords,
-  mongoMetricRecords,
-  nginxLogRecords,
-  nginxMetricRecords,
-  postgresLogRecords,
-  postgresMetricRecords
+  {
+    type: VECTOR_APACHE_LOGS_TYPE,
+    records: apacheLogRecords
+  },
+  {
+    type: VECTOR_APACHE_METRICS_TYPE,
+    records: apacheMetricRecords
+  },
+  {
+    type: VECTOR_CUSTOM_APPLICATION_TYPE,
+    records: customAppRecords
+  },
+  {
+    type: VECTOR_HOST_METRICS_TYPE,
+    records: hostMetricRecords
+  },
+  {
+    type: VECTOR_MONGO_LOGS_TYPE,
+    records: mongoLogRecords
+  },
+  {
+    type: VECTOR_MONGO_METRICS_TYPE,
+    records: mongoMetricRecords
+  },
+  {
+    type: VECTOR_NGINX_LOGS_TYPE,
+    records: nginxLogRecords
+  },
+  {
+    type: VECTOR_NGINX_METRICS_TYPE,
+    records: nginxMetricRecords
+  },
+  {
+    type: VECTOR_POSTGRES_LOGS_TYPE,
+    records: postgresLogRecords
+  },
+  {
+    type: VECTOR_POSTGRES_METRICS_TYPE,
+    records: postgresMetricRecords
+  }
 ];
 
 /**
@@ -236,11 +266,12 @@ async function writeRecords(rawData) {
 
   const promises = [];
   allRecords.forEach((recordType) => {
-    if (recordType.length === 0) return;
+    const { records, type } = recordType;
 
-    const tableName = records[0].type;
+    if (records.length === 0) return;
+
     for (let i = 0; i <= records.length; i += 100) {
-      promises.push(write100Records(records.slice(i, i + 100), tableName));
+      promises.push(write100Records(records.slice(i, i + 100), type));
     }
   });
 
