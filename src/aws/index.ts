@@ -17,6 +17,7 @@ import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
 import listDeliveryStreams from './firehose/listDeliveryStreams';
+import deleteDeliveryStream from './firehose/deleteDeliveryStream';
 
 import createRole from './iam/createRole';
 import attachRolePolicy from './iam/attachRolePolicy';
@@ -48,10 +49,12 @@ export default {
 
   createDeliveryStream,
   listDeliveryStreams,
+  deleteDeliveryStream,
 
   createRole,
   attachRolePolicy,
   listRoles,
+  detachRolePolicy,
 
   getCredentials,
 

@@ -1,8 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import detachRolePolicy from "../iam/detachRolePolicy";
 import getAttachedRolePolicies from "../iam/getAttachedRolePolicies";
-import store from '../../store';
-import constants from '../../constants';
+import { AWS_IAM_ROLE_NAME } from '../../constants';
 
 export default async function detachRolePolicies(): Promise<void> {
   const policies = await getAttachedRolePolicies();
@@ -12,7 +11,7 @@ export default async function detachRolePolicies(): Promise<void> {
     if (policies) {
       policies.forEach((policy: string) => {
         promises.push(detachRolePolicy(
-          store.AWS.IAM.RoleName!, policy
+          AWS_IAM_ROLE_NAME, policy
         ));
       });
     }

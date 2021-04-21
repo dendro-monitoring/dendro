@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import AWS = require('aws-sdk');
 // import { AWSError, IAM } from 'aws-sdk';
 import { Command, flags } from '@oclif/command';
@@ -38,7 +39,14 @@ export default class Teardown extends Command {
       spinner.succeed();
 
       spinner = log.spin('Deleting bucket...');
-      await orchestrator.deleteBucket();
+      const bucketResponse = await orchestrator.deleteBucket();
+      if (bucketResponse.code === "NoSuchBucket") {
+        log.warn("Couldn't delete bucket: No such bucket exists");
+      }
+      spinner.succeed();
+
+      spinner = log.spin('Deleting firehose...');
+      await orchestrator.deleteFirehose();
       spinner.succeed();
 
     } catch (error) {

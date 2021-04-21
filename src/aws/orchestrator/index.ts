@@ -9,6 +9,7 @@ import setupFirehose from './setupFirehose';
 import detachRolePolicies from './detachRolePolicies';
 import deleteRole from './deleteRole';
 import deleteBucket from './deleteBucket';
+import deleteFirehose from './deleteFirehose';
 
 export default {
   createRole,
@@ -22,4 +23,5 @@ export default {
   detachRolePolicies,
   deleteRole,
   deleteBucket,
+  deleteFirehose,
 };
