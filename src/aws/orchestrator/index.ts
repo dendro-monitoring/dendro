@@ -19,7 +19,6 @@ export default {
   getLogEvents,
   setupLambda,
   setupFirehose,
-<<<<<<< HEAD
   detachRolePolicies,
   deleteRole,
   deleteBucket,
