@@ -47,6 +47,9 @@ const VECTOR_NGINX_METRICS_TYPE = "nginx-metrics";
 const VECTOR_POSTGRES_LOGS_TYPE = "postgres-logs";
 const VECTOR_POSTGRES_METRICS_TYPE = "postgres-metrics";
 
+/**
+ * Arrays for dividing the individual record types.
+ */
 const apacheLogRecords = [];
 const apacheMetricRecords = [];
 const customAppRecords = [];
