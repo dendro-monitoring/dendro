@@ -10,6 +10,14 @@ interface TimestreamTableData {
   region: string
 }
 
+/**
+ * @param params - Parameters object
+ * @param params.DatabaseName Required
+ * @param params.TableName Required
+ * @param params.MagneticStoreRetentionPeriodInDays defaults to 30
+ * @param params.MemoryStoreRetentionPeriod defaults to 720
+ * @returns Promise
+ */
 export default function createTimestreamTable({
   DatabaseName,
   TableName,
