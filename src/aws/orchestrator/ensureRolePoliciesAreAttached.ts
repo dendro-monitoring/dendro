@@ -1,21 +1,21 @@
-import AWS = require('aws-sdk');
 import arePoliciesAttached from '../iam/arePoliciesAttached';
 
-function asyncForEach(array, callback): Promise<void> {
+function asyncRetry(count: number, shortCircuit: boolean, callback: () => void): Promise<void> {
   return new Promise(resolve => {
     (async () => {
-      for (let index = 0; index < array.length; index++) {
-        await callback(array[index], index, array);
+      if (shortCircuit) return;
+      for (let index = 0; index < count; index++) {
+        await callback();
       }
       resolve();
     })();
   });
 }
 
-export default function ensureRolePoliciesAreAttached() {
+export default function ensureRolePoliciesAreAttached(): Promise<boolean> {
   return new Promise(resolve => {
     let isAttached = false;
-    asyncForEach([1,2,3], async () => {
+    asyncRetry(5, isAttached, async () => {
       if (!isAttached) {
         isAttached = await arePoliciesAttached();
         if (isAttached) resolve(isAttached);

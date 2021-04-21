@@ -5,19 +5,27 @@ import attachRolePolicies from './attachRolePolicies';
 import ensureRolePoliciesAreAttached from './ensureRolePoliciesAreAttached';
 
 import { AWS_IAM_ROLE_NAME } from '../../constants';
+import arePoliciesAttached from '../iam/arePoliciesAttached';
 
 export default function createRole(): Promise<void> {
+  async function attachPolicies(): Promise<void> {
+    await attachRolePolicies();
+    await ensureRolePoliciesAreAttached();
+  }
   return new Promise(resolve => {
 
     AWSWrapper.createRole(AWS_IAM_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(async newRole => {
       if (newRole) {
-        await attachRolePolicies();
-        await ensureRolePoliciesAreAttached();
         store.AWS.IAM.Arn = newRole.Role.Arn;
+        await attachPolicies();
+
         resolve();
       } else {
         const roles: any = await listRoles();
+        const isAttached = await arePoliciesAttached();
         store.AWS.IAM.Arn = roles.find((role: any) => role.RoleName === AWS_IAM_ROLE_NAME).Arn;
+        if (!isAttached) await attachPolicies();
+
         resolve();
       }
     });

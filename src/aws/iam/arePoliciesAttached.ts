@@ -1,8 +1,8 @@
 /* eslint-disable max-lines-per-function */
 import AWS = require('aws-sdk');
+import constants, { AWS_IAM_ROLE_NAME } from '../../constants';
+
 const iam = new AWS.IAM();
-import constants from '../../constants';
-import store from '../../store';
 const ROLE_POLICIES = [
   constants.LAMBDA_POLICY_ARN,
   constants.FIREHOSE_POLICY_ARN,
@@ -14,22 +14,33 @@ const sleep = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
 };
 
+function asyncRetry(array: Array<any>, callback: (input: string) => void): Promise<void> {
+  return new Promise(resolve => {
+    (async () => {
+      for (let index = 0; index < array.length; index++) {
+        await callback(array[index]);
+      }
+      resolve();
+    })();
+  });
+}
+
 export default function arePoliciesAttached(): Promise<boolean> {
   return new Promise(resolve => {
-    iam.listAttachedRolePolicies({ RoleName: store.AWS.IAM.RoleName! }, (err, data) => {
-      if (err) throw new Error(err);
-      if (!data.AttachedPolicies) {
-        resolve(false);
-      }
-      const returnedPolicyArns = data.AttachedPolicies.map(policy => policy.PolicyArn);
+    iam.listAttachedRolePolicies({ RoleName: AWS_IAM_ROLE_NAME }, (err, data: any) => {
+      if (err) throw new Error(String(err));
+
+      const returnedPolicyArns = data.AttachedPolicies.map((policy: { PolicyArn: string }) => policy.PolicyArn);
       let isPolicyPresent = true;
-      ROLE_POLICIES.forEach(async arnValue => {
+
+      asyncRetry(ROLE_POLICIES, async arnValue => {
         if (!returnedPolicyArns.includes(arnValue)) {
           await sleep(1000);
           isPolicyPresent = false;
         }
+      }).then(() => {
+        resolve(isPolicyPresent);
       });
-      resolve(isPolicyPresent);
     });
   });
 }
