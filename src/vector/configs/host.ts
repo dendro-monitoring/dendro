@@ -56,7 +56,7 @@ scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
 };
 
 export const buildHostConfig = (): string => {
-  if (store.Vector.Host.shouldBuildConfig()) {
+  if (store.Vector.Host.isMonitored()) {
     return config();
   }
 
