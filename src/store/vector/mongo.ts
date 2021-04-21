@@ -1,7 +1,7 @@
 export interface MongoData {
   port?: string;
   url?: string;
-  scrapeIntervalSeconds?: number;
+  scrapeIntervalSeconds?: string;
   monitorLogs?: boolean;
   monitorMetrics?: boolean;
 }
@@ -11,7 +11,7 @@ class Mongo {
 
   url: string;
 
-  scrapeIntervalSeconds: number;
+  scrapeIntervalSeconds: string;
 
   monitorLogs: boolean;
 
@@ -20,7 +20,7 @@ class Mongo {
   constructor({
     port = '27017',
     url = 'localhost',
-    scrapeIntervalSeconds = 15,
+    scrapeIntervalSeconds = '15',
     monitorLogs = false,
     monitorMetrics = false,
   }: MongoData) {

@@ -9,7 +9,7 @@ export default function getLogEvents(): Promise<any>{
 
       results = [...results, ...events];
     } while (store.AWS.Cloudwatch.NextToken);
-    
+
     resolve(results);
   });
 }
