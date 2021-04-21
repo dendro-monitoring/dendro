@@ -1,3 +1,4 @@
+import { AWS_TIMESTREAM_DATABASE_NAME } from "../../constants";
 import createTable from '../timestream/createTimestreamTable';
 
 import store from '../../store';
@@ -9,10 +10,10 @@ import store from '../../store';
 export default function createTimestreamTables(): Promise<void> {
   const promises: Array<Promise<any>> = [];
 
-  function pushCreateTablePromise(serviceName: string) {
-    promises.push(createTable({ 
-      DatabaseName: store.AWS.Timestream.DatabaseName!, 
-      TableName: `${store.AWS.Timestream.TablePrefix}-${serviceName}`
+  function pushCreateTablePromise(TableName: string) {
+    promises.push(createTable({
+      DatabaseName: AWS_TIMESTREAM_DATABASE_NAME,
+      TableName
     } as unknown as any));
   }
 
@@ -20,7 +21,7 @@ export default function createTimestreamTables(): Promise<void> {
     if (store.Vector.Apache.monitorAccessLogs) {
       pushCreateTablePromise('apache-access-logs');
     }
-    if (store.Vector.Apache.monitorErrorLogs) { 
+    if (store.Vector.Apache.monitorErrorLogs) {
       pushCreateTablePromise('apache-error-logs');
     }
     if (store.Vector.Apache.monitorMetrics) {
@@ -41,7 +42,7 @@ export default function createTimestreamTables(): Promise<void> {
     if (store.Vector.Nginx.monitorAccessLogs) {
       pushCreateTablePromise('nginx-access-logs');
     }
-    if (store.Vector.Nginx.monitorErrorLogs) { 
+    if (store.Vector.Nginx.monitorErrorLogs) {
       pushCreateTablePromise('nginx-error-logs');
     }
     if (store.Vector.Nginx.monitorMetrics) {
@@ -66,9 +67,12 @@ export default function createTimestreamTables(): Promise<void> {
     if (store.Vector.Host.shouldBuildConfig()) {
       pushCreateTablePromise('host-metrics');
     }
+    if (store.Vector.CustomApplications.length > 0) {
+      pushCreateTablePromise('custom-application');
+    }
 
     Promise.all(promises).then(() => {
       resolve();
     });
   });
-} 
+}
