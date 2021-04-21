@@ -64,7 +64,7 @@ export default function createTimestreamTables(): Promise<void> {
     setupMongoTables();
     setupNginxTables();
     setupPostgresTables();
-    if (store.Vector.Host.shouldBuildConfig()) {
+    if (store.Vector.Host.isMonitored()) {
       pushCreateTablePromise('host-metrics');
     }
     if (store.Vector.CustomApplications.length > 0) {
