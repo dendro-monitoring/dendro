@@ -12,11 +12,10 @@ import {
   hostPrompt,
   customApplicationPromptOptions
 } from '../prompts';
+import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
 import { ensureCredentials } from '../utils/aws';
 import chalk from 'chalk';
-
-type Answers = string[] | undefined;
 
 export default class Configure extends Command {
   static description = 'configuring collector/agent setup of log sources';
@@ -41,7 +40,7 @@ export default class Configure extends Command {
   async nginxConfig(): Promise<void> {
     console.clear();
 
-    const nginxServices: Answers = (await nginxPrompt()).nginx;
+    const nginxServices: PromptAnswers = (await nginxPrompt()).nginx;
 
     if (nginxServices?.includes('Access log')) { store.Vector.Nginx.monitorAccessLogs = true; }
     if (nginxServices?.includes('Error log')) { store.Vector.Nginx.monitorErrorLogs = true; }
@@ -57,7 +56,7 @@ export default class Configure extends Command {
   async apacheConfig(): Promise<void> {
     console.clear();
 
-    const apacheServices: Answers = (await apachePrompt()).apache;
+    const apacheServices: PromptAnswers = (await apachePrompt()).apache;
 
     if (apacheServices?.includes('Access log')) { store.Vector.Apache.monitorAccessLogs = true; }
     if (apacheServices?.includes('Error log')) { store.Vector.Apache.monitorErrorLogs = true; }
@@ -73,7 +72,7 @@ export default class Configure extends Command {
   async postgresConfig(): Promise<void> {
     console.clear();
 
-    const postgresServices: Answers = (await postgresPrompt()).postgres;
+    const postgresServices: PromptAnswers = (await postgresPrompt()).postgres;
 
     if (postgresServices?.includes('Error log')) { store.Vector.Postgres.monitorErrorLogs = true; }
     if (postgresServices?.includes('Health metrics')) {
@@ -88,7 +87,7 @@ export default class Configure extends Command {
   async mongoConfig(): Promise<void> {
     console.clear();
 
-    const mongoServices: Answers = (await mongoPrompt()).mongo;
+    const mongoServices: PromptAnswers = (await mongoPrompt()).mongo;
 
     if (mongoServices?.includes('Log')) { store.Vector.Mongo.monitorLogs = true; }
     if (mongoServices?.includes('Health metrics')) {
@@ -104,7 +103,7 @@ export default class Configure extends Command {
   async hostConfig(): Promise<void> {
     console.clear();
 
-    const hostServices: Answers = (await hostPrompt()).host;
+    const hostServices: PromptAnswers = (await hostPrompt()).host;
 
     if (!hostServices) return;
 
