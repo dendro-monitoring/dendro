@@ -11,6 +11,9 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
       ExtendedS3DestinationConfiguration: {
         BucketARN: `arn:aws:s3:::${BucketName}`, /* required */
         RoleARN,
+        BufferingHints: {
+          IntervalInSeconds: 60,
+        },
         CloudWatchLoggingOptions: {
           Enabled: true,
           LogGroupName: 'test-logger',
