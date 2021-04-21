@@ -1,9 +1,10 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
+import { AWS_REGION } from '../../constants';
 
 import store from '../../store';
 
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update({ region: AWS_REGION });
 const timestreamquery = new AWS.TimestreamQuery();
 
 export default function query(QueryString: string): Promise<any> {

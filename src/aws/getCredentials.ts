@@ -1,4 +1,4 @@
-import AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
 export default async function isAuthenticated(): Promise<any> {
   return new Promise(resolve => {

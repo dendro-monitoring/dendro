@@ -37,7 +37,7 @@ class AWS {
     S3: s3 = {},
     Firehose: firehose = {},
     Timestream: timestream = {},
-    IAM: iam = { role: {} },
+    IAM: iam = {},
     Cloudwatch: cloudwatch = {}
   }: AWSData) {
     this.Credentials = new Credentials(credentials);

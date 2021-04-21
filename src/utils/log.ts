@@ -1,4 +1,4 @@
-import * as ora from 'ora';
+import ora from 'ora';
 import * as chalk from 'chalk';
 
 export type LevelNames = 'debug' | 'info' | 'warn' | 'error' | 'fatal';
