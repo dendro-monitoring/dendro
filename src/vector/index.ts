@@ -1,4 +1,6 @@
-import { ensureCredentials } from '../utils/aws';
+import * as fs from 'fs';
+import * as path from 'path';
+
 import log from '../utils/log';
 
 import { buildApacheConfig } from './configs/apache';
@@ -12,9 +14,8 @@ import { buildPostgresConfig } from './configs/postgres';
  * Build the vector config file based on the current store
  * @returns {String} The vector config file ready to write to disk
  */
-export const buildVectorConfig = (): string => {
+const buildVectorConfig = (): string => {
   log.debug('Writing vector config');
-  ensureCredentials('Tried writing vector configs without aws credentials existing.');
 
   let config = '';
   config += buildApacheConfig();
@@ -27,4 +28,12 @@ export const buildVectorConfig = (): string => {
   log.debug(`Vector config file: \n${config}`);
 
   return config;
+};
+
+export const writeVectorConfig = async (): Promise<void> => {
+  fs.writeFile(
+    path.resolve(process.cwd(), 'vector-config.toml'),
+    buildVectorConfig(),
+    (err) => { if (err) throw err; }
+  );
 };
