@@ -1,5 +1,11 @@
 import store from '../../store';
 import log from '../../utils/log';
+import {
+  AWS_REGION,
+  AWS_FIREHOSE_STREAM_NAME,
+  VECTOR_NGINX_LOGS_TYPE,
+  VECTOR_NGINX_METRICS_TYPE,
+} from '../../constants';
 
 const logConfig = (): string => {
   log.debug('Writing Nginx vector log config');
@@ -18,7 +24,7 @@ const logConfig = (): string => {
   type = "remap"
   inputs = ["nginx_logs"]
   source = '''
-  .type = "nginx-logs"
+  .type = "${VECTOR_NGINX_LOGS_TYPE}"
   '''
 
 [sinks.nginx_logs_firehose_stream_sink]
@@ -27,8 +33,8 @@ const logConfig = (): string => {
   inputs = ["nginx_logs_transform"]
 
   # AWS
-  region = "us-east-2", required when endpoint = null
-  stream_name = "NginxLogsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
@@ -65,7 +71,7 @@ const metricConfig = (): string => {
   type = "remap"
   inputs = ["nginx_metrics_to_logs"]
   source = '''
-  .type = "nginx-metrics"
+  .type = "${VECTOR_NGINX_METRICS_TYPE}"
   '''
 
 [sinks.nginx_metrics_firehose_stream_sink]
@@ -74,8 +80,8 @@ const metricConfig = (): string => {
   inputs = ["nginx_metrics_transform"]
 
   # AWS
-  region = "us-east-2"
-  stream_name = "NginxMetricsDendroStream"
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
 
   ## Auth
   auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
