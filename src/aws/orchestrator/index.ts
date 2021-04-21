@@ -15,5 +15,5 @@ export default {
   listTables,
   getLogEvents,
   setupLambda,
-  setupFirehose, 
+  setupFirehose,
 };

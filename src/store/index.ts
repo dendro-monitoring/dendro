@@ -93,10 +93,7 @@ const cache: CacheData = diskCache || {
     Lambda: {},
     S3: {},
     Firehose: {},
-    Timestream: {
-      // TODO:
-      TableName: 'default-table-134'
-    },
+    Timestream: {},
     IAM: {},
   },
   Vector: {

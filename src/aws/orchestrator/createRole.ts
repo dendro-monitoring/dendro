@@ -1,4 +1,3 @@
-// const store = require('../store')
 import AWSWrapper from '../../aws';
 import store from '../../store';
 import listRoles from '../iam/listRoles';
