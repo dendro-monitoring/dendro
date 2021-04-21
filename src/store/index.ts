@@ -27,6 +27,7 @@ class Store {
   /**
    * Call this function when an error occurs and you plan to exit.
    * This function will dump the current state to the cache to prevent data loss.
+   * Cache is located at `~/.config/dendro-cli/config.json`
    */
   dump() {
     log.debug(`Dumping store data:`);
@@ -91,19 +92,10 @@ const cache: CacheData = diskCache || {
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     },
     Lambda: {},
-    S3: { 
-      bucketName: 'dendro-bucket'
-    },
-    Firehose: {
-      deliveryStreamName: 'DendroFirehoseStream'
-    },
-    Timestream: {
-      DatabaseName: 'dendro-timestream',
-      TablePrefix: 'default-table-134'
-    },
-    IAM: {
-      RoleName: 'dendro-s3-lambda-role'
-    },
+    S3: {},
+    Firehose: {},
+    Timestream: {},
+    IAM: {},
   },
   Vector: {
     Postgres: {},

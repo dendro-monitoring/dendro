@@ -33,6 +33,6 @@ export default class QueryCommand extends Command {
 
     const results = await orchestrator.query(QueryString);
     console.log(results);
-    
+
   }
 }

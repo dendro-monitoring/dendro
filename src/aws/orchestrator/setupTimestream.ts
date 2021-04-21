@@ -1,14 +1,13 @@
 import createTimestreamDatabase from '../../aws/timestream/createTimestreamDatabase';
 import setupTimestreamTables from './setupTimestreamTables';
 
-import store from '../../store';
+import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
 
 export default function setupTimestream(): Promise<void> {
   return new Promise(resolve => {
-    createTimestreamDatabase(store.AWS.Timestream.DatabaseName!).then( async (databaseData) => {
+    createTimestreamDatabase(AWS_TIMESTREAM_DATABASE_NAME).then( async () => {
       await setupTimestreamTables();
       resolve();
     });
-
   });
 }
