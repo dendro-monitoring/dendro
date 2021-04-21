@@ -1,0 +1,35 @@
+
+################ Nginx Logs #############################
+
+[sources.nginx_logs]
+  type = "file"
+  include = [
+    "/var/log/nginx/access_log.log",
+    "/var/log/nginx/error_log.log"
+  ]
+  read_from = "beginning"
+
+[transforms.nginx_logs_transform]
+  type = "remap"
+  inputs = ["nginx_logs"]
+  source = '''
+  .type = "nginx-logs"
+  '''
+
+[sinks.nginx_logs_firehose_stream_sink]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["nginx_logs_transform"]
+
+  # AWS
+  region = "us-east-2"
+  stream_name = "DendroFirehoseStream"
+
+  ## Auth
+  auth.access_key_id = "dddddddddddddddddddd"
+  auth.secret_access_key = "dddddddddddddddddddddddddddddddddddddddddddd"
+
+  # Encoding
+  encoding.codec = "json"
+
+#############################################

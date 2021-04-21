@@ -1,4 +1,4 @@
-const { MultiSelect, Form } = require('enquirer');
+const { Form } = require('enquirer');
 import prompts = require('prompts');
 
 export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => {
@@ -8,12 +8,12 @@ export const postgresPrompt = async (): Promise<prompts.Answers<"postgres">> => 
     message: 'Which of the following aspects of Postgres would you like to monitor?\n',
     instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
     choices: [
-      { 
+      {
         title: 'Error log',
         value: 'Error log',
         description: 'Collect Postgres logs per your `postgresql.conf` file.\nFor more information on defaults, visit: https://www.postgresql.org/docs/9.0/runtime-config-logging.html'
       },
-      { 
+      {
         title: 'Health metrics',
         value: 'Health metrics',
         description: 'Record information on status, database connections, and more.\nFor more info, visit https://vector.dev/docs/reference/configuration/sources/postgresql_metrics/'
