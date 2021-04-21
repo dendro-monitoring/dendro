@@ -1,7 +1,5 @@
 export interface TimestreamData {
   DatabaseName?: string
-  TableName?: string
-  DatabaseData?: Record<string, any>
   NextToken?: string;
 }
 
@@ -10,13 +8,10 @@ export interface TimestreamData {
  */
 class Timestream {
   DatabaseName?: string;
-  TableName?: string;
-  DatabaseData?: Record<string, any>;
   NextToken?: string;
 
-  constructor({ DatabaseName, TableName, NextToken }: TimestreamData) {
+  constructor({ DatabaseName, NextToken }: TimestreamData) {
     this.DatabaseName = DatabaseName;
-    this.TableName = TableName;
     this.NextToken = NextToken;
   }
 }

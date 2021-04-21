@@ -1,5 +1,5 @@
-const { MultiSelect, Form } = require('enquirer');
-import prompts = require('prompts');
+const { Form } = require('enquirer');
+import prompts from 'prompts';
 
 export const mongoPrompt = async (): Promise<prompts.Answers<"mongo">> => {
   return await prompts({
@@ -8,12 +8,12 @@ export const mongoPrompt = async (): Promise<prompts.Answers<"mongo">> => {
     message: 'Which of the following aspects of MongoDB would you like to monitor?\n',
     instructions: 'Press: Space to select one, A to select all, and Enter to submit.',
     choices: [
-      { 
+      {
         title: 'Log',
         value: 'Log',
-        description: 'Collect default MongoDB log messages. https://docs.mongodb.com/manual/reference/log-messages/' 
+        description: 'Collect default MongoDB log messages. https://docs.mongodb.com/manual/reference/log-messages/'
       },
-      { 
+      {
         title: 'Health metrics',
         value: 'Health metrics',
         description: 'For info on specific metrics collected, visit: https://vector.dev/docs/reference/configuration/sources/mongodb_metrics/'
