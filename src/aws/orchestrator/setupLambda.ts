@@ -11,7 +11,6 @@ export default function setupLambda(): Promise<void> {
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: store.AWS.IAM.Arn,
       DATABASE_NAME: AWS_TIMESTREAM_DATABASE_NAME,
-      DATABASE_TABLE: store.AWS.Timestream.TableName,
     } as any).then( async (lambdaData) => {
 
       if (!lambdaData) {

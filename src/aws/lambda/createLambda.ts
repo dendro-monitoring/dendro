@@ -11,7 +11,6 @@ interface LambdaData {
   lambdaFile: string,
   Role: string,
   DATABASE_NAME: string,
-  DATABASE_TABLE: string,
   Runtime: string,
   region: string,
   Description: string
@@ -21,7 +20,6 @@ export default function createLambda({
   lambdaFile,
   Role = store.AWS.IAM.Arn!,
   DATABASE_NAME,
-  DATABASE_TABLE,
   Runtime = 'nodejs12.x',
   region = AWS_REGION,
   Description = '',
@@ -53,14 +51,9 @@ export default function createLambda({
       Environment: {
         Variables: {
           DATABASE_NAME,
-          DATABASE_TABLE,
         },
       },
     };
-    // console.log('====================================');
-    // console.log(params.FunctionName);
-    // console.log('====================================');
-    // resolve();
 
     lambda.createFunction(params, (err: AWSError, data) => {
       if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));

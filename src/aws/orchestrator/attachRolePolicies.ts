@@ -1,5 +1,4 @@
 import attachRolePolicy from "../iam/attachRolePolicy";
-import store from '../../store';
 import constants from '../../constants';
 
 import { AWS_IAM_ROLE_NAME } from '../../constants';
