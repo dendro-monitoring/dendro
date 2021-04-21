@@ -49,7 +49,7 @@ class Host {
   /*
    * Helps identify if a host vector config should be built
    */
-  shouldBuildConfig(): boolean {
+  isMonitored(): boolean {
     if (this.cpu) return true;
     if (this.disk) return true;
     if (this.filesystem) return true;

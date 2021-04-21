@@ -36,6 +36,7 @@ USAGE
 * [`dendro list`](#dendro-list)
 * [`dendro logs`](#dendro-logs)
 * [`dendro query [QUERYSTRING]`](#dendro-query-querystring)
+* [`dendro review [FILE]`](#dendro-review-file)
 * [`dendro start:server`](#dendro-startserver)
 
 ## `dendro clean`
@@ -165,6 +166,22 @@ OPTIONS
 ```
 
 _See code: [src/commands/query.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/query.ts)_
+
+## `dendro review [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ dendro review [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/review.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/review.ts)_
 
 ## `dendro start:server`
 
