@@ -17,6 +17,7 @@
     "cli-ux": "^5.5.1",
     "conf": "^9.0.2",
     "enquirer": "^2.3.6",
+    "js-file-download": "^0.4.12",
     "next": "10.1.3",
     "ora": "^5.4.0",
     "prompts": "^2.4.1",
