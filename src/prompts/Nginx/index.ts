@@ -1,5 +1,5 @@
 const { Form } = require('enquirer');
-import prompts = require('prompts');
+import prompts from 'prompts';
 
 export const nginxPrompt = async (): Promise<prompts.Answers<"nginx">> => {
   return await prompts({
