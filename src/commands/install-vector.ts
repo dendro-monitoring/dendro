@@ -9,8 +9,8 @@ export default class InstallVector extends Command {
 
     const prompt = new Select({
       name: 'package-manager',
-      message: 'Which package managers do you use?',
-      choices: [ 'Homebrew', 'APT', 'RPM' ]
+      message: 'Which package manager do you use?',
+      choices: [ 'Homebrew', 'APT', 'RPM', 'Other' ]
     });
 
     const choice = await prompt.run();
@@ -25,6 +25,8 @@ export default class InstallVector extends Command {
     } else if (choice.includes('RPM')) {
       console.log(instructions);
       console.log('sudo rpm -i https://packages.timber.io/vector/0.13.X/vector-0.13.X-1.x86_64.rpm && sudo systemctl restart vector');
+    } else if (choice.includes('Other')) {
+      console.log('Please check the official Vector documentation at: https://vector.dev/docs/setup/installation/');
     }
   }
 }
