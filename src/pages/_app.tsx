@@ -11,8 +11,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     (async () => {
       console.log('hit');
       const res = await fetch("/api/tables");
-      const { data } = await res.json();
-      setServices(data);
+      const { tableNames } = await res.json();
+      setServices(tableNames);
     })();
   }, []);
 
