@@ -1,5 +1,6 @@
 import store from '../../store';
 import listTablesTimestream from "../timestream/listTables";
+import * as AWS from 'aws-sdk';
 
 import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
 
@@ -10,12 +11,17 @@ import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
  * ```
  * @returns Promise<any>
  */
-export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_DATABASE_NAME): Promise<any> {
-  return new Promise(async resolve => {
+export default async function listTables(): Promise<any> {
+  return new Promise(async (resolve, reject) => {
     let results: Array<any> = [];
     do {
-      const result = await listTablesTimestream(DatabaseName);
-      results = [...results, ...result.Tables];
+      try {
+        const result = await listTablesTimestream();
+        results = [...results, ...result.Tables];
+      } catch (e) {
+        reject(e);
+      }
+
     } while (store.AWS.Timestream.NextToken);
 
     resolve(results);

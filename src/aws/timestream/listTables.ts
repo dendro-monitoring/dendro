@@ -5,8 +5,8 @@ import { AWS_REGION } from '../../constants';
 AWS.config.update({ region: AWS_REGION });
 
 const timestreamwrite = new AWS.TimestreamWrite();
-export default async function listTables(DatabaseName: string): Promise<any> {
-  return new Promise(resolve => {
+export default async function listTables(): Promise<any> {
+  return new Promise((resolve, reject) => {
     const params = {
       DatabaseName,
       NextToken: store.AWS.Timestream.NextToken
@@ -14,7 +14,8 @@ export default async function listTables(DatabaseName: string): Promise<any> {
 
     timestreamwrite.listTables(params, function(err, data) {
       if (err) {
-        throw new Error(String(err));
+        reject(err);
+        return;
       }
 
       store.AWS.Timestream.NextToken = data.NextToken;
