@@ -35,16 +35,16 @@ const VECTOR_POSTGRES_METRICS_TYPE = "postgres-metrics"
 
 // Arrays for dividing the individual record types.
 
-var apacheLogRecords []*timestreamwrite.Record      // = make([]*timestreamwrite.Record, 1)
-var apacheMetricRecords []*timestreamwrite.Record   // = make([]*timestreamwrite.Record, 1)
-var customAppRecords []*timestreamwrite.Record      // = make([]*timestreamwrite.Record, 1)
-var hostMetricRecords []*timestreamwrite.Record     // = make([]*timestreamwrite.Record, 1)
-var mongoLogRecords []*timestreamwrite.Record       // = make([]*timestreamwrite.Record, 1)
-var mongoMetricRecords []*timestreamwrite.Record    // = make([]*timestreamwrite.Record, 1)
-var nginxLogRecords []*timestreamwrite.Record       // = make([]*timestreamwrite.Record, 1)
-var nginxMetricRecords []*timestreamwrite.Record    // = make([]*timestreamwrite.Record, 1)
-var postgresLogRecords []*timestreamwrite.Record    // = make([]*timestreamwrite.Record, 1)
-var postgresMetricRecords []*timestreamwrite.Record // = make([]*timestreamwrite.Record, 1)
+var apacheLogRecords []*timestreamwrite.Record
+var apacheMetricRecords []*timestreamwrite.Record
+var customAppRecords []*timestreamwrite.Record
+var hostMetricRecords []*timestreamwrite.Record
+var mongoLogRecords []*timestreamwrite.Record
+var mongoMetricRecords []*timestreamwrite.Record
+var nginxLogRecords []*timestreamwrite.Record
+var nginxMetricRecords []*timestreamwrite.Record
+var postgresLogRecords []*timestreamwrite.Record
+var postgresMetricRecords []*timestreamwrite.Record
 
 /*
 An array contain all record types.
