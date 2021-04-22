@@ -7,22 +7,34 @@ const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/_deployable
 
 export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
-    AWSWrapper.createLambda({
+    const params: any = {
       lambdaFile: PATH_TO_LAMBDA_FUNCTION,
       Role: store.AWS.IAM.Arn,
       DATABASE_NAME: AWS_TIMESTREAM_DATABASE_NAME,
-    } as any).then( async (lambdaData) => {
+    };
 
+    AWSWrapper.createLambda(params).then(async (lambdaData) => {
       if (!lambdaData) {
         const funcs = await AWSWrapper.listFunctions();
-        store.AWS.Lambda.FunctionArn = funcs.Functions.find( (func: { FunctionName: string}) => path.basename(PATH_TO_LAMBDA_FUNCTION) === `${func.FunctionName}.js`).FunctionArn;
+        store.AWS.Lambda.FunctionArn = funcs
+          .Functions
+          .find((func: { FunctionName: string}) => (
+            path.basename(PATH_TO_LAMBDA_FUNCTION) === `${func.FunctionName}.js`
+          )).FunctionArn;
+
         return resolve();
       }
-      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn).then( async () => {
-        store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
-        await AWSWrapper.createS3LambdaTrigger(AWS_S3_BUCKET_NAME, store.AWS.Lambda.FunctionArn!);
-        resolve();
-      });
+
+      AWSWrapper.setLambdaInvokePolicy(lambdaData.FunctionArn)
+        .then(async () => {
+          store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
+          await AWSWrapper.createS3LambdaTrigger(
+            AWS_S3_BUCKET_NAME,
+            store.AWS.Lambda.FunctionArn as string
+          );
+
+          resolve();
+        });
     });
   });
 }
