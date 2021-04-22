@@ -1,15 +1,25 @@
-import store from '../../store';
+import describeLogGroups from '../cloudwatch/describeLogGroups';
+import describeLogStreams from '../cloudwatch/describeLogStreams';
 import getEvents from '../cloudwatch/getLogEvents';
 
-export default function getLogEvents(): Promise<any>{
+export default function getLogEvents(): Promise<void>{
   return new Promise(async resolve => {
-    let results: Array<any> = [];
-    do {
-      const { events } = await getEvents('/aws/lambda/DendroTestS3ToTimestream', '2021/04/13/[$LATEST]b61150ae86bd4fce959156adce82f3fb');
+    const results = {};
+    const logGroups = await describeLogGroups();
+    logGroups.forEach( (group: { logGroupName: string}) => results[group.logGroupName] = group);
 
-      results = [...results, ...events];
-    } while (store.AWS.Cloudwatch.NextToken);
+    for (const logGroupName of Object.keys(results)) {
+      const logGroup = results[logGroupName];
 
-    resolve(results);
+      logGroup.logStreams = await describeLogStreams(logGroupName);
+
+      for (const logStream of logGroup.logStreams) {
+        const events = await(getEvents(logGroupName, logStream.logStreamName));
+
+        logStream.events = events;
+      }
+    }
+    console.log(JSON.stringify(results, null, 2));
+    resolve();
   });
 }
