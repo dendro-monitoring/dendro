@@ -128,35 +128,20 @@ func buildRecordTypes(rawRecords *[]map[string]interface{}) {
 }
 
 func WriteRecords(
-	records *[]*timestreamwrite.Record,
-	vectorType string,
+	recordInput *timestreamwrite.WriteRecordsInput,
 	svc *timestreamwrite.TimestreamWrite,
-	totalLen int,
+	vectorType string,
 ) {
-	for i := 0; i <= totalLen; i += 100 {
-		recordInput := timestreamwrite.WriteRecordsInput{
-			DatabaseName: &DATABASE_NAME,
-			TableName:    &vectorType,
-		}
-
-		if totalLen-i-100 >= 0 {
-			recordInput.SetRecords((*records)[i : i+100])
-		} else {
-			lenRemaining := totalLen - i
-			recordInput.SetRecords((*records)[i : i+lenRemaining])
-		}
-
-		_, err := svc.WriteRecords(&recordInput)
-		if err != nil {
-			fmt.Println(err)
-			panic(err)
-		}
-
-		fmt.Printf(
-			"\nSuccessfully wrote records for table: %s",
-			vectorType,
-		)
+	_, err := svc.WriteRecords(recordInput)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
 	}
+
+	fmt.Printf(
+		"Successfully wrote records for table: %s\n",
+		vectorType,
+	)
 }
 
 func writeAllRecords(
@@ -171,17 +156,30 @@ func writeAllRecords(
 	}
 
 	fmt.Printf(
-		"\nWriting %s records for table %s",
+		"Writing %s records for table %s\n",
 		strconv.Itoa(totalLen),
 		vectorType,
 	)
 
-	WriteRecords(
-		records,
-		vectorType,
-		svc,
-		totalLen,
-	)
+	for i := 0; i <= totalLen; i += 100 {
+		recordInput := timestreamwrite.WriteRecordsInput{
+			DatabaseName: &DATABASE_NAME,
+			TableName:    &vectorType,
+		}
+
+		if totalLen-i-100 >= 0 {
+			recordInput.SetRecords((*records)[i : i+100])
+		} else {
+			lenRemaining := totalLen - i
+			recordInput.SetRecords((*records)[i : i+lenRemaining])
+		}
+
+		WriteRecords(
+			&recordInput,
+			svc,
+			vectorType,
+		)
+	}
 }
 
 func writeAllRecordsTypes(rawRecords *[]map[string]interface{}) {
@@ -192,10 +190,9 @@ func writeAllRecordsTypes(rawRecords *[]map[string]interface{}) {
 
 	for i := range allRecords {
 		currRecordContainer := allRecords[i]
-		records := *currRecordContainer.records
 
 		writeAllRecords(
-			&records,
+			currRecordContainer.records,
 			currRecordContainer.vectorType,
 			svc,
 		)
