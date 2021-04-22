@@ -1,25 +1,15 @@
-import describeLogGroups from '../cloudwatch/describeLogGroups';
-import describeLogStreams from '../cloudwatch/describeLogStreams';
-import getEvents from '../cloudwatch/getLogEvents';
+import getLogs from '../cloudwatch/getLogEvents';
 
-export default function getLogEvents(): Promise<void>{
-  return new Promise(async resolve => {
-    const results = {};
-    const logGroups = await describeLogGroups();
-    logGroups.forEach( (group: { logGroupName: string}) => results[group.logGroupName] = group);
+import store from '../../store';
 
-    for (const logGroupName of Object.keys(results)) {
-      const logGroup = results[logGroupName];
+export default function getLogEvents(logGroupName: string, logStreamName: string): Promise<any> {
+  return new Promise(async (resolve) =>{
+    let results: Array<any> = [];
+    do {
+      const groups: Array<any> = await getLogs(logGroupName, logStreamName) as any;
+      results = [...results, ...groups];
+    } while (store.AWS.Cloudwatch.NextToken);
 
-      logGroup.logStreams = await describeLogStreams(logGroupName);
-
-      for (const logStream of logGroup.logStreams) {
-        const events = await(getEvents(logGroupName, logStream.logStreamName));
-
-        logStream.events = events;
-      }
-    }
-    console.log(JSON.stringify(results, null, 2));
-    resolve();
+    resolve(results);
   });
 }

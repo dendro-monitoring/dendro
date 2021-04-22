@@ -13,7 +13,7 @@ export default function getLogEvents(
   startTime?: number,
   endTime?: number
 ): Promise<any> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const params = {
       logGroupName,
       logStreamName,
@@ -23,7 +23,7 @@ export default function getLogEvents(
       startTime
     };
     cloudwatch.getLogEvents(params as unknown as any, function(err: AWSError, data: any) {
-      if (err) throw new Error(String(err));
+      if (err) return reject(err);
 
       if (data.events.length === 0) {
         store.AWS.Cloudwatch.NextToken = null;

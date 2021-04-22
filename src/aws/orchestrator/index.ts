@@ -3,7 +3,7 @@ import createBucket from './createBucket';
 import setupTimestream from './setupTimestream';
 import query from './query';
 import listTables from './listTables';
-import getLogEvents from './getLogEvents';
+import getLogs from './getLogs';
 import setupLambda from './setupLambda';
 import setupFirehose from './setupFirehose';
 
@@ -13,7 +13,7 @@ export default {
   setupTimestream,
   query,
   listTables,
-  getLogEvents,
+  getLogs,
   setupLambda,
   setupFirehose,
 };
