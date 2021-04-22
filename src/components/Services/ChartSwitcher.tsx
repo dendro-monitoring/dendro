@@ -12,7 +12,7 @@ import NginxLogsCharts from './NginxLogs/Charts';
 import NginxMetricsCharts from './NginxMetrics/Charts';
 
 import PostgresLogsCharts from './PostgresLogs/Charts';
-import PostgresMetricsCharts from './PostgresMetrics/Charts';
+// import PostgresMetricsCharts from './PostgresMetrics/Charts';
 
 import Error from './Error';
 
@@ -41,7 +41,7 @@ export default function ChartSwitcher({ slug }: Props) {
     case "postgres-logs":
       return <PostgresLogsCharts />;
     case "postgres-metrics":
-      return <PostgresMetricsCharts />;
+      return <PostgresLogsCharts />;
     default:
       return <Error />;
   }
