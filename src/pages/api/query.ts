@@ -7,6 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
     const results = await query(q);
     res.status(200).json({ data: results });
   } catch (e) {
-    res.status(500);
+    console.log(e);
+    res.status(500).json({ data: {} });
   }
 };
