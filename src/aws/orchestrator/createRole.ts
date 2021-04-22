@@ -18,6 +18,10 @@ export default function createRole(): Promise<void> {
       if (newRole) {
         store.AWS.IAM.Arn = newRole.Role.Arn;
         console.log('attaching policies');
+        const roleData = await AWSWrapper.getRole( AWS_IAM_ROLE_NAME );
+        console.log('====================================');
+        console.log(roleData);
+        console.log('====================================');
         await attachPolicies();
         console.log(await arePoliciesAttached());
 
