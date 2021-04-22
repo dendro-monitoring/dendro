@@ -34,7 +34,6 @@ export default class DeployCommand extends Command {
 
       spinner = log.spin('Creating a new bucket...');
       await orchestrator.createBucket();
-      await orchestrator.putS3Lifecycle();
       spinner.succeed();
 
       spinner = log.spin('Setting up firehose...');
