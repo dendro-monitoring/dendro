@@ -6,12 +6,12 @@ export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> 
   try {
     const tables = await listTables();
 
-    const monitoredServices: MonitoredService[] = [];
+    const data: MonitoredService[] = [];
     tables.forEach((table: { TableName: VectorService }) => {
-      monitoredServices.push({ name: table.TableName });
+      data.push({ name: table.TableName });
     });
 
-    res.status(200).json({ monitoredServices });
+    res.status(200).json({ data });
   } catch (e) {
     console.log(e);
     res.status(500);
