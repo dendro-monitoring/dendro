@@ -1,20 +1,20 @@
 import 'tailwindcss/tailwind.css';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-
+import { useState, useEffect } from 'react';
 import Sidebar from '../components/sidebar';
-import { MonitoredService } from '../constants/frontendTypes';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  // TODO: Fetch database tables
-  const services: MonitoredService[] = [
-    { name: 'postgres-metrics' },
-    { name: 'nginx-logs' },
-    { name: 'custom-application' },
-    { name: 'apache-logs' },
-    { name: 'mongo-metrics' },
-    { name: 'host-metrics' },
-  ];
+  const [services, setServices] = useState([]);
+
+  useEffect(()=> {
+    (async () => {
+      console.log('hit');
+      const res = await fetch("/api/tables");
+      const { tableNames } = await res.json();
+      setServices(tableNames);
+    })();
+  }, []);
 
   pageProps.services = services;
 
