@@ -9,10 +9,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(()=> {
     (async () => {
-      console.log('hit');
       const res = await fetch("/api/tables");
-      const { tableNames } = await res.json();
-      setServices(tableNames);
+      const { data } = await res.json();
+      setServices(data);
     })();
   }, []);
 
