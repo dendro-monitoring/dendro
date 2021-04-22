@@ -1,3 +1,3 @@
 export default function Chart() {
-  return <h1>I am a Postgres Metric chart!</h1>;
+  return <h1>I am a Postgres Log chart!</h1>;
 }
