@@ -1,5 +1,5 @@
 import createRole from './createRole';
-import createBucket from './createBucket';
+import createBucket, { putS3Lifecycle } from './createBucket';
 import setupTimestream from './setupTimestream';
 import query from './query';
 import listTables from './listTables';
@@ -10,6 +10,7 @@ import setupFirehose from './setupFirehose';
 export default {
   createRole,
   createBucket,
+  putS3Lifecycle,
   setupTimestream,
   query,
   listTables,
