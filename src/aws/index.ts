@@ -1,11 +1,14 @@
 import createBucket from './s3/createBucket';
 import listBuckets from './s3/listBuckets';
+import listObjects from './s3/listObjects';
+import deleteObjects from './s3/deleteObjects';
 import deleteBucket from './s3/deleteBucket';
 import createS3LambdaTrigger from './s3/createS3LambdaTrigger';
 
 import createLambda from './lambda/createLambda';
 import listFunctions from './lambda/listFunctions';
 import setLambdaInvokePolicy from './lambda/setLambdaInvokePolicy';
+import deleteLambdaFunction from './lambda/deleteLambdaFunction';
 
 import uploadToBucket from './s3/uploadToBucket';
 
@@ -32,12 +35,15 @@ import getLogEvents from './cloudwatch/getLogEvents';
 export default {
   createBucket,
   listBuckets,
+  listObjects,
+  deleteObjects,
   deleteBucket,
   createS3LambdaTrigger,
 
   createLambda,
   listFunctions,
   setLambdaInvokePolicy,
+  deleteLambdaFunction,
 
   uploadToBucket,
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';

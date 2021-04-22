@@ -10,6 +10,8 @@ import detachRolePolicies from './detachRolePolicies';
 import deleteRole from './deleteRole';
 import deleteBucket from './deleteBucket';
 import deleteFirehose from './deleteFirehose';
+import deleteLambda from './deleteLambda';
+import getItemsToDelete from './getItemsToDelete';
 
 export default {
   createRole,
@@ -24,4 +26,6 @@ export default {
   deleteRole,
   deleteBucket,
   deleteFirehose,
+  deleteLambda,
+  getItemsToDelete,
 };

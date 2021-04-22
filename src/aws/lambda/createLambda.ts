@@ -1,9 +1,11 @@
+/* eslint-disable max-lines-per-function */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
 import { AWS_REGION } from '../../constants';
+import { AWS_LAMBDA_NAME } from '../../constants';
 
 import store from '../../store';
 
@@ -27,8 +29,6 @@ export default function createLambda({
   return new Promise(resolve => {
     AWS.config.update({ region });
 
-    const lambdaName = lambdaFile.replace(/\.js/, '');
-
     if (!fs.existsSync(lambdaFile)) {
       throw new Error("Can't find lambda file");
     }
@@ -43,8 +43,8 @@ export default function createLambda({
       Code: { /* required */
         ZipFile: zip.toBuffer(),
       },
-      FunctionName: path.basename(lambdaName), /* required */
-      Handler: `${lambdaName}.handler`, /* required */
+      FunctionName: AWS_LAMBDA_NAME, /* required */
+      Handler: `${AWS_LAMBDA_NAME}.handler`, /* required */
       Role, /* required */
       Runtime, /* required */
       Description,

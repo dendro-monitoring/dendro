@@ -12,9 +12,12 @@ export default function deleteBucket(Bucket: string, region = AWS_REGION): Promi
       Bucket,
     };
 
-    s3.deleteBucket(bucketParams, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
-      else resolve(data);
+    s3.deleteBucket(bucketParams, (err: AWSError) => {
+      if (err && err.code === "NoSuchBucket") {
+        resolve(err);
+      } else if (err) {
+        throw new Error(String(err));
+      } else resolve(null);
     });
   });
 }
