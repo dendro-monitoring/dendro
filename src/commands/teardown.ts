@@ -64,7 +64,7 @@ export default class Teardown extends Command {
       // }
       // spinner.succeed();
 
-      // delete timestream
+      // await orchestrator.deleteTimestream();
 
     } catch (error) {
       spinner?.fail();
