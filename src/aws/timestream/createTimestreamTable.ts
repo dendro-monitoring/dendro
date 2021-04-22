@@ -21,8 +21,8 @@ interface TimestreamTableData {
 export default function createTimestreamTable({
   DatabaseName,
   TableName,
-  MagneticStoreRetentionPeriodInDays = '30',
-  MemoryStoreRetentionPeriodInHours = '720',
+  MagneticStoreRetentionPeriodInDays = '365',
+  MemoryStoreRetentionPeriodInHours = '168',
   region = AWS_REGION,
 }: TimestreamTableData ): Promise<any> {
   return new Promise(resolve => {
