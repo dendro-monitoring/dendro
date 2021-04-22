@@ -18,11 +18,8 @@ export default function createTimestreamTables(): Promise<void> {
   }
 
   function setupApacheTables() {
-    if (store.Vector.Apache.monitorAccessLogs) {
-      pushCreateTablePromise('apache-access-logs');
-    }
-    if (store.Vector.Apache.monitorErrorLogs) {
-      pushCreateTablePromise('apache-error-logs');
+    if (store.Vector.Apache.monitorAccessLogs || store.Vector.Apache.monitorErrorLogs) {
+      pushCreateTablePromise('apache-logs');
     }
     if (store.Vector.Apache.monitorMetrics) {
       pushCreateTablePromise('apache-metrics');
@@ -39,11 +36,8 @@ export default function createTimestreamTables(): Promise<void> {
   }
 
   function setupNginxTables() {
-    if (store.Vector.Nginx.monitorAccessLogs) {
-      pushCreateTablePromise('nginx-access-logs');
-    }
-    if (store.Vector.Nginx.monitorErrorLogs) {
-      pushCreateTablePromise('nginx-error-logs');
+    if (store.Vector.Nginx.monitorAccessLogs || store.Vector.Nginx.monitorErrorLogs) {
+      pushCreateTablePromise('nginx-logs');
     }
     if (store.Vector.Nginx.monitorMetrics) {
       pushCreateTablePromise('nginx-metrics');
@@ -52,7 +46,7 @@ export default function createTimestreamTables(): Promise<void> {
 
   function setupPostgresTables() {
     if (store.Vector.Postgres.monitorErrorLogs) {
-      pushCreateTablePromise('postgres-error-logs');
+      pushCreateTablePromise('postgres-logs');
     }
     if (store.Vector.Postgres.monitorMetrics) {
       pushCreateTablePromise('postgres-metrics');
