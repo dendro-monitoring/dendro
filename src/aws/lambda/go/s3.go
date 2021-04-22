@@ -30,13 +30,13 @@ func fetchS3Object(bucket string, key string) *s3.GetObjectOutput {
 	return result
 }
 
-func getS3ObjectBody(buffer io.ReadCloser) string {
+func getS3ObjectBody(buffer *io.ReadCloser) string {
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(buffer)
+	buf.ReadFrom(*buffer)
 	return buf.String()
 }
 
-func getParsedS3ObjectBody(buffer io.ReadCloser) []map[string]interface{} {
+func getParsedS3ObjectBody(buffer *io.ReadCloser) []map[string]interface{} {
 	body := getS3ObjectBody(buffer)
 
 	parseableBody := "[" + REGEX.ReplaceAllString(body, "},{") + "]"

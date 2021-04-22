@@ -41,7 +41,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "start": "NODE_ENV=production node ./src/server.js",
     "version": "oclif-dev readme && git add README.md",
-    "zip": "zip ./src/aws/lambda/go/function.zip ./src/aws/lambda/go/main",
+    "zip": "zip -j ./src/aws/lambda/go/function.zip ./src/aws/lambda/go/main",
     "zip:go": "npm run build:go && npm run zip"
   },
   "dependencies": {
