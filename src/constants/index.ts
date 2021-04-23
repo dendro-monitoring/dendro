@@ -1,4 +1,5 @@
 import * as AWS from 'aws-sdk';
+import { setCredentials } from '../utils/aws';
 
 export default {
   LAMBDA_POLICY_ARN:  'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
@@ -16,6 +17,7 @@ export const AWS_TIMESTREAM_DATABASE_NAME = 'DendroTimestreamDB';
 export const AWS_IAM_ROLE_NAME ='dendro-s3-lambda-role';
 export const AWS_LAMBDA_FUNCTION_NAME = '_deployableLambdaFunction';
 
+setCredentials();
 export const AWS_IAM = new AWS.IAM();
 export const AWS_CLOUDWATCH = new AWS.CloudWatchLogs({ region: AWS_REGION });
 export const AWS_FIREHOSE = new AWS.Firehose({ region: AWS_REGION });
