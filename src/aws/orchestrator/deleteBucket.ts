@@ -1,6 +1,4 @@
-import AWS = require('aws-sdk');
 import AWSWrapper from '../../aws';
-import { AWSError } from 'aws-sdk';
 import { AWS_S3_BUCKET_NAME } from '../../constants';
 
 export default async function deleteBucket(): Promise<any> {
@@ -8,15 +6,13 @@ export default async function deleteBucket(): Promise<any> {
   let bucketToDelete;
 
   if (listOfBuckets) {
-    listOfBuckets.Buckets.forEach(bucket => {
+    for (const bucket of listOfBuckets.Buckets) {
       if (bucket.Name.substring(0, 16) === AWS_S3_BUCKET_NAME.substring(0, 16)) {
         bucketToDelete = bucket.Name;
+        await AWSWrapper.deleteObjects(bucketToDelete);
+        await AWSWrapper.deleteBucket(bucketToDelete);
       }
-    });
+    }
   }
 
-  if (bucketToDelete) {
-    await AWSWrapper.deleteObjects(bucketToDelete);
-    await AWSWrapper.deleteBucket(bucketToDelete);
-  }
 }
