@@ -11,6 +11,7 @@ export default function describeLogGroups(): Promise<any> {
     const params = {
       nextToken: store.AWS.Cloudwatch.NextToken
     };
+
     cloudwatchlogs.describeLogGroups(params as unknown as any, function(err, data) {
       if (err) reject(err);
       else {

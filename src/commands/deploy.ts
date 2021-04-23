@@ -31,24 +31,28 @@ export default class DeployCommand extends Command {
     log.setLevel(level as LevelNames);
     let spinner;
     try {
-      spinner = log.spin('Setting up a new role...');
-      await orchestrator.createRole();
-      spinner.succeed();
+      // spinner = log.spin('Setting up a new role...');
+      // await orchestrator.createRole();
+      // spinner.succeed();
 
-      spinner = log.spin('Creating a new bucket...');
-      await orchestrator.createBucket();
-      spinner.succeed();
+      // spinner = log.spin('Creating a new bucket...');
+      // await orchestrator.createBucket();
+      // spinner.succeed();
 
-      spinner = log.spin('Setting up firehose...');
-      await orchestrator.setupFirehose();
-      spinner.succeed();
+      // spinner = log.spin('Setting up firehose...');
+      // await orchestrator.setupFirehose();
+      // spinner.succeed();
 
-      spinner = log.spin('Setting up timestream...');
-      await orchestrator.setupTimestream();
-      spinner.succeed();
+      // spinner = log.spin('Setting up timestream...');
+      // await orchestrator.setupTimestream();
+      // spinner.succeed();
 
-      spinner = log.spin('Setting up lambda...');
-      await orchestrator.setupLambda();
+      // spinner = log.spin('Setting up lambda...');
+      // await orchestrator.setupLambda();
+      // spinner.succeed();
+
+      spinner = log.spin('Setting up alarms...');
+      await orchestrator.putMetricFilter();
       spinner.succeed();
 
     } catch (error) {

@@ -27,6 +27,7 @@ import getCredentials from './getCredentials';
 
 import describeLogStreams from './cloudwatch/describeLogStreams';
 import getLogEvents from './cloudwatch/getLogEvents';
+import putMetricFilter from './cloudwatch/putMetricFilter';
 
 export default {
   createBucket,
@@ -57,5 +58,6 @@ export default {
   getCredentials,
 
   describeLogStreams,
-  getLogEvents
+  getLogEvents,
+  putMetricFilter
 };

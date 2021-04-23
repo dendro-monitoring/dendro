@@ -16,6 +16,7 @@ export const AWS_S3_BUCKET_NAME = AWS_S3_BUCKET_PREFIX + AWS_S3_BUCKET_SUFFIX;
 export const AWS_TIMESTREAM_DATABASE_NAME = 'DendroTimestreamDB';
 export const AWS_IAM_ROLE_NAME ='dendro-s3-lambda-role';
 export const AWS_LAMBDA_FUNCTION_NAME = '_deployableLambdaFunction';
+export const AWS_CLOUDWATCH_LOG_GROUP_NAME = '/aws/lambda/_deployableLambdaFunction';
 
 /**
  * Ensure credentials are set for the AWS SDK before
