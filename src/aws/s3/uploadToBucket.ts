@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 
-import { s3 } from '../singletons';
+import { AWS_S3 } from '../../constants';
 
 export default function uploadToBucket(Bucket: string, file: string): Promise<any> {
   return new Promise(resolve => {
@@ -18,7 +18,7 @@ export default function uploadToBucket(Bucket: string, file: string): Promise<an
     uploadParams.Body = String(fileStream);
     uploadParams.Key = path.basename(file);
 
-    s3.upload(uploadParams, (err: Error, data: any) => {
+    AWS_S3.upload(uploadParams, (err: Error, data: any) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

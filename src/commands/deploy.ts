@@ -3,8 +3,8 @@
 
 import { Command, flags } from '@oclif/command';
 
-import log, { LevelNames } from "../utils/log";
-import { setCredentials } from '../aws/singletons';
+import log, { LevelNames } from '../utils/log';
+import { setCredentials } from '../utils/aws';
 import orchestrator from '../aws/orchestrator';
 
 export default class DeployCommand extends Command {

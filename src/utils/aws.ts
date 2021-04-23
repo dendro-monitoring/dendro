@@ -1,3 +1,4 @@
+import * as AWS from 'aws-sdk';
 import store from '../store';
 import { awsCredentialsFormInfo } from '../prompts';
 const { Form } = require('enquirer');
@@ -19,3 +20,11 @@ export const ensureCredentials = async (): Promise<void> => {
     store.AWS.Credentials.secretAccessKey = answers['Secret Key'];
   }
 };
+
+export async function setCredentials(): Promise<void> {
+  await ensureCredentials();
+  AWS.config.update({
+    accessKeyId: store.AWS.Credentials.accessKeyId,
+    secretAccessKey: store.AWS.Credentials.secretAccessKey,
+  });
+}

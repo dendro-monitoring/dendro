@@ -1,9 +1,9 @@
 import { AWSError } from 'aws-sdk';
-import { lambda } from '../singletons';
+import { AWS_LAMBDA } from '../../constants';
 
 export default function listFunctions(): Promise<any> {
   return new Promise(resolve => {
-    lambda.listFunctions({}, (err: AWSError, data) => {
+    AWS_LAMBDA.listFunctions({}, (err: AWSError, data) => {
       if (err) throw new Error(err as unknown as string);
       else resolve(data);
     });

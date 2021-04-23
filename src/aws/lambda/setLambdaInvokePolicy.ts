@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import { lambda } from '../singletons';
+import { AWS_LAMBDA } from '../../constants';
 
 export default function setLambdaInvokePolicy(
   Arn: string,
@@ -14,7 +14,7 @@ export default function setLambdaInvokePolicy(
       StatementId,
     };
 
-    lambda.addPermission(params, (err: AWSError, data) => {
+    AWS_LAMBDA.addPermission(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import { timestreamWrite } from '../singletons';
+import { AWS_TIMESTREAM_WRITE } from '../../constants';
 
 interface TimestreamTableData {
   DatabaseName: string,
@@ -32,7 +32,8 @@ export default function createTimestreamTable({
         MemoryStoreRetentionPeriodInHours,
       },
     };
-    timestreamWrite.createTable(params, (err: AWSError, data) => {
+
+    AWS_TIMESTREAM_WRITE.createTable(params, (err: AWSError, data) => {
       if (err && err.code !== 'ConflictException') throw new Error(String(err));
       else resolve([err, data]);
     });

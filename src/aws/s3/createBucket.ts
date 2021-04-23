@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import { s3 } from '../singletons';
+import { AWS_S3 } from '../../constants';
 
 export default function createBucket(bucketName: string): Promise<any> {
   return new Promise(resolve => {
@@ -7,7 +7,7 @@ export default function createBucket(bucketName: string): Promise<any> {
       Bucket: bucketName,
     };
 
-    s3.createBucket(bucketParams, (err: AWSError, data) => {
+    AWS_S3.createBucket(bucketParams, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

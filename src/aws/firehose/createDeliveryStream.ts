@@ -1,5 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import { firehose } from '../singletons';
+import { AWS_FIREHOSE } from '../../constants';
 
 export default function createDeliveryStream(DeliveryStreamName: string, BucketName: string, RoleARN: string): Promise<any> {
   return new Promise(resolve => {
@@ -19,7 +19,7 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
         },
       },
     };
-    firehose.createDeliveryStream(params, (err: AWSError, data) => {
+    AWS_FIREHOSE.createDeliveryStream(params, (err: AWSError, data) => {
       if (err && err.code !== 'ResourceInUseException') throw new Error(String(err)); // an error occurred
       else resolve(data);     // successful response
     });

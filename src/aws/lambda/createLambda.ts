@@ -3,9 +3,8 @@ import * as path from 'path';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
 
-import { lambda } from '../singletons';
-
 import store from '../../store';
+import { AWS_LAMBDA } from '../../constants';
 
 interface LambdaData {
   lambdaFile: string,
@@ -27,7 +26,7 @@ export default function createLambda({
     const lambdaName = lambdaFile.replace(/\.js/, '');
 
     if (!fs.existsSync(lambdaFile)) {
-      throw new Error("Can't find lambda file");
+      throw new Error('Can\'t find lambda file');
     }
 
     const zip = new AdmZip();
@@ -51,7 +50,7 @@ export default function createLambda({
       },
     };
 
-    lambda.createFunction(params, (err: AWSError, data) => {
+    AWS_LAMBDA.createFunction(params, (err: AWSError, data) => {
       if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));
       else resolve(data);
     });
