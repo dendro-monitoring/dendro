@@ -11,12 +11,12 @@ import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
  * ```
  * @returns Promise<any>
  */
-export default async function listTables(): Promise<any> {
+export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_DATABASE_NAME): Promise<any> {
   return new Promise(async (resolve, reject) => {
     let results: Array<any> = [];
     do {
       try {
-        const result = await listTablesTimestream();
+        const result = await listTablesTimestream(DatabaseName);
         results = [...results, ...result.Tables];
       } catch (e) {
         reject(e);

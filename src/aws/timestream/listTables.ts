@@ -5,7 +5,7 @@ import { AWS_REGION } from '../../constants';
 AWS.config.update({ region: AWS_REGION });
 
 const timestreamwrite = new AWS.TimestreamWrite();
-export default async function listTables(): Promise<any> {
+export default async function listTables(DatabaseName: string): Promise<any> {
   return new Promise((resolve, reject) => {
     const params = {
       DatabaseName,
