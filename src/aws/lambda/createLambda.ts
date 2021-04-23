@@ -48,7 +48,7 @@ export default function createLambda({
       Role,
       Runtime,
       Description,
-      Timeout: '360',
+      Timeout: '180',
       Environment: {
         Variables: {
           DATABASE_NAME,
