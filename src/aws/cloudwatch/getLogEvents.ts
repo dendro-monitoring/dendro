@@ -1,10 +1,7 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-import { AWS_REGION } from '../../constants';
+import { AWS_CLOUDWATCH } from '../../constants';
 
 import store from '../../store';
-
-const cloudwatch = new AWS.CloudWatchLogs({ region: AWS_REGION });
 
 export default function getLogEvents(
   logGroupName: string,
@@ -22,7 +19,7 @@ export default function getLogEvents(
       endTime,
       startTime
     };
-    cloudwatch.getLogEvents(params as unknown as any, function(err: AWSError, data: any) {
+    AWS_CLOUDWATCH.getLogEvents(params as unknown as any, function(err: AWSError, data: any) {
       if (err) return reject(err);
 
       if (data.events.length === 0) {

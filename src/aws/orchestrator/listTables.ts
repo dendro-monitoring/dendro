@@ -1,6 +1,5 @@
 import store from '../../store';
 import listTablesTimestream from "../timestream/listTables";
-import * as AWS from 'aws-sdk';
 
 /**
  * Lists all the tables located in the database defined by `store.AWS.Timestream.DatabaseName`
