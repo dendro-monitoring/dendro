@@ -4,6 +4,7 @@ import listObjects from './s3/listObjects';
 import deleteObjects from './s3/deleteObjects';
 import deleteBucket from './s3/deleteBucket';
 import createS3LambdaTrigger from './s3/createS3LambdaTrigger';
+import putS3Lifecycle from './s3/putLifecycle';
 
 import createLambda from './lambda/createLambda';
 import listFunctions from './lambda/listFunctions';
@@ -39,6 +40,7 @@ export default {
   deleteObjects,
   deleteBucket,
   createS3LambdaTrigger,
+  putS3Lifecycle,
 
   createLambda,
   listFunctions,

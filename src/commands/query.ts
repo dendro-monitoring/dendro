@@ -2,6 +2,7 @@ import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
 
 import orchestrator from '../aws/orchestrator';
+import { ensureCredentials } from '../utils/aws';
 
 export default class QueryCommand extends Command {
   static description = 'queries the database';
@@ -27,6 +28,8 @@ export default class QueryCommand extends Command {
   ];
 
   async run(): Promise<void> {
+    ensureCredentials();
+
     const { flags: cliFlags, args: { QueryString } } = this.parse(QueryCommand);
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);

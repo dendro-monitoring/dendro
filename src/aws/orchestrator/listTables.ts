@@ -1,6 +1,5 @@
 import store from '../../store';
 import listTablesTimestream from "../timestream/listTables";
-import * as AWS from 'aws-sdk';
 
 import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
 

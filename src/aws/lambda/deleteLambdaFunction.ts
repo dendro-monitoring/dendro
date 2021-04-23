@@ -1,15 +1,13 @@
 import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-import { AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
-
-const lambda = new AWS.Lambda();
+import { AWS_LAMBDA_FUNCTION_NAME, AWS_LAMBDA } from '../../constants';
 
 export default function deleteLambdaFunction(): Promise<any> {
   return new Promise(resolve => {
     const params = {
       FunctionName: AWS_LAMBDA_FUNCTION_NAME, /* required */
     };
-    lambda.deleteFunction(params, (err: AWSError) => {
+    AWS_LAMBDA.deleteFunction(params, (err: AWSError) => {
       if (err && err.code === "ResourceNotFoundException") {
         resolve(err);
       } else if (err) {

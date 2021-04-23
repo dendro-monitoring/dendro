@@ -1,12 +1,13 @@
 /* eslint-disable max-lines-per-function */
 import { Command, flags } from '@oclif/command';
 import cli from 'cli-ux';
-import orchestrator from '../aws/orchestrator';
-import log, { LevelNames } from "../utils/log";
+
+import log, { LevelNames } from '../utils/log';
 import AWSWrapper from '../aws';
 import chalk from 'chalk';
 import ora from 'ora';
-import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_FIREHOSE_STREAM_NAME, AWS_IAM_ROLE_NAME, AWS_LAMBDA_FUNCTION_NAME, AWS_S3_BUCKET_NAME, AWS_S3_BUCKET_PREFIX, AWS_TIMESTREAM_DATABASE_NAME } from '../constants';
+import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_FIREHOSE_STREAM_NAME, AWS_IAM_ROLE_NAME, AWS_LAMBDA_FUNCTION_NAME, AWS_S3_BUCKET_PREFIX, AWS_TIMESTREAM_DATABASE_NAME } from '../constants';
+import { ensureCredentials } from '../utils/aws';
 
 export default class ListCommand extends Command {
   static description = 'describe the command here';
@@ -86,7 +87,7 @@ Timestream
   }
 
   async printDeliveryStreams(streams: string[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold("Firehose Stream:"));
+    callback(chalk.bold('Firehose Stream:'));
 
     if (streams.length === 0) {
       log.info('No stream found!');
@@ -126,7 +127,7 @@ Timestream
   }
 
   async printTimestream(streams: { DatabaseName: string }[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold("Timestream Database:"));
+    callback(chalk.bold('Timestream Database:'));
 
     if (streams.length === 0) {
       log.info('No timestream database found!');
@@ -147,7 +148,7 @@ Timestream
   }
 
   async printTimestreamTables(tables: { TableName: string }[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold("Timestream Tables:"));
+    callback(chalk.bold('Timestream Tables:'));
 
     if (!tables || tables.length === 0) {
       log.info('No timestream tables found!');
@@ -166,8 +167,9 @@ Timestream
     }
   }
 
-  // eslint-disable-next-line max-statements
-  async run(): Promise<void> {
+  async run() {
+    ensureCredentials();
+
     const parsed = this.parse(ListCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);

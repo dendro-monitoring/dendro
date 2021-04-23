@@ -1,13 +1,13 @@
 /* eslint-disable max-lines-per-function */
 import * as fs from 'fs';
 import * as path from 'path';
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
 import { AWS_REGION } from '../../constants';
 import { AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
 
 import store from '../../store';
+import { AWS_LAMBDA } from '../../constants';
 
 interface LambdaData {
   lambdaFile: string,
@@ -23,24 +23,20 @@ export default function createLambda({
   Role = store.AWS.IAM.Arn!,
   DATABASE_NAME,
   Runtime = 'nodejs12.x',
-  region = AWS_REGION,
   Description = '',
 }: LambdaData): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
 
     if (!fs.existsSync(lambdaFile)) {
-      throw new Error("Can't find lambda file");
+      throw new Error('Can\'t find lambda file');
     }
 
     const zip = new AdmZip();
 
     zip.addLocalFile(lambdaFile);
 
-    const lambda = new AWS.Lambda();
-
     const params = {
-      Code: { /* required */
+      Code: {
         ZipFile: zip.toBuffer(),
       },
       FunctionName: AWS_LAMBDA_FUNCTION_NAME, /* required */
@@ -48,6 +44,7 @@ export default function createLambda({
       Role, /* required */
       Runtime, /* required */
       Description,
+      Timeout: '180',
       Environment: {
         Variables: {
           DATABASE_NAME,
@@ -55,7 +52,7 @@ export default function createLambda({
       },
     };
 
-    lambda.createFunction(params, (err: AWSError, data) => {
+    AWS_LAMBDA.createFunction(params, (err: AWSError, data) => {
       if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));
       else resolve(data);
     });

@@ -4,7 +4,7 @@ import setupTimestream from './setupTimestream';
 import deleteTimestream from './deleteTimestream';
 import query from './query';
 import listTables from './listTables';
-import getLogEvents from './getLogEvents';
+import getLogs from './getLogs';
 import setupLambda from './setupLambda';
 import setupFirehose from './setupFirehose';
 import detachRolePolicies from './detachRolePolicies';
@@ -21,7 +21,7 @@ export default {
   deleteTimestream,
   query,
   listTables,
-  getLogEvents,
+  getLogs,
   setupLambda,
   setupFirehose,
   detachRolePolicies,
