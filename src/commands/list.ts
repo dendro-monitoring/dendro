@@ -5,7 +5,7 @@ import log, { LevelNames } from "../utils/log";
 import AWSWrapper from '../aws';
 import chalk from 'chalk';
 import ora from 'ora';
-import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_FIREHOSE_STREAM_NAME, AWS_IAM_ROLE_NAME, AWS_LAMBDA_FUNCTION_NAME, AWS_S3_BUCKET_NAME, AWS_S3_BUCKET_PREFIX, AWS_TIMESTREAM_DATABASE_NAME } from '../constants';
+import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_FIREHOSE_STREAM_NAME, AWS_IAM_ROLE_NAME, AWS_LAMBDA_FUNCTION_NAME, AWS_S3_BUCKET_PREFIX, AWS_TIMESTREAM_DATABASE_NAME } from '../constants';
 
 export default class ListCommand extends Command {
   static description = 'describe the command here';
