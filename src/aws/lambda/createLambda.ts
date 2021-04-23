@@ -40,14 +40,15 @@ export default function createLambda({
     const lambda = new AWS.Lambda();
 
     const params = {
-      Code: { /* required */
+      Code: {
         ZipFile: zip.toBuffer(),
       },
-      FunctionName: path.basename(lambdaName), /* required */
-      Handler: `${lambdaName}.handler`, /* required */
-      Role, /* required */
-      Runtime, /* required */
+      FunctionName: path.basename(lambdaName),
+      Handler: `${lambdaName}.handler`,
+      Role,
+      Runtime,
       Description,
+      Timeout: '180',
       Environment: {
         Variables: {
           DATABASE_NAME,
