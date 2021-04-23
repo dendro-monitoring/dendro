@@ -1,7 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
-
-const iam = new AWS.IAM();
+import { AWS_IAM } from '../../constants';
 
 export default function attachRolePolicy(RoleName: string, PolicyArn: string): Promise<any> {
   return new Promise(resolve => {
@@ -10,7 +8,7 @@ export default function attachRolePolicy(RoleName: string, PolicyArn: string): P
       RoleName,
     };
 
-    iam.attachRolePolicy(params, (err: AWSError, data) => {
+    AWS_IAM.attachRolePolicy(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

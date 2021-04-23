@@ -1,6 +1,5 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-import { AWS_REGION } from '../../constants';
+import { AWS_TIMESTREAM_WRITE } from '../../constants';
 
 interface TimestreamTableData {
   DatabaseName: string,
@@ -21,24 +20,20 @@ interface TimestreamTableData {
 export default function createTimestreamTable({
   DatabaseName,
   TableName,
-  MagneticStoreRetentionPeriodInDays = '30',
-  MemoryStoreRetentionPeriodInHours = '720',
-  region = AWS_REGION,
+  MagneticStoreRetentionPeriodInDays = '365',
+  MemoryStoreRetentionPeriodInHours = '168',
 }: TimestreamTableData ): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
-
-    const Timestream = new AWS.TimestreamWrite();
-
     const params: any = {
-      DatabaseName, /* required */
-      TableName, /* required */
+      DatabaseName,
+      TableName,
       RetentionProperties: {
-        MagneticStoreRetentionPeriodInDays, /* required */
-        MemoryStoreRetentionPeriodInHours, /* required */
+        MagneticStoreRetentionPeriodInDays,
+        MemoryStoreRetentionPeriodInHours,
       },
     };
-    Timestream.createTable(params, (err: AWSError, data) => {
+
+    AWS_TIMESTREAM_WRITE.createTable(params, (err: AWSError, data) => {
       if (err && err.code !== 'ConflictException') throw new Error(String(err));
       else resolve([err, data]);
     });

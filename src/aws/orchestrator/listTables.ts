@@ -9,11 +9,16 @@ import listTablesTimestream from "../timestream/listTables";
  * @returns Promise<any>
  */
 export default async function listTables(): Promise<any> {
-  return new Promise(async resolve => {
+  return new Promise(async (resolve, reject) => {
     let results: Array<any> = [];
     do {
-      const result = await listTablesTimestream();
-      results = [...results, ...result.Tables];
+      try {
+        const result = await listTablesTimestream();
+        results = [...results, ...result.Tables];
+      } catch (e) {
+        reject(e);
+      }
+
     } while (store.AWS.Timestream.NextToken);
 
     resolve(results);

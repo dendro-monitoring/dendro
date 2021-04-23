@@ -7,14 +7,17 @@ export interface queryResults {
 }
 
 export default function query(QueryString: string): Promise<queryResults> {
-  return new Promise( async resolve => {
+  return new Promise(async (resolve, reject) => {
     const results: queryResults = { Rows: [] };
     do {
-      const result = await timestreamQuery(QueryString);
-
-      results.ColumnInfo = result.ColumnInfo;
-      results.Rows = [...results.Rows, ...result.Rows];
-
+      try {
+        const result = await timestreamQuery(QueryString);
+        results.ColumnInfo = result.ColumnInfo;
+        results.Rows = [...results.Rows, ...result.Rows];
+      } catch (e) {
+        reject(e);
+        return;
+      }
     } while (store.AWS.Timestream.NextToken);
 
     resolve(results);

@@ -8,7 +8,6 @@ import { AWS_IAM_ROLE_NAME } from '../../constants';
 
 export default function createRole(): Promise<void> {
   return new Promise(resolve => {
-
     AWSWrapper.createRole(AWS_IAM_ROLE_NAME, ['firehose.amazonaws.com', 'lambda.amazonaws.com']).then(async newRole => {
       if (newRole) {
         attachRolePolicies(resolve);
