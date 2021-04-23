@@ -3,7 +3,7 @@ import {
   AWS_S3_BUCKET_NAME,
   AWS_TIMESTREAM_DATABASE_NAME,
   AWS_IAM_ROLE_NAME,
-  AWS_LAMBDA_NAME
+  AWS_LAMBDA_FUNCTION_NAME
 } from '../../constants';
 import AWSWrapper from '../../aws';
 
@@ -12,12 +12,14 @@ export default async function getItemsToDelete(): Promise<any> {
   const streams = await AWSWrapper.listDeliveryStreams();
   const buckets = await AWSWrapper.listBuckets();
   const lambdas = await AWSWrapper.listFunctions();
+  const timestreams = await AWSWrapper.listDatabases();
   return new Promise(resolve => {
     const list = {
       roles,
       streams,
       buckets,
       lambdas,
+      timestreams,
     };
     resolve(list);
   });

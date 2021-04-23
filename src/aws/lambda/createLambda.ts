@@ -5,7 +5,7 @@ import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
 import { AWS_REGION } from '../../constants';
-import { AWS_LAMBDA_NAME } from '../../constants';
+import { AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
 
 import store from '../../store';
 
@@ -43,8 +43,8 @@ export default function createLambda({
       Code: { /* required */
         ZipFile: zip.toBuffer(),
       },
-      FunctionName: AWS_LAMBDA_NAME, /* required */
-      Handler: `${AWS_LAMBDA_NAME}.handler`, /* required */
+      FunctionName: AWS_LAMBDA_FUNCTION_NAME, /* required */
+      Handler: `${AWS_LAMBDA_FUNCTION_NAME}.handler`, /* required */
       Role, /* required */
       Runtime, /* required */
       Description,

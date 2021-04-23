@@ -7,7 +7,6 @@ const s3 = new AWS.S3();
 
 export default async function deleteObjects(Bucket: string): Promise<any> {
   const objectsToDelete = await listObjects(Bucket);
-  console.log(objectsToDelete);
 
   const params = {
     Bucket,
@@ -17,8 +16,6 @@ export default async function deleteObjects(Bucket: string): Promise<any> {
       }) : []
     }
   };
-
-  console.log(params);
 
   return new Promise(resolve => {
     if (objectsToDelete.Contents.length === 0) {

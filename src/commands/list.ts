@@ -1,6 +1,7 @@
+/* eslint-disable max-lines-per-function */
 import { Command, flags } from '@oclif/command';
 import cli from 'cli-ux';
-
+import orchestrator from '../aws/orchestrator';
 import log, { LevelNames } from "../utils/log";
 import AWSWrapper from '../aws';
 import chalk from 'chalk';
@@ -42,7 +43,7 @@ Timestream
 
   static args = [];
 
-  async printRoles(roles: { RoleName: string}[], callback: (msg: string) => void): Promise<void> {
+  async printRoles(roles: { RoleName: string }[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold("Role:"));
 
     if (roles.length === 0) {
@@ -63,7 +64,7 @@ Timestream
     console.log('\n');
   }
 
-  async printBuckets(buckets: { Name: string}[], callback: (msg: string) => void): Promise<void> {
+  async printBuckets(buckets: { Name: string }[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold("Bucket:"));
 
     if (buckets.length === 0) {
@@ -106,7 +107,7 @@ Timestream
     callback(chalk.bold('Lambda:'));
 
     if (lambdas.length === 0) {
-      log.info('No lambda created!');
+      log.info('No lambda found!');
       return;
     }
 
@@ -148,7 +149,7 @@ Timestream
   async printTimestreamTables(tables: { TableName: string }[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold("Timestream Tables:"));
 
-    if (tables.length === 0) {
+    if (!tables || tables.length === 0) {
       log.info('No timestream tables found!');
       return;
     }
@@ -165,7 +166,8 @@ Timestream
     }
   }
 
-  async run() {
+  // eslint-disable-next-line max-statements
+  async run(): Promise<void> {
     const parsed = this.parse(ListCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
@@ -193,7 +195,7 @@ Timestream
     await this.printTimestream(Databases, callback);
 
     spinner = log.spin('Listing Timestream tables...\n');
-    const { Tables } = await AWSWrapper.listTables();
-    await this.printTimestreamTables(Tables, callback);
+    const Tables = await AWSWrapper.listTables();
+    await this.printTimestreamTables(Tables.Tables, callback);
   }
 }

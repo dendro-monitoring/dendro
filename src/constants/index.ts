@@ -12,7 +12,7 @@ export const AWS_S3_BUCKET_SUFFIX = Math.random().toString(36).substring(2);
 export const AWS_S3_BUCKET_NAME = AWS_S3_BUCKET_PREFIX + AWS_S3_BUCKET_SUFFIX;
 export const AWS_TIMESTREAM_DATABASE_NAME = "DendroTimestreamDB";
 export const AWS_IAM_ROLE_NAME = "dendro-s3-lambda-role";
-export const AWS_LAMBDA_NAME = "DendroLambdaFunction";
+export const AWS_LAMBDA_FUNCTION_NAME = "DendroLambdaFunction";
 
 export const VECTOR_APACHE_LOGS_TYPE = "apache-logs";
 export const VECTOR_APACHE_METRICS_TYPE = "apache-metrics";
