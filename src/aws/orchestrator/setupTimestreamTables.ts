@@ -1,4 +1,4 @@
-import { AWS_TIMESTREAM_DATABASE_NAME } from "../../constants";
+import * as constants from "../../constants";
 import createTable from '../timestream/createTimestreamTable';
 
 import store from '../../store';
@@ -12,44 +12,44 @@ export default function createTimestreamTables(): Promise<void> {
 
   function pushCreateTablePromise(TableName: string) {
     promises.push(createTable({
-      DatabaseName: AWS_TIMESTREAM_DATABASE_NAME,
+      DatabaseName: constants.AWS_TIMESTREAM_DATABASE_NAME,
       TableName
     } as unknown as any));
   }
 
   function setupApacheTables() {
     if (store.Vector.Apache.monitorAccessLogs || store.Vector.Apache.monitorErrorLogs) {
-      pushCreateTablePromise('apache-logs');
+      pushCreateTablePromise(constants.VECTOR_APACHE_LOGS_TYPE);
     }
     if (store.Vector.Apache.monitorMetrics) {
-      pushCreateTablePromise('apache-metrics');
+      pushCreateTablePromise(constants.VECTOR_APACHE_METRICS_TYPE);
     }
   }
 
   function setupMongoTables() {
     if (store.Vector.Mongo.monitorLogs) {
-      pushCreateTablePromise('mongo-logs');
+      pushCreateTablePromise(constants.VECTOR_MONGO_LOGS_TYPE);
     }
     if (store.Vector.Mongo.monitorMetrics) {
-      pushCreateTablePromise('mongo-metrics');
+      pushCreateTablePromise(constants.VECTOR_MONGO_METRICS_TYPE);
     }
   }
 
   function setupNginxTables() {
     if (store.Vector.Nginx.monitorAccessLogs || store.Vector.Nginx.monitorErrorLogs) {
-      pushCreateTablePromise('nginx-logs');
+      pushCreateTablePromise(constants.VECTOR_NGINX_LOGS_TYPE);
     }
     if (store.Vector.Nginx.monitorMetrics) {
-      pushCreateTablePromise('nginx-metrics');
+      pushCreateTablePromise(constants.VECTOR_NGINX_METRICS_TYPE);
     }
   }
 
   function setupPostgresTables() {
     if (store.Vector.Postgres.monitorErrorLogs) {
-      pushCreateTablePromise('postgres-logs');
+      pushCreateTablePromise(constants.VECTOR_POSTGRES_LOGS_TYPE);
     }
     if (store.Vector.Postgres.monitorMetrics) {
-      pushCreateTablePromise('postgres-metrics');
+      pushCreateTablePromise(constants.VECTOR_POSTGRES_METRICS_TYPE);
     }
   }
 
@@ -59,10 +59,10 @@ export default function createTimestreamTables(): Promise<void> {
     setupNginxTables();
     setupPostgresTables();
     if (store.Vector.Host.isMonitored()) {
-      pushCreateTablePromise('host-metrics');
+      pushCreateTablePromise(constants.VECTOR_HOST_METRICS_TYPE);
     }
     if (store.Vector.CustomApplications.length > 0) {
-      pushCreateTablePromise('custom-application');
+      pushCreateTablePromise(constants.VECTOR_CUSTOM_APPLICATION_TYPE);
     }
 
     Promise.all(promises).then(() => {
