@@ -17,6 +17,10 @@ export const AWS_TIMESTREAM_DATABASE_NAME = 'DendroTimestreamDB';
 export const AWS_IAM_ROLE_NAME ='dendro-s3-lambda-role';
 export const AWS_LAMBDA_FUNCTION_NAME = '_deployableLambdaFunction';
 
+/**
+ * Ensure credentials are set for the AWS SDK before
+ * we begin instaniating aws objects.
+ */
 setCredentials();
 export const AWS_IAM = new AWS.IAM();
 export const AWS_CLOUDWATCH = new AWS.CloudWatchLogs({ region: AWS_REGION });
