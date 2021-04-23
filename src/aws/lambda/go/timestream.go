@@ -145,10 +145,12 @@ func WriteRecords(
 }
 
 func writeAllRecords(
-	records *[]*timestreamwrite.Record,
-	vectorType string,
+	recordContainer *RecordContainer,
 	svc *timestreamwrite.TimestreamWrite,
 ) {
+	records := recordContainer.records
+	vectorType := recordContainer.vectorType
+
 	totalLen := len(*records)
 
 	if totalLen == 0 {
@@ -189,12 +191,6 @@ func writeAllRecordsTypes(rawRecords *[]map[string]interface{}) {
 	buildRecordTypes(rawRecords)
 
 	for i := range allRecords {
-		currRecordContainer := allRecords[i]
-
-		writeAllRecords(
-			currRecordContainer.records,
-			currRecordContainer.vectorType,
-			svc,
-		)
+		writeAllRecords(&allRecords[i], svc)
 	}
 }
