@@ -3,8 +3,9 @@
 
 import { Command, flags } from '@oclif/command';
 
-import log, { LevelNames } from "../utils/log";
+import log, { LevelNames } from '../utils/log';
 import orchestrator from '../aws/orchestrator';
+import { ensureCredentials } from '../utils/aws';
 
 export default class DeployCommand extends Command {
   static flags = {
@@ -22,7 +23,9 @@ export default class DeployCommand extends Command {
       default: 'info',
     }),
   };
-  async run() {
+  async run(): Promise<void> {
+    ensureCredentials();
+
     const parsed = this.parse(DeployCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);

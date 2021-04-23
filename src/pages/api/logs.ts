@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import getLogEvents from "../../aws/orchestrator/getLogEvents";
+import getLogs from "../../aws/orchestrator/getLogs";
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
-    const logs = await getLogEvents();
+    const logs = await getLogs();
     res.status(200).json({ logs });
   } catch (e) {
     res.status(500);
