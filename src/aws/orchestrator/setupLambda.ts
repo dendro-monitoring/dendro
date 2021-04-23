@@ -2,6 +2,7 @@ import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';
 import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME } from '../../constants';
+import getBucketName from './getBucketName';
 
 const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/_deployableLambdaFunction.js`);
 
@@ -29,7 +30,7 @@ export default function setupLambda(): Promise<void> {
         .then(async () => {
           store.AWS.Lambda.FunctionArn = lambdaData.FunctionArn;
           await AWSWrapper.createS3LambdaTrigger(
-            AWS_S3_BUCKET_NAME,
+            await getBucketName() || AWS_S3_BUCKET_NAME,
             store.AWS.Lambda.FunctionArn as string
           );
 
