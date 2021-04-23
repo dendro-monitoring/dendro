@@ -1,7 +1,5 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-
-const firehose = new AWS.Firehose();
+import { firehose } from '../singletons';
 
 export default function createDeliveryStream(DeliveryStreamName: string, BucketName: string, RoleARN: string): Promise<any> {
   return new Promise(resolve => {

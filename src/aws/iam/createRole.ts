@@ -1,7 +1,5 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-
-const iam = new AWS.IAM();
+import { iam } from '../singletons';
 
 export default function createRole(RoleName: string, Service: string[]): Promise<any> {
   return new Promise(resolve => {

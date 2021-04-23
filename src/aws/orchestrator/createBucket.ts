@@ -1,4 +1,3 @@
-
 import AWSWrapper from '..';
 import { AWS_S3_BUCKET_NAME } from '../../constants';
 

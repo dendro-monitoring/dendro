@@ -4,6 +4,7 @@
 import { Command, flags } from '@oclif/command';
 
 import log, { LevelNames } from "../utils/log";
+import { setCredentials } from '../aws/singletons';
 import orchestrator from '../aws/orchestrator';
 
 export default class DeployCommand extends Command {
@@ -22,12 +23,14 @@ export default class DeployCommand extends Command {
       default: 'info',
     }),
   };
-  async run() {
+  async run(): Promise<void> {
     const parsed = this.parse(DeployCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
     let spinner;
     try {
+      await setCredentials();
+
       spinner = log.spin('Setting up a new role...');
       await orchestrator.createRole();
       spinner.succeed();

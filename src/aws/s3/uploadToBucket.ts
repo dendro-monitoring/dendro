@@ -1,14 +1,10 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import * as AWS from 'aws-sdk';
-import { AWS_REGION } from '../../constants';
 
-const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+import { s3 } from '../singletons';
 
-export default function uploadToBucket(Bucket: string, file: string, region = AWS_REGION): Promise<any> {
+export default function uploadToBucket(Bucket: string, file: string): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
-
     const uploadParams = { Bucket, Key: '', Body: '' };
 
     if (!fs.existsSync(file)) throw new Error('Cannot open file');

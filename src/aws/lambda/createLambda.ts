@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import AdmZip from 'adm-zip';
-import { AWS_REGION } from '../../constants';
+
+import { lambda } from '../singletons';
 
 import store from '../../store';
 
@@ -21,12 +21,9 @@ export default function createLambda({
   Role = store.AWS.IAM.Arn!,
   DATABASE_NAME,
   Runtime = 'nodejs12.x',
-  region = AWS_REGION,
   Description = '',
 }: LambdaData): Promise<any> {
   return new Promise(resolve => {
-    AWS.config.update({ region });
-
     const lambdaName = lambdaFile.replace(/\.js/, '');
 
     if (!fs.existsSync(lambdaFile)) {
@@ -37,16 +34,14 @@ export default function createLambda({
 
     zip.addLocalFile(lambdaFile);
 
-    const lambda = new AWS.Lambda();
-
     const params = {
-      Code: { /* required */
+      Code: {
         ZipFile: zip.toBuffer(),
       },
-      FunctionName: path.basename(lambdaName), /* required */
-      Handler: `${lambdaName}.handler`, /* required */
-      Role, /* required */
-      Runtime, /* required */
+      FunctionName: path.basename(lambdaName),
+      Handler: `${lambdaName}.handler`,
+      Role,
+      Runtime,
       Description,
       Environment: {
         Variables: {

@@ -1,7 +1,5 @@
 import { AWSError } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
-
-const s3 = new AWS.S3();
+import { s3 } from '../singletons';
 
 export default function listBuckets(): Promise<any>{
   return new Promise(resolve => {

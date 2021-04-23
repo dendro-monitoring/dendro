@@ -1,13 +1,10 @@
 import { AWSError } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
-
-const iam = new AWS.IAM();
+import { iam } from '../singletons';
 
 export default function listRoles(): Promise<any> {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     iam.listRoles({}, (err: AWSError, data: any) => {
-      // TODO: resolve?
-      if (err) resolve(err);
+      if (err) return reject(err);
       resolve(data.Roles);
     });
   });

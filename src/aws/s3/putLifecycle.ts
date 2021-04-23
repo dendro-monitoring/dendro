@@ -1,8 +1,6 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
 import { AWS_S3_BUCKET_NAME } from '../../constants';
-
-const s3 = new AWS.S3();
+import { s3 } from '../singletons';
 
 export default function putLifecycle(): Promise<any> {
   return new Promise((resolve, reject) => {

@@ -3,10 +3,8 @@
  * trigger one lambda
 */
 
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-
-const s3 = new AWS.S3();
+import { s3 } from '../singletons';
 
 export default function createS3LambdaTrigger(Bucket: string, LambdaFunctionArn: string): Promise<any> {
   return new Promise(resolve => {
