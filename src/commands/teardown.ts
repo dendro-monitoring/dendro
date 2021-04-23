@@ -104,7 +104,7 @@ export default class Teardown extends Command {
     callback(chalk.bold('Lambda:'));
 
     if (lambdas.length === 0) {
-      log.info('No lambda created!');
+      log.info('No lambda found!');
       return;
     }
 
@@ -184,8 +184,8 @@ export default class Teardown extends Command {
       const { Functions } = await AWSWrapper.listFunctions();
       await this.printLambdas(Functions, callback);
 
-      // const { Databases } = await AWSWrapper.listDatabases();
-      // await this.printTimestream(Databases, callback);
+      const { Databases } = await AWSWrapper.listDatabases();
+      await this.printTimestream(Databases, callback);
 
       // const { Tables } = await AWSWrapper.listTables();
       // await this.printTimestreamTables(Tables, callback);
