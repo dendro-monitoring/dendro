@@ -2,6 +2,7 @@ import { Command, flags } from '@oclif/command';
 
 import log, { LevelNames } from '../utils/log';
 import orchestrator from '../aws/orchestrator';
+import { ensureCredentials } from '../utils/aws';
 
 export default class LogCommand extends Command {
   static description = 'logs cloudwatch logs';
@@ -23,6 +24,8 @@ export default class LogCommand extends Command {
   };
 
   async run() {
+    ensureCredentials();
+
     const { flags: cliFlags } = this.parse(LogCommand);
 
     const { level } = cliFlags;
