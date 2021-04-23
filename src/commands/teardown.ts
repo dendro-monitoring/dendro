@@ -3,6 +3,7 @@ import AWS = require('aws-sdk');
 import { Command, flags } from '@oclif/command';
 import orchestrator from '../aws/orchestrator';
 import log, { LevelNames } from "../utils/log";
+import { ensureCredentials } from '../utils/aws';
 import {
   ALL_TIMESTREAM_DATABASE_TABLES,
   AWS_FIREHOSE_STREAM_NAME,
@@ -43,7 +44,7 @@ export default class Teardown extends Command {
   async printRoles(roles: { RoleName: string }[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold("Role:"));
 
-    if (roles.length === 0) {
+    if (roles.length === 0 || roles.filter(role => role.RoleName === AWS_IAM_ROLE_NAME).length === 0) {
       log.info('No role found!');
       return;
     }
@@ -160,6 +161,7 @@ export default class Teardown extends Command {
   }
 
   async run() {
+    ensureCredentials();
     AWS.config.update({ region: AWS_REGION });
     const parsed = this.parse(Teardown);
     const { level } = parsed.flags;

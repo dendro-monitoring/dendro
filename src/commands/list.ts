@@ -47,7 +47,7 @@ Timestream
   async printRoles(roles: { RoleName: string }[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold("Role:"));
 
-    if (roles.length === 0) {
+    if (roles.length === 0 || roles.filter(role => role.RoleName === AWS_IAM_ROLE_NAME).length === 0) {
       log.info('No role found!');
       return;
     }

@@ -18,6 +18,10 @@ export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_D
         const result = await listTablesTimestream(DatabaseName);
         results = [...results, ...result.Tables];
       } catch (e) {
+        if (e.code === "ResourceNotFoundException") {
+          resolve(null);
+          return;
+        }
         reject(e);
       }
 

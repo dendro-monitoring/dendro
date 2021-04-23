@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 import { AWS_REGION } from '../../constants';
 
 export default function deleteTable(DatabaseName: string, TableName: string, region: string = AWS_REGION): Promise<any> {
-  return new Promise( async resolve => {
+  return new Promise(async resolve => {
     AWS.config.update({ region });
     const timestreamwrite = new AWS.TimestreamWrite();
 
@@ -17,4 +17,3 @@ export default function deleteTable(DatabaseName: string, TableName: string, reg
     });
   });
 }
-

@@ -10,7 +10,11 @@ export default function deleteDatabase(DatabaseName: string, region: string = AW
       DatabaseName
     };
 
-    timestreamwrite.deleteDatabase(params, function(err, data) {
+    timestreamwrite.deleteDatabase(params, function (err, data) {
+      if (err && err.code === "ResourceNotFoundException") {
+        resolve(null);
+        return;
+      }
       if (err) throw new Error(String(err));
       else resolve(data);
     });
