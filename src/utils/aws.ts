@@ -32,10 +32,6 @@ export function setCredentials(): void {
   AWS.config.update({
     accessKeyId: store.AWS.Credentials.accessKeyId,
     secretAccessKey: store.AWS.Credentials.secretAccessKey,
-    // credentials: new AWS.Credentials({
-    //   accessKeyId: store.AWS.Credentials.accessKeyId as string,
-    //   secretAccessKey: store.AWS.Credentials.secretAccessKey as string
-    // })
   });
 
   credentialsSet = true;
