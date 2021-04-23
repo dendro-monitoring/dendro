@@ -36,35 +36,35 @@ export default class Teardown extends Command {
     try {
       const itemsToDelete = await orchestrator.getItemsToDelete();
       console.log(itemsToDelete);
-      // spinner = log.spin('Deleting role...');
-      // const roleError = await orchestrator.deleteRole();
-      // if (roleError) {
-      //   log.warn("Couldn't delete role: No such role exists");
-      // }
-      // spinner.succeed();
+      spinner = log.spin('Deleting role...');
+      const roleError = await orchestrator.deleteRole();
+      if (roleError) {
+        log.warn("Couldn't delete role: No such role exists");
+      }
+      spinner.succeed();
 
-      // spinner = log.spin('Deleting bucket...');
-      // const bucketError = await orchestrator.deleteBucket();
-      // if (bucketError) {
-      //   log.warn("Couldn't delete bucket: No such bucket exists");
-      // }
-      // spinner.succeed();
+      spinner = log.spin('Deleting bucket...');
+      const bucketError = await orchestrator.deleteBucket();
+      if (bucketError) {
+        log.warn("Couldn't delete bucket: No such bucket exists");
+      }
+      spinner.succeed();
 
-      // spinner = log.spin('Deleting firehose...');
-      // const firehoseError = await orchestrator.deleteFirehose();
-      // if (firehoseError) {
-      //   log.warn("Couldn't delete firehose: No such stream name exists");
-      // }
-      // spinner.succeed();
+      spinner = log.spin('Deleting firehose...');
+      const firehoseError = await orchestrator.deleteFirehose();
+      if (firehoseError) {
+        log.warn("Couldn't delete firehose: No such stream name exists");
+      }
+      spinner.succeed();
 
-      // spinner = log.spin('Deleting lambda...');
-      // const lambdaError = await orchestrator.deleteLambda();
-      // if (lambdaError) {
-      //   log.warn("Couldn't delete lambda: No such lambda exists");
-      // }
-      // spinner.succeed();
+      spinner = log.spin('Deleting lambda...');
+      const lambdaError = await orchestrator.deleteLambda();
+      if (lambdaError) {
+        log.warn("Couldn't delete lambda: No such lambda exists");
+      }
+      spinner.succeed();
 
-      // await orchestrator.deleteTimestream();
+      await orchestrator.deleteTimestream();
 
     } catch (error) {
       spinner?.fail();
