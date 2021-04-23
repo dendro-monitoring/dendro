@@ -6,29 +6,33 @@ import store from '../../store';
 
 const cloudwatch = new AWS.CloudWatchLogs({ region: AWS_REGION });
 
-export default function getLogEvents(logGroupName: string, logStreamName: string, startFromHead = true): Promise<any> {
-  return new Promise(resolve => {
+export default function getLogEvents(
+  logGroupName: string,
+  logStreamName: string,
+  startFromHead = true,
+  startTime?: number,
+  endTime?: number
+): Promise<any> {
+  return new Promise((resolve, reject) => {
     const params = {
       logGroupName,
       logStreamName,
       nextToken: store.AWS.Cloudwatch.NextToken,
       startFromHead,
-      // endTime: 'NUMBER_VALUE',
-      // startTime: 'NUMBER_VALUE'
+      endTime,
+      startTime
     };
     cloudwatch.getLogEvents(params as unknown as any, function(err: AWSError, data: any) {
-      if (err) {
-        console.log(err, err.stack);
+      if (err) return reject(err);
+
+      if (data.events.length === 0) {
+        store.AWS.Cloudwatch.NextToken = null;
       } else {
-        if (data.events.length === 0) {
-          store.AWS.Cloudwatch.NextToken = null;
-
-        } else {
-          store.AWS.Cloudwatch.NextToken = data.nextForwardToken;
-        }
-
-        resolve(data);
+        store.AWS.Cloudwatch.NextToken = data.nextForwardToken;
       }
+
+      resolve(data.events);
+
     });
   });
 }
