@@ -1,10 +1,9 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-const timestream = new AWS.TimestreamWrite();
+import { AWS_TIMESTREAM_WRITE } from '../../constants';
 
 export default function listDatabases(): Promise<any> {
   return new Promise(resolve => {
-    timestream.listDatabases({}, (err: AWSError, data: any) => {
+    AWS_TIMESTREAM_WRITE.listDatabases({}, (err: AWSError, data: any) => {
       if (err) throw new Error(err as unknown as string);
       else resolve(data);
     });
