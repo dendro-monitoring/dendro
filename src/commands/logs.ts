@@ -28,9 +28,9 @@ export default class LogCommand extends Command {
     const { level } = cliFlags;
     log.setLevel(level as LevelNames);
 
-    // const streams = await orchestrator.describeLogStreams('/aws/lambda/_deployableLambdaFunction');
-    const logs = await orchestrator.getLogEvents();
-    console.log(logs);
+    const logs = await orchestrator.getLogs();
+
+    console.log(JSON.stringify(logs, null, 2));
 
   }
 }
