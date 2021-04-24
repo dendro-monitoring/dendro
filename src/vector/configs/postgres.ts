@@ -21,13 +21,13 @@ const logConfig = (): string => {
   # General
   type = "regex_parser"
   inputs = ["postgres_logs"]
-  patterns = ['^(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3} \w+) (?P<code>\[\d+\]) (?P<username>\w+)@(?P<database>\w+) (?P<level>\w+):[ \t]+(?P<message>[a-zA-Z0-9-_ \W]*)']
+  patterns = ['^(?P<pg_timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3} \\w+) (?P<code>\\[\\d+\\]) (?P<username>\\w+)@(?P<database>\\w+) (?P<level>\\w+):[ \\t]+(?P<message>[a-zA-Z0-9-_ \\W]*)']
 
 [transforms.postgres_logs_transform]
   type = "remap"
   inputs = ["postgres_regex_transform"]
   source = '''
-  .type = "postgres-logs"
+  .type = "${VECTOR_POSTGRES_LOGS_TYPE}"
   '''
 
 [sinks.postgres_logs_firehose_stream_sink]

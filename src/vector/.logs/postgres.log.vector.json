@@ -1,0 +1,26 @@
+{
+  "code": "[498361]",
+  "database": "postgres",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/postgres.log.log",
+  "host": "andrew-xps159560",
+  "level": "LOG",
+  "message": "provided user name (postgres) and authenticated user name (peter) do not match",
+  "pg_timestamp": "2021-03-10 17:54:15.640 EST",
+  "source_type": "file",
+  "timestamp": "2021-04-24T15:58:25.276115665Z",
+  "type": "postgres-logs",
+  "username": "postgres"
+}
+{
+  "code": "[498361]",
+  "database": "postgres",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/postgres.log.log",
+  "host": "andrew-xps159560",
+  "level": "FATAL",
+  "message": "Peer authentication failed for user \"postgres\"",
+  "pg_timestamp": "2021-03-10 17:54:15.640 EST",
+  "source_type": "file",
+  "timestamp": "2021-04-24T15:58:25.276143278Z",
+  "type": "postgres-logs",
+  "username": "postgres"
+}
