@@ -1,6 +1,6 @@
 import describeLogGroups from './describeLogGroups';
 import describeLogStreams from './describeLogStreams';
-import getEvents from '../cloudwatch/getLogEvents';
+import getEvents from '../../cloudwatch/getLogEvents';
 
 export default function getLogs(): Promise<void>{
   return new Promise(async resolve => {

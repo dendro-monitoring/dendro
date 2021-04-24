@@ -2,10 +2,10 @@ import * as AWS from 'aws-sdk';
 import { setCredentials } from '../utils/aws';
 
 export default {
-  LAMBDA_POLICY_ARN:  'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
-  FIREHOSE_POLICY_ARN:  'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess',
-  TIMESTREAM_POLICY_ARN:  'arn:aws:iam::aws:policy/AmazonTimestreamFullAccess',
-  S3_POLICY_ARN:  'arn:aws:iam::aws:policy/AmazonS3FullAccess',
+  LAMBDA_POLICY_ARN: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+  FIREHOSE_POLICY_ARN: 'arn:aws:iam::aws:policy/AmazonKinesisFirehoseFullAccess',
+  TIMESTREAM_POLICY_ARN: 'arn:aws:iam::aws:policy/AmazonTimestreamFullAccess',
+  S3_POLICY_ARN: 'arn:aws:iam::aws:policy/AmazonS3FullAccess',
 };
 
 export const AWS_REGION = 'us-east-1';
@@ -14,7 +14,7 @@ export const AWS_S3_BUCKET_PREFIX = 'dendro-s3-bucket-';
 export const AWS_S3_BUCKET_SUFFIX = Math.random().toString(36).substring(2);
 export const AWS_S3_BUCKET_NAME = AWS_S3_BUCKET_PREFIX + AWS_S3_BUCKET_SUFFIX;
 export const AWS_TIMESTREAM_DATABASE_NAME = 'DendroTimestreamDB';
-export const AWS_IAM_ROLE_NAME ='dendro-s3-lambda-role';
+export const AWS_IAM_ROLE_NAME = 'dendro-s3-lambda-role';
 export const AWS_LAMBDA_FUNCTION_NAME = '_deployableLambdaFunction';
 export const AWS_CLOUDWATCH_LOG_GROUP_NAME = '/aws/lambda/_deployableLambdaFunction';
 export const AWS_SNS_TOPIC_NAME = 'dendro-sns-topic';

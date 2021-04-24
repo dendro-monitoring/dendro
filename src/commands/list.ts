@@ -1,12 +1,18 @@
+/* eslint-disable max-lines-per-function */
 import { Command, flags } from '@oclif/command';
-import cli from 'cli-ux';
 
 import log, { LevelNames } from '../utils/log';
 import AWSWrapper from '../aws';
-import chalk from 'chalk';
 import ora from 'ora';
-import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_FIREHOSE_STREAM_NAME, AWS_IAM_ROLE_NAME, AWS_LAMBDA_FUNCTION_NAME, AWS_S3_BUCKET_PREFIX, AWS_TIMESTREAM_DATABASE_NAME } from '../constants';
 import { ensureCredentials } from '../utils/aws';
+import {
+  logRoles,
+  logBuckets,
+  logDeliveryStreams,
+  logLambdas,
+  logTimestream,
+  logTimestreamTables
+} from '../utils/list';
 
 export default class ListCommand extends Command {
   static description = 'describe the command here';
@@ -24,7 +30,7 @@ Timestream
   static flags = {
     help: flags.help({ char: 'h' }),
     // flag with a value (-n, --name=VALUE)
-    // name: flags.string({ char: 'n', description: 'name to print' }),
+    // name: flags.string({ char: 'n', description: 'name to log' }),
     // flag with no value (-f, --force)
     // force: flags.boolean({ char: 'f' }),
     level: flags.string({
@@ -43,132 +49,7 @@ Timestream
 
   static args = [];
 
-  async printRoles(roles: { RoleName: string}[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Role:'));
-    const dendroRole = roles.filter( ({ RoleName }) => RoleName === AWS_IAM_ROLE_NAME);
-
-    if (dendroRole.length === 0) {
-      log.info('No role found!');
-      return;
-    }
-
-    for await (const role of dendroRole) {
-      if (role.RoleName !== AWS_IAM_ROLE_NAME) {
-        continue;
-      }
-
-      cli.url(
-        `- ${role.RoleName}`,
-        `https://console.aws.amazon.com/iam/home?region=us-east-1#/roles/${role.RoleName}`
-      );
-    }
-    console.log('\n');
-  }
-
-  async printBuckets(buckets: { Name: string}[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Bucket:'));
-    const dendroBuckets = buckets.filter( ({ Name }) => Name.includes(AWS_S3_BUCKET_PREFIX));
-
-    if (dendroBuckets.length === 0) {
-      log.info('No bucket found!');
-      return;
-    }
-
-    for (const bucket of dendroBuckets) {
-      if (!bucket.Name.includes(AWS_S3_BUCKET_PREFIX)) {
-        continue;
-      }
-
-      cli.url(
-        `- ${bucket.Name}`,
-        `https://s3.console.aws.amazon.com/s3/buckets/${bucket.Name}?region=us-east-2&tab=objects`
-      );
-    }
-    console.log('\n');
-  }
-
-  async printDeliveryStreams(streams: string[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Firehose Stream:'));
-
-    if (streams.length === 0) {
-      log.info('No stream found!');
-      return;
-    }
-
-    for await (const stream of streams) {
-      if (stream !== AWS_FIREHOSE_STREAM_NAME) {
-        continue;
-      }
-
-      cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`);
-    }
-    console.log('\n');
-  }
-
-  async printLambdas(lambdas: { FunctionName: string }[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Lambda:'));
-
-    if (lambdas.length === 0) {
-      log.info('No lambda created!');
-      return;
-    }
-
-    for await (const lambda of lambdas) {
-      if (lambda.FunctionName !== AWS_LAMBDA_FUNCTION_NAME) {
-        continue;
-      }
-
-      cli.url(
-        `- ${lambda.FunctionName}`,
-        `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`
-      );
-    }
-
-    console.log('\n');
-  }
-
-  async printTimestream(streams: { DatabaseName: string }[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Timestream Database:'));
-
-    if (streams.length === 0) {
-      log.info('No timestream database found!');
-      return;
-    }
-
-    for await (const stream of streams) {
-      if (stream.DatabaseName !== AWS_TIMESTREAM_DATABASE_NAME) {
-        continue;
-      }
-
-      cli.url(
-        `- ${stream.DatabaseName}`,
-        `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`
-      );
-    }
-    console.log('\n');
-  }
-
-  async printTimestreamTables(tables: { TableName: string }[], callback: (msg: string) => void): Promise<void> {
-    callback(chalk.bold('Timestream Tables:'));
-
-    if (tables.length === 0) {
-      log.info('No timestream tables found!');
-      return;
-    }
-
-    for await (const table of tables) {
-      if (!ALL_TIMESTREAM_DATABASE_TABLES.includes(table.TableName)) {
-        continue;
-      }
-
-      cli.url(
-        `- ${table.TableName}`,
-        `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/DendroTimestreamDB/tables/${table.DatabaseName}`
-      );
-    }
-  }
-
-  async run() {
+  async run(): Promise<void>{
     ensureCredentials();
 
     const parsed = this.parse(ListCommand);
@@ -179,28 +60,28 @@ Timestream
 
     spinner = log.spin('Listing role...');
     const Roles = await AWSWrapper.listRoles();
-    await this.printRoles(Roles, callback);
+    await logRoles(Roles, callback);
 
     spinner = log.spin('Listing S3 bucket...');
-    const { Buckets } = await AWSWrapper.listBuckets();
-    await this.printBuckets(Buckets, callback);
+    const Buckets = await AWSWrapper.listBuckets();
+    await logBuckets(Buckets, callback);
 
     spinner = log.spin('Listing Firehose stream...\n');
-    const { DeliveryStreamNames } = await AWSWrapper.listDeliveryStreams();
-    await this.printDeliveryStreams(DeliveryStreamNames, callback);
+    const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
+    await logDeliveryStreams(DeliveryStreamNames, callback);
 
     spinner = log.spin('Listing Lambda function...\n');
-    const { Functions } = await AWSWrapper.listFunctions();
-    await this.printLambdas(Functions, callback);
+    const Functions = await AWSWrapper.listFunctions();
+    await logLambdas(Functions, callback);
 
     spinner = log.spin('Listing Timestream database...\n');
-    const { Databases } = await AWSWrapper.listDatabases();
-    await this.printTimestream(Databases, callback);
+    const Databases = await AWSWrapper.listDatabases();
+    await logTimestream(Databases, callback);
 
     if ( Databases.length > 0 ) {
       spinner = log.spin('Listing Timestream tables...\n');
-      const { Tables } = await AWSWrapper.listTables();
-      await this.printTimestreamTables(Tables, callback);
+      const Tables = await AWSWrapper.listTables();
+      await logTimestreamTables(Tables, callback);
     }
   }
 }
