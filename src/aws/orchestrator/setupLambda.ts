@@ -4,7 +4,7 @@ import store from '../../store';
 import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME } from '../../constants';
 import getBucketName from './getBucketName';
 
-const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/_deployableLambdaFunction.js`);
+const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/go/function.zip`);
 
 export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
