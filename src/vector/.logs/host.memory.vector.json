@@ -1,0 +1,84 @@
+{
+  "gauge": {
+    "value": 16241236000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_total_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}
+{
+  "gauge": {
+    "value": 5310004000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_free_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}
+{
+  "gauge": {
+    "value": 9321592000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_available_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}
+{
+  "gauge": {
+    "value": 1893976000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_active_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}
+{
+  "gauge": {
+    "value": 549984000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_buffers_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}
+{
+  "gauge": {
+    "value": 4660796000.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "memory_cached_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "memory"
+  },
+  "timestamp": "2021-04-23T18:33:19.907548056Z",
+  "type": "host-metrics"
+}

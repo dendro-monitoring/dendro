@@ -15,8 +15,8 @@ const logConfig = (): string => {
 [sources.nginx_logs]
   type = "file"
   include = [
-    ${store.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access.log*",' : null}
-    ${store.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error.log*"' : null}
+    ${store.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access_log.log",' : null}
+    ${store.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error_log.log"' : null}
   ]
   read_from = "beginning"
 
@@ -24,6 +24,8 @@ const logConfig = (): string => {
   type = "remap"
   inputs = ["nginx_logs"]
   source = '''
+  .parsed = parse_nginx_log!(.message, "combined")
+  del(.message)
   .type = "${VECTOR_NGINX_LOGS_TYPE}"
   '''
 

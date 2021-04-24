@@ -1,0 +1,104 @@
+{
+  "gauge": {
+    "value": 1.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "up",
+  "namespace": "postgresql",
+  "tags": {
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.369647206Z",
+  "type": "postgres-metrics"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_datid",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368466896Z",
+  "type": "postgres-metrics"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_numbackends",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368469085Z",
+  "type": "postgres-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_xact_commit_total",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368471649Z",
+  "type": "postgres-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_xact_rollback_total",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368478689Z",
+  "type": "postgres-metrics"
+}
+{
+  "counter": {
+    "value": 285.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_blks_read_total",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368480236Z",
+  "type": "postgres-metrics"
+}
+{
+  "counter": {
+    "value": 2212314.0
+  },
+  "host": "localhost",
+  "kind": "absolute",
+  "name": "pg_stat_database_blks_hit_total",
+  "namespace": "postgresql",
+  "tags": {
+    "db": "",
+    "endpoint": "postgresql:///postgres?host=localhost&port=5432"
+  },
+  "timestamp": "2021-04-23T18:25:34.368481600Z",
+  "type": "postgres-metrics"
+}
