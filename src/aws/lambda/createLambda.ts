@@ -25,11 +25,9 @@ export default function createLambda({
       throw new Error('Can\'t find lambda file');
     }
 
-    const zip = fs.readFileSync(lambdaFile);
-
     const params = {
       Code: {
-        ZipFile: zip,
+        ZipFile: fs.readFileSync(lambdaFile),
       },
       FunctionName: AWS_LAMBDA_FUNCTION_NAME,
       Handler: 'main',
