@@ -15,7 +15,7 @@ export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_D
       }
 
       store.AWS.Timestream.NextToken = data.NextToken;
-      resolve(data);
+      resolve(data.Tables);
     });
   });
 }

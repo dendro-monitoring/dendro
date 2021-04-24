@@ -1,9 +1,7 @@
 /* eslint-disable max-lines-per-function */
 import { AWSError } from 'aws-sdk';
-import * as AWS from 'aws-sdk';
+import { AWS_S3 } from '../../constants';
 import listObjects from './listObjects';
-
-const s3 = new AWS.S3();
 
 export default async function deleteObjects(Bucket: string): Promise<any> {
   const objectsToDelete = await listObjects(Bucket);
@@ -11,7 +9,7 @@ export default async function deleteObjects(Bucket: string): Promise<any> {
   const params = {
     Bucket,
     Delete: {
-      Objects: objectsToDelete ? objectsToDelete.Contents.map(object => {
+      Objects: objectsToDelete ? objectsToDelete.Contents.map((object: { Key: string}) => {
         return { Key: object.Key };
       }) : []
     }
@@ -22,7 +20,7 @@ export default async function deleteObjects(Bucket: string): Promise<any> {
       resolve(null);
       return;
     }
-    s3.deleteObjects(params, (err: AWSError, data) => {
+    AWS_S3.deleteObjects(params, (err: AWSError, data) => {
       if (err) throw new Error(String(err));
       else resolve(data);
     });

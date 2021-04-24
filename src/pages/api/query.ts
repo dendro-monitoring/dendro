@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import query from "../../aws/orchestrator/query";
+import query from '../../aws/orchestrator/timestream/query';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {

@@ -1,10 +1,3 @@
-import {
-  AWS_FIREHOSE_STREAM_NAME,
-  AWS_S3_BUCKET_NAME,
-  AWS_TIMESTREAM_DATABASE_NAME,
-  AWS_IAM_ROLE_NAME,
-  AWS_LAMBDA_FUNCTION_NAME
-} from '../../constants';
 import AWSWrapper from '../../aws';
 
 export default async function getItemsToDelete(): Promise<any> {

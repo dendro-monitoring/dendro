@@ -9,7 +9,7 @@ import putS3Lifecycle from './s3/putLifecycle';
 import createLambda from './lambda/createLambda';
 import listFunctions from './lambda/listFunctions';
 import setLambdaInvokePolicy from './lambda/setLambdaInvokePolicy';
-import deleteLambdaFunction from './lambda/deleteLambdaFunction';
+import deleteFunction from './lambda/deleteFunction';
 
 import uploadToBucket from './s3/uploadToBucket';
 
@@ -45,7 +45,7 @@ export default {
   createLambda,
   listFunctions,
   setLambdaInvokePolicy,
-  deleteLambdaFunction,
+  deleteFunction,
 
   uploadToBucket,
 

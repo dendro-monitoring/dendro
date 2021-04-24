@@ -1,17 +1,13 @@
-import AWS = require('aws-sdk');
-import { AWS_REGION } from '../../constants';
+import { AWS_TIMESTREAM_WRITE } from '../../constants';
 
-export default function deleteDatabase(DatabaseName: string, region: string = AWS_REGION): Promise<any> {
-  AWS.config.update({ region });
-  const timestreamwrite = new AWS.TimestreamWrite();
-
+export default function deleteDatabase(DatabaseName: string): Promise<any> {
   return new Promise(resolve => {
     const params = {
       DatabaseName
     };
 
-    timestreamwrite.deleteDatabase(params, function (err, data) {
-      if (err && err.code === "ResourceNotFoundException") {
+    AWS_TIMESTREAM_WRITE.deleteDatabase(params, function (err, data) {
+      if (err && err.code === 'ResourceNotFoundException') {
         resolve(null);
         return;
       }

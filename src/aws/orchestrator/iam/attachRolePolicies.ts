@@ -1,7 +1,7 @@
-import attachRolePolicy from "../iam/attachRolePolicy";
-import constants from '../../constants';
+import attachRolePolicy from '../../iam/attachRolePolicy';
+import constants from '../../../constants';
 
-import { AWS_IAM_ROLE_NAME } from '../../constants';
+import { AWS_IAM_ROLE_NAME } from '../../../constants';
 
 export default function attachRolePolicies(
   resolve: () => any

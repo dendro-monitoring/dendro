@@ -1,7 +1,7 @@
-import store from '../../store';
-import listTablesTimestream from "../timestream/listTables";
+import store from '../../../store';
+import listTablesTimestream from '../../timestream/listTables';
 
-import { AWS_TIMESTREAM_DATABASE_NAME } from '../../constants';
+import { AWS_TIMESTREAM_DATABASE_NAME } from '../../../constants';
 
 /**
  * Lists all the tables located in the database defined by `store.AWS.Timestream.DatabaseName`
@@ -16,9 +16,9 @@ export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_D
     do {
       try {
         const result = await listTablesTimestream(DatabaseName);
-        results = [...results, ...result.Tables];
+        results = [...results, ...result];
       } catch (e) {
-        if (e.code === "ResourceNotFoundException") {
+        if (e.code === 'ResourceNotFoundException') {
           resolve(null);
           return;
         }
