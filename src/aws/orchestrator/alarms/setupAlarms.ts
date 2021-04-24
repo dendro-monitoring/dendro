@@ -1,14 +1,14 @@
 import createAlarms from './createAlarms';
 import createTopic from '../../sns/createTopic';
-import subscribe from '../../sns/subscribe';
 import putMetricFilters from './putMetricFliters';
+import { createSubscriptions } from './createSubscriptions';
 
 /**
  * Adds the neccessary alarms to the users Lambda
  */
 export default async function setupAlarms(): Promise<void> {
   await createTopic();
-  await subscribe('awcrotwell@gmail.com');
+  await createSubscriptions();
   await putMetricFilters();
   await createAlarms();
 }

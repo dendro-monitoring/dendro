@@ -33,7 +33,7 @@ class AWS {
 
   Cloudwatch: CloudwatchData;
 
-  SNS: SNSData;
+  SNS: SNS;
 
   constructor({
     Credentials: credentials = {},

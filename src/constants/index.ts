@@ -56,3 +56,5 @@ export const ALL_TIMESTREAM_DATABASE_TABLES = [
   VECTOR_POSTGRES_LOGS_TYPE,
   VECTOR_POSTGRES_METRICS_TYPE
 ];
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -6,9 +6,14 @@ import { postgresPrompt, postgresCredentialsPrompt } from './Postgres';
 import { mongoPrompt, mongoCredentialsPrompt } from './MongoDB';
 import { hostPrompt } from './Host';
 import { customApplicationPromptOptions } from './CustomApplication';
-import { awsCredentialsFormInfo } from './AWS';
+import {
+  awsCredentialsFormInfo,
+  promptCredentials,
+  confirmAlarms,
+  alarmEmailsPrompt
+} from './AWS';
 
-const servicesToMonitor = async (): Promise<prompts.Answers<"sources">> => {
+const servicesToMonitor = async (): Promise<prompts.Answers<'sources'>> => {
   return await prompts({
     type: 'multiselect',
     name: 'sources',
@@ -51,5 +56,8 @@ export {
   mongoPrompt, mongoCredentialsPrompt,
   hostPrompt,
   customApplicationPromptOptions,
-  awsCredentialsFormInfo
+  awsCredentialsFormInfo,
+  promptCredentials,
+  confirmAlarms,
+  alarmEmailsPrompt
 };
