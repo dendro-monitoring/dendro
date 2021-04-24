@@ -45,18 +45,19 @@ Timestream
 
   async printRoles(roles: { RoleName: string}[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold('Role:'));
+    const dendroRole = roles.filter( ({ RoleName }) => RoleName === AWS_IAM_ROLE_NAME);
 
-    if (roles.length === 0) {
+    if (dendroRole.length === 0) {
       log.info('No role found!');
       return;
     }
 
-    for await (const role of roles) {
+    for await (const role of dendroRole) {
       if (role.RoleName !== AWS_IAM_ROLE_NAME) {
         continue;
       }
 
-      await cli.url(
+      cli.url(
         `- ${role.RoleName}`,
         `https://console.aws.amazon.com/iam/home?region=us-east-1#/roles/${role.RoleName}`
       );
@@ -66,18 +67,19 @@ Timestream
 
   async printBuckets(buckets: { Name: string}[], callback: (msg: string) => void): Promise<void> {
     callback(chalk.bold('Bucket:'));
+    const dendroBuckets = buckets.filter( ({ Name }) => Name.includes(AWS_S3_BUCKET_PREFIX));
 
-    if (buckets.length === 0) {
+    if (dendroBuckets.length === 0) {
       log.info('No bucket found!');
       return;
     }
 
-    for await (const bucket of buckets) {
+    for (const bucket of dendroBuckets) {
       if (!bucket.Name.includes(AWS_S3_BUCKET_PREFIX)) {
         continue;
       }
 
-      await cli.url(
+      cli.url(
         `- ${bucket.Name}`,
         `https://s3.console.aws.amazon.com/s3/buckets/${bucket.Name}?region=us-east-2&tab=objects`
       );
@@ -98,7 +100,7 @@ Timestream
         continue;
       }
 
-      await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`);
+      cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`);
     }
     console.log('\n');
   }
@@ -116,7 +118,7 @@ Timestream
         continue;
       }
 
-      await cli.url(
+      cli.url(
         `- ${lambda.FunctionName}`,
         `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`
       );
@@ -138,7 +140,7 @@ Timestream
         continue;
       }
 
-      await cli.url(
+      cli.url(
         `- ${stream.DatabaseName}`,
         `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`
       );
@@ -159,7 +161,7 @@ Timestream
         continue;
       }
 
-      await cli.url(
+      cli.url(
         `- ${table.TableName}`,
         `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/DendroTimestreamDB/tables/${table.DatabaseName}`
       );
@@ -195,8 +197,10 @@ Timestream
     const { Databases } = await AWSWrapper.listDatabases();
     await this.printTimestream(Databases, callback);
 
-    spinner = log.spin('Listing Timestream tables...\n');
-    const { Tables } = await AWSWrapper.listTables();
-    await this.printTimestreamTables(Tables, callback);
+    if ( Databases.length > 0 ) {
+      spinner = log.spin('Listing Timestream tables...\n');
+      const { Tables } = await AWSWrapper.listTables();
+      await this.printTimestreamTables(Tables, callback);
+    }
   }
 }
