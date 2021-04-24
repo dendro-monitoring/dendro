@@ -16,6 +16,8 @@ export const AWS_S3_BUCKET_NAME = AWS_S3_BUCKET_PREFIX + AWS_S3_BUCKET_SUFFIX;
 export const AWS_TIMESTREAM_DATABASE_NAME = 'DendroTimestreamDB';
 export const AWS_IAM_ROLE_NAME = 'dendro-s3-lambda-role';
 export const AWS_LAMBDA_FUNCTION_NAME = '_deployableLambdaFunction';
+export const AWS_CLOUDWATCH_LOG_GROUP_NAME = '/aws/lambda/_deployableLambdaFunction';
+export const AWS_SNS_TOPIC_NAME = 'dendro-sns-topic';
 
 /**
  * Ensure credentials are set for the AWS SDK before
@@ -29,6 +31,7 @@ export const AWS_LAMBDA = new AWS.Lambda({ region: AWS_REGION });
 export const AWS_S3 = new AWS.S3();
 export const AWS_TIMESTREAM_WRITE = new AWS.TimestreamWrite({ region: AWS_REGION });
 export const AWS_TIMESTREAM_QUERY = new AWS.TimestreamQuery({ region: AWS_REGION });
+export const AWS_SNS = new AWS.SNS({ region: AWS_REGION });
 
 export const VECTOR_APACHE_LOGS_TYPE = 'apache-logs';
 export const VECTOR_APACHE_METRICS_TYPE = 'apache-metrics';
@@ -53,3 +56,5 @@ export const ALL_TIMESTREAM_DATABASE_TABLES = [
   VECTOR_POSTGRES_LOGS_TYPE,
   VECTOR_POSTGRES_METRICS_TYPE
 ];
+
+export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

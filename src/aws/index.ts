@@ -32,6 +32,11 @@ import getCredentials from './getCredentials';
 
 import describeLogStreams from './cloudwatch/describeLogStreams';
 import getLogEvents from './cloudwatch/getLogEvents';
+import putMetricFilter from './cloudwatch/putMetricFilter';
+
+import createTopic from './sns/createTopic';
+import subscribe from './sns/subscribe';
+import deleteTopic from './sns/deleteTopic';
 
 export default {
   createBucket,
@@ -67,5 +72,10 @@ export default {
   getCredentials,
 
   describeLogStreams,
-  getLogEvents
+  getLogEvents,
+  putMetricFilter,
+
+  createTopic,
+  subscribe,
+  deleteTopic,
 };
