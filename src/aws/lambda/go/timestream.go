@@ -11,6 +11,54 @@ import (
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
+func dimension(name string, val string) timestreamwrite.Dimension {
+	return timestreamwrite.Dimension{
+		Name:  &name,
+		Value: &val,
+	}
+}
+
+func toUnix(timestamp string) string {
+	t, err := time.Parse(time.RFC3339, timestamp)
+	if err != nil {
+		fmt.Println(err)
+		// If some error, just do time .now
+		return fmt.Sprint(time.Now().Unix())
+	}
+	return fmt.Sprint(t.Unix())
+}
+
+func fetch(toProcess func() interface{}) string {
+	str := toProcess()
+	switch str.(type) {
+	case string:
+		return str.(string)
+	default:
+		return ""
+	}
+}
+
+func fetchMeasureValue(record *map[string]interface{}) string {
+	val, ok := (*record)["counter"]
+	if ok {
+		return fmt.Sprintf(
+			"%f",
+			val.(map[string]interface{})["value"].(float64),
+		)
+	}
+
+	val, ok = (*record)["gauge"]
+	if ok {
+		return fmt.Sprintf(
+			"%f",
+			val.(map[string]interface{})["value"].(float64),
+		)
+	}
+
+	fmt.Printf("\nError: No counter or gauge for record: %s", (*record)["name"])
+	return ""
+}
+
 // TODO: Is this pass by value?
 func buildGenericRecord(record *map[string]interface{}) *timestreamwrite.Record {
 	name1 := "host"
@@ -87,12 +135,94 @@ func buildNginxMetricRecord(record *map[string]interface{}) {
 	nginxMetricRecords = append(nginxMetricRecords, buildGenericRecord(record))
 }
 
-func buildPostgresLogRecord(record *map[string]interface{}) {
-	postgresLogRecords = append(postgresLogRecords, buildGenericRecord(record))
+func buildPostgresLogRecord(pRecord *map[string]interface{}) {
+	record := *pRecord
+
+	host := func() interface{} {
+		return record["host"].(string)
+	}
+	database := func() interface{} {
+		return record["database"].(string)
+	}
+	code := func() interface{} {
+		return record["code"].(string)
+	}
+	message := func() interface{} {
+		return record["message"].(string)
+	}
+	timestamp := func() interface{} {
+		return record["timestamp"].(string)
+	}
+	level := func() interface{} {
+		return record["level"].(string)
+	}
+
+	hostDimension := dimension("host", fetch(host))
+	databaseDimension := dimension("database", fetch(database))
+	codeDimension := dimension("code", fetch(code))
+	messageDimension := dimension("message", fetch(message))
+
+	unixTime := toUnix(fetch(timestamp))
+	timeUnit := timestreamwrite.TimeUnitSeconds
+
+	measureName := "level"
+	measureValueType := "VARCHAR"
+	measureValue := fetch(level)
+
+	postgresLogRecords = append(postgresLogRecords, &timestreamwrite.Record{
+		Dimensions: []*timestreamwrite.Dimension{
+			&hostDimension,
+			&databaseDimension,
+			&codeDimension,
+			&messageDimension,
+		},
+		MeasureName:      &measureName,
+		MeasureValueType: &measureValueType,
+		MeasureValue:     &measureValue,
+		Time:             &unixTime,
+		TimeUnit:         &timeUnit,
+	})
 }
 
-func buildPostgresMetricRecord(record *map[string]interface{}) {
-	postgresMetricRecords = append(postgresMetricRecords, buildGenericRecord(record))
+func buildPostgresMetricRecord(pRecord *map[string]interface{}) {
+	record := *pRecord
+
+	host := func() interface{} {
+		return record["host"].(string)
+	}
+	dbFunc := func() interface{} {
+		return record["tags"].(map[string]interface{})["db"].(string)
+	}
+	name := func() interface{} {
+		return record["name"].(string)
+	}
+	timestamp := func() interface{} {
+		return record["timestamp"].(string)
+	}
+
+	hostDimension := dimension("host", fetch(host))
+	dbDimension := dimension("database", fetch(dbFunc))
+	nameDimension := dimension("name", fetch(name))
+
+	unixTime := toUnix(fetch(timestamp))
+	timeUnit := timestreamwrite.TimeUnitSeconds
+
+	measureName := fetch(name)
+	measureValueType := "DOUBLE"
+	measureValue := fetchMeasureValue(pRecord)
+
+	postgresMetricRecords = append(postgresMetricRecords, &timestreamwrite.Record{
+		Dimensions: []*timestreamwrite.Dimension{
+			&hostDimension,
+			&dbDimension,
+			&nameDimension,
+		},
+		MeasureName:      &measureName,
+		MeasureValueType: &measureValueType,
+		MeasureValue:     &measureValue,
+		Time:             &unixTime,
+		TimeUnit:         &timeUnit,
+	})
 }
 
 func buildRecordTypes(rawRecords *[]map[string]interface{}) {

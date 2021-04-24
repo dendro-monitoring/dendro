@@ -142,7 +142,7 @@
     * time: obj.timestamp
 
 ### postgres
-* postgres-error-log
+- [x] postgres-error-log
   * dimensions
     * host: obj.host
     * type: obj.type
@@ -154,7 +154,7 @@
     * measure-value: obj.level
   * time: obj.timestamp
 
-* postgres-metrics
+- [x] postgres-metrics
   * dimensions
     * type: obj.type
     * host: obj.host
