@@ -4,7 +4,14 @@ import log, { LevelNames } from '../utils/log';
 import { ensureCredentials } from '../utils/aws';
 import AWSWrapper from '../aws';
 const { Confirm } = require('enquirer');
-import { logRoles, logBuckets, logDeliveryStreams, logLambdas, logTimestream, logTimestreamTables } from '../utils/log';
+import {
+  logRoles,
+  logBuckets,
+  logDeliveryStreams,
+  logLambdas,
+  logTimestream,
+  logTimestreamTables
+} from '../utils/list';
 
 function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>): boolean {
   return roles.length === 0 && buckets.length === 0 && streams.length === 0 && functions.length === 0 && databases.length === 0;
