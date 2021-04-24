@@ -1,5 +1,7 @@
 import createBucket from './s3/createBucket';
 import listBuckets from './s3/listBuckets';
+import listObjects from './s3/listObjects';
+import deleteObjects from './s3/deleteObjects';
 import deleteBucket from './s3/deleteBucket';
 import createS3LambdaTrigger from './s3/createS3LambdaTrigger';
 import putS3Lifecycle from './s3/putLifecycle';
@@ -7,6 +9,7 @@ import putS3Lifecycle from './s3/putLifecycle';
 import createLambda from './lambda/createLambda';
 import listFunctions from './lambda/listFunctions';
 import setLambdaInvokePolicy from './lambda/setLambdaInvokePolicy';
+import deleteFunction from './lambda/deleteFunction';
 
 import uploadToBucket from './s3/uploadToBucket';
 
@@ -18,10 +21,12 @@ import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
 import listDeliveryStreams from './firehose/listDeliveryStreams';
+import deleteDeliveryStream from './firehose/deleteDeliveryStream';
 
 import createRole from './iam/createRole';
 import attachRolePolicy from './iam/attachRolePolicy';
 import listRoles from './iam/listRoles';
+import detachRolePolicy from './iam/detachRolePolicy';
 
 import getCredentials from './getCredentials';
 
@@ -31,6 +36,8 @@ import getLogEvents from './cloudwatch/getLogEvents';
 export default {
   createBucket,
   listBuckets,
+  listObjects,
+  deleteObjects,
   deleteBucket,
   createS3LambdaTrigger,
   putS3Lifecycle,
@@ -38,6 +45,7 @@ export default {
   createLambda,
   listFunctions,
   setLambdaInvokePolicy,
+  deleteFunction,
 
   uploadToBucket,
 
@@ -49,10 +57,12 @@ export default {
 
   createDeliveryStream,
   listDeliveryStreams,
+  deleteDeliveryStream,
 
   createRole,
   attachRolePolicy,
   listRoles,
+  detachRolePolicy,
 
   getCredentials,
 

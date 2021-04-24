@@ -1,7 +1,7 @@
-import * as constants from "../../constants";
-import createTable from '../timestream/createTimestreamTable';
+import * as constants from '../../../constants';
+import createTable from '../../timestream/createTimestreamTable';
 
-import store from '../../store';
+import store from '../../../store';
 
 /**
  * Creates a table for each individual watched service listed under store.Vector

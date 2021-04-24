@@ -1,10 +1,11 @@
+/* eslint-disable max-lines-per-function */
 import * as path from 'path';
-import AWSWrapper from '..';
-import store from '../../store';
-import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME, AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
-import getBucketName from './getBucketName';
+import AWSWrapper from '../..';
+import store from '../../../store';
+import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME, AWS_LAMBDA_FUNCTION_NAME } from '../../../constants';
+import getBucketName from '../s3/getBucketName';
 
-const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/go/function.zip`);
+const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../../lambda/go/function.zip`);
 
 export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
@@ -18,7 +19,6 @@ export default function setupLambda(): Promise<void> {
       if (!lambdaData) {
         const funcs = await AWSWrapper.listFunctions();
         store.AWS.Lambda.FunctionArn = funcs
-          .Functions
           .find((func: { FunctionName: string}) => (
             AWS_LAMBDA_FUNCTION_NAME === func.FunctionName
           )).FunctionArn;

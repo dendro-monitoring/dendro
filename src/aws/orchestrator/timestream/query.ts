@@ -1,5 +1,5 @@
-import store from '../../store';
-import timestreamQuery from '../timestream/query';
+import store from '../../../store';
+import timestreamQuery from '../../timestream/query';
 
 export interface queryResults {
   ColumnInfo?: {Name: string, Type: Record<string, unknown>[]}

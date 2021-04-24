@@ -1,5 +1,5 @@
-import { AWS_S3_BUCKET_NAME } from '../../constants';
-import AWSWrapper from '..';
+import { AWS_S3_BUCKET_NAME } from '../../../constants';
+import AWSWrapper from '../..';
 import getBucketName from './getBucketName';
 
 export default function createBucket(): Promise<void> {

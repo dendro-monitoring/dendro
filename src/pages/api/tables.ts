@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import listTables from "../../aws/orchestrator/listTables";
+import listTables from '../../aws/orchestrator/timestream/listTables';
 import { MonitoredService, VectorService } from '../../constants/frontendTypes';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
