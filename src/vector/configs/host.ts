@@ -14,13 +14,13 @@ const config = (): string => {
 [sources.host_metrics]
 type = "host_metrics"
 collectors = [
-  "${store.Vector.Host.cpu ? "cpu" : null}",
-  "${store.Vector.Host.cpu ? "disk" : null}",
-  "${store.Vector.Host.cpu ? "filesystem" : null}",
-  "${store.Vector.Host.cpu ? "load" : null}",
-  "${store.Vector.Host.cpu ? "host" : null}",
-  "${store.Vector.Host.cpu ? "memory" : null}",
-  "${store.Vector.Host.cpu ? "network" : null}"
+  ${store.Vector.Host.cpu ? '"cpu",' : ''}
+  ${store.Vector.Host.disk ? '"disk",' : ''}
+  ${store.Vector.Host.filesystem ? '"filesystem",' : ''}
+  ${store.Vector.Host.load ? '"load",' : ''}
+  ${store.Vector.Host.host ? '"host",' : ''}
+  ${store.Vector.Host.memory ? '"memory",' : ''}
+  ${store.Vector.Host.network ? '"network",' : ''}
 ]
 scrape_interval_secs = ${store.Vector.Host.scrapeIntervalSeconds}
 

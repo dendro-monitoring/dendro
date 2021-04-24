@@ -1,0 +1,10 @@
+2021-03-09 17:38:03.666 EST [496153] postgres@postgres ERROR:  syntax error at or near "ADD" at character 24
+2021-03-10 17:38:03.666 EST [496153] postgres@postgres STATEMENT:  UPDATE ROLE "postgres" ADD PASSWORD 'postgres';
+2021-03-10 17:51:25.833 EST [498009] postgres@postgres ERROR:  syntax error at or near "," at character 29
+2021-03-10 17:51:25.833 EST [498009] postgres@postgres STATEMENT:  ALTER ROLE "peter" superuser, createdb;
+2021-03-10 17:52:33.784 EST [498234] peter@peter FATAL:  database "peter" does not exist
+2021-03-10 17:53:49.856 EST [498325] peter@peter FATAL:  database "peter" does not exist
+2021-03-10 17:54:04.092 EST [498345] peter@peter FATAL:  database "peter" does not exist
+2021-03-10 17:54:15.640 EST [498361] postgres@postgres LOG:  provided user name (postgres) and authenticated user name (peter) do not match
+2021-03-10 17:54:15.640 EST [498361] postgres@postgres FATAL:  Peer authentication failed for user "postgres"
+2021-03-10 17:54:15.640 EST [498361] postgres@postgres DETAIL:  Connection matched pg_hba.conf line 89: "local   all             postgres                                peer"

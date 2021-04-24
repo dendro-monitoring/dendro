@@ -1,0 +1,32 @@
+{
+  "counter": {
+    "value": 22417.28
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "cpu_seconds_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "cpu",
+    "cpu": "0",
+    "mode": "idle"
+  },
+  "timestamp": "2021-04-23T18:33:19.905957191Z",
+  "type": "host-metrics"
+}
+{
+  "counter": {
+    "value": 0.41
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "cpu_seconds_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "cpu",
+    "cpu": "0",
+    "mode": "nice"
+  },
+  "timestamp": "2021-04-23T18:33:19.905957191Z",
+  "type": "host-metrics"
+}

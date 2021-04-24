@@ -1,0 +1,96 @@
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_free_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "nsfs",
+    "filesystem": "nsfs",
+    "mountpoint": "/run/snapd/ns/zoom-client.mnt"
+  },
+  "timestamp": "2021-04-24T14:29:32.714628742Z"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_total_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "nsfs",
+    "filesystem": "nsfs",
+    "mountpoint": "/run/snapd/ns/zoom-client.mnt"
+  },
+  "timestamp": "2021-04-24T14:29:32.714628742Z"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_used_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "nsfs",
+    "filesystem": "nsfs",
+    "mountpoint": "/run/snapd/ns/zoom-client.mnt"
+  },
+  "timestamp": "2021-04-24T14:29:32.714628742Z"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_free_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "binfmt_misc",
+    "filesystem": "binfmt_misc",
+    "mountpoint": "/proc/sys/fs/binfmt_misc"
+  },
+  "timestamp": "2021-04-24T14:29:32.714640236Z"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_total_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "binfmt_misc",
+    "filesystem": "binfmt_misc",
+    "mountpoint": "/proc/sys/fs/binfmt_misc"
+  },
+  "timestamp": "2021-04-24T14:29:32.714640236Z"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "filesystem_used_bytes",
+  "namespace": "host",
+  "tags": {
+    "collector": "filesystem",
+    "device": "binfmt_misc",
+    "filesystem": "binfmt_misc",
+    "mountpoint": "/proc/sys/fs/binfmt_misc"
+  },
+  "timestamp": "2021-04-24T14:29:32.714640236Z"
+}

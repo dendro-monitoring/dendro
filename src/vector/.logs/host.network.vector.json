@@ -1,0 +1,75 @@
+{
+  "counter": {
+    "value": 13127025.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "network_receive_bytes_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "network",
+    "device": "lo"
+  },
+  "timestamp": "2021-04-23T18:33:19.908815282Z",
+  "type": "host-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "network_receive_errs_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "network",
+    "device": "lo"
+  },
+  "timestamp": "2021-04-23T18:33:19.908815282Z",
+  "type": "host-metrics"
+}
+{
+  "counter": {
+    "value": 17084.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "network_receive_packets_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "network",
+    "device": "lo"
+  },
+  "timestamp": "2021-04-23T18:33:19.908815282Z",
+  "type": "host-metrics"
+}
+{
+  "counter": {
+    "value": 13127025.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "network_transmit_bytes_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "network",
+    "device": "lo"
+  },
+  "timestamp": "2021-04-23T18:33:19.908815282Z",
+  "type": "host-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "network_transmit_errs_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "network",
+    "device": "lo"
+  },
+  "timestamp": "2021-04-23T18:33:19.908815282Z",
+  "type": "host-metrics"
+}

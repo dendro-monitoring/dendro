@@ -24,6 +24,8 @@ const logConfig = (): string => {
   inputs = ["mongo_logs"]
   source = '''
   .type = "${VECTOR_MONGO_LOGS_TYPE}"
+  .parsed = parse_json!(.message)
+  del(.message)
   '''
 
 [sinks.mongo_logs_firehose_stream_sink]
@@ -58,7 +60,7 @@ const metricConfig = (): string => {
 ################ Mongo Metrics #############################
 
 [sources.mongo_metrics]
-  type = "mongo_metrics"
+  type = "mongodb_metrics"
   endpoints = ["mongodb://${url}:${port}"]
   scrape_interval_secs = ${scrapeIntervalSeconds}
 
