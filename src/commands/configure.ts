@@ -10,11 +10,11 @@ import {
   postgresPrompt, postgresCredentialsPrompt,
   mongoPrompt, mongoCredentialsPrompt,
   hostPrompt,
-  customApplicationPromptOptions
+  customApplicationPromptOptions,
+  promptCredentials
 } from '../prompts';
 import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
-import { promptCredentials } from '../utils/aws';
 import chalk from 'chalk';
 
 export default class Configure extends Command {

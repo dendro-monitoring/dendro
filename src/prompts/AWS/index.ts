@@ -1,6 +1,7 @@
 import log from '../../utils/log';
 import { AWSCredentialsAnswers } from '../../constants/cliTypes';
 import store from '../../store';
+import { credentialsExist } from '../../utils/aws';
 
 export const awsCredentialsFormInfo = {
   name: 'aws credentials',
@@ -31,5 +32,19 @@ export const awsCredentialsFormInfo = {
     }
 
     return true;
+  }
+};
+
+/**
+ * Used to ensure aws credentials exist prior to doing some operation
+ * that would require them.
+ */
+export const promptCredentials = async (): Promise<void> => {
+  if (!credentialsExist()) {
+    console.clear();
+
+    const answers: AWSCredentialsAnswers = await (new Form(awsCredentialsFormInfo)).run();
+    store.AWS.Credentials.accessKeyId = answers['Access Key ID'];
+    store.AWS.Credentials.secretAccessKey = answers['Secret Key'];
   }
 };
