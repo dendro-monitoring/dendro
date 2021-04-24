@@ -92,16 +92,8 @@ const allParams = [
  * Adds the neccessary alarms to the users Lambda
  */
 export default async function putMetricFilters(): Promise<void> {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const promises: Promise<any>[] = [];
+  const promises: Promise<any>[] = [];
 
-      allParams.forEach(param => promises.push(putMetricFilter(param)));
-      await Promise.all(promises);
-
-      resolve();
-    } catch (e) {
-      reject(e);
-    }
-  });
+  allParams.forEach(param => promises.push(putMetricFilter(param)));
+  await Promise.all(promises);
 }

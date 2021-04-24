@@ -52,7 +52,7 @@ export default class DeployCommand extends Command {
       // spinner.succeed();
 
       spinner = log.spin('Setting up alarms...');
-      await orchestrator.putMetricFilter();
+      await orchestrator.setupAlarms();
       spinner.succeed();
 
     } catch (error) {

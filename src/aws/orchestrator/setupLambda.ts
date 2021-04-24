@@ -1,9 +1,14 @@
 import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';
-import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME, AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
+import {
+  AWS_TIMESTREAM_DATABASE_NAME,
+  AWS_S3_BUCKET_NAME,
+  AWS_LAMBDA_FUNCTION_NAME
+} from '../../constants';
 import getBucketName from './getBucketName';
 
+// TODO: Move to constants
 const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/go/function.zip`);
 
 export default function setupLambda(): Promise<void> {

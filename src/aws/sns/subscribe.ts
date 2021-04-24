@@ -10,6 +10,7 @@ export default function subscribe(Endpoint: string, Protocol = 'email'): Promise
       Endpoint,
       ReturnSubscriptionArn: true
     };
+
     AWS_SNS.subscribe(params as any, function(err: AWSError, data: any) {
       if (err) return reject(err);
 

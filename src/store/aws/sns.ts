@@ -1,11 +1,11 @@
 export interface SNSData {
-  TopicArn?: string | undefined
-  SubscriptionArn?: string | undefined
+  TopicArn?: string
+  SubscriptionArn?: string
 }
 
 export default class SNS {
-  TopicArn: string | undefined;
-  SubscriptionArn: string | undefined;
+  TopicArn?: string;
+  SubscriptionArn?: string;
 
   constructor({ TopicArn, SubscriptionArn }: SNSData) {
     this.TopicArn = TopicArn;
