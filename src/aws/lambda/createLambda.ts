@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import * as fs from 'fs';
 import { AWSError } from 'aws-sdk';
 

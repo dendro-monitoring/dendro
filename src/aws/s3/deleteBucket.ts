@@ -7,9 +7,12 @@ export default function deleteBucket(Bucket: string): Promise<any> {
       Bucket,
     };
 
-    AWS_S3.deleteBucket(bucketParams, (err: AWSError, data) => {
-      if (err) throw new Error(String(err));
-      else resolve(data);
+    AWS_S3.deleteBucket(bucketParams, (err: AWSError) => {
+      if (err && err.code === 'NoSuchBucket') {
+        resolve(err);
+      } else if (err) {
+        throw new Error(String(err));
+      } else resolve(null);
     });
   });
 }

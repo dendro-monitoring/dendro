@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import getLogs from "../../aws/orchestrator/getLogs";
+import getLogs from '../../aws/orchestrator/cloudwatch/getLogs';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {

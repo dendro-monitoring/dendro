@@ -1,6 +1,6 @@
-import describeGroups from '../cloudwatch/describeLogGroups';
+import describeGroups from '../../cloudwatch/describeLogGroups';
 
-import store from '../../store';
+import store from '../../../store';
 
 export default function describeLogGroups(): Promise<Array<any>> {
   return new Promise(async (resolve) => {

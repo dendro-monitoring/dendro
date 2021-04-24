@@ -1,6 +1,6 @@
-import getLogs from '../cloudwatch/getLogEvents';
+import getLogs from '../../cloudwatch/getLogEvents';
 
-import store from '../../store';
+import store from '../../../store';
 
 export default function getLogEvents(logGroupName: string, logStreamName: string): Promise<any> {
   return new Promise(async (resolve) =>{

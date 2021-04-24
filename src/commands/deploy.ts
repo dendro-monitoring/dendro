@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
 
@@ -6,6 +7,8 @@ import { Command, flags } from '@oclif/command';
 import log, { LevelNames } from '../utils/log';
 import orchestrator from '../aws/orchestrator';
 import { ensureCredentials } from '../utils/aws';
+import { alarmEmailsPrompt, confirmAlarms } from '../prompts';
+import store from '../store';
 
 export default class DeployCommand extends Command {
   static flags = {
@@ -29,6 +32,15 @@ export default class DeployCommand extends Command {
     const parsed = this.parse(DeployCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
+
+    const alarms = await confirmAlarms.run();
+    if (alarms) {
+      console.clear();
+      store.AWS.SNS.Emails = await alarmEmailsPrompt.run();
+    }
+
+    console.clear();
+
     let spinner;
     try {
       spinner = log.spin('Setting up a new role...');
@@ -50,6 +62,12 @@ export default class DeployCommand extends Command {
       spinner = log.spin('Setting up lambda...');
       await orchestrator.setupLambda();
       spinner.succeed();
+
+      if (alarms) {
+        spinner = log.spin('Setting up alarms...');
+        await orchestrator.setupAlarms();
+        spinner.succeed();
+      }
 
     } catch (error) {
       spinner?.fail();

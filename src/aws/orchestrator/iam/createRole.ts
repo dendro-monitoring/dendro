@@ -1,10 +1,10 @@
-import AWSWrapper from '../../aws';
-import store from '../../store';
-import listRoles from '../iam/listRoles';
+import AWSWrapper from '../..';
+import store from '../../../store';
+import listRoles from '../../iam/listRoles';
 
 import attachRolePolicies from './attachRolePolicies';
 
-import { AWS_IAM_ROLE_NAME } from '../../constants';
+import { AWS_IAM_ROLE_NAME } from '../../../constants';
 
 export default function createRole(): Promise<void> {
   return new Promise(resolve => {

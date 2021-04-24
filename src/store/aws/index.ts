@@ -5,6 +5,7 @@ import Firehose, { FirehoseData } from './firehose';
 import Timestream, { TimestreamData } from './timestream';
 import IAM, { AWSIAMData } from './iam';
 import Cloudwatch, { CloudwatchData } from './cloudwatch';
+import SNS, { SNSData } from './sns';
 
 export interface AWSData {
   Credentials: CredentialsData;
@@ -14,6 +15,7 @@ export interface AWSData {
   Timestream: TimestreamData;
   IAM: AWSIAMData;
   Cloudwatch: CloudwatchData;
+  SNS: SNSData;
 }
 
 class AWS {
@@ -31,6 +33,8 @@ class AWS {
 
   Cloudwatch: CloudwatchData;
 
+  SNS: SNS;
+
   constructor({
     Credentials: credentials = {},
     Lambda: lambda = {},
@@ -38,7 +42,8 @@ class AWS {
     Firehose: firehose = {},
     Timestream: timestream = {},
     IAM: iam = {},
-    Cloudwatch: cloudwatch = {}
+    Cloudwatch: cloudwatch = {},
+    SNS: sns = {}
   }: AWSData) {
     this.Credentials = new Credentials(credentials);
     this.Lambda = new Lambda(lambda);
@@ -47,6 +52,7 @@ class AWS {
     this.Timestream = new Timestream(timestream);
     this.IAM = new IAM(iam);
     this.Cloudwatch = new Cloudwatch(cloudwatch);
+    this.SNS = new SNS(sns);
   }
 }
 

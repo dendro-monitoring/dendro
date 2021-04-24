@@ -1,6 +1,6 @@
 import { AWSError } from 'aws-sdk';
 import { AWS_S3_BUCKET_NAME, AWS_S3 } from '../../constants';
-import getBucketName from '../orchestrator/getBucketName';
+import getBucketName from '../orchestrator/s3/getBucketName';
 
 export default function putLifecycle(): Promise<any> {
   return new Promise(async (resolve, reject) => {
