@@ -1,80 +1,83 @@
 import { AWS_CLOUDWATCH_LOG_GROUP_NAME } from '../../../constants';
 import putMetricFilter from '../../cloudwatch/putMetricFilter';
 
+const metricNamespace = 'Dendro';
+const metricValue = '1';
+
 const apacheParams: any = {
-  filterName: 'Apache', /* required */
-  filterPattern: '"[APACHE]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'Apache',
+  filterPattern: '"[APACHE]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroApache', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroApache',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
 
 const customAppParams: any = {
-  filterName: 'CustomApp', /* required */
-  filterPattern: '"[CUSTOMAPP]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'CustomApp',
+  filterPattern: '"[CUSTOMAPP]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroCustomApp', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroCustomApp',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
 
 const hostParams: any = {
-  filterName: 'Host', /* required */
-  filterPattern: '"[HOST]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'Host',
+  filterPattern: '"[HOST]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroHost', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroHost',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
 
 const mongoParams: any = {
-  filterName: 'Mongo', /* required */
-  filterPattern: '"[MONGO]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'Mongo',
+  filterPattern: '"[MONGO]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroMongo', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroMongo',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
 
 const nginxParams: any = {
-  filterName: 'Ngninx', /* required */
-  filterPattern: '"[NGINX]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'Ngninx',
+  filterPattern: '"[NGINX]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroNginx', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroNginx',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
 
 const postgresParams: any = {
-  filterName: 'Postgres', /* required */
-  filterPattern: '"[POSTGRES]"', /* required */
-  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME, /* required */
-  metricTransformations: [ /* required */
+  filterName: 'Postgres',
+  filterPattern: '"[POSTGRES]"',
+  logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
+  metricTransformations: [
     {
-      metricName: 'DendroPostgres', /* required */
-      metricNamespace: 'Dendro', /* required */
-      metricValue: '1', /* required */
+      metricName: 'DendroPostgres',
+      metricNamespace,
+      metricValue,
     },
   ]
 };
