@@ -2,10 +2,10 @@
 import * as path from 'path';
 import AWSWrapper from '..';
 import store from '../../store';
-import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME } from '../../constants';
+import { AWS_TIMESTREAM_DATABASE_NAME, AWS_S3_BUCKET_NAME, AWS_LAMBDA_FUNCTION_NAME } from '../../constants';
 import getBucketName from './getBucketName';
 
-const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/_deployableLambdaFunction.js`);
+const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/go/function.zip`);
 
 export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
@@ -21,7 +21,7 @@ export default function setupLambda(): Promise<void> {
         store.AWS.Lambda.FunctionArn = funcs
           .Functions
           .find((func: { FunctionName: string}) => (
-            path.basename(PATH_TO_LAMBDA_FUNCTION) === `${func.FunctionName}.js`
+            AWS_LAMBDA_FUNCTION_NAME === func.FunctionName
           )).FunctionArn;
 
         return resolve();
