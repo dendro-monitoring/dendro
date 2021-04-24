@@ -5,9 +5,6 @@ import { MonitoredService, VectorService } from '../../constants/frontendTypes';
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
     const tables = await listTables();
-    console.log('====================================');
-    console.log(tables);
-    console.log('====================================');
 
     const data: MonitoredService[] = [];
     tables.forEach((table: { TableName: VectorService }) => {
