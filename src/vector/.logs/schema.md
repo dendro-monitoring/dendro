@@ -1,6 +1,6 @@
 ### host-metrics:
 
-* cpu
+- [ ] cpu
   * dimensions
     * type: obj.type
     * collector: obj.tags.collector
@@ -12,7 +12,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* memory
+- [ ] memory
   * dimensions
     * type: obj.type
     * collector: obj.tags.collector
@@ -22,18 +22,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* network
-  * dimensions
-    * type: obj.type
-    * host: obj.host
-    * collector: obj.tags.collector
-    * device: obj.tags.device
-  * measures
-    * measure-name: obj.name
-    * measure-value: obj.gauge.value || obj.counter.value
-  * time: obj.timestamp
-
-* disk
+- [ ] network
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -44,7 +33,18 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* filesystem
+- [ ] disk
+  * dimensions
+    * type: obj.type
+    * host: obj.host
+    * collector: obj.tags.collector
+    * device: obj.tags.device
+  * measures
+    * measure-name: obj.name
+    * measure-value: obj.gauge.value || obj.counter.value
+  * time: obj.timestamp
+
+- [ ] filesystem
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -57,7 +57,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* host
+- [ ] host
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -67,7 +67,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* load
+- [ ] load
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -79,7 +79,7 @@
 
 ### mongodb:
 
-* mongodb-metrics
+- [x] mongodb-metrics
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -88,7 +88,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-* mongodb-logs
+- [x] mongodb-logs
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -97,49 +97,49 @@
     * context: obj.parsed.ctx
     * message: obj.parsed.msg
   * measures
-    * measure-name: obj.parsed.
-    * measure-value: 
+    * measure-name: severity
+    * measure-value: obj.parsed.s
   * time: obj.timestamp
 
-  ### nginx:
+### nginx:
 
-  * nginx-access-log
-    * dimensions
-      * type: obj.type
-      * host: obj.host
-      * agent: obj.parsed.agent
-      * client: obj.parsed.client
-      * method: obj.parsed.method
-      * path: obj.parsed.path
-      * referer: obj.parsed.referer
-      * request: obj.parsed.request
-      * response-body-size: obj.parsed.size
-    * measures
-      * measure-name: "status-code"
-      * measure-value: obj.parsed.status
-    * time: obj.timestamp
+- [x] nginx-access-log
+  * dimensions
+    * type: obj.type
+    * host: obj.host
+    * agent: obj.parsed.agent
+    * client: obj.parsed.client
+    * method: obj.parsed.method
+    * path: obj.parsed.path
+    * referer: obj.parsed.referer
+    * request: obj.parsed.request
+    * response-body-size: obj.parsed.size
+  * measures
+    * measure-name: "status-code"
+    * measure-value: obj.parsed.status
+  * time: obj.timestamp
 
-  * nginx-error-log
-    * dimensions
-      * type: obj.type
-      * host: obj.host
-      * client: obj.parsed.client
-      * server: obj.parsed.server
-      * message: obj.parsed.message
-      * request: obj.parsed.request
-    * measures
-      * measure-name: "severity"
-      * measure-value: obj.parsed.severity (varchar)
-    * time: obj.timestamp
+- [ ] nginx-error-log
+  * dimensions
+    * type: obj.type
+    * host: obj.host
+    * client: obj.parsed.client
+    * server: obj.parsed.server
+    * message: obj.parsed.message
+    * request: obj.parsed.request
+  * measures
+    * measure-name: "severity"
+    * measure-value: obj.parsed.severity (varchar)
+  * time: obj.timestamp
 
-  * nginx-metrics
-    * dimensions
-      * type: obj.type
-      * host: obj.host
-    * measures
-      * measure-name: obj.name
-      * measure-value: obj.gauge.value || obj.counter.value
-    * time: obj.timestamp
+- [x] nginx-metrics
+  * dimensions
+    * type: obj.type
+    * host: obj.host
+  * measures
+    * measure-name: obj.name
+    * measure-value: obj.gauge.value || obj.counter.value
+  * time: obj.timestamp
 
 ### postgres
 - [x] postgres-error-log
@@ -165,12 +165,12 @@
   * time: obj.timestamp
 
 ### apache
-* apache-access-log
-* apache-error-log
-* apache-metrics
+- [ ] apache-access-log
+- [ ] apache-error-log
+- [ ] apache-metrics
 
 ### custom app
-* custom-app-log
+- [ ] custom-app-log
   * dimensions
     * host: obj.host
     * app-name: obj.appname

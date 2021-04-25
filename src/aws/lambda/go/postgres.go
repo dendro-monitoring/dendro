@@ -69,7 +69,6 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 
 	hostDimension := dimension("host", fetch(host))
 	dbDimension := dimension("database", fetch(dbFunc))
-	nameDimension := dimension("name", fetch(name))
 
 	unixTime := toUnix(fetch(timestamp))
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -82,7 +81,6 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 		Dimensions: []*timestreamwrite.Dimension{
 			&hostDimension,
 			&dbDimension,
-			&nameDimension,
 		},
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
