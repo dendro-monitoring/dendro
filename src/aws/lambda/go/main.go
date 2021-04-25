@@ -27,26 +27,30 @@ var DATABASE_NAME string = "DendroTimestreamDB"
 
 // All the different vector types & database names
 
-const VECTOR_APACHE_LOGS_TYPE = "apache-logs"
+const VECTOR_APACHE_ACCESS_LOGS_TYPE = "apache-access-logs"
+const VECTOR_APACHE_ERROR_LOGS_TYPE = "apache-error-logs"
 const VECTOR_APACHE_METRICS_TYPE = "apache-metrics"
 const VECTOR_CUSTOM_APPLICATION_TYPE = "custom-application"
 const VECTOR_HOST_METRICS_TYPE = "host-metrics"
 const VECTOR_MONGO_LOGS_TYPE = "mongo-logs"
 const VECTOR_MONGO_METRICS_TYPE = "mongo-metrics"
-const VECTOR_NGINX_LOGS_TYPE = "nginx-logs"
+const VECTOR_NGINX_ACCESS_LOGS_TYPE = "nginx-access-logs"
+const VECTOR_NGINX_ERROR_LOGS_TYPE = "nginx-error-logs"
 const VECTOR_NGINX_METRICS_TYPE = "nginx-metrics"
 const VECTOR_POSTGRES_LOGS_TYPE = "postgres-logs"
 const VECTOR_POSTGRES_METRICS_TYPE = "postgres-metrics"
 
 // Arrays for dividing the individual record types.
 
-var apacheLogRecords []*timestreamwrite.Record
+var apacheAccessLogRecords []*timestreamwrite.Record
+var apacheErrorLogRecords []*timestreamwrite.Record
 var apacheMetricRecords []*timestreamwrite.Record
 var customAppRecords []*timestreamwrite.Record
 var hostMetricRecords []*timestreamwrite.Record
 var mongoLogRecords []*timestreamwrite.Record
 var mongoMetricRecords []*timestreamwrite.Record
-var nginxLogRecords []*timestreamwrite.Record
+var nginxAccessLogRecords []*timestreamwrite.Record
+var nginxErrorLogRecords []*timestreamwrite.Record
 var nginxMetricRecords []*timestreamwrite.Record
 var postgresLogRecords []*timestreamwrite.Record
 var postgresMetricRecords []*timestreamwrite.Record
@@ -57,8 +61,12 @@ We iterate on this to write all records to the db easily.
 */
 var allRecords []RecordContainer = []RecordContainer{
 	{
-		vectorType: VECTOR_APACHE_LOGS_TYPE,
-		records:    &apacheLogRecords,
+		vectorType: VECTOR_APACHE_ACCESS_LOGS_TYPE,
+		records:    &apacheAccessLogRecords,
+	},
+	{
+		vectorType: VECTOR_APACHE_ERROR_LOGS_TYPE,
+		records:    &apacheErrorLogRecords,
 	},
 	{
 		vectorType: VECTOR_APACHE_METRICS_TYPE,
@@ -81,8 +89,12 @@ var allRecords []RecordContainer = []RecordContainer{
 		records:    &mongoMetricRecords,
 	},
 	{
-		vectorType: VECTOR_NGINX_LOGS_TYPE,
-		records:    &nginxLogRecords,
+		vectorType: VECTOR_NGINX_ACCESS_LOGS_TYPE,
+		records:    &nginxAccessLogRecords,
+	},
+	{
+		vectorType: VECTOR_NGINX_ERROR_LOGS_TYPE,
+		records:    &nginxErrorLogRecords,
 	},
 	{
 		vectorType: VECTOR_NGINX_METRICS_TYPE,

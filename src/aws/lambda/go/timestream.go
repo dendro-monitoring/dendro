@@ -103,136 +103,16 @@ func buildGenericRecord(record *RawRecord) *timestreamwrite.Record {
 	}
 }
 
-func buildApacheLogRecord(record *RawRecord) {
-	apacheLogRecords = append(apacheLogRecords, buildGenericRecord(record))
-}
-
-func buildApacheMetricRecord(record *RawRecord) {
-	apacheMetricRecords = append(apacheMetricRecords, buildGenericRecord(record))
-}
-
-func buildCustomAppRecord(record *RawRecord) {
-	customAppRecords = append(customAppRecords, buildGenericRecord(record))
-}
-
-func buildHostMetricRecord(record *RawRecord) {
-	hostMetricRecords = append(hostMetricRecords, buildGenericRecord(record))
-}
-
-func buildMongoLogRecord(record *RawRecord) {
-	mongoLogRecords = append(mongoLogRecords, buildGenericRecord(record))
-}
-
-func buildMongoMetricRecord(record *RawRecord) {
-	mongoMetricRecords = append(mongoMetricRecords, buildGenericRecord(record))
-}
-
-func buildNginxLogRecord(record *RawRecord) {
-	nginxLogRecords = append(nginxLogRecords, buildGenericRecord(record))
-}
-
-func buildNginxMetricRecord(record *RawRecord) {
-	nginxMetricRecords = append(nginxMetricRecords, buildGenericRecord(record))
-}
-
-func buildPostgresLogRecord(pRecord *RawRecord) {
-	record := *pRecord
-
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	database := func() interface{} {
-		return record["database"].(string)
-	}
-	code := func() interface{} {
-		return record["code"].(string)
-	}
-	message := func() interface{} {
-		return record["message"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
-	}
-	level := func() interface{} {
-		return record["level"].(string)
-	}
-
-	hostDimension := dimension("host", fetch(host))
-	databaseDimension := dimension("database", fetch(database))
-	codeDimension := dimension("code", fetch(code))
-	messageDimension := dimension("message", fetch(message))
-
-	unixTime := toUnix(fetch(timestamp))
-	timeUnit := timestreamwrite.TimeUnitSeconds
-
-	measureName := "level"
-	measureValueType := "VARCHAR"
-	measureValue := fetch(level)
-
-	postgresLogRecords = append(postgresLogRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&databaseDimension,
-			&codeDimension,
-			&messageDimension,
-		},
-		MeasureName:      &measureName,
-		MeasureValueType: &measureValueType,
-		MeasureValue:     &measureValue,
-		Time:             &unixTime,
-		TimeUnit:         &timeUnit,
-	})
-}
-
-func buildPostgresMetricRecord(pRecord *RawRecord) {
-	record := *pRecord
-
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	dbFunc := func() interface{} {
-		return record["tags"].(RawRecord)["db"].(string)
-	}
-	name := func() interface{} {
-		return record["name"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
-	}
-
-	hostDimension := dimension("host", fetch(host))
-	dbDimension := dimension("database", fetch(dbFunc))
-	nameDimension := dimension("name", fetch(name))
-
-	unixTime := toUnix(fetch(timestamp))
-	timeUnit := timestreamwrite.TimeUnitSeconds
-
-	measureName := fetch(name)
-	measureValueType := "DOUBLE"
-	measureValue := fetchMeasureValue(pRecord)
-
-	postgresMetricRecords = append(postgresMetricRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&dbDimension,
-			&nameDimension,
-		},
-		MeasureName:      &measureName,
-		MeasureValueType: &measureValueType,
-		MeasureValue:     &measureValue,
-		Time:             &unixTime,
-		TimeUnit:         &timeUnit,
-	})
-}
-
 func buildRecordTypes(rawRecords *[]RawRecord) {
 	for i := range *rawRecords {
 		record := (*rawRecords)[i]
 
 		// TODO: Check if key was missing?
 		switch record["type"] {
-		case VECTOR_APACHE_LOGS_TYPE:
-			buildApacheLogRecord(&record)
+		case VECTOR_APACHE_ACCESS_LOGS_TYPE:
+			buildApacheAccessLogRecord(&record)
+		case VECTOR_APACHE_ERROR_LOGS_TYPE:
+			buildApacheErrorLogRecord(&record)
 		case VECTOR_APACHE_METRICS_TYPE:
 			buildApacheMetricRecord(&record)
 		case VECTOR_CUSTOM_APPLICATION_TYPE:
@@ -243,8 +123,10 @@ func buildRecordTypes(rawRecords *[]RawRecord) {
 			buildMongoLogRecord(&record)
 		case VECTOR_MONGO_METRICS_TYPE:
 			buildMongoMetricRecord(&record)
-		case VECTOR_NGINX_LOGS_TYPE:
-			buildNginxLogRecord(&record)
+		case VECTOR_NGINX_ACCESS_LOGS_TYPE:
+			buildNginxAccessLogRecord(&record)
+		case VECTOR_NGINX_ERROR_LOGS_TYPE:
+			buildNginxErrorLogRecord(&record)
 		case VECTOR_NGINX_METRICS_TYPE:
 			buildNginxMetricRecord(&record)
 		case VECTOR_POSTGRES_LOGS_TYPE:
