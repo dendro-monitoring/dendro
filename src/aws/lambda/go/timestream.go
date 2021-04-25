@@ -38,12 +38,12 @@ func fetch(toProcess func() interface{}) string {
 	}
 }
 
-func fetchMeasureValue(record *map[string]interface{}) string {
+func fetchMeasureValue(record *RawRecord) string {
 	val, ok := (*record)["counter"]
 	if ok {
 		return fmt.Sprintf(
 			"%f",
-			val.(map[string]interface{})["value"].(float64),
+			val.(RawRecord)["value"].(float64),
 		)
 	}
 
@@ -51,7 +51,7 @@ func fetchMeasureValue(record *map[string]interface{}) string {
 	if ok {
 		return fmt.Sprintf(
 			"%f",
-			val.(map[string]interface{})["value"].(float64),
+			val.(RawRecord)["value"].(float64),
 		)
 	}
 
@@ -60,7 +60,7 @@ func fetchMeasureValue(record *map[string]interface{}) string {
 }
 
 // TODO: Is this pass by value?
-func buildGenericRecord(record *map[string]interface{}) *timestreamwrite.Record {
+func buildGenericRecord(record *RawRecord) *timestreamwrite.Record {
 	name1 := "host"
 	val1 := "hello-world"
 	dim1 := timestreamwrite.Dimension{
@@ -103,39 +103,39 @@ func buildGenericRecord(record *map[string]interface{}) *timestreamwrite.Record 
 	}
 }
 
-func buildApacheLogRecord(record *map[string]interface{}) {
+func buildApacheLogRecord(record *RawRecord) {
 	apacheLogRecords = append(apacheLogRecords, buildGenericRecord(record))
 }
 
-func buildApacheMetricRecord(record *map[string]interface{}) {
+func buildApacheMetricRecord(record *RawRecord) {
 	apacheMetricRecords = append(apacheMetricRecords, buildGenericRecord(record))
 }
 
-func buildCustomAppRecord(record *map[string]interface{}) {
+func buildCustomAppRecord(record *RawRecord) {
 	customAppRecords = append(customAppRecords, buildGenericRecord(record))
 }
 
-func buildHostMetricRecord(record *map[string]interface{}) {
+func buildHostMetricRecord(record *RawRecord) {
 	hostMetricRecords = append(hostMetricRecords, buildGenericRecord(record))
 }
 
-func buildMongoLogRecord(record *map[string]interface{}) {
+func buildMongoLogRecord(record *RawRecord) {
 	mongoLogRecords = append(mongoLogRecords, buildGenericRecord(record))
 }
 
-func buildMongoMetricRecord(record *map[string]interface{}) {
+func buildMongoMetricRecord(record *RawRecord) {
 	mongoMetricRecords = append(mongoMetricRecords, buildGenericRecord(record))
 }
 
-func buildNginxLogRecord(record *map[string]interface{}) {
+func buildNginxLogRecord(record *RawRecord) {
 	nginxLogRecords = append(nginxLogRecords, buildGenericRecord(record))
 }
 
-func buildNginxMetricRecord(record *map[string]interface{}) {
+func buildNginxMetricRecord(record *RawRecord) {
 	nginxMetricRecords = append(nginxMetricRecords, buildGenericRecord(record))
 }
 
-func buildPostgresLogRecord(pRecord *map[string]interface{}) {
+func buildPostgresLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
 	host := func() interface{} {
@@ -184,14 +184,14 @@ func buildPostgresLogRecord(pRecord *map[string]interface{}) {
 	})
 }
 
-func buildPostgresMetricRecord(pRecord *map[string]interface{}) {
+func buildPostgresMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
 
 	host := func() interface{} {
 		return record["host"].(string)
 	}
 	dbFunc := func() interface{} {
-		return record["tags"].(map[string]interface{})["db"].(string)
+		return record["tags"].(RawRecord)["db"].(string)
 	}
 	name := func() interface{} {
 		return record["name"].(string)
@@ -225,7 +225,7 @@ func buildPostgresMetricRecord(pRecord *map[string]interface{}) {
 	})
 }
 
-func buildRecordTypes(rawRecords *[]map[string]interface{}) {
+func buildRecordTypes(rawRecords *[]RawRecord) {
 	for i := range *rawRecords {
 		record := (*rawRecords)[i]
 
@@ -314,7 +314,7 @@ func writeAllRecords(
 	}
 }
 
-func writeAllRecordsTypes(rawRecords *[]map[string]interface{}) {
+func writeAllRecordsTypes(rawRecords *[]RawRecord) {
 	mySession := session.Must(session.NewSession())
 	svc := timestreamwrite.New(mySession)
 
