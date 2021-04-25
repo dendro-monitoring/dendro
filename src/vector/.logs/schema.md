@@ -1,6 +1,6 @@
 ### host-metrics:
 
-- [ ] cpu
+- [x] cpu
   * dimensions
     * type: obj.type
     * collector: obj.tags.collector
@@ -12,7 +12,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-- [ ] memory
+- [x] memory
   * dimensions
     * type: obj.type
     * collector: obj.tags.collector
@@ -22,7 +22,17 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-- [ ] network
+- [x] network
+  * dimensions
+    * type: obj.type
+    * host: obj.host
+    * collector: obj.tags.collector
+    * device: obj.tags.device
+  * measures
+    * measure-name: obj.name
+    * measure-value: obj.gauge.value || obj.counter.value
+  * time: obj.timestamp
+- [x] disk
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -33,18 +43,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-- [ ] disk
-  * dimensions
-    * type: obj.type
-    * host: obj.host
-    * collector: obj.tags.collector
-    * device: obj.tags.device
-  * measures
-    * measure-name: obj.name
-    * measure-value: obj.gauge.value || obj.counter.value
-  * time: obj.timestamp
-
-- [ ] filesystem
+- [x] filesystem
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -57,7 +56,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-- [ ] host
+- [x] host
   * dimensions
     * type: obj.type
     * host: obj.host
@@ -67,7 +66,7 @@
     * measure-value: obj.gauge.value || obj.counter.value
   * time: obj.timestamp
 
-- [ ] load
+- [x] load
   * dimensions
     * type: obj.type
     * host: obj.host
