@@ -18,8 +18,11 @@ export default function createTimestreamTables(): Promise<void> {
   }
 
   function setupApacheTables() {
-    if (store.Vector.Apache.monitorAccessLogs || store.Vector.Apache.monitorErrorLogs) {
-      pushCreateTablePromise(constants.VECTOR_APACHE_LOGS_TYPE);
+    if (store.Vector.Apache.monitorAccessLogs) {
+      pushCreateTablePromise(constants.VECTOR_APACHE_ACCESS_LOGS_TYPE);
+    }
+    if (store.Vector.Apache.monitorErrorLogs) {
+      pushCreateTablePromise(constants.VECTOR_APACHE_ERROR_LOGS_TYPE);
     }
     if (store.Vector.Apache.monitorMetrics) {
       pushCreateTablePromise(constants.VECTOR_APACHE_METRICS_TYPE);
@@ -36,8 +39,11 @@ export default function createTimestreamTables(): Promise<void> {
   }
 
   function setupNginxTables() {
-    if (store.Vector.Nginx.monitorAccessLogs || store.Vector.Nginx.monitorErrorLogs) {
-      pushCreateTablePromise(constants.VECTOR_NGINX_LOGS_TYPE);
+    if (store.Vector.Nginx.monitorAccessLogs) {
+      pushCreateTablePromise(constants.VECTOR_NGINX_ACCESS_LOGS_TYPE);
+    }
+    if (store.Vector.Nginx.monitorErrorLogs) {
+      pushCreateTablePromise(constants.VECTOR_NGINX_ERROR_LOGS_TYPE);
     }
     if (store.Vector.Nginx.monitorMetrics) {
       pushCreateTablePromise(constants.VECTOR_NGINX_METRICS_TYPE);
