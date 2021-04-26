@@ -34,7 +34,7 @@ export const AWS_TIMESTREAM_QUERY = new AWS.TimestreamQuery({ region: AWS_REGION
 export const AWS_SNS = new AWS.SNS({ region: AWS_REGION });
 
 export const VECTOR_APACHE_ACCESS_LOGS_TYPE = 'apache-access-logs';
-export const VECTOR_APACHE_ERROR_LOGS_TYPE = 'apache-error_logs';
+export const VECTOR_APACHE_ERROR_LOGS_TYPE = 'apache-error-logs';
 export const VECTOR_APACHE_METRICS_TYPE = 'apache-metrics';
 export const VECTOR_CUSTOM_APPLICATION_TYPE = 'custom-application';
 export const VECTOR_HOST_METRICS_TYPE = 'host-metrics';
