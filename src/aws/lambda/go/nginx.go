@@ -71,8 +71,58 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	})
 }
 
-func buildNginxErrorLogRecord(record *RawRecord) {
-	nginxMetricRecords = append(nginxMetricRecords, buildGenericRecord(record))
+func buildNginxErrorLogRecord(pRecord *RawRecord) {
+	record := *pRecord
+
+	host := func() interface{} {
+		return record["host"].(string)
+	}
+	client := func() interface{} {
+		return record["client"].(string)
+	}
+	server := func() interface{} {
+		return record["server"].(string)
+	}
+	message := func() interface{} {
+		return record["message"].(string)
+	}
+	request := func() interface{} {
+		return record["request"].(string)
+	}
+	severity := func() interface{} {
+		return record["severity"].(string)
+	}
+	timestamp := func() interface{} {
+		return record["timestamp"].(string)
+	}
+
+	hostDimension := dimension("host", fetch(host))
+	clientDimension := dimension("client", fetch(client))
+	serverDimension := dimension("server", fetch(server))
+	messageDimension := dimension("message", fetch(message))
+	requestDimension := dimension("request", fetch(request))
+
+	unixTime := toUnix(fetch(timestamp))
+	timeUnit := timestreamwrite.TimeUnitSeconds
+
+	measureName := "severity"
+	measureValueType := "VARCHAR"
+	measureValue := fetch(severity)
+
+	nginxErrorLogRecords = append(nginxErrorLogRecords, &timestreamwrite.Record{
+		Dimensions: []*timestreamwrite.Dimension{
+			&hostDimension,
+			&clientDimension,
+			&serverDimension,
+			&messageDimension,
+			&requestDimension,
+		},
+		MeasureName:      &measureName,
+		MeasureValueType: &measureValueType,
+		MeasureValue:     &measureValue,
+		Time:             &unixTime,
+		TimeUnit:         &timeUnit,
+	})
 }
 
 func buildNginxMetricRecord(pRecord *RawRecord) {

@@ -66,7 +66,7 @@ const metricConfig = (): string => {
 
 [sources.postgres_metrics]
   type = "postgresql_metrics"
-  endpoints = ["postgresql://${username}:${password}@${url}:${port}/${databaseName}"]
+  endpoints = ["postgresql://${username}:${password ? password : 'postgres'}@${url}:${port}/${databaseName}"]
   scrape_interval_secs = ${scrapeIntervalSeconds}
 
 [transforms.postgres_metrics_to_logs]
