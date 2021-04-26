@@ -58,7 +58,6 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)
-		dimensions = append(dimensions, pDimension("timestamp", timestamp))
 	}
 
 	if keyExists(record, "name") {
