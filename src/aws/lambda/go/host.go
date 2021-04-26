@@ -20,28 +20,30 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	}
 
 	if keyExists(record, "tags") {
-		if keyExists(record, "collector") {
-			collector = record["collector"].(string)
+		tags := record["collector"].(map[string]interface{})
+
+		if keyExists(tags, "collector") {
+			collector = tags["collector"].(string)
 		}
 
-		if keyExists(record, "cpu") {
-			cpuCode = record["cpu"].(string)
+		if keyExists(tags, "cpu") {
+			cpuCode = tags["cpu"].(string)
 		}
 
-		if keyExists(record, "mode") {
-			cpuMode = record["mode"].(string)
+		if keyExists(tags, "mode") {
+			cpuMode = tags["mode"].(string)
 		}
 
-		if keyExists(record, "device") {
-			device = record["device"].(string)
+		if keyExists(tags, "device") {
+			device = tags["device"].(string)
 		}
 
-		if keyExists(record, "filesystem") {
-			fsFilesystem = record["filesystem"].(string)
+		if keyExists(tags, "filesystem") {
+			fsFilesystem = tags["filesystem"].(string)
 		}
 
-		if keyExists(record, "mountpoint") {
-			fsMountpoint = record["mountpoint"].(string)
+		if keyExists(tags, "mountpoint") {
+			fsMountpoint = tags["mountpoint"].(string)
 		}
 	}
 
