@@ -57,14 +57,18 @@ const errorLogConfig = (): string => {
   include = ["/var/log/apache2/error_log"]
   read_from = "beginning"
 
+[transforms.apache_regex_transform]
+  # General
+  type = "regex_parser"
+  inputs = ["apache_logs"]
+  patterns = ['^(?P<apache_timestamp>\\[\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+\\]) \\[(?P<source_file>\\w+):(?P<level>\\w+)\\] \\[pid (?P<pid>\\d+):tid (?P<tid>\\d+)\\] (?P<code>\\w+): (?P<message>[a-zA-Z0-9-_ \\W]*)']
+
 # TODO: Only works with access_log
 [transforms.apache_logs_transform]
   type = "remap"
-  inputs = ["apache_logs"]
+  inputs = ["apache_regex_transform"]
   source = '''
   .type = "${VECTOR_APACHE_ERROR_LOGS_TYPE}"
-  .parsed = parse_apache_log!(.message, format: "common")
-  del(.message)
   '''
 
 [sinks.apache_logs_firehose_stream_sink]
