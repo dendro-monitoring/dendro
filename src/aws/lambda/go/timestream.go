@@ -11,6 +11,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
+func keyExists(decoded map[string]interface{}, key string) bool {
+	val, ok := decoded[key]
+	return ok && val != nil
+}
+
 func dimension(name string, val string) timestreamwrite.Dimension {
 	return timestreamwrite.Dimension{
 		Name:  &name,

@@ -1,40 +1,85 @@
 package main
 
-import "github.com/aws/aws-sdk-go/service/timestreamwrite"
+import (
+	"github.com/aws/aws-sdk-go/service/timestreamwrite"
+)
 
 func buildPostgresLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	database := func() interface{} {
-		return record["database"].(string)
-	}
-	code := func() interface{} {
-		return record["code"].(string)
-	}
-	message := func() interface{} {
-		return record["message"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
-	}
-	level := func() interface{} {
-		return record["level"].(string)
+	// host := func() interface{} {
+	// 	return record["host"].(string)
+	// }
+	// database := func() interface{} {
+	// 	return record["database"].(string)
+	// }
+	// code := func() interface{} {
+	// 	return record["code"].(string)
+	// }
+	// message := func() interface{} {
+	// 	return record["message"].(string)
+	// }
+	// timestamp := func() interface{} {
+	// 	return record["timestamp"].(string)
+	// }
+	// level := func() interface{} {
+	// 	return record["level"].(string)
+	// }
+
+	var host string
+	var database string
+	var code string
+	var message string
+	var timestamp string
+	var level string
+
+	if keyExists(record, "host") {
+		host = record["host"].(string)
+	} else {
+		host = ""
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	databaseDimension := dimension("database", fetch(database))
-	codeDimension := dimension("code", fetch(code))
-	messageDimension := dimension("message", fetch(message))
+	if keyExists(record, "database") {
+		database = record["database"].(string)
+	} else {
+		database = ""
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	if keyExists(record, "code") {
+		code = record["code"].(string)
+	} else {
+		code = ""
+	}
+
+	if keyExists(record, "message") {
+		message = record["message"].(string)
+	} else {
+		message = ""
+	}
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+	} else {
+		timestamp = ""
+	}
+
+	if keyExists(record, "level") {
+		level = record["level"].(string)
+	} else {
+		level = ""
+	}
+
+	hostDimension := dimension("host", host)
+	databaseDimension := dimension("database", database)
+	codeDimension := dimension("code", code)
+	messageDimension := dimension("message", message)
+
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := "level"
 	measureValueType := "VARCHAR"
-	measureValue := fetch(level)
+	measureValue := level
 
 	postgresLogRecords = append(postgresLogRecords, &timestreamwrite.Record{
 		Dimensions: []*timestreamwrite.Dimension{

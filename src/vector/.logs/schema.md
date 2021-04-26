@@ -118,7 +118,7 @@
     * measure-value: obj.parsed.status
   * time: obj.timestamp
 
-- [ ] nginx-error-log
+- [x] nginx-error-log
   * dimensions
     * type: obj.type
     * host: obj.host
