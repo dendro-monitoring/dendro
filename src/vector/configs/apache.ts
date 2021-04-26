@@ -3,7 +3,8 @@ import log from '../../utils/log';
 import {
   AWS_REGION,
   AWS_FIREHOSE_STREAM_NAME,
-  VECTOR_APACHE_LOGS_TYPE,
+  VECTOR_APACHE_ACCESS_LOGS_TYPE,
+  VECTOR_APACHE_ERROR_LOGS_TYPE,
   VECTOR_APACHE_METRICS_TYPE
 } from '../../constants';
 
@@ -21,7 +22,7 @@ const accessLogConfig = (): string => {
   type = "remap"
   inputs = ["apache_logs"]
   source = '''
-  .type = "${VECTOR_APACHE_LOGS_TYPE}"
+  .type = "${VECTOR_APACHE_ACCESS_LOGS_TYPE}"
   .parsed = parse_apache_log!(.message, format: "common")
   del(.message)
   '''
@@ -61,7 +62,7 @@ const errorLogConfig = (): string => {
   type = "remap"
   inputs = ["apache_logs"]
   source = '''
-  .type = "${VECTOR_APACHE_LOGS_TYPE}"
+  .type = "${VECTOR_APACHE_ERROR_LOGS_TYPE}"
   .parsed = parse_apache_log!(.message, format: "common")
   del(.message)
   '''

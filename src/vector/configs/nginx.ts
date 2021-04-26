@@ -3,7 +3,8 @@ import log from '../../utils/log';
 import {
   AWS_REGION,
   AWS_FIREHOSE_STREAM_NAME,
-  VECTOR_NGINX_LOGS_TYPE,
+  VECTOR_NGINX_ACCESS_LOGS_TYPE,
+  VECTOR_NGINX_ERROR_LOGS_TYPE,
   VECTOR_NGINX_METRICS_TYPE,
 } from '../../constants';
 
@@ -23,7 +24,7 @@ const accessLogConfig = (): string => {
   source = '''
   .parsed = parse_nginx_log!(.message, "combined")
   del(.message)
-  .type = "${VECTOR_NGINX_LOGS_TYPE}"
+  .type = "${VECTOR_NGINX_ACCESS_LOGS_TYPE}"
   '''
 
 [sinks.nginx_access_logs_firehose_stream_sink]
@@ -66,7 +67,7 @@ const errorLogConfig = (): string => {
   type = "remap"
   inputs = ["nginx_error_regex_transform"]
   source = '''
-  .type = "${VECTOR_NGINX_LOGS_TYPE}"
+  .type = "${VECTOR_NGINX_ERROR_LOGS_TYPE}"
   '''
 
 [sinks.nginx_error_logs_firehose_stream_sink]
