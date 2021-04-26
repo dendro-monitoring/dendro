@@ -13,7 +13,7 @@ import (
 
 func keyExists(decoded map[string]interface{}, key string) bool {
 	val, ok := decoded[key]
-	return ok && val != nil
+	return ok && val != nil && val != ""
 }
 
 func dimension(name string, val string) timestreamwrite.Dimension {

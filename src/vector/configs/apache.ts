@@ -7,17 +7,53 @@ import {
   VECTOR_APACHE_METRICS_TYPE
 } from '../../constants';
 
-const logConfig = (): string => {
+const accessLogConfig = (): string => {
+  log.debug('Writing Apache vector access log config');
+  return `
+################ Apache Logs #############################
+
+[sources.apache_logs]
+  type = "file"
+  include = ["/var/log/apache2/access_log",]
+  read_from = "beginning"
+
+[transforms.apache_logs_transform]
+  type = "remap"
+  inputs = ["apache_logs"]
+  source = '''
+  .type = "${VECTOR_APACHE_LOGS_TYPE}"
+  .parsed = parse_apache_log!(.message, format: "common")
+  del(.message)
+  '''
+
+[sinks.apache_logs_firehose_stream_sink]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["apache_logs_transform"]
+
+  # AWS
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
+
+  ## Auth
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
+
+  # Encoding
+  encoding.codec = "json"
+
+#############################################
+`;
+};
+
+const errorLogConfig = (): string => {
   log.debug('Writing Apache vector log config');
   return `
 ################ Apache Logs #############################
 
 [sources.apache_logs]
   type = "file"
-  include = [
-    ${store.Vector.Apache.monitorAccessLogs ? '"/var/log/apache2/access_log",' : null}
-    ${store.Vector.Apache.monitorErrorLogs ? '"/var/log/apache2/error_log"' : null}
-  ]
+  include = ["/var/log/apache2/error_log"]
   read_from = "beginning"
 
 # TODO: Only works with access_log
@@ -104,11 +140,12 @@ export const buildApacheConfig = (): string => {
     config += metricConfig();
   }
 
-  if (
-    store.Vector.Apache.monitorAccessLogs ||
-    store.Vector.Apache.monitorErrorLogs
-  ) {
-    config += logConfig();
+  if (store.Vector.Apache.monitorAccessLogs) {
+    config += accessLogConfig();
+  }
+
+  if (store.Vector.Apache.monitorErrorLogs) {
+    config += errorLogConfig();
   }
 
   return config;

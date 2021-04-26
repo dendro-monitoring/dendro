@@ -60,7 +60,6 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 			fmt.Println(record)
 			fmt.Println(dimensions[i])
 		}
-
 	}
 
 	timestamp = fetch(pRecord, "timestamp")
