@@ -6,16 +6,12 @@ import { postgresPrompt, postgresCredentialsPrompt } from './Postgres';
 import { mongoPrompt, mongoCredentialsPrompt } from './MongoDB';
 import { hostPrompt } from './Host';
 import { customApplicationPromptOptions } from './CustomApplication';
-<<<<<<< HEAD
 import {
   awsCredentialsFormInfo,
   promptCredentials,
   confirmAlarms,
   alarmEmailsPrompt
 } from './AWS';
-=======
-import { awsCredentialsFormInfo, promptCredentials } from './AWS';
->>>>>>> 882e0f1bb75f669a3bd7ab3723c05b3fe28571e9
 
 const servicesToMonitor = async (): Promise<prompts.Answers<'sources'>> => {
   return await prompts({
