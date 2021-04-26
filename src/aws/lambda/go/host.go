@@ -69,6 +69,7 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := name
+	// TODO: If name doesn't exist, return? Record fails?
 	measureValueType := "VARCHAR"
 	measureValue := fetchMeasureValue(pRecord)
 

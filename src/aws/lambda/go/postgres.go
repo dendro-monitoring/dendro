@@ -14,34 +14,36 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 	var timestamp string
 	var level string
 
+	var dimensions []*timestreamwrite.Dimension
+
 	if keyExists(record, "host") {
 		host = record["host"].(string)
+		dimensions = append(dimensions, pDimension("host", host))
 	}
 
 	if keyExists(record, "database") {
 		database = record["database"].(string)
+		dimensions = append(dimensions, pDimension("database", database))
 	}
 
 	if keyExists(record, "code") {
 		code = record["code"].(string)
+		dimensions = append(dimensions, pDimension("code", code))
 	}
 
 	if keyExists(record, "message") {
 		message = record["message"].(string)
+		dimensions = append(dimensions, pDimension("message", message))
 	}
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)
 	}
 
+	// Measure value
 	if keyExists(record, "level") {
 		level = record["level"].(string)
 	}
-
-	hostDimension := dimension("host", host)
-	databaseDimension := dimension("database", database)
-	codeDimension := dimension("code", code)
-	messageDimension := dimension("message", message)
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -51,12 +53,7 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 	measureValue := level
 
 	postgresLogRecords = append(postgresLogRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&databaseDimension,
-			&codeDimension,
-			&messageDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
@@ -68,34 +65,45 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 func buildPostgresMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	dbFunc := func() interface{} {
-		return record["tags"].(RawRecord)["db"].(string)
-	}
-	name := func() interface{} {
-		return record["name"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var host string
+	var database string
+	var name string
+	var timestamp string
+
+	var dimensions []*timestreamwrite.Dimension
+
+	if keyExists(record, "host") {
+		host = record["host"].(string)
+		dimensions = append(dimensions, pDimension("host", host))
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	dbDimension := dimension("database", fetch(dbFunc))
+	if keyExists(record, "tags") {
+		tags := record["tags"].(map[string]interface{})
 
-	unixTime := toUnix(fetch(timestamp))
+		if keyExists(tags, "db") {
+			database = tags["db"].(string)
+			dimensions = append(dimensions, pDimension("database", database))
+		}
+	}
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+		dimensions = append(dimensions, pDimension("timestamp", timestamp))
+	}
+
+	if keyExists(record, "name") {
+		name = record["name"].(string)
+	}
+
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
-	measureName := fetch(name)
+	measureName := name
 	measureValueType := "DOUBLE"
 	measureValue := fetchMeasureValue(pRecord)
 
 	postgresMetricRecords = append(postgresMetricRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&dbDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
