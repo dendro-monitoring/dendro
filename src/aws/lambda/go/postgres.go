@@ -7,34 +7,15 @@ import (
 func buildPostgresLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	var host string
-	var database string
-	var code string
-	var message string
-	var timestamp string
-	var level string
-
 	var dimensions []*timestreamwrite.Dimension
+	var timestamp string
+	level := "null"
 
-	if keyExists(record, "host") {
-		host = record["host"].(string)
-		dimensions = append(dimensions, pDimension("host", host))
-	}
-
-	if keyExists(record, "database") {
-		database = record["database"].(string)
-		dimensions = append(dimensions, pDimension("database", database))
-	}
-
-	if keyExists(record, "code") {
-		code = record["code"].(string)
-		dimensions = append(dimensions, pDimension("code", code))
-	}
-
-	if keyExists(record, "message") {
-		message = record["message"].(string)
-		dimensions = append(dimensions, pDimension("message", message))
-	}
+	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = insertDimension(pRecord, dimensions, "database")
+	dimensions = insertDimension(pRecord, dimensions, "code")
+	dimensions = insertDimension(pRecord, dimensions, "message")
+	dimensions = insertDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)
@@ -92,8 +73,8 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := name
-	measureValueType := "DOUBLE"
 	measureValue := fetchMeasureValue(pRecord)
+	measureValueType := "DOUBLE"
 
 	postgresMetricRecords = append(postgresMetricRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,

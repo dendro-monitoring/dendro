@@ -51,49 +51,33 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 func buildNginxErrorLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	client := func() interface{} {
-		return record["client"].(string)
-	}
-	server := func() interface{} {
-		return record["server"].(string)
-	}
-	message := func() interface{} {
-		return record["message"].(string)
-	}
-	request := func() interface{} {
-		return record["request"].(string)
-	}
-	severity := func() interface{} {
-		return record["severity"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var dimensions []*timestreamwrite.Dimension
+	var timestamp string
+	severity := "null" // TODO
+
+	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = insertDimension(pRecord, dimensions, "client")
+	dimensions = insertDimension(pRecord, dimensions, "server")
+	dimensions = insertDimension(pRecord, dimensions, "message")
+	dimensions = insertDimension(pRecord, dimensions, "request")
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	clientDimension := dimension("client", fetch(client))
-	serverDimension := dimension("server", fetch(server))
-	messageDimension := dimension("message", fetch(message))
-	requestDimension := dimension("request", fetch(request))
+	if keyExists(record, "severity") {
+		severity = record["severity"].(string)
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := "severity"
 	measureValueType := "VARCHAR"
-	measureValue := fetch(severity)
+	measureValue := severity
 
 	nginxErrorLogRecords = append(nginxErrorLogRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&clientDimension,
-			&serverDimension,
-			&messageDimension,
-			&requestDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
