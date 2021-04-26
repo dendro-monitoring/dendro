@@ -44,8 +44,6 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 }
 
 func buildNginxErrorLogRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
 	severity := "null" // TODO
@@ -56,13 +54,8 @@ func buildNginxErrorLogRecord(pRecord *RawRecord) {
 	dimensions = appendDimension(pRecord, dimensions, "message")
 	dimensions = appendDimension(pRecord, dimensions, "request")
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "severity") {
-		severity = record["severity"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	severity = fetch(pRecord, "severity")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -82,21 +75,14 @@ func buildNginxErrorLogRecord(pRecord *RawRecord) {
 }
 
 func buildNginxMetricRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var name string
 	var timestamp string
 
 	dimensions = appendDimension(pRecord, dimensions, "host")
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "name") {
-		name = record["name"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	name = fetch(pRecord, "name")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

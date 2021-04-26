@@ -49,8 +49,6 @@ func buildApacheAccessLogRecord(pRecord *RawRecord) {
 }
 
 func buildApacheErrorLogRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
 	severity := "null" // TODO
@@ -61,13 +59,8 @@ func buildApacheErrorLogRecord(pRecord *RawRecord) {
 	dimensions = appendDimension(pRecord, dimensions, "message")
 	dimensions = appendDimension(pRecord, dimensions, "request")
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "severity") {
-		severity = record["severity"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	severity = fetch(pRecord, "severity")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -87,8 +80,6 @@ func buildApacheErrorLogRecord(pRecord *RawRecord) {
 }
 
 func buildApacheMetricRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var name string
 	var timestamp string
@@ -97,13 +88,8 @@ func buildApacheMetricRecord(pRecord *RawRecord) {
 	dimensions = appendDimension(pRecord, dimensions, "type")
 	dimensions = appendDimension(pRecord, dimensions, "state")
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "name") {
-		name = record["name"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	name = fetch(pRecord, "timestamp")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
