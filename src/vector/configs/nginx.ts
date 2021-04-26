@@ -7,20 +7,17 @@ import {
   VECTOR_NGINX_METRICS_TYPE,
 } from '../../constants';
 
-const logConfig = (): string => {
-  log.debug('Writing Nginx vector log config');
+const accessLogConfig = (): string => {
+  log.debug('Writing Nginx vector access log config');
   return `
-################ Nginx Logs #############################
+################ Nginx Access Logs #############################
 
-[sources.nginx_logs]
+[sources.nginx_access_logs]
   type = "file"
-  include = [
-    ${store.Vector.Nginx.monitorAccessLogs ? '"/var/log/nginx/access.log*",' : null}
-    ${store.Vector.Nginx.monitorErrorLogs ? '"/var/log/nginx/error.log*"' : null}
-  ]
+  include = ["/var/log/nginx/access.log*"]
   read_from = "beginning"
 
-[transforms.nginx_logs_transform]
+[transforms.nginx_access_logs_transform]
   type = "remap"
   inputs = ["nginx_logs"]
   source = '''
@@ -29,10 +26,53 @@ const logConfig = (): string => {
   .type = "${VECTOR_NGINX_LOGS_TYPE}"
   '''
 
-[sinks.nginx_logs_firehose_stream_sink]
+[sinks.nginx_access_logs_firehose_stream_sink]
   # General
   type = "aws_kinesis_firehose"
-  inputs = ["nginx_logs_transform"]
+  inputs = ["nginx_access_logs_transform"]
+
+  # AWS
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
+
+  ## Auth
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
+
+  # Encoding
+  encoding.codec = "json"
+
+#############################################
+`;
+};
+
+const errorLogConfig = (): string => {
+  log.debug('Writing Nginx vector error log config');
+  return `
+################ Nginx Error Logs #############################
+
+[sources.nginx_error_logs]
+  type = "file"
+  include = ["/var/log/nginx/error.log*"]
+  read_from = "beginning"
+
+[transforms.nginx_error_regex_transform]
+  # General
+  type = "regex_parser"
+  inputs = ["nginx_error_logs"]
+  patterns = ['^(?P<timestamp>\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ (\\+\\d+ )?)\\[(?P<severity>\\w+)\\] (?P<pid>\\d+)#(?P<tid>\\d+):(?: \\*(?P<connid>\\d+))? (?P<message>.*)']
+
+[transforms.nginx_error_logs_transform]
+  type = "remap"
+  inputs = ["nginx_error_regex_transform"]
+  source = '''
+  .type = "${VECTOR_NGINX_LOGS_TYPE}"
+  '''
+
+[sinks.nginx_error_logs_firehose_stream_sink]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["nginx_error_logs_transform"]
 
   # AWS
   region = "${AWS_REGION}"
@@ -103,11 +143,12 @@ export const buildNginxConfig = (): string => {
     config += metricConfig();
   }
 
-  if (
-    store.Vector.Nginx.monitorAccessLogs ||
-    store.Vector.Nginx.monitorErrorLogs
-  ) {
-    config += logConfig();
+  if (store.Vector.Nginx.monitorAccessLogs) {
+    config += accessLogConfig();
+  }
+
+  if (store.Vector.Nginx.monitorErrorLogs) {
+    config += errorLogConfig();
   }
 
   return config;
