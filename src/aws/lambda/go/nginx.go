@@ -4,6 +4,7 @@ import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 
 func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	record := *pRecord
+
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
 	statusCode := "null" // TODO
