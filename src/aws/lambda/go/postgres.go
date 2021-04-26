@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
@@ -52,13 +50,6 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 		if keyExists(tags, "db") {
 			database := tags["db"].(string)
 			dimensions = append(dimensions, dimension("database", database))
-		}
-	}
-
-	for i := range dimensions {
-		if *(dimensions[i].Value) == "" {
-			fmt.Println(record)
-			fmt.Println(dimensions[i])
 		}
 	}
 
