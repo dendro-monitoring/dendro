@@ -57,6 +57,7 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 
 	for i := range dimensions {
 		if *(dimensions[i].Value) == "" {
+			fmt.Println(record)
 			fmt.Println(dimensions[i])
 		}
 
