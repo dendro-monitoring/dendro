@@ -27,13 +27,8 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 		}
 	}
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "name") {
-		name = record["name"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	name = fetch(pRecord, "name")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

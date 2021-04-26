@@ -22,14 +22,10 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 		dimensions = insertDimension(&parsed, dimensions, "request")
 		dimensions = insertDimension(&parsed, dimensions, "size")
 
-		if keyExists(parsed, "status") {
-			statusCode = parsed["status"].(string)
-		}
+		statusCode = fetch(pRecord, "status")
 	}
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

@@ -28,14 +28,10 @@ func buildMongoLogRecord(pRecord *RawRecord) {
 			dimensions = append(dimensions, pDimension("message", parsed["msg"].(string)))
 		}
 
-		if keyExists(record, "severity") {
-			severity = record["s"].(string)
-		}
+		severity = fetch(pRecord, "s")
 	}
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -55,21 +51,14 @@ func buildMongoLogRecord(pRecord *RawRecord) {
 }
 
 func buildMongoMetricRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var name string
 	var timestamp string
 
 	dimensions = insertDimension(pRecord, dimensions, "host")
 
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	if keyExists(record, "name") {
-		name = record["name"].(string)
-	}
+	timestamp = fetch(pRecord, "timestamp")
+	name = fetch(pRecord, "name")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

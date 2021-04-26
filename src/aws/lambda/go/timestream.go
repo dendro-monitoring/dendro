@@ -28,6 +28,14 @@ func pDimension(name string, val string) *timestreamwrite.Dimension {
 	return &dim
 }
 
+func fetch(record *RawRecord, key string) string {
+	if keyExists((*record), key) {
+		return (*record)[key].(string)
+	}
+
+	return ""
+}
+
 func insertDimension(
 	pRecord *RawRecord,
 	dimensions []*timestreamwrite.Dimension,
@@ -53,16 +61,6 @@ func toUnix(timestamp string) string {
 		return fmt.Sprint(time.Now().Unix())
 	}
 	return fmt.Sprint(t.Unix())
-}
-
-func fetch(toProcess func() interface{}) string {
-	str := toProcess()
-	switch str.(type) {
-	case string:
-		return str.(string)
-	default:
-		return ""
-	}
 }
 
 func fetchMeasureValue(record *RawRecord) string {
