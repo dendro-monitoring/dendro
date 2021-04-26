@@ -19,7 +19,6 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 		dimensions = appendDimension(&parsed, dimensions, "method")
 		dimensions = appendDimension(&parsed, dimensions, "path")
 		dimensions = appendDimension(&parsed, dimensions, "referer")
-		dimensions = appendDimension(&parsed, dimensions, "request")
 		dimensions = appendDimension(&parsed, dimensions, "size")
 
 		statusCode = fetch(pRecord, "status")
