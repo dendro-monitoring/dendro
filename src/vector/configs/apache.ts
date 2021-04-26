@@ -27,6 +27,7 @@ const logConfig = (): string => {
   source = '''
   .type = "${VECTOR_APACHE_LOGS_TYPE}"
   .parsed = parse_apache_log!(.message, format: "common")
+  del(.message)
   '''
 
 [sinks.apache_logs_firehose_stream_sink]
