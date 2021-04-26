@@ -20,7 +20,7 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	}
 
 	if keyExists(record, "tags") {
-		tags := record["collector"].(map[string]interface{})
+		tags := record["tags"].(map[string]interface{})
 
 		if keyExists(tags, "collector") {
 			collector = tags["collector"].(string)
