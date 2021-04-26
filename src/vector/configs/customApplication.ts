@@ -1,15 +1,12 @@
 import store from '../../store';
 import log from '../../utils/log';
+import trim from '../../utils/trim';
 import { CustomApplicationData } from '../../store/vector/customApplication';
 import {
   AWS_REGION,
   AWS_FIREHOSE_STREAM_NAME,
   VECTOR_CUSTOM_APPLICATION_TYPE
 } from '../../constants';
-
-function trim(s: string): string {
-  return ( s || '' ).replace( /^\s+|\s+$/g, '' );
-}
 
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   log.debug(`Writing custom application vector log config for application ${name}`);
