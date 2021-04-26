@@ -16,38 +16,26 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 
 	if keyExists(record, "host") {
 		host = record["host"].(string)
-	} else {
-		host = ""
 	}
 
 	if keyExists(record, "database") {
 		database = record["database"].(string)
-	} else {
-		database = ""
 	}
 
 	if keyExists(record, "code") {
 		code = record["code"].(string)
-	} else {
-		code = ""
 	}
 
 	if keyExists(record, "message") {
 		message = record["message"].(string)
-	} else {
-		message = ""
 	}
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)
-	} else {
-		timestamp = ""
 	}
 
 	if keyExists(record, "level") {
 		level = record["level"].(string)
-	} else {
-		level = ""
 	}
 
 	hostDimension := dimension("host", host)

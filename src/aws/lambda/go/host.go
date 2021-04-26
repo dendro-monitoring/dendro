@@ -15,8 +15,11 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	var name string
 	var timestamp string
 
+	var dimensions []*timestreamwrite.Dimension
+
 	if keyExists(record, "host") {
 		host = record["host"].(string)
+		dimensions = append(dimensions, pDimension("host", host))
 	}
 
 	if keyExists(record, "tags") {
@@ -24,44 +27,43 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 
 		if keyExists(tags, "collector") {
 			collector = tags["collector"].(string)
+			dimensions = append(dimensions, pDimension("collector", collector))
 		}
 
 		if keyExists(tags, "cpu") {
 			cpuCode = tags["cpu"].(string)
+			dimensions = append(dimensions, pDimension("cpuCode", cpuCode))
 		}
 
 		if keyExists(tags, "mode") {
 			cpuMode = tags["mode"].(string)
+			dimensions = append(dimensions, pDimension("cpuMode", cpuMode))
 		}
 
 		if keyExists(tags, "device") {
 			device = tags["device"].(string)
+			dimensions = append(dimensions, pDimension("device", device))
 		}
 
 		if keyExists(tags, "filesystem") {
 			fsFilesystem = tags["filesystem"].(string)
+			dimensions = append(dimensions, pDimension("filesystem", fsFilesystem))
 		}
 
 		if keyExists(tags, "mountpoint") {
 			fsMountpoint = tags["mountpoint"].(string)
+			dimensions = append(dimensions, pDimension("mountpoint", fsMountpoint))
 		}
+	}
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+		dimensions = append(dimensions, pDimension("timestamp", timestamp))
 	}
 
 	if keyExists(record, "name") {
 		name = record["name"].(string)
 	}
-
-	if keyExists(record, "timestamp") {
-		timestamp = record["timestamp"].(string)
-	}
-
-	hostDimension := dimension("host", host)
-	collectorDimension := dimension("collector", collector)
-	cpuCodeDimension := dimension("cpuCode", cpuCode)
-	cpuModeDimension := dimension("cpuMode", cpuMode)
-	deviceDimension := dimension("device", device)
-	fsFilesystemDimension := dimension("filesystem", fsFilesystem)
-	fsMountpointDimension := dimension("mountpoint", fsMountpoint)
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
@@ -71,15 +73,7 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	measureValue := fetchMeasureValue(pRecord)
 
 	hostMetricRecords = append(hostMetricRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&collectorDimension,
-			&cpuCodeDimension,
-			&cpuModeDimension,
-			&deviceDimension,
-			&fsFilesystemDimension,
-			&fsMountpointDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,

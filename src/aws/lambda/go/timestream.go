@@ -23,6 +23,11 @@ func dimension(name string, val string) timestreamwrite.Dimension {
 	}
 }
 
+func pDimension(name string, val string) *timestreamwrite.Dimension {
+	dim := dimension(name, val)
+	return &dim
+}
+
 func toUnix(timestamp string) string {
 	t, err := time.Parse(time.RFC3339, timestamp)
 	if err != nil {

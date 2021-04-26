@@ -8,3 +8,4 @@
 2021-03-10 17:54:15.640 EST [498361] postgres@postgres LOG:  provided user name (postgres) and authenticated user name (peter) do not match
 2021-03-10 17:54:15.640 EST [498361] postgres@postgres FATAL:  Peer authentication failed for user "postgres"
 2021-03-10 17:54:15.640 EST [498361] postgres@postgres DETAIL:  Connection matched pg_hba.conf line 89: "local   all             postgres                                peer"
+021-04-26 10:32:41.750 EDT [989] HINT:  Future log output will appear in directory "log".
