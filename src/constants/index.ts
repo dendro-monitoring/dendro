@@ -33,25 +33,29 @@ export const AWS_TIMESTREAM_WRITE = new AWS.TimestreamWrite({ region: AWS_REGION
 export const AWS_TIMESTREAM_QUERY = new AWS.TimestreamQuery({ region: AWS_REGION });
 export const AWS_SNS = new AWS.SNS({ region: AWS_REGION });
 
-export const VECTOR_APACHE_LOGS_TYPE = 'apache-logs';
-export const VECTOR_APACHE_METRICS_TYPE = 'apache-metrics';
-export const VECTOR_CUSTOM_APPLICATION_TYPE = 'custom-application';
-export const VECTOR_HOST_METRICS_TYPE = 'host-metrics';
-export const VECTOR_MONGO_LOGS_TYPE = 'mongo-logs';
-export const VECTOR_MONGO_METRICS_TYPE = 'mongo-metrics';
-export const VECTOR_NGINX_LOGS_TYPE = 'nginx-logs';
-export const VECTOR_NGINX_METRICS_TYPE = 'nginx-metrics';
-export const VECTOR_POSTGRES_LOGS_TYPE = 'postgres-logs';
-export const VECTOR_POSTGRES_METRICS_TYPE = 'postgres-metrics';
+export const VECTOR_APACHE_ACCESS_LOGS_TYPE = 'apacheAccessLogs';
+export const VECTOR_APACHE_ERROR_LOGS_TYPE = 'apacheErrorLogs';
+export const VECTOR_APACHE_METRICS_TYPE = 'apacheMetrics';
+export const VECTOR_CUSTOM_APPLICATION_TYPE = 'customApplication';
+export const VECTOR_HOST_METRICS_TYPE = 'hostMetrics';
+export const VECTOR_MONGO_LOGS_TYPE = 'mongoLogs';
+export const VECTOR_MONGO_METRICS_TYPE = 'mongoMetrics';
+export const VECTOR_NGINX_ACCESS_LOGS_TYPE = 'nginxAccessLogs';
+export const VECTOR_NGINX_ERROR_LOGS_TYPE = 'nginxErrorLogs';
+export const VECTOR_NGINX_METRICS_TYPE = 'nginxMetrics';
+export const VECTOR_POSTGRES_LOGS_TYPE = 'postgresLogs';
+export const VECTOR_POSTGRES_METRICS_TYPE = 'postgresMetrics';
 
 export const ALL_TIMESTREAM_DATABASE_TABLES = [
-  VECTOR_APACHE_LOGS_TYPE,
+  VECTOR_APACHE_ACCESS_LOGS_TYPE,
+  VECTOR_APACHE_ERROR_LOGS_TYPE,
   VECTOR_APACHE_METRICS_TYPE,
   VECTOR_CUSTOM_APPLICATION_TYPE,
   VECTOR_HOST_METRICS_TYPE,
   VECTOR_MONGO_LOGS_TYPE,
   VECTOR_MONGO_METRICS_TYPE,
-  VECTOR_NGINX_LOGS_TYPE,
+  VECTOR_NGINX_ACCESS_LOGS_TYPE,
+  VECTOR_NGINX_ERROR_LOGS_TYPE,
   VECTOR_NGINX_METRICS_TYPE,
   VECTOR_POSTGRES_LOGS_TYPE,
   VECTOR_POSTGRES_METRICS_TYPE
