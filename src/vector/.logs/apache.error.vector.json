@@ -1,0 +1,153 @@
+{
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "message": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message",
+  "source_type": "file",
+  "timestamp": "2021-04-26T20:52:44.920494286Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:01.489761 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations",
+  "pid": "139364",
+  "source_file": "mpm_event",
+  "source_type": "file",
+  "tid": "140590644567360",
+  "timestamp": "2021-04-26T20:52:44.920672292Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:01.489924 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'",
+  "pid": "139364",
+  "source_file": "core",
+  "source_type": "file",
+  "tid": "140590644567360",
+  "timestamp": "2021-04-26T20:52:44.920690463Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:22.499940 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "error",
+  "message": "[client 127.0.0.1:48940] AH01630: client denied by server configuration: /srv/http/server-status",
+  "pid": "139368",
+  "source_file": "authz_core",
+  "source_type": "file",
+  "tid": "140590630037056",
+  "timestamp": "2021-04-26T20:52:44.920715544Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:56.344928 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00492: caught SIGWINCH, shutting down gracefully",
+  "pid": "139364",
+  "source_file": "mpm_event",
+  "source_type": "file",
+  "tid": "140590644567360",
+  "timestamp": "2021-04-26T20:52:44.920731063Z"
+}
+{
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "message": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message",
+  "source_type": "file",
+  "timestamp": "2021-04-26T20:52:44.920745575Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:56.431795 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations",
+  "pid": "139483",
+  "source_file": "mpm_event",
+  "source_type": "file",
+  "tid": "140102840216896",
+  "timestamp": "2021-04-26T20:52:44.920759848Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:56.431846 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'",
+  "pid": "139483",
+  "source_file": "core",
+  "source_type": "file",
+  "tid": "140102840216896",
+  "timestamp": "2021-04-26T20:52:44.920774581Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:47:59.513329 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "error",
+  "message": "[client 127.0.0.1:48946] AH01630: client denied by server configuration: /srv/http/server-status",
+  "pid": "139487",
+  "source_file": "authz_core",
+  "source_type": "file",
+  "tid": "140102825686592",
+  "timestamp": "2021-04-26T20:52:44.920793242Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:48:00.545258 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "error",
+  "message": "[client 127.0.0.1:48946] AH01630: client denied by server configuration: /srv/http/server-status",
+  "pid": "139487",
+  "source_file": "authz_core",
+  "source_type": "file",
+  "tid": "140102783723072",
+  "timestamp": "2021-04-26T20:52:44.920807746Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:48:14.012174 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "error",
+  "message": "[client 127.0.0.1:48950] AH01630: client denied by server configuration: /srv/http/server-status",
+  "pid": "139487",
+  "source_file": "authz_core",
+  "source_type": "file",
+  "tid": "140101824800320",
+  "timestamp": "2021-04-26T20:52:44.920822116Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:49:04.831916 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00492: caught SIGWINCH, shutting down gracefully",
+  "pid": "139483",
+  "source_file": "mpm_event",
+  "source_type": "file",
+  "tid": "140102840216896",
+  "timestamp": "2021-04-26T20:52:44.920836354Z"
+}
+{
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "message": "AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message",
+  "source_type": "file",
+  "timestamp": "2021-04-26T20:52:44.920850492Z"
+}
+{
+  "apache_timestamp": "[Mon Apr 26 06:49:04.885010 2021]",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/apache.error.log",
+  "host": "andrew-xps159560",
+  "level": "notice",
+  "message": "AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations",
+  "pid": "139609",
+  "source_file": "mpm_event",
+  "source_type": "file",
+  "tid": "139806627863872",
+  "timestamp": "2021-04-26T20:52:44.920865838Z"
+}

@@ -61,7 +61,7 @@ const errorLogConfig = (): string => {
   # General
   type = "regex_parser"
   inputs = ["apache_logs"]
-  patterns = ['^(?P<apache_timestamp>\\[\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+\\]) \\[(?P<source_file>\\w+):(?P<level>\\w+)\\] \\[pid (?P<pid>\\d+):tid (?P<tid>\\d+)\\] (?P<code>\\w+): (?P<message>[a-zA-Z0-9-_ \\W]*)']
+  patterns = ['^((?P<apache_timestamp>\\[\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+\\]) )?(\\[(?P<source_file>\\w+):(?P<level>\\w+)\\] \\[pid (?P<pid>\\d+):tid (?P<tid>\\d+)\\] )?(?P<message>[a-zA-Z0-9-_ \\W]*)']
 
 # TODO: Only works with access_log
 [transforms.apache_logs_transform]
