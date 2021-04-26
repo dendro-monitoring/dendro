@@ -1,0 +1,14 @@
+{
+  "file": "/var/log/httpd/error_log",
+  "host": "andrew-xps159560",
+  "message": "[Mon Apr 26 06:49:04.885010 2021] [mpm_event:notice] [pid 139609:tid 139806627863872] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations",
+  "source_type": "file",
+  "timestamp": "2021-04-26T11:01:02.343019879Z"
+}
+{
+  "file": "/var/log/httpd/error_log",
+  "host": "andrew-xps159560",
+  "message": "[Mon Apr 26 06:49:04.885084 2021] [core:notice] [pid 139609:tid 139806627863872] AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'",
+  "source_type": "file",
+  "timestamp": "2021-04-26T11:01:02.343024747Z"
+}

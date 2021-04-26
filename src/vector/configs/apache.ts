@@ -15,16 +15,18 @@ const logConfig = (): string => {
 [sources.apache_logs]
   type = "file"
   include = [
-    ${store.Vector.Apache.monitorAccessLogs ? '"/var/log/apache2/access.log",' : null}
-    ${store.Vector.Apache.monitorErrorLogs ? '"/var/log/apache2/error.log"' : null}
+    ${store.Vector.Apache.monitorAccessLogs ? '"/var/log/apache2/access_log",' : null}
+    ${store.Vector.Apache.monitorErrorLogs ? '"/var/log/apache2/error_log"' : null}
   ]
   read_from = "beginning"
 
+# TODO: Only works with access_log
 [transforms.apache_logs_transform]
   type = "remap"
   inputs = ["apache_logs"]
   source = '''
   .type = "${VECTOR_APACHE_LOGS_TYPE}"
+  .parsed = parse_apache_log!(.message, format: "common")
   '''
 
 [sinks.apache_logs_firehose_stream_sink]
@@ -71,7 +73,7 @@ const metricConfig = (): string => {
   type = "remap"
   inputs = ["apache_metrics_to_logs"]
   source = '''
-  .type = ${VECTOR_APACHE_METRICS_TYPE}"
+  .type = "${VECTOR_APACHE_METRICS_TYPE}"
   '''
 
 [sinks.apache_metrics_firehose_stream_sink]

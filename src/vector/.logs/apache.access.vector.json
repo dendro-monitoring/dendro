@@ -1,0 +1,36 @@
+{
+  "file": "/var/log/httpd/access_log",
+  "host": "andrew-xps159560",
+  "message": "::1 - - [26/Apr/2021:06:55:57 -0400] \"GET /server-status/?auto HTTP/1.1\" 200 1156",
+  "parsed": {
+    "host": "::1",
+    "message": "GET /server-status/?auto HTTP/1.1",
+    "method": "GET",
+    "path": "/server-status/?auto",
+    "protocol": "HTTP/1.1",
+    "size": 1156,
+    "status": 200,
+    "timestamp": "2021-04-26T10:55:57Z"
+  },
+  "source_type": "file",
+  "timestamp": "2021-04-26T10:57:58.961159793Z",
+  "type": "apache-logs"
+}
+{
+  "file": "/var/log/httpd/access_log",
+  "host": "andrew-xps159560",
+  "message": "::1 - - [26/Apr/2021:06:57:58 -0400] \"GET /server-status/?auto HTTP/1.1\" 200 1156",
+  "parsed": {
+    "host": "::1",
+    "message": "GET /server-status/?auto HTTP/1.1",
+    "method": "GET",
+    "path": "/server-status/?auto",
+    "protocol": "HTTP/1.1",
+    "size": 1156,
+    "status": 200,
+    "timestamp": "2021-04-26T10:57:58Z"
+  },
+  "source_type": "file",
+  "timestamp": "2021-04-26T10:57:58.969280116Z",
+  "type": "apache-logs"
+}

@@ -1,0 +1,101 @@
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "connections",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto",
+    "state": "keepalive"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "cpu_seconds_total",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto",
+    "type": "children_system"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "duration_seconds_total",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "counter": {
+    "value": 412.0
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "uptime_seconds_total",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "counter": {
+    "value": 1.0
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "access_total",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "gauge": {
+    "value": 0.00970874
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "cpu_load",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
+{
+  "gauge": {
+    "value": 0.01
+  },
+  "host": "localhost:80",
+  "kind": "absolute",
+  "name": "cpu_seconds_total",
+  "namespace": "apache",
+  "tags": {
+    "endpoint": "http://localhost:80/server-status/auto",
+    "type": "user"
+  },
+  "timestamp": "2021-04-26T10:55:57.534073415Z",
+  "type": "apache-metrics"
+}
