@@ -7,6 +7,10 @@ import {
   VECTOR_CUSTOM_APPLICATION_TYPE
 } from '../../constants';
 
+function trim(s: string): string {
+  return ( s || '' ).replace( /^\s+|\s+$/g, '' );
+}
+
 const logConfig = ({ name, filepath }: CustomApplicationData): string => {
   log.debug(`Writing custom application vector log config for application ${name}`);
   return `
@@ -14,7 +18,7 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
 
 [sources.custom_application_${name}_logs]
   type = "file"
-  include = ["${filepath}"]
+  include = ["${trim(filepath)}"]
   read_from = "beginning"
 
 [transforms.custom_application_${name}_transform]
