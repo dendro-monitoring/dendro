@@ -7,25 +7,6 @@ import (
 func buildPostgresLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	// host := func() interface{} {
-	// 	return record["host"].(string)
-	// }
-	// database := func() interface{} {
-	// 	return record["database"].(string)
-	// }
-	// code := func() interface{} {
-	// 	return record["code"].(string)
-	// }
-	// message := func() interface{} {
-	// 	return record["message"].(string)
-	// }
-	// timestamp := func() interface{} {
-	// 	return record["timestamp"].(string)
-	// }
-	// level := func() interface{} {
-	// 	return record["level"].(string)
-	// }
-
 	var host string
 	var database string
 	var code string

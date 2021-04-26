@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 )
 
 func fetch(toProcess func() interface{}) string {
@@ -26,25 +24,25 @@ func keyExists(decoded map[string]interface{}, key string) bool {
 type RawRecord = map[string]interface{}
 
 func main() {
-	body := `{
-		"file": "/var/log/postgresql/postgresql-13-main.log",
-		"host":"peter-ThinkPad-P51-W10DG",
-		"message": "2021-04-26 10:32:41.750 EDT [989] HINT:  Future log output will appear in directory \"log\".",
-		"source_type": "file",
-		"timestamp": "2021-04-26T16:13:16.762496506Z",
-		"type": "postgres-logs"
-	}`
+	// body := `{
+	// 	"file": "/var/log/postgresql/postgresql-13-main.log",
+	// 	"host":"peter-ThinkPad-P51-W10DG",
+	// 	"message": "2021-04-26 10:32:41.750 EDT [989] HINT:  Future log output will appear in directory \"log\".",
+	// 	"source_type": "file",
+	// 	"timestamp": "2021-04-26T16:13:16.762496506Z",
+	// 	"type": "postgres-logs"
+	// }`
 
-	var parsedBody RawRecord
-	err := json.Unmarshal(
-		[]byte(body),
-		&parsedBody,
-	)
+	// var parsedBody RawRecord
+	// err := json.Unmarshal(
+	// 	[]byte(body),
+	// 	&parsedBody,
+	// )
 
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(3)
-	}
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	os.Exit(3)
+	// }
 
 	// database := func() interface{} {
 	// 	// i, ok := parsedBody["database"].(string)
@@ -55,12 +53,13 @@ func main() {
 	// 	return
 	// }
 
-	var database string
-	if keyExists(parsedBody, "database") {
-		database = parsedBody["database"].(string)
-	} else {
-		database = ""
-	}
+	// var database string
+	// if keyExists(parsedBody, "database") {
+	// 	database = parsedBody["database"].(string)
+	// } else {
+	// 	database = ""
+	// }
+	var test string
 
-	fmt.Println(database)
+	fmt.Println(test == "")
 }

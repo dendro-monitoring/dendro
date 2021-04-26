@@ -5,47 +5,66 @@ import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 func buildHostMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	collector := func() interface{} {
-		return record["tags"].(RawRecord)["collector"].(string)
-	}
-	cpuCode := func() interface{} {
-		return record["tags"].(RawRecord)["cpu"].(string)
-	}
-	cpuMode := func() interface{} {
-		return record["tags"].(RawRecord)["mode"].(string)
-	}
-	// Can be for network, disk or filesystem
-	device := func() interface{} {
-		return record["tags"].(RawRecord)["device"].(string)
-	}
-	fsFilesystem := func() interface{} {
-		return record["tags"].(RawRecord)["filesystem"].(string)
-	}
-	fsMountpoint := func() interface{} {
-		return record["tags"].(RawRecord)["mountpoint"].(string)
-	}
-	name := func() interface{} {
-		return record["name"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var host string
+	var collector string
+	var cpuCode string
+	var cpuMode string
+	var device string
+	var fsFilesystem string
+	var fsMountpoint string
+	var name string
+	var timestamp string
+
+	if keyExists(record, "host") {
+		host = record["host"].(string)
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	collectorDimension := dimension("collector", fetch(collector))
-	cpuCodeDimension := dimension("cpuCode", fetch(cpuCode))
-	cpuModeDimension := dimension("cpuMode", fetch(cpuMode))
-	deviceDimension := dimension("device", fetch(device))
-	fsFilesystemDimension := dimension("filesystem", fetch(fsFilesystem))
-	fsMountpointDimension := dimension("mountpoint", fetch(fsMountpoint))
+	if keyExists(record, "tags") {
+		if keyExists(record, "collector") {
+			collector = record["collector"].(string)
+		}
 
-	unixTime := toUnix(fetch(timestamp))
+		if keyExists(record, "cpu") {
+			cpuCode = record["cpu"].(string)
+		}
+
+		if keyExists(record, "mode") {
+			cpuMode = record["mode"].(string)
+		}
+
+		if keyExists(record, "device") {
+			device = record["device"].(string)
+		}
+
+		if keyExists(record, "filesystem") {
+			fsFilesystem = record["filesystem"].(string)
+		}
+
+		if keyExists(record, "mountpoint") {
+			fsMountpoint = record["mountpoint"].(string)
+		}
+	}
+
+	if keyExists(record, "name") {
+		name = record["name"].(string)
+	}
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+	}
+
+	hostDimension := dimension("host", host)
+	collectorDimension := dimension("collector", collector)
+	cpuCodeDimension := dimension("cpuCode", cpuCode)
+	cpuModeDimension := dimension("cpuMode", cpuMode)
+	deviceDimension := dimension("device", device)
+	fsFilesystemDimension := dimension("filesystem", fsFilesystem)
+	fsMountpointDimension := dimension("mountpoint", fsMountpoint)
+
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
-	measureName := fetch(name)
+	measureName := name
 	measureValueType := "VARCHAR"
 	measureValue := fetchMeasureValue(pRecord)
 
