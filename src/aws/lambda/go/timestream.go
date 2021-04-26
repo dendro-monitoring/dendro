@@ -16,16 +16,11 @@ func keyExists(decoded map[string]interface{}, key string) bool {
 	return ok && val != nil && val != ""
 }
 
-func dimension(name string, val string) timestreamwrite.Dimension {
-	return timestreamwrite.Dimension{
+func dimension(name string, val string) *timestreamwrite.Dimension {
+	return &timestreamwrite.Dimension{
 		Name:  &name,
 		Value: &val,
 	}
-}
-
-func pDimension(name string, val string) *timestreamwrite.Dimension {
-	dim := dimension(name, val)
-	return &dim
 }
 
 func fetch(record *RawRecord, key string) string {
@@ -36,7 +31,7 @@ func fetch(record *RawRecord, key string) string {
 	return ""
 }
 
-func insertDimension(
+func appendDimension(
 	pRecord *RawRecord,
 	dimensions []*timestreamwrite.Dimension,
 	key string,
@@ -44,7 +39,7 @@ func insertDimension(
 	record := *pRecord
 
 	if keyExists(record, key) {
-		return append(dimensions, pDimension(key, record[key].(string)))
+		return append(dimensions, dimension(key, record[key].(string)))
 	}
 
 	return dimensions

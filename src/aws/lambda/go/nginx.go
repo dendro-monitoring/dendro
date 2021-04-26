@@ -9,18 +9,18 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	var timestamp string
 	statusCode := "null" // TODO
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "parsed") {
 		parsed := record["parsed"].(map[string]interface{})
 
-		dimensions = insertDimension(&parsed, dimensions, "agent")
-		dimensions = insertDimension(&parsed, dimensions, "client")
-		dimensions = insertDimension(&parsed, dimensions, "method")
-		dimensions = insertDimension(&parsed, dimensions, "path")
-		dimensions = insertDimension(&parsed, dimensions, "referer")
-		dimensions = insertDimension(&parsed, dimensions, "request")
-		dimensions = insertDimension(&parsed, dimensions, "size")
+		dimensions = appendDimension(&parsed, dimensions, "agent")
+		dimensions = appendDimension(&parsed, dimensions, "client")
+		dimensions = appendDimension(&parsed, dimensions, "method")
+		dimensions = appendDimension(&parsed, dimensions, "path")
+		dimensions = appendDimension(&parsed, dimensions, "referer")
+		dimensions = appendDimension(&parsed, dimensions, "request")
+		dimensions = appendDimension(&parsed, dimensions, "size")
 
 		statusCode = fetch(pRecord, "status")
 	}
@@ -51,11 +51,11 @@ func buildNginxErrorLogRecord(pRecord *RawRecord) {
 	var timestamp string
 	severity := "null" // TODO
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
-	dimensions = insertDimension(pRecord, dimensions, "client")
-	dimensions = insertDimension(pRecord, dimensions, "server")
-	dimensions = insertDimension(pRecord, dimensions, "message")
-	dimensions = insertDimension(pRecord, dimensions, "request")
+	dimensions = appendDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "client")
+	dimensions = appendDimension(pRecord, dimensions, "server")
+	dimensions = appendDimension(pRecord, dimensions, "message")
+	dimensions = appendDimension(pRecord, dimensions, "request")
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)
@@ -89,7 +89,7 @@ func buildNginxMetricRecord(pRecord *RawRecord) {
 	var name string
 	var timestamp string
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "timestamp") {
 		timestamp = record["timestamp"].(string)

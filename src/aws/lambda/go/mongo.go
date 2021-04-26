@@ -11,21 +11,21 @@ func buildMongoLogRecord(pRecord *RawRecord) {
 	var timestamp string
 	severity := "null" // TODO
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "parsed") {
 		parsed := record["parsed"].(map[string]interface{})
 
 		if keyExists(record, "component") {
-			dimensions = append(dimensions, pDimension("component", parsed["c"].(string)))
+			dimensions = append(dimensions, dimension("component", parsed["c"].(string)))
 		}
 
 		if keyExists(record, "context") {
-			dimensions = append(dimensions, pDimension("context", parsed["ctx"].(string)))
+			dimensions = append(dimensions, dimension("context", parsed["ctx"].(string)))
 		}
 
 		if keyExists(record, "message") {
-			dimensions = append(dimensions, pDimension("message", parsed["msg"].(string)))
+			dimensions = append(dimensions, dimension("message", parsed["msg"].(string)))
 		}
 
 		severity = fetch(pRecord, "s")
@@ -55,7 +55,7 @@ func buildMongoMetricRecord(pRecord *RawRecord) {
 	var name string
 	var timestamp string
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	timestamp = fetch(pRecord, "timestamp")
 	name = fetch(pRecord, "name")

@@ -8,22 +8,22 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 	var name string
 	var timestamp string
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "tags") {
 		tags := record["tags"].(map[string]interface{})
 
-		dimensions = insertDimension(&tags, dimensions, "collector")
-		dimensions = insertDimension(&tags, dimensions, "device")
-		dimensions = insertDimension(&tags, dimensions, "filesystem")
-		dimensions = insertDimension(&tags, dimensions, "mountpoint")
+		dimensions = appendDimension(&tags, dimensions, "collector")
+		dimensions = appendDimension(&tags, dimensions, "device")
+		dimensions = appendDimension(&tags, dimensions, "filesystem")
+		dimensions = appendDimension(&tags, dimensions, "mountpoint")
 
 		if keyExists(tags, "cpu") {
-			dimensions = append(dimensions, pDimension("cpuCode", tags["cpu"].(string)))
+			dimensions = append(dimensions, dimension("cpuCode", tags["cpu"].(string)))
 		}
 
 		if keyExists(tags, "mode") {
-			dimensions = append(dimensions, pDimension("cpuMode", tags["mode"].(string)))
+			dimensions = append(dimensions, dimension("cpuMode", tags["mode"].(string)))
 		}
 	}
 

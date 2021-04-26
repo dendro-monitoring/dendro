@@ -11,11 +11,11 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 	var timestamp string
 	level := "null"
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
-	dimensions = insertDimension(pRecord, dimensions, "database")
-	dimensions = insertDimension(pRecord, dimensions, "code")
-	dimensions = insertDimension(pRecord, dimensions, "message")
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "database")
+	dimensions = appendDimension(pRecord, dimensions, "code")
+	dimensions = appendDimension(pRecord, dimensions, "message")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	timestamp = fetch(pRecord, "timestamp")
 	level = fetch(pRecord, "level")
@@ -44,14 +44,14 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 	var timestamp string
 	var dimensions []*timestreamwrite.Dimension
 
-	dimensions = insertDimension(pRecord, dimensions, "host")
+	dimensions = appendDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "tags") {
 		tags := record["tags"].(map[string]interface{})
 
 		if keyExists(tags, "db") {
 			database := tags["db"].(string)
-			dimensions = append(dimensions, pDimension("database", database))
+			dimensions = append(dimensions, dimension("database", database))
 		}
 	}
 
