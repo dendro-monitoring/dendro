@@ -28,6 +28,23 @@ func pDimension(name string, val string) *timestreamwrite.Dimension {
 	return &dim
 }
 
+func insertDimension(
+	pRecord *RawRecord,
+	dimensions []*timestreamwrite.Dimension,
+	key string,
+) []*timestreamwrite.Dimension {
+	record := *pRecord
+
+	if keyExists(record, key) {
+		return append(
+			dimensions,
+			pDimension(key, record[key].(string)),
+		)
+	}
+
+	return dimensions
+}
+
 func toUnix(timestamp string) string {
 	t, err := time.Parse(time.RFC3339, timestamp)
 	if err != nil {

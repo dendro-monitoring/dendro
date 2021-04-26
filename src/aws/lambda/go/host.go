@@ -4,56 +4,21 @@ import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 
 func buildHostMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
-
-	var host string
-	var collector string
-	var cpuCode string
-	var cpuMode string
-	var device string
-	var fsFilesystem string
-	var fsMountpoint string
+	var dimensions []*timestreamwrite.Dimension
 	var name string
 	var timestamp string
 
-	var dimensions []*timestreamwrite.Dimension
-
-	if keyExists(record, "host") {
-		host = record["host"].(string)
-		dimensions = append(dimensions, pDimension("host", host))
-	}
+	dimensions = insertDimension(pRecord, dimensions, "host")
 
 	if keyExists(record, "tags") {
 		tags := record["tags"].(map[string]interface{})
 
-		if keyExists(tags, "collector") {
-			collector = tags["collector"].(string)
-			dimensions = append(dimensions, pDimension("collector", collector))
-		}
-
-		if keyExists(tags, "cpu") {
-			cpuCode = tags["cpu"].(string)
-			dimensions = append(dimensions, pDimension("cpuCode", cpuCode))
-		}
-
-		if keyExists(tags, "mode") {
-			cpuMode = tags["mode"].(string)
-			dimensions = append(dimensions, pDimension("cpuMode", cpuMode))
-		}
-
-		if keyExists(tags, "device") {
-			device = tags["device"].(string)
-			dimensions = append(dimensions, pDimension("device", device))
-		}
-
-		if keyExists(tags, "filesystem") {
-			fsFilesystem = tags["filesystem"].(string)
-			dimensions = append(dimensions, pDimension("filesystem", fsFilesystem))
-		}
-
-		if keyExists(tags, "mountpoint") {
-			fsMountpoint = tags["mountpoint"].(string)
-			dimensions = append(dimensions, pDimension("mountpoint", fsMountpoint))
-		}
+		dimensions = insertDimension(&tags, dimensions, "collector")
+		dimensions = insertDimension(&tags, dimensions, "device")
+		dimensions = insertDimension(&tags, dimensions, "filesystem")
+		dimensions = insertDimension(&tags, dimensions, "mountpoint")
+		dimensions = insertDimension(&tags, dimensions, "host")
+		dimensions = insertDimension(&tags, dimensions, "host")
 	}
 
 	if keyExists(record, "timestamp") {

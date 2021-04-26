@@ -4,65 +4,41 @@ import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 
 func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	record := *pRecord
+	var dimensions []*timestreamwrite.Dimension
+	var timestamp string
+	statusCode := "null" // TODO
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	agent := func() interface{} {
-		return record["parsed"].(RawRecord)["agent"].(string)
-	}
-	client := func() interface{} {
-		return record["parsed"].(RawRecord)["client"].(string)
-	}
-	method := func() interface{} {
-		return record["parsed"].(RawRecord)["method"].(string)
-	}
-	path := func() interface{} {
-		return record["parsed"].(RawRecord)["path"].(string)
-	}
-	referer := func() interface{} {
-		return record["parsed"].(RawRecord)["referer"].(string)
-	}
-	request := func() interface{} {
-		return record["parsed"].(RawRecord)["request"].(string)
-	}
-	size := func() interface{} {
-		return record["parsed"].(RawRecord)["size"].(string)
-	}
-	statusCode := func() interface{} {
-		return record["parsed"].(RawRecord)["status"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	dimensions = insertDimension(pRecord, dimensions, "host")
+
+	if keyExists(record, "parsed") {
+		parsed := record["parsed"].(map[string]interface{})
+
+		dimensions = insertDimension(&parsed, dimensions, "agent")
+		dimensions = insertDimension(&parsed, dimensions, "client")
+		dimensions = insertDimension(&parsed, dimensions, "method")
+		dimensions = insertDimension(&parsed, dimensions, "path")
+		dimensions = insertDimension(&parsed, dimensions, "referer")
+		dimensions = insertDimension(&parsed, dimensions, "request")
+		dimensions = insertDimension(&parsed, dimensions, "size")
+
+		if keyExists(parsed, "status") {
+			statusCode = parsed["status"].(string)
+		}
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	agentDimension := dimension("agent", fetch(agent))
-	clientDimension := dimension("client", fetch(client))
-	methodDimension := dimension("method", fetch(method))
-	pathDimension := dimension("path", fetch(path))
-	refererDimension := dimension("referer", fetch(referer))
-	requestDimension := dimension("request", fetch(request))
-	sizeDimension := dimension("size", fetch(size))
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := "statusCode"
 	measureValueType := "VARCHAR"
-	measureValue := fetch(statusCode)
+	measureValue := statusCode
 
 	nginxAccessLogRecords = append(nginxAccessLogRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&agentDimension,
-			&clientDimension,
-			&methodDimension,
-			&pathDimension,
-			&refererDimension,
-			&requestDimension,
-			&sizeDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
