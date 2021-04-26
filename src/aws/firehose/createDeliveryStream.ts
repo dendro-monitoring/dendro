@@ -14,6 +14,8 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
         },
         CloudWatchLoggingOptions: {
           Enabled: true,
+          LogGroupName: 'test-logger',
+          LogStreamName: 'firehose-test-logger'
         },
       },
     };
