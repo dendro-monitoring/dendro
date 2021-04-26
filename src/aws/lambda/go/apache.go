@@ -2,14 +2,6 @@ package main
 
 import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 
-// func buildApacheErrorLogRecord(record *RawRecord) {
-// 	apacheErrorLogRecords = append(apacheErrorLogRecords, buildGenericRecord(record))
-// }
-
-// func buildApacheMetricRecord(record *RawRecord) {
-// 	apacheMetricRecords = append(apacheMetricRecords, buildGenericRecord(record))
-// }
-
 func buildApacheAccessLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
