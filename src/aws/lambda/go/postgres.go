@@ -56,7 +56,10 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 	}
 
 	for i := range dimensions {
-		fmt.Println(dimensions[i])
+		if *(dimensions[i].Value) == "" {
+			fmt.Println(dimensions[i])
+		}
+
 	}
 
 	timestamp = fetch(pRecord, "timestamp")
