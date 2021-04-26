@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"math/rand"
 	"strconv"
 	"time"
 
@@ -74,50 +72,6 @@ func fetchMeasureValue(record *RawRecord) string {
 
 	fmt.Printf("\nError: No counter or gauge for record: %s", (*record)["name"])
 	return ""
-}
-
-// TODO: Is this pass by value?
-func buildGenericRecord(record *RawRecord) *timestreamwrite.Record {
-	name1 := "host"
-	val1 := "hello-world"
-	dim1 := timestreamwrite.Dimension{
-		Name:  &name1,
-		Value: &val1,
-	}
-
-	name2 := "IP"
-	val2 := "192.168.1.1"
-	dim2 := timestreamwrite.Dimension{
-		Name:  &name2,
-		Value: &val2,
-	}
-
-	name3 := "RANDOMNUMBER"
-	val3 := strconv.Itoa(rand.Int())
-	dim3 := timestreamwrite.Dimension{
-		Name:  &name3,
-		Value: &val3,
-	}
-
-	measureName := "rawData"
-	measureValueType := "VARCHAR"
-	unixTime := fmt.Sprint(time.Now().Unix())
-	timeUnit := timestreamwrite.TimeUnitSeconds
-
-	out, err := json.Marshal(record)
-	if err != nil {
-		panic(err)
-	}
-	measureValue := string(out)
-
-	return &timestreamwrite.Record{
-		Dimensions:       []*timestreamwrite.Dimension{&dim1, &dim2, &dim3},
-		MeasureName:      &measureName,
-		MeasureValueType: &measureValueType,
-		MeasureValue:     &measureValue,
-		Time:             &unixTime,
-		TimeUnit:         &timeUnit,
-	}
 }
 
 func buildRecordTypes(rawRecords *[]RawRecord) {
