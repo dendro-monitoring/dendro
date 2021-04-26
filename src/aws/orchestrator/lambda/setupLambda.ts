@@ -1,6 +1,6 @@
 /* eslint-disable max-lines-per-function */
 import * as path from 'path';
-import AWSWrapper from '..';
+import AWSWrapper from '../..';
 import store from '../../../store';
 import {
   AWS_TIMESTREAM_DATABASE_NAME,
@@ -10,7 +10,7 @@ import {
 import getBucketName from '../s3/getBucketName';
 
 // TODO: Move to constants
-const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../lambda/go/function.zip`);
+const PATH_TO_LAMBDA_FUNCTION = path.resolve(`${__dirname}/../../lambda/go/function.zip`);
 
 export default function setupLambda(): Promise<void> {
   return new Promise( resolve => {
