@@ -7,44 +7,45 @@ import (
 func buildMongoLogRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	component := func() interface{} {
-		return record["parsed"].(RawRecord)["c"].(string)
-	}
-	context := func() interface{} {
-		return record["parsed"].(RawRecord)["ctx"].(string)
-	}
-	message := func() interface{} {
-		return record["parsed"].(RawRecord)["msg"].(string)
-	}
-	severity := func() interface{} {
-		return record["parsed"].(RawRecord)["s"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var dimensions []*timestreamwrite.Dimension
+	var timestamp string
+	severity := "null" // TODO
+
+	dimensions = insertDimension(pRecord, dimensions, "host")
+
+	if keyExists(record, "parsed") {
+		parsed := record["parsed"].(map[string]interface{})
+
+		if keyExists(record, "component") {
+			dimensions = append(dimensions, pDimension("component", parsed["c"].(string)))
+		}
+
+		if keyExists(record, "context") {
+			dimensions = append(dimensions, pDimension("context", parsed["ctx"].(string)))
+		}
+
+		if keyExists(record, "message") {
+			dimensions = append(dimensions, pDimension("message", parsed["msg"].(string)))
+		}
+
+		if keyExists(record, "severity") {
+			severity = record["s"].(string)
+		}
 	}
 
-	hostDimension := dimension("host", fetch(host))
-	componentDimension := dimension("component", fetch(component))
-	contextDimension := dimension("context", fetch(context))
-	messageDimension := dimension("message", fetch(message))
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
 	measureName := "severity"
+	measureValue := severity
 	measureValueType := "VARCHAR"
-	measureValue := fetch(severity)
 
 	mongoLogRecords = append(mongoLogRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-			&componentDimension,
-			&contextDimension,
-			&messageDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
@@ -56,29 +57,29 @@ func buildMongoLogRecord(pRecord *RawRecord) {
 func buildMongoMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	name := func() interface{} {
-		return record["name"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var dimensions []*timestreamwrite.Dimension
+	var name string
+	var timestamp string
+
+	dimensions = insertDimension(pRecord, dimensions, "host")
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
 	}
 
-	hostDimension := dimension("host", fetch(host))
+	if keyExists(record, "name") {
+		name = record["name"].(string)
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
-	measureName := fetch(name)
-	measureValueType := "DOUBLE"
+	measureName := name
 	measureValue := fetchMeasureValue(pRecord)
+	measureValueType := "DOUBLE"
 
 	mongoMetricRecords = append(mongoMetricRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,

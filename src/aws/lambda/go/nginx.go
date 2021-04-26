@@ -89,29 +89,29 @@ func buildNginxErrorLogRecord(pRecord *RawRecord) {
 func buildNginxMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
 
-	host := func() interface{} {
-		return record["host"].(string)
-	}
-	name := func() interface{} {
-		return record["name"].(string)
-	}
-	timestamp := func() interface{} {
-		return record["timestamp"].(string)
+	var dimensions []*timestreamwrite.Dimension
+	var name string
+	var timestamp string
+
+	dimensions = insertDimension(pRecord, dimensions, "host")
+
+	if keyExists(record, "timestamp") {
+		timestamp = record["timestamp"].(string)
 	}
 
-	hostDimension := dimension("host", fetch(host))
+	if keyExists(record, "name") {
+		name = record["name"].(string)
+	}
 
-	unixTime := toUnix(fetch(timestamp))
+	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds
 
-	measureName := fetch(name)
-	measureValueType := "DOUBLE"
+	measureName := name
 	measureValue := fetchMeasureValue(pRecord)
+	measureValueType := "DOUBLE"
 
 	nginxMetricRecords = append(nginxMetricRecords, &timestreamwrite.Record{
-		Dimensions: []*timestreamwrite.Dimension{
-			&hostDimension,
-		},
+		Dimensions:       dimensions,
 		MeasureName:      &measureName,
 		MeasureValueType: &measureValueType,
 		MeasureValue:     &measureValue,
