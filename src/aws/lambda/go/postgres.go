@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
@@ -51,6 +53,10 @@ func buildPostgresMetricRecord(pRecord *RawRecord) {
 			database := tags["db"].(string)
 			dimensions = append(dimensions, pDimension("database", database))
 		}
+	}
+
+	for i := range dimensions {
+		fmt.Println(dimensions[i])
 	}
 
 	timestamp = fetch(pRecord, "timestamp")

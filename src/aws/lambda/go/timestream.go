@@ -44,10 +44,7 @@ func insertDimension(
 	record := *pRecord
 
 	if keyExists(record, key) {
-		return append(
-			dimensions,
-			pDimension(key, record[key].(string)),
-		)
+		return append(dimensions, pDimension(key, record[key].(string)))
 	}
 
 	return dimensions
