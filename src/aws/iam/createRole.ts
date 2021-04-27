@@ -1,7 +1,5 @@
-import * as AWS from 'aws-sdk';
 import { AWSError } from 'aws-sdk';
-
-const iam = new AWS.IAM();
+import { AWS_IAM } from '../../constants';
 
 export default function createRole(RoleName: string, Service: string[]): Promise<any> {
   return new Promise(resolve => {
@@ -24,7 +22,7 @@ export default function createRole(RoleName: string, Service: string[]): Promise
       RoleName,
     };
 
-    iam.createRole(params, (err: AWSError, data) => {
+    AWS_IAM.createRole(params, (err: AWSError, data) => {
       if (err && err.code !== 'EntityAlreadyExists') {
         throw new Error(String(err));
       } else resolve(data);

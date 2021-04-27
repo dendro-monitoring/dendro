@@ -1,0 +1,72 @@
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost:27017",
+  "kind": "absolute",
+  "name": "mongod_metrics_repl_buffer_count",
+  "namespace": "mongodb",
+  "tags": {
+    "endpoint": "mongodb://localhost:27017"
+  },
+  "timestamp": "2021-04-23T17:59:53.955343917Z",
+  "type": "mongo-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost:27017",
+  "kind": "absolute",
+  "name": "mongod_metrics_repl_buffer_max_size_bytes_total",
+  "namespace": "mongodb",
+  "tags": {
+    "endpoint": "mongodb://localhost:27017"
+  },
+  "timestamp": "2021-04-23T17:59:53.955344122Z",
+  "type": "mongo-metrics"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "localhost:27017",
+  "kind": "absolute",
+  "name": "mongod_metrics_repl_buffer_size_bytes",
+  "namespace": "mongodb",
+  "tags": {
+    "endpoint": "mongodb://localhost:27017"
+  },
+  "timestamp": "2021-04-23T17:59:53.955344340Z",
+  "type": "mongo-metrics"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost:27017",
+  "kind": "absolute",
+  "name": "mongod_metrics_repl_executor_queue",
+  "namespace": "mongodb",
+  "tags": {
+    "endpoint": "mongodb://localhost:27017",
+    "type": "network_in_progress"
+  },
+  "timestamp": "2021-04-23T17:59:53.955344637Z",
+  "type": "mongo-metrics"
+}
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost:27017",
+  "kind": "absolute",
+  "name": "mongod_metrics_repl_executor_queue",
+  "namespace": "mongodb",
+  "tags": {
+    "endpoint": "mongodb://localhost:27017",
+    "type": "sleepers"
+  },
+  "timestamp": "2021-04-23T17:59:53.955344925Z",
+  "type": "mongo-metrics"
+}

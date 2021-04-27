@@ -1,0 +1,36 @@
+{
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/mongo-log.log",
+  "host": "andrew-xps159560",
+  "parsed": {
+    "attr": {
+      "client": "conn1",
+      "doc": {
+        "application": {
+          "name": "MongoDB Shell"
+        },
+        "driver": {
+          "name": "MongoDB Internal Client",
+          "version": "4.4.4"
+        },
+        "os": {
+          "architecture": "x86_64",
+          "name": "Ubuntu",
+          "type": "Linux",
+          "version": "20.04"
+        }
+      },
+      "remote": "127.0.0.1:40954"
+    },
+    "c": "NETWORK",
+    "ctx": "conn1",
+    "id": 51800,
+    "msg": "client metadata",
+    "s": "I",
+    "t": {
+      "$date": "2021-03-09T15:47:23.048+00:00"
+    }
+  },
+  "source_type": "file",
+  "timestamp": "2021-04-23T18:17:05.087787971Z",
+  "type": "mongo-logs"
+}

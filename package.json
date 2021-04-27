@@ -1,17 +1,58 @@
 {
   "name": "dendro-cli",
-  "description": "Core CLI for dendroflumechuck",
   "version": "0.0.11",
+  "description": "Core CLI for dendroflumechuck",
+  "keywords": [
+    "oclif",
+    "time-series",
+    "AWS",
+    "serverless",
+    "logs"
+  ],
+  "homepage": "https://github.com/dendro-naap/dendro-cli",
+  "bugs": "https://github.com/dendro-naap/dendro-cli/issues",
+  "repository": "dendro-naap/dendro-cli",
+  "license": "MIT",
   "author": "team-naap",
+  "main": "lib/index.js",
   "bin": {
     "dendro": "./bin/run"
   },
-  "bugs": "https://github.com/dendro-naap/dendro-cli/issues",
+  "files": [
+    "/bin",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json",
+    "/lib",
+    ".next/server",
+    ".next/static",
+    ".next/BUILD_ID",
+    ".next/build-manifest.json",
+    ".next/export-marker.json",
+    ".next/images-manifest.json",
+    ".next/prerender-manifest.json",
+    ".next/react-loadable-manifest.json",
+    ".next/required-server-files.json",
+    ".next/routes-manifest.json"
+  ],
+  "scripts": {
+    "dev": "node ./src/server.js",
+    "build:configs": "node lib/vector/index.js",
+    "build:next": "next build",
+    "build:go": "GOOS=linux CGO_ENABLED=0 go build -o ./src/aws/lambda/go/main ./src/aws/lambda/go/*.go",
+    "build:oclif": "oclif-dev manifest && oclif-dev readme",
+    "build:tsc": "tsc --noEmit false",
+    "build:move_zip": "mv ./src/aws/lambda/go/function.zip ./lib/aws/lambda/function.zip",
+    "prepack": "npm run build:oclif && npm run build:next && npm run build:tsc && npm run zip:go && npm run build:move_zip",
+    "postpack": "rm -f oclif.manifest.json",
+    "start": "NODE_ENV=production node ./src/server.js",
+    "version": "oclif-dev readme && git add README.md",
+    "zip": "zip -j ./src/aws/lambda/go/function.zip ./src/aws/lambda/go/main",
+    "zip:go": "npm run build:go && npm run zip"
+  },
   "dependencies": {
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
-    "adm-zip": "^0.5.5",
     "aws-sdk": "^2.884.0",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
@@ -50,45 +91,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "files": [
-    "/bin",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json",
-    "/lib",
-    ".next/server",
-    ".next/static",
-    ".next/BUILD_ID",
-    ".next/build-manifest.json",
-    ".next/export-marker.json",
-    ".next/images-manifest.json",
-    ".next/prerender-manifest.json",
-    ".next/react-loadable-manifest.json",
-    ".next/required-server-files.json",
-    ".next/routes-manifest.json"
-  ],
-  "homepage": "https://github.com/dendro-naap/dendro-cli",
-  "keywords": [
-    "oclif"
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
     "bin": "dendro",
     "plugins": [
       "@oclif/plugin-help"
     ]
-  },
-  "repository": "dendro-naap/dendro-cli",
-  "scripts": {
-    "postpack": "rm -f oclif.manifest.json",
-    "posttest": "eslint .",
-    "prepack": "oclif-dev manifest && oclif-dev readme && next build && tsc --noEmit false",
-    "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md",
-    "build:configs": "node lib/vector/index.js",
-    "dev": "node ./src/server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node ./src/server.js"
   }
 }

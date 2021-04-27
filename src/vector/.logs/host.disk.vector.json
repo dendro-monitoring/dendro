@@ -1,0 +1,84 @@
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_written_bytes_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop25"
+  },
+  "timestamp": "2021-04-24T14:28:02.051266620Z"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_writes_completed_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop25"
+  },
+  "timestamp": "2021-04-24T14:28:02.051266620Z"
+}
+{
+  "counter": {
+    "value": 38324224.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_read_bytes_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop26"
+  },
+  "timestamp": "2021-04-24T14:28:02.051287623Z"
+}
+{
+  "counter": {
+    "value": 963.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_reads_completed_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop26"
+  },
+  "timestamp": "2021-04-24T14:28:02.051287623Z"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_written_bytes_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop26"
+  },
+  "timestamp": "2021-04-24T14:28:02.051287623Z"
+}
+{
+  "counter": {
+    "value": 0.0
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "disk_writes_completed_total",
+  "namespace": "host",
+  "tags": {
+    "collector": "disk",
+    "device": "loop26"
+  },
+  "timestamp": "2021-04-24T14:28:02.051287623Z"
+}

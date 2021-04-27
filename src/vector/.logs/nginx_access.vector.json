@@ -1,0 +1,21 @@
+{
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/tes2.log",
+  "host": "andrew-xps159560",
+  "parsed": {
+    "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+    "client": "100.33.243.86",
+    "compression": "2.75",
+    "method": "GET",
+    "path": "/flights/manifest.json",
+    "protocol": "HTTP/1.1",
+    "referer": "https://nlicalzi.com/flights",
+    "request": "GET /flights/manifest.json HTTP/1.1",
+    "size": 504,
+    "status": 200,
+    "timestamp": "2021-04-23T14:59:24Z"
+  },
+  "message": "100.33.243.86 - - [23/Apr/2021:14:59:24 +0000] \"GET /flights/manifest.json HTTP/1.1\" 200 504 \"https://nlicalzi.com/flights\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36\" \"2.75\"",
+  "source_type": "file",
+  "timestamp": "2021-04-23T16:22:28.459348518Z",
+  "type": "custom-application"
+}

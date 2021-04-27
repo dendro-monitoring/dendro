@@ -1,8 +1,18 @@
+/* eslint-disable max-lines-per-function */
 import { Command, flags } from '@oclif/command';
-import cli from 'cli-ux';
 
-import log, { LevelNames } from "../utils/log";
+import log, { LevelNames } from '../utils/log';
 import AWSWrapper from '../aws';
+import ora from 'ora';
+import { ensureCredentials } from '../utils/aws';
+import {
+  logRoles,
+  logBuckets,
+  logDeliveryStreams,
+  logLambdas,
+  logTimestream,
+  logTimestreamTables
+} from '../utils/list';
 
 export default class ListCommand extends Command {
   static description = 'describe the command here';
@@ -20,7 +30,7 @@ Timestream
   static flags = {
     help: flags.help({ char: 'h' }),
     // flag with a value (-n, --name=VALUE)
-    // name: flags.string({ char: 'n', description: 'name to print' }),
+    // name: flags.string({ char: 'n', description: 'name to log' }),
     // flag with no value (-f, --force)
     // force: flags.boolean({ char: 'f' }),
     level: flags.string({
@@ -37,92 +47,41 @@ Timestream
     }),
   };
 
-  static args = [
-    // { name: 'file' }
-  ];
+  static args = [];
 
-  static printRoles(roles: { RoleName: string}[]): void {
-    if (roles.length === 0) {
-      log.info('No roles created!');
-      return;
-    }
+  async run(): Promise<void>{
+    ensureCredentials();
 
-    roles.forEach( async role => await cli.url(`- ${role.RoleName}`, `https://console.aws.amazon.com/iam/home?region=us-east-1#/roles/${role.RoleName}`)
-    );
-    console.log('\n');
-  }
-
-  static printBuckets(buckets: { Name: string}[]): void {
-    if (buckets.length === 0) {
-      log.info('No buckets created!');
-      return;
-    }
-
-    buckets.forEach( async bucket => await cli.url(`- ${bucket.Name}`, `https://s3.console.aws.amazon.com/s3/buckets/${bucket.Name}?region=us-east-2&tab=objects`));
-    console.log('\n');
-  }
-
-  static printDeliveryStreams(streams: string[]): void {
-    if (streams.length === 0) {
-      log.info('No streams created!');
-      return;
-    }
-
-    streams.forEach( async stream =>  await cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`));
-    console.log('\n');
-  }
-
-  async printLambdas(lambdas: { FunctionName: string }[]): Promise<void> {
-    if (lambdas.length === 0) {
-      log.info('No lambdas created!');
-      return;
-    }
-    log.error('Bug here!!!');
-    lambdas.forEach( async lambda => await cli.url(`- ${lambda.FunctionName}`, `https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/${lambda.FunctionName}?tab=code`));
-    console.log('\n');
-
-  }
-
-  static printTimestream(streams: { DatabaseName: string }[]): void {
-    if (streams.length === 0) {
-      log.info('No streams created!');
-      return;
-    }
-
-    streams.forEach( async stream => await cli.url(`- ${stream.DatabaseName}`, `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/${stream.DatabaseName}`));
-    console.log('\n');
-  }
-
-  async run() {
     const parsed = this.parse(ListCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
-    let spinner;
+    let spinner: ora.Ora | undefined;
+    const callback = (msg: string) => spinner?.succeed(msg);
 
-    spinner = log.spin('Listing roles...\n');
-    const  Roles  = await AWSWrapper.listRoles();
+    spinner = log.spin('Listing role...');
+    const Roles = await AWSWrapper.listRoles();
+    await logRoles(Roles, callback);
 
-    ListCommand.printRoles(Roles);
-    spinner.succeed(' ');
+    spinner = log.spin('Listing S3 bucket...');
+    const Buckets = await AWSWrapper.listBuckets();
+    await logBuckets(Buckets, callback);
 
-    spinner = log.spin('Listing S3 buckets...\n');
-    const { Buckets } = await AWSWrapper.listBuckets();
-    ListCommand.printBuckets(Buckets);
-    spinner.succeed(' ');
+    spinner = log.spin('Listing Firehose stream...\n');
+    const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
+    await logDeliveryStreams(DeliveryStreamNames, callback);
 
-    spinner = log.spin('Listing Firehose delivery streams...\n');
-    const { DeliveryStreamNames } = await AWSWrapper.listDeliveryStreams();
-    ListCommand.printDeliveryStreams(DeliveryStreamNames);
-    spinner.succeed(' ');
+    spinner = log.spin('Listing Lambda function...\n');
+    const Functions = await AWSWrapper.listFunctions();
+    await logLambdas(Functions, callback);
 
-    spinner = log.spin('Listing Lambda functions...\n');
-    const { Functions } = await AWSWrapper.listFunctions();
-    await this.printLambdas(Functions);
-    spinner.succeed();
+    spinner = log.spin('Listing Timestream database...\n');
+    const Databases = await AWSWrapper.listDatabases();
+    await logTimestream(Databases, callback);
 
-    spinner = log.spin('Listing Timestream databases...\n');
-    const { Databases } = await AWSWrapper.listDatabases();
-    ListCommand.printTimestream(Databases);
-    spinner.succeed();
+    if ( Databases.length > 0 ) {
+      spinner = log.spin('Listing Timestream tables...\n');
+      const Tables = await AWSWrapper.listTables();
+      await logTimestreamTables(Tables, callback);
+    }
   }
 }

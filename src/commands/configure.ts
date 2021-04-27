@@ -10,11 +10,11 @@ import {
   postgresPrompt, postgresCredentialsPrompt,
   mongoPrompt, mongoCredentialsPrompt,
   hostPrompt,
-  customApplicationPromptOptions
+  customApplicationPromptOptions,
+  promptCredentials
 } from '../prompts';
 import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
-import { ensureCredentials } from '../utils/aws';
 import chalk from 'chalk';
 
 export default class Configure extends Command {
@@ -121,7 +121,7 @@ export default class Configure extends Command {
     let addAnother = true;
     while (addAnother) {
       const customApp = await new Form(customApplicationPromptOptions).run();
-      customApp.name = customApp.name.replace(" ", "_");
+      customApp.name = customApp.name.replace(' ', '_');
 
       store.Vector.setCustomApp(customApp);
 
@@ -151,7 +151,7 @@ export default class Configure extends Command {
     if (monitoringSelections.includes('Host machine health')) { await this.hostConfig(); }
     if (monitoringSelections.includes('Custom application (other)')) { await this.customApplicationConfig(); }
 
-    await ensureCredentials();
+    await promptCredentials();
 
     console.clear();
     log.info('Saving selections to cache');

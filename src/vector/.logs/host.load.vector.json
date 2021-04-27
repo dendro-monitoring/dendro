@@ -1,0 +1,39 @@
+{
+  "gauge": {
+    "value": 3.359999895095825
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "load1",
+  "namespace": "host",
+  "tags": {
+    "collector": "load"
+  },
+  "timestamp": "2021-04-24T14:34:36.996954141Z"
+}
+{
+  "gauge": {
+    "value": 3.0799999237060547
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "load5",
+  "namespace": "host",
+  "tags": {
+    "collector": "load"
+  },
+  "timestamp": "2021-04-24T14:34:36.996954141Z"
+}
+{
+  "gauge": {
+    "value": 2.4800000190734863
+  },
+  "host": "andrew-xps159560",
+  "kind": "absolute",
+  "name": "load15",
+  "namespace": "host",
+  "tags": {
+    "collector": "load"
+  },
+  "timestamp": "2021-04-24T14:34:36.996954141Z"
+}

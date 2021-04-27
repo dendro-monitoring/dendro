@@ -1,0 +1,14 @@
+{
+  "gauge": {
+    "value": 0.0
+  },
+  "host": "localhost: 80",
+  "kind": "absolute",
+  "name": "up",
+  "namespace": "nginx",
+  "tags": {
+    "endpoint": "http://localhost:80/basic_status"
+  },
+  "timestamp": "2021-04-24T15:20:05.180827629Z",
+  "type": "nginx-metrics"
+}
