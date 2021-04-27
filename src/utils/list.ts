@@ -2,9 +2,9 @@ import chalk from 'chalk';
 import cli from 'cli-ux';
 
 import log from './log';
-import { ALL_TIMESTREAM_DATABASE_TABLES } from '../constants';
+import { ALL_TIMESTREAM_DATABASE_TABLES, AWS_SNS_TOPIC_NAME } from '../constants';
 
-export async function logRoles(roles: { RoleName: string}[], callback: (msg: string) => void): Promise<void> {
+export async function logRoles(roles: { RoleName: string }[], callback: (msg: string) => void): Promise<void> {
   callback(chalk.bold('Role:'));
 
   if (roles.length === 0) {
@@ -22,7 +22,7 @@ export async function logRoles(roles: { RoleName: string}[], callback: (msg: str
   console.log('\n');
 }
 
-export async function logBuckets(buckets: { Name: string}[], callback: (msg: string) => void): Promise<void> {
+export async function logBuckets(buckets: { Name: string }[], callback: (msg: string) => void): Promise<void> {
   callback(chalk.bold('Bucket:'));
 
   if (buckets.length === 0) {
@@ -106,4 +106,19 @@ export async function logTimestreamTables(tables: { TableName: string, DatabaseN
       `https://console.aws.amazon.com/timestream/home?region=us-east-1#databases/DendroTimestreamDB/tables/${table.TableName}`
     );
   }
+  console.log('\n');
+}
+
+export async function logSNS(topics: string[], callback: (msg: string) => void): Promise<void> {
+  callback(chalk.bold('SNS Topic:'));
+
+  if (topics.length === 0) {
+    log.info('No topic found!');
+    return;
+  }
+
+  for await (const topic of topics) {
+    cli.url(`- ${AWS_SNS_TOPIC_NAME}`, `https://console.aws.amazon.com/sns/v3/home?region=us-east-1#/topic/${topic}`);
+  }
+  console.log('\n');
 }
