@@ -1,6 +1,8 @@
 package main
 
-import "github.com/aws/aws-sdk-go/service/timestreamwrite"
+import (
+	"github.com/aws/aws-sdk-go/service/timestreamwrite"
+)
 
 func buildApacheAccessLogRecord(pRecord *RawRecord) {
 	record := *pRecord
@@ -18,7 +20,7 @@ func buildApacheAccessLogRecord(pRecord *RawRecord) {
 		dimensions = appendDimension(&parsed, dimensions, "path")
 		dimensions = appendDimension(&parsed, dimensions, "size")
 
-		statusCode = fetch(pRecord, "status")
+		statusCode = fetch(&parsed, "status")
 	}
 
 	timestamp = fetch(pRecord, "timestamp")
@@ -52,7 +54,10 @@ func buildApacheErrorLogRecord(pRecord *RawRecord) {
 	dimensions = appendDimension(pRecord, dimensions, "request")
 
 	timestamp = fetch(pRecord, "timestamp")
-	severity = fetch(pRecord, "severity")
+	severity = fetch(pRecord, "level")
+	if severity == "" {
+		severity = "null"
+	}
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

@@ -116,8 +116,8 @@ func WriteRecords(
 ) {
 	_, err := svc.WriteRecords(recordInput)
 	if err != nil {
-		fmt.Println("Failed to write recoords.")
-		fmt.Println(err.Error())
+		fmt.Println("Failed to write records.")
+		fmt.Println(err)
 		// TODO: Should we panic and crash when we fail to write a batch?
 		// panic(err)
 		return
@@ -142,10 +142,8 @@ func writeAllRecords(
 		return
 	}
 
-	fmt.Println("totalLen")
-
 	fmt.Printf(
-		"Writing %s records for table %s\n",
+		"Writing %v records for table %s\n",
 		strconv.Itoa(totalLen),
 		vectorType,
 	)

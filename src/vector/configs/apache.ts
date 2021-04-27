@@ -25,6 +25,8 @@ const accessLogConfig = (): string => {
   .type = "${VECTOR_APACHE_ACCESS_LOGS_TYPE}"
   .parsed = parse_apache_log!(.message, format: "common")
   del(.message)
+  .parsed.status = to_string(.parsed.status)
+  .parsed.size = to_string(.parsed.size)
   '''
 
 [sinks.apache_access_logs_firehose_stream_sink]
