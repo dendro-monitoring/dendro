@@ -51,7 +51,7 @@ export default class Teardown extends Command {
       const Buckets = await AWSWrapper.listBuckets();
       await logBuckets(Buckets, callback);
 
-      const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
+      const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
       await logDeliveryStreams(DeliveryStreamNames, callback);
 
       const Functions = await AWSWrapper.listFunctions();
@@ -94,7 +94,7 @@ export default class Teardown extends Command {
         spinner.succeed();
       }
 
-      if (DeliveryStreamNames.length > 0) {
+      if (DeliveryStreamNames) {
         spinner = log.spin('Deleting firehose...');
         const firehoseError = await orchestrator.deleteFirehose();
         if (firehoseError) {
