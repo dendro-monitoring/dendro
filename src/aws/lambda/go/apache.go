@@ -77,11 +77,10 @@ func buildApacheMetricRecord(pRecord *RawRecord) {
 	var timestamp string
 
 	dimensions = appendDimension(pRecord, dimensions, "host")
-	dimensions = appendDimension(pRecord, dimensions, "type")
 	dimensions = appendDimension(pRecord, dimensions, "state")
 
 	timestamp = fetch(pRecord, "timestamp")
-	name = fetch(pRecord, "timestamp")
+	name = fetch(pRecord, "name")
 
 	unixTime := toUnix(timestamp)
 	timeUnit := timestreamwrite.TimeUnitSeconds

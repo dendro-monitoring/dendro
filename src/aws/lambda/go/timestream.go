@@ -78,7 +78,6 @@ func buildRecordTypes(rawRecords *[]RawRecord) {
 	for i := range *rawRecords {
 		record := (*rawRecords)[i]
 
-		// TODO: Check if key was missing?
 		switch record["type"] {
 		case VECTOR_APACHE_ACCESS_LOGS_TYPE:
 			buildApacheAccessLogRecord(&record)
@@ -117,8 +116,9 @@ func WriteRecords(
 ) {
 	_, err := svc.WriteRecords(recordInput)
 	if err != nil {
-		fmt.Println(err)
-		panic(err)
+		fmt.Println(err.Error())
+		// TODO: Should we panic and crash when we fail to write a batch?
+		// panic(err)
 	}
 
 	fmt.Printf(

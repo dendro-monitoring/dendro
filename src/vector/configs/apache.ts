@@ -11,26 +11,26 @@ import {
 const accessLogConfig = (): string => {
   log.debug('Writing Apache vector access log config');
   return `
-################ Apache Logs #############################
+################ Apache Access Logs #############################
 
-[sources.apache_logs]
+[sources.apache_access_logs]
   type = "file"
   include = ["/var/log/apache2/access_log",]
   read_from = "beginning"
 
-[transforms.apache_logs_transform]
+[transforms.apache_access_logs_transform]
   type = "remap"
-  inputs = ["apache_logs"]
+  inputs = ["apache_access_logs"]
   source = '''
   .type = "${VECTOR_APACHE_ACCESS_LOGS_TYPE}"
   .parsed = parse_apache_log!(.message, format: "common")
   del(.message)
   '''
 
-[sinks.apache_logs_firehose_stream_sink]
+[sinks.apache_access_logs_firehose_stream_sink]
   # General
   type = "aws_kinesis_firehose"
-  inputs = ["apache_logs_transform"]
+  inputs = ["apache_access_logs_transform"]
 
   # AWS
   region = "${AWS_REGION}"
@@ -50,31 +50,31 @@ const accessLogConfig = (): string => {
 const errorLogConfig = (): string => {
   log.debug('Writing Apache vector log config');
   return `
-################ Apache Logs #############################
+################ Apache Error Logs #############################
 
-[sources.apache_logs]
+[sources.apache_error_logs]
   type = "file"
   include = ["/var/log/apache2/error_log"]
   read_from = "beginning"
 
-[transforms.apache_regex_transform]
+[transforms.apache_error_regex_transform]
   # General
   type = "regex_parser"
-  inputs = ["apache_logs"]
+  inputs = ["apache_error_logs"]
   patterns = ['^((?P<apache_timestamp>\\[\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+\\]) )?(\\[(?P<source_file>\\w+):(?P<level>\\w+)\\] \\[pid (?P<pid>\\d+):tid (?P<tid>\\d+)\\] )?(?P<message>[a-zA-Z0-9-_ \\W]*)']
 
 # TODO: Only works with access_log
-[transforms.apache_logs_transform]
+[transforms.apache_error_logs_transform]
   type = "remap"
-  inputs = ["apache_regex_transform"]
+  inputs = ["apache_error_regex_transform"]
   source = '''
   .type = "${VECTOR_APACHE_ERROR_LOGS_TYPE}"
   '''
 
-[sinks.apache_logs_firehose_stream_sink]
+[sinks.apache_error_logs_firehose_stream_sink]
   # General
   type = "aws_kinesis_firehose"
-  inputs = ["apache_logs_transform"]
+  inputs = ["apache_error_logs_transform"]
 
   # AWS
   region = "${AWS_REGION}"

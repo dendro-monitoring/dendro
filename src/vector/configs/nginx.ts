@@ -18,12 +18,16 @@ const accessLogConfig = (): string => {
   include = ["/var/log/nginx/access.log*"]
   read_from = "beginning"
 
+[transforms.nginx_regex_transform]
+  # General
+  type = "regex_parser"
+  inputs = ["nginx_access_logs"]
+  patterns = ['^(?P<ip>[\\w\\.]+) - (?P<user>.*) \\[(?P<time>.*)\\] "(?P<method>[\\w]+) (?P<path>.*) (?P<scheme>.*)\\/(?P<http_version>.*)" (?P<status>[\\d]+) (?P<bytes_out>[\\d]+) "(?P<referer>.*)" "(?P<agent>.*)"( (?P<request_time>.*)$)?']
+
 [transforms.nginx_access_logs_transform]
   type = "remap"
-  inputs = ["nginx_logs"]
+  inputs = ["nginx_regex_transform"]
   source = '''
-  .parsed = parse_nginx_log!(.message, "combined")
-  del(.message)
   .type = "${VECTOR_NGINX_ACCESS_LOGS_TYPE}"
   '''
 
