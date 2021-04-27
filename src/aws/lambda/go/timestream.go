@@ -116,9 +116,11 @@ func WriteRecords(
 ) {
 	_, err := svc.WriteRecords(recordInput)
 	if err != nil {
+		fmt.Println("Failed to write recoords.")
 		fmt.Println(err.Error())
 		// TODO: Should we panic and crash when we fail to write a batch?
 		// panic(err)
+		return
 	}
 
 	fmt.Printf(
@@ -139,6 +141,8 @@ func writeAllRecords(
 	if totalLen == 0 {
 		return
 	}
+
+	fmt.Println("totalLen")
 
 	fmt.Printf(
 		"Writing %s records for table %s\n",

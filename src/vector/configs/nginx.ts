@@ -22,7 +22,7 @@ const accessLogConfig = (): string => {
   # General
   type = "regex_parser"
   inputs = ["nginx_access_logs"]
-  patterns = ['^(?P<ip>[\\w\\.]+) - (?P<user>.*) \\[(?P<time>.*)\\] "(?P<method>[\\w]+) (?P<path>.*) (?P<scheme>.*)\\/(?P<http_version>.*)" (?P<status>[\\d]+) (?P<bytes_out>[\\d]+) "(?P<referer>.*)" "(?P<agent>.*)"( (?P<request_time>.*)$)?']
+  patterns = ['^(?P<ip>[\\w\\.]+) - (?P<user>.*) \\[(?P<time>.*)\\] "(?P<method>[\\w]+) (?P<path>.*) (?P<scheme>.*)\/(?P<http_version>.*)" (?P<status>[\\d]+) (?P<bytes_out>[\\d]+) "(?P<referer>.*)" "(?P<agent>.*)"( (?P<request_time>.*)$)?']
 
 [transforms.nginx_access_logs_transform]
   type = "remap"
