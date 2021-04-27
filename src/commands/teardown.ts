@@ -14,7 +14,7 @@ import {
 } from '../utils/list';
 
 function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>): boolean {
-  return roles.length === 0 && buckets.length === 0 && streams.length === 0 && functions.length === 0 && databases.length === 0;
+  return roles.length === 0 && buckets.length === 0 && !streams && functions.length === 0 && databases.length === 0;
 }
 
 export default class Teardown extends Command {
