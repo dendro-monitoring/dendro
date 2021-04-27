@@ -109,7 +109,7 @@ export async function logTimestreamTables(tables: { TableName: string, DatabaseN
   console.log('\n');
 }
 
-export async function logSNS(topics: string[], callback: (msg: string) => void): Promise<void> {
+export async function logTopic(topics: string[], callback: (msg: string) => void): Promise<void> {
   callback(chalk.bold('SNS Topic:'));
 
   if (topics.length === 0) {

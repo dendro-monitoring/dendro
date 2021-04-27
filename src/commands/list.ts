@@ -12,7 +12,7 @@ import {
   logLambdas,
   logTimestream,
   logTimestreamTables,
-  logSNS
+  logTopic
 } from '../utils/list';
 
 export default class ListCommand extends Command {
@@ -86,6 +86,6 @@ Timestream
     }
 
     const topics = await AWSWrapper.listTopics();
-    await logSNS(topics, callback)
+    await logTopic(topics, callback)
   }
 }

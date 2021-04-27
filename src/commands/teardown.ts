@@ -10,11 +10,12 @@ import {
   logDeliveryStreams,
   logLambdas,
   logTimestream,
-  logTimestreamTables
+  logTimestreamTables,
+  logTopic,
 } from '../utils/list';
 
-function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>): boolean {
-  return roles.length === 0 && buckets.length === 0 && streams.length === 0 && functions.length === 0 && databases.length === 0;
+function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>, topics: Array<any>): boolean {
+  return roles.length === 0 && buckets.length === 0 && streams.length === 0 && functions.length === 0 && databases.length === 0 && topics.length === 0;
 }
 
 export default class Teardown extends Command {
@@ -65,7 +66,10 @@ export default class Teardown extends Command {
         await logTimestreamTables(Tables, callback);
       }
 
-      if (noResourcesFound(Roles, Buckets, DeliveryStreamNames, Functions, Databases)) return log.info('No resources to delete');
+      const Topics = await AWSWrapper.listTopics();
+      await logTopic(Topics, callback);
+
+      if (noResourcesFound(Roles, Buckets, DeliveryStreamNames, Functions, Databases, Topics)) return log.info('No resources to delete');
 
       const prompt = new Confirm({
         name: 'confirm-delete',
@@ -76,45 +80,51 @@ export default class Teardown extends Command {
 
       if (!choice) return;
 
-      if (Roles.length > 0) {
-        spinner = log.spin('Deleting role...');
-        const roleError = await orchestrator.deleteRole();
-        if (roleError) {
-          log.warn('Couldn\'t delete role: No such role exists');
-        }
-        spinner.succeed();
-      }
+      // if (Roles.length > 0) {
+      //   spinner = log.spin('Deleting role...');
+      //   const roleError = await orchestrator.deleteRole();
+      //   if (roleError) {
+      //     log.warn('Couldn\'t delete role: No such role exists');
+      //   }
+      //   spinner.succeed();
+      // }
 
-      if (Buckets.length > 0) {
-        spinner = log.spin('Deleting bucket...');
-        const bucketError = await orchestrator.deleteBucket();
-        if (bucketError) {
-          log.warn('Couldn\'t delete bucket: No such bucket exists');
-        }
-        spinner.succeed();
-      }
+      // if (Buckets.length > 0) {
+      //   spinner = log.spin('Deleting bucket...');
+      //   const bucketError = await orchestrator.deleteBucket();
+      //   if (bucketError) {
+      //     log.warn('Couldn\'t delete bucket: No such bucket exists');
+      //   }
+      //   spinner.succeed();
+      // }
 
-      if (DeliveryStreamNames.length > 0) {
-        spinner = log.spin('Deleting firehose...');
-        const firehoseError = await orchestrator.deleteFirehose();
-        if (firehoseError) {
-          log.warn('Couldn\'t delete firehose: No such stream name exists');
-        }
-        spinner.succeed();
-      }
+      // if (DeliveryStreamNames.length > 0) {
+      //   spinner = log.spin('Deleting firehose...');
+      //   const firehoseError = await orchestrator.deleteFirehose();
+      //   if (firehoseError) {
+      //     log.warn('Couldn\'t delete firehose: No such stream name exists');
+      //   }
+      //   spinner.succeed();
+      // }
 
-      if (Functions.length > 0) {
-        spinner = log.spin('Deleting lambda...');
-        const lambdaError = await orchestrator.deleteLambda();
-        if (lambdaError) {
-          log.warn('Couldn\'t delete lambda: No such lambda exists');
-        }
-        spinner.succeed();
-      }
+      // if (Functions.length > 0) {
+      //   spinner = log.spin('Deleting lambda...');
+      //   const lambdaError = await orchestrator.deleteLambda();
+      //   if (lambdaError) {
+      //     log.warn('Couldn\'t delete lambda: No such lambda exists');
+      //   }
+      //   spinner.succeed();
+      // }
 
-      if (Databases.length > 0) {
-        spinner = log.spin('Deleting timestream...');
-        await orchestrator.deleteTimestream();
+      // if (Databases.length > 0) {
+      //   spinner = log.spin('Deleting timestream...');
+      //   await orchestrator.deleteTimestream();
+      //   spinner.succeed();
+      // }
+
+      if (Topics.length > 0) {
+        spinner = log.spin('Deleting SNS Topic...');
+        await AWSWrapper.deleteTopic(Topics[0]);
         spinner.succeed();
       }
 

@@ -16,7 +16,7 @@ export default function listTopics(Name?: string): Promise<any> {
             return splitArn[splitArn.length - 1] === AWS_SNS_TOPIC_NAME;
           } else return false;
         }).map(topic => topic.TopicArn));
-      } else resolve(null);
+      } else resolve(data.Topics);
     });
   });
 }
