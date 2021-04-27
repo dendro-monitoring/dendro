@@ -3,27 +3,20 @@ package main
 import "github.com/aws/aws-sdk-go/service/timestreamwrite"
 
 func buildNginxAccessLogRecord(pRecord *RawRecord) {
-	record := *pRecord
-
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
 	statusCode := "null" // TODO
 
 	dimensions = appendDimension(pRecord, dimensions, "host")
 
-	if keyExists(record, "parsed") {
-		parsed := record["parsed"].(map[string]interface{})
+	dimensions = appendDimension(pRecord, dimensions, "agent")
+	dimensions = appendDimension(pRecord, dimensions, "ip")
+	dimensions = appendDimension(pRecord, dimensions, "method")
+	dimensions = appendDimension(pRecord, dimensions, "path")
+	dimensions = appendDimension(pRecord, dimensions, "referer")
+	dimensions = appendDimension(pRecord, dimensions, "bytes_out")
 
-		dimensions = appendDimension(&parsed, dimensions, "agent")
-		dimensions = appendDimension(&parsed, dimensions, "client")
-		dimensions = appendDimension(&parsed, dimensions, "method")
-		dimensions = appendDimension(&parsed, dimensions, "path")
-		dimensions = appendDimension(&parsed, dimensions, "referer")
-		dimensions = appendDimension(&parsed, dimensions, "size")
-		dimensions = appendDimension(&parsed, dimensions, "request_time")
-
-		statusCode = fetch(pRecord, "status")
-	}
+	statusCode = fetch(pRecord, "status")
 
 	timestamp = fetch(pRecord, "timestamp")
 
