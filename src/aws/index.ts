@@ -21,6 +21,7 @@ import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
 import listDeliveryStreams from './firehose/listDeliveryStreams';
+import describeDeliveryStream from './firehose/describeDeliveryStream';
 import deleteDeliveryStream from './firehose/deleteDeliveryStream';
 
 import createRole from './iam/createRole';
@@ -62,6 +63,7 @@ export default {
 
   createDeliveryStream,
   listDeliveryStreams,
+  describeDeliveryStream,
   deleteDeliveryStream,
 
   createRole,

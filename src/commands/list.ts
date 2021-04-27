@@ -67,7 +67,7 @@ Timestream
     await logBuckets(Buckets, callback);
 
     spinner = log.spin('Listing Firehose stream...\n');
-    const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
+    const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
     await logDeliveryStreams(DeliveryStreamNames, callback);
 
     spinner = log.spin('Listing Lambda function...\n');

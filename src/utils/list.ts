@@ -39,17 +39,15 @@ export async function logBuckets(buckets: { Name: string}[], callback: (msg: str
   console.log('\n');
 }
 
-export async function logDeliveryStreams(streams: string[], callback: (msg: string) => void): Promise<void> {
+export async function logDeliveryStreams(stream: { DeliveryStreamDescription: { DeliveryStreamName: string, DeliveryStreamStatus: string }}, callback: (msg: string) => void): Promise<void> {
   callback(chalk.bold('Firehose Stream:'));
 
-  if (streams.length === 0) {
+  if (stream === null) {
     log.info('No stream found!');
     return;
   }
 
-  for await (const stream of streams) {
-    cli.url(`- ${stream}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream}`);
-  }
+  cli.url(`- ${stream.DeliveryStreamDescription.DeliveryStreamName} - Status: ${stream.DeliveryStreamDescription.DeliveryStreamStatus}`, `https://console.aws.amazon.com/firehose/home?region=us-east-1#/details/${stream.DeliveryStreamDescription.DeliveryStreamName}`);
   console.log('\n');
 }
 
