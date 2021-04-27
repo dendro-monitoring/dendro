@@ -20,7 +20,6 @@ import listDatabases from './timestream/listDatabases';
 import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
-import listDeliveryStreams from './firehose/listDeliveryStreams';
 import describeDeliveryStream from './firehose/describeDeliveryStream';
 import deleteDeliveryStream from './firehose/deleteDeliveryStream';
 
@@ -62,7 +61,6 @@ export default {
   listTables,
 
   createDeliveryStream,
-  listDeliveryStreams,
   describeDeliveryStream,
   deleteDeliveryStream,
 
