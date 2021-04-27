@@ -7,7 +7,7 @@ const { Confirm } = require('enquirer');
 import {
   logRoles,
   logBuckets,
-  logDeliveryStreams,
+  logDeliveryStream,
   logLambdas,
   logTimestream,
   logTimestreamTables
@@ -52,7 +52,7 @@ export default class Teardown extends Command {
       await logBuckets(Buckets, callback);
 
       const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
-      await logDeliveryStreams(DeliveryStreamNames, callback);
+      await logDeliveryStream(DeliveryStreamNames, callback);
 
       const Functions = await AWSWrapper.listFunctions();
       await logLambdas(Functions, callback);

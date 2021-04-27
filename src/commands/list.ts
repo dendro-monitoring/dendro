@@ -8,7 +8,7 @@ import { ensureCredentials } from '../utils/aws';
 import {
   logRoles,
   logBuckets,
-  logDeliveryStreams,
+  logDeliveryStream,
   logLambdas,
   logTimestream,
   logTimestreamTables
@@ -68,7 +68,7 @@ Timestream
 
     spinner = log.spin('Listing Firehose stream...\n');
     const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
-    await logDeliveryStreams(DeliveryStreamNames, callback);
+    await logDeliveryStream(DeliveryStreamNames, callback);
 
     spinner = log.spin('Listing Lambda function...\n');
     const Functions = await AWSWrapper.listFunctions();

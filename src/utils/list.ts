@@ -39,7 +39,7 @@ export async function logBuckets(buckets: { Name: string}[], callback: (msg: str
   console.log('\n');
 }
 
-export async function logDeliveryStreams(stream: { DeliveryStreamDescription: { DeliveryStreamName: string, DeliveryStreamStatus: string }}, callback: (msg: string) => void): Promise<void> {
+export async function logDeliveryStream(stream: { DeliveryStreamDescription: { DeliveryStreamName: string, DeliveryStreamStatus: string }}, callback: (msg: string) => void): Promise<void> {
   callback(chalk.bold('Firehose Stream:'));
 
   if (stream === null) {
