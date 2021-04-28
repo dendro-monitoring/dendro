@@ -9,7 +9,8 @@ import HostMetricsCharts from './HostMetrics/Charts';
 import MongoLogsCharts from './MongoLogs/Charts';
 import MongoMetricsCharts from './MongoMetrics/Charts';
 
-import NginxLogsCharts from './NginxLogs/Charts';
+import NginxAccessLogsCharts from './NginxAccessLogs/Charts';
+import NginxErrorLogsCharts from './NginxErrorLogs/Charts';
 import NginxMetricsCharts from './NginxMetrics/Charts';
 
 import PostgresLogsCharts from './PostgresLogs/Charts';
