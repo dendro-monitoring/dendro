@@ -1,20 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Service from './Service';
 
-import { MonitoredService } from '../../constants/frontendTypes';
-
-interface Props {
-  services: MonitoredService[]
-}
-
-const Sidebar = ({ services }: Props) => {
+const Sidebar = () => {
   const router = useRouter();
 
   const active =
-    "group flex items-center px-2 py-2 text-base font-medium rounded-md text-white bg-gray-900";
+    'group flex items-center px-2 py-2 text-base font-medium rounded-md text-white bg-gray-900';
   const inactive =
-    "group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700";
+    'group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-700';
 
   return (
     <div className="flex flex-shrink-0 h-full">
@@ -27,7 +20,7 @@ const Sidebar = ({ services }: Props) => {
             <nav className="mt-5 flex-1 px-2 bg-gray-800 space-y-1">
               <Link href="/">
 
-                <a className={router.pathname === "/" ? active : inactive}>
+                <a className={router.pathname === '/' ? active : inactive}>
                   <svg
                     className="mr-3 h-6 w-6 text-gray-300"
                     xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +42,7 @@ const Sidebar = ({ services }: Props) => {
               </Link>
 
               <Link href="/query">
-                <a className={router.pathname === "/query" ? active : inactive}>
+                <a className={router.pathname === '/query' ? active : inactive}>
                   <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
@@ -57,12 +50,21 @@ const Sidebar = ({ services }: Props) => {
                 </a>
               </Link>
 
-              {services.map((service) => <Service
+              <Link href="/metrics">
+                <a className={router.pathname === '/metrics' ? active : inactive}>
+                  <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Metrics
+                </a>
+              </Link>
+
+              {/* {services.map((service) => <Service
                 service={service}
                 key={service.name}
                 active={active}
                 inactive={inactive}
-              />)}
+              />)} */}
             </nav>
           </div>
         </div>
