@@ -36,8 +36,7 @@ export interface ChartDataPoint {
   y: any;
 }
 
-export interface ChartData {
-  labelText: string;
-  dataPoints: ChartDataPoint[];
-  stroke?: string;
+export interface ChartScale {
+  x: string;
+  y: string;
 }

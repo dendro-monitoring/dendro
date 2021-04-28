@@ -1,12 +1,12 @@
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel } from 'victory';
-import { ChartData } from '../../constants/frontendTypes';
+// import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel } from 'victory';
+// import { ChartData } from '../../constants/frontendTypes';
 
 interface Props {
   name: string;
-  charts: ChartData[]
+  children: JSX.Element[]
 }
 
-export default function ChartCard({ name: camelCaseName, charts }: Props) {
+export default function ChartCard({ name: camelCaseName, children }: Props) {
 
   /**
    * Convert `apacheAccessLogs` to `Apache Access Logs`
@@ -19,28 +19,17 @@ export default function ChartCard({ name: camelCaseName, charts }: Props) {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">{name}</h1>
-
       <div className="bg-gray-50 shadow rounded mt-2">
-        <div className="max-w-7xl mx-auto lg:flex lg:items-center lg:justify-center">
-          {charts.map(({ labelText, dataPoints, stroke }) => (
-            <VictoryChart
-              style={{ parent: { maxWidth: '50%', /* height: '300px' */ } }}
-              theme={VictoryTheme.material}
-              key="hi"
-            >
-              <VictoryLabel text={labelText} x={180} y={30} textAnchor="middle"/>
-              <VictoryLine
-                style={{
-                  data: { stroke: stroke || '#EF4444' },
-                  parent: { border: '1px solid #9CA3AF' }
-                }}
-                data={dataPoints}
-              />
-            </VictoryChart>
-          ))}
-        </div>
+        {children.map((child, idx) => (
+          <div
+            className="max-w-7xl mx-auto lg:flex lg:items-center lg:justify-center"
+            key={idx}
+          >
+            {child}
+          </div>
+        ))}
       </div>
+
     </>
   );
 }

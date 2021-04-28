@@ -18,10 +18,19 @@ import PostgresMetricsCharts from './PostgresMetrics/Charts';
 import Error from './Error';
 
 interface Props {
-  name: string | string[]
+  name: string
 }
 
-export default function ChartSwitcher({ name }: Props) {
+export default function ChartSwitcher({ name: camelCaseName }: Props) {
+  /**
+   * Convert `apacheAccessLogs` to `Apache Access Logs`
+   */
+  const name = camelCaseName
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(' ')
+    .map((i) => i[0].toUpperCase() + i.slice(1))
+    .join(' ');
+
   switch (name) {
     case 'apache-logs':
       return <ApacheLogsCharts />;
