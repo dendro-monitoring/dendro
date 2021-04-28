@@ -1,13 +1,13 @@
-export type VectorService = "apache-metrics"
-| "apache-logs"
-| "custom-application"
-| "host-metrics"
-| "mongo-metrics"
-| "mongo-logs"
-| "nginx-metrics"
-| "nginx-logs"
-| "postgres-metrics"
-| "postgres-logs";
+export type VectorService = 'apache-metrics'
+| 'apache-logs'
+| 'custom-application'
+| 'host-metrics'
+| 'mongo-metrics'
+| 'mongo-logs'
+| 'nginx-metrics'
+| 'nginx-logs'
+| 'postgres-metrics'
+| 'postgres-logs';
 
 export interface MonitoredService {
   name: VectorService
@@ -29,4 +29,14 @@ export interface CloudWatchLog {
   TIME: string;
   ingestionTime: string;
   message: string;
+}
+
+export interface ChartDataPoint {
+  x: any;
+  y: any;
+}
+
+export interface ChartData {
+  labelText: string;
+  datapoints: ChartDataPoint[]
 }
