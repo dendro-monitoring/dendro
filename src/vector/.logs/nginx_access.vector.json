@@ -19,3 +19,21 @@
   "timestamp": "2021-04-23T16:22:28.459348518Z",
   "type": "custom-application"
 }
+{
+  "agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36",
+  "bytes_out": "504",
+  "file": "/home/andrew/workspace/js/dendro-cli/src/vector/.logs/nginx_access.log",
+  "host": "andrew-xps159560",
+  "http_version": "1.1",
+  "ip": "0.0.0.0",
+  "method": "GET",
+  "path": "/my-path/manifest.json",
+  "referer": "https://my-url.com/my-path",
+  "request_time": "0.002",
+  "scheme": "HTTP",
+  "source_type": "file",
+  "status": "200",
+  "time": "23/Apr/2021:14:59:24 +0000",
+  "timestamp": "2021-04-27T15:37:43.963127333Z",
+  "user": "-"
+}
