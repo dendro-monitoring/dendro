@@ -18,40 +18,40 @@ export default function Chart() {
       const { data: fetchedData } = await res.json();
       setUptimeData(remap(fetchedData));
     })();
-
-    // SECOND QUERY
-    // (async () => {
-    //   const res = await fetch(
-    //     '/api/query',
-    //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
-    //   );
-
-    //   const { data: fetchedData } = await res.json();
-    //   setData(fetchedData);
-    // })();
-
-    // THIRD QUERY
-    // (async () => {
-    //   const res = await fetch(
-    //     '/api/query',
-    //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
-    //   );
-
-    //   const { data: fetchedData } = await res.json();
-    //   setData(fetchedData);
-    // })();
-
-    // FOURTH QUERY
-    // (async () => {
-    //   const res = await fetch(
-    //     '/api/query',
-    //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
-    //   );
-
-    //   const { data: fetchedData } = await res.json();
-    //   setData(fetchedData);
-    // })();
   }, []);
+
+  // SECOND QUERY
+  // (async () => {
+  //   const res = await fetch(
+  //     '/api/query',
+  //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
+  //   );
+
+  //   const { data: fetchedData } = await res.json();
+  //   setData(fetchedData);
+  // })();
+
+  // THIRD QUERY
+  // (async () => {
+  //   const res = await fetch(
+  //     '/api/query',
+  //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
+  //   );
+
+  //   const { data: fetchedData } = await res.json();
+  //   setData(fetchedData);
+  // })();
+
+  // FOURTH QUERY
+  // (async () => {
+  //   const res = await fetch(
+  //     '/api/query',
+  //     { method: 'POST', body: JSON.stringify({ query: 'SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10' }) }
+  //   );
+
+  //   const { data: fetchedData } = await res.json();
+  //   setData(fetchedData);
+  // })();
 
   return <h1>{ JSON.stringify(uptimeData) }</h1>;
 }

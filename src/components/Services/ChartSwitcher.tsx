@@ -8,7 +8,8 @@ import HostMetricsCharts from './HostMetrics/Charts';
 import MongoLogsCharts from './MongoLogs/Charts';
 import MongoMetricsCharts from './MongoMetrics/Charts';
 
-import NginxLogsCharts from './NginxLogs/Charts';
+import NginxAccessLogsCharts from './NginxAccessLogs/Charts';
+import NginxErrorLogsCharts from './NginxErrorLogs/Charts';
 import NginxMetricsCharts from './NginxMetrics/Charts';
 
 import PostgresLogsCharts from './PostgresLogs/Charts';
@@ -22,25 +23,27 @@ interface Props {
 
 export default function ChartSwitcher({ slug }: Props) {
   switch (slug) {
-    case "apache-logs":
+    case 'apacheLogs':
       return <ApacheLogsCharts />;
-    case "apache-metrics":
+    case 'apacheMetrics':
       return <ApacheMetricsCharts />;
-    case "custom-application":
+    case 'customApplication':
       return <CustomApplicationCharts />;
-    case "host-metrics":
+    case 'hostMetrics':
       return <HostMetricsCharts />;
-    case "mongo-logs":
+    case 'mongoLogs':
       return <MongoLogsCharts />;
-    case "mongo-metrics":
+    case 'mongoMetrics':
       return <MongoMetricsCharts />;
-    case "nginx-logs":
-      return <NginxLogsCharts />;
-    case "nginx-metrics":
+    case 'nginxAccessLogs':
+      return <NginxAccessLogsCharts />;
+    case 'nginxErrorLogs':
+      return <NginxErrorLogsCharts />;
+    case 'nginxMetrics':
       return <NginxMetricsCharts />;
-    case "postgres-logs":
+    case 'postgresLogs':
       return <PostgresLogsCharts />;
-    case "postgres-metrics":
+    case 'postgresLogs':
       return <PostgresMetricsCharts />;
     default:
       return <Error />;
