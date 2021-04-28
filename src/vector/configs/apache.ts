@@ -3,34 +3,80 @@ import log from '../../utils/log';
 import {
   AWS_REGION,
   AWS_FIREHOSE_STREAM_NAME,
-  VECTOR_APACHE_LOGS_TYPE,
+  VECTOR_APACHE_ACCESS_LOGS_TYPE,
+  VECTOR_APACHE_ERROR_LOGS_TYPE,
   VECTOR_APACHE_METRICS_TYPE
 } from '../../constants';
 
-const logConfig = (): string => {
-  log.debug('Writing Apache vector log config');
+const accessLogConfig = (): string => {
+  log.debug('Writing Apache vector access log config');
   return `
-################ Apache Logs #############################
+################ Apache Access Logs #############################
 
-[sources.apache_logs]
+[sources.apache_access_logs]
   type = "file"
-  include = [
-    ${store.Vector.Apache.monitorAccessLogs ? '"/var/log/apache2/access.log",' : null}
-    ${store.Vector.Apache.monitorErrorLogs ? '"/var/log/apache2/error.log"' : null}
-  ]
+  include = ["/var/log/apache2/access_log",]
   read_from = "beginning"
 
-[transforms.apache_logs_transform]
+[transforms.apache_access_logs_transform]
   type = "remap"
-  inputs = ["apache_logs"]
+  inputs = ["apache_access_logs"]
   source = '''
-  .type = "${VECTOR_APACHE_LOGS_TYPE}"
+  .type = "${VECTOR_APACHE_ACCESS_LOGS_TYPE}"
+  .parsed = parse_apache_log!(.message, format: "common")
+  del(.message)
+  .parsed.status = to_string(.parsed.status)
+  .parsed.size = to_string(.parsed.size)
   '''
 
-[sinks.apache_logs_firehose_stream_sink]
+[sinks.apache_access_logs_firehose_stream_sink]
   # General
   type = "aws_kinesis_firehose"
-  inputs = ["apache_logs_transform"]
+  inputs = ["apache_access_logs_transform"]
+
+  # AWS
+  region = "${AWS_REGION}"
+  stream_name = "${AWS_FIREHOSE_STREAM_NAME}"
+
+  ## Auth
+  auth.access_key_id = "${store.AWS.Credentials.accessKeyId}"
+  auth.secret_access_key = "${store.AWS.Credentials.secretAccessKey}"
+
+  # Encoding
+  encoding.codec = "json"
+
+#############################################
+`;
+};
+
+const errorLogConfig = (): string => {
+  log.debug('Writing Apache vector log config');
+  return `
+################ Apache Error Logs #############################
+
+[sources.apache_error_logs]
+  type = "file"
+  include = ["/var/log/apache2/error_log"]
+  read_from = "beginning"
+
+[transforms.apache_error_regex_transform]
+  # General
+  type = "regex_parser"
+  inputs = ["apache_error_logs"]
+  patterns = ['^((?P<apache_timestamp>\\[\\w+ \\w+ \\d+ \\d+:\\d+:\\d+.\\d+ \\d+\\]) )?(\\[(?P<source_file>\\w+):(?P<level>\\w+)\\] \\[pid (?P<pid>\\d+):tid (?P<tid>\\d+)\\] )?(?P<message>[a-zA-Z0-9-_ \\W]*)']
+
+# TODO: Only works with access_log
+[transforms.apache_error_logs_transform]
+  type = "remap"
+  inputs = ["apache_error_regex_transform"]
+  source = '''
+  .type = "${VECTOR_APACHE_ERROR_LOGS_TYPE}"
+  '''
+
+[sinks.apache_error_logs_firehose_stream_sink]
+  # General
+  type = "aws_kinesis_firehose"
+  inputs = ["apache_error_logs_transform"]
 
   # AWS
   region = "${AWS_REGION}"
@@ -71,7 +117,7 @@ const metricConfig = (): string => {
   type = "remap"
   inputs = ["apache_metrics_to_logs"]
   source = '''
-  .type = ${VECTOR_APACHE_METRICS_TYPE}"
+  .type = "${VECTOR_APACHE_METRICS_TYPE}"
   '''
 
 [sinks.apache_metrics_firehose_stream_sink]
@@ -101,11 +147,12 @@ export const buildApacheConfig = (): string => {
     config += metricConfig();
   }
 
-  if (
-    store.Vector.Apache.monitorAccessLogs ||
-    store.Vector.Apache.monitorErrorLogs
-  ) {
-    config += logConfig();
+  if (store.Vector.Apache.monitorAccessLogs) {
+    config += accessLogConfig();
+  }
+
+  if (store.Vector.Apache.monitorErrorLogs) {
+    config += errorLogConfig();
   }
 
   return config;

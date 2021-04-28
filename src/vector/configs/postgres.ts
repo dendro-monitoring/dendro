@@ -21,7 +21,7 @@ const logConfig = (): string => {
   # General
   type = "regex_parser"
   inputs = ["postgres_logs"]
-  patterns = ['^(?P<pg_timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3} \\w+) (?P<code>\\[\\d+\\]) (?P<username>\\w+)@(?P<database>\\w+) (?P<level>\\w+):[ \\t]+(?P<message>[a-zA-Z0-9-_ \\W]*)']
+  patterns = ['^(?P<pg_timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3} \\w+) (?P<code>\\[\\d+\\]) ((?P<username>\\w+)@(?P<database>\\w+) )?(?P<level>\\w+):[ \\t]+(?P<message>[a-zA-Z0-9-_ \\W]*)']
 
 [transforms.postgres_logs_transform]
   type = "remap"
@@ -66,7 +66,7 @@ const metricConfig = (): string => {
 
 [sources.postgres_metrics]
   type = "postgresql_metrics"
-  endpoints = ["postgresql://${username}:${password}@${url}:${port}/${databaseName}"]
+  endpoints = ["postgresql://${username}:${password ? password : 'postgres'}@${url}:${port}/${databaseName}"]
   scrape_interval_secs = ${scrapeIntervalSeconds}
 
 [transforms.postgres_metrics_to_logs]

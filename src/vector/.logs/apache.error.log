@@ -1,0 +1,15 @@
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+[Mon Apr 26 06:47:01.489761 2021] [mpm_event:notice] [pid 139364:tid 140590644567360] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Mon Apr 26 06:47:01.489924 2021] [core:notice] [pid 139364:tid 140590644567360] AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'
+[Mon Apr 26 06:47:22.499940 2021] [authz_core:error] [pid 139368:tid 140590630037056] [client 127.0.0.1:48940] AH01630: client denied by server configuration: /srv/http/server-status
+[Mon Apr 26 06:47:56.344928 2021] [mpm_event:notice] [pid 139364:tid 140590644567360] AH00492: caught SIGWINCH, shutting down gracefully
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+[Mon Apr 26 06:47:56.431795 2021] [mpm_event:notice] [pid 139483:tid 140102840216896] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Mon Apr 26 06:47:56.431846 2021] [core:notice] [pid 139483:tid 140102840216896] AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'
+[Mon Apr 26 06:47:59.513329 2021] [authz_core:error] [pid 139487:tid 140102825686592] [client 127.0.0.1:48946] AH01630: client denied by server configuration: /srv/http/server-status
+[Mon Apr 26 06:48:00.545258 2021] [authz_core:error] [pid 139487:tid 140102783723072] [client 127.0.0.1:48946] AH01630: client denied by server configuration: /srv/http/server-status
+[Mon Apr 26 06:48:14.012174 2021] [authz_core:error] [pid 139487:tid 140101824800320] [client 127.0.0.1:48950] AH01630: client denied by server configuration: /srv/http/server-status
+[Mon Apr 26 06:49:04.831916 2021] [mpm_event:notice] [pid 139483:tid 140102840216896] AH00492: caught SIGWINCH, shutting down gracefully
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+[Mon Apr 26 06:49:04.885010 2021] [mpm_event:notice] [pid 139609:tid 139806627863872] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Mon Apr 26 06:49:04.885084 2021] [core:notice] [pid 139609:tid 139806627863872] AH00094: Command line: '/usr/bin/httpd -D FOREGROUND'
