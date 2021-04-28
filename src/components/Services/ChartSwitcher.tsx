@@ -31,7 +31,7 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
     .map((i) => i[0].toUpperCase() + i.slice(1))
     .join(' ');
 
-  switch (name) {
+  switch (camelCaseName) {
     case 'apache-logs':
       return <ApacheLogsCharts />;
     case 'apacheAccessLogs':
