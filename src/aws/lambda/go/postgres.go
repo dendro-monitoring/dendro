@@ -6,6 +6,20 @@ import (
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
+func postgresLogErrors(pRecord *RawRecord) {
+	severity := fetch(pRecord, "level")
+	name := fetch(pRecord, "name")
+	measureValue := fetchMV(pRecord)
+
+	if severity == "FATAL" {
+		fmt.Println("[POSTGRES] Error: Fatal postgres error")
+	}
+
+	if name == "up" && measureValue == "0.0" {
+		fmt.Println("[POSTGRES] Error: Postgres server is down")
+	}
+}
+
 func buildPostgresLogRecord(pRecord *RawRecord) {
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
@@ -37,21 +51,6 @@ func buildPostgresLogRecord(pRecord *RawRecord) {
 		Time:             &unixTime,
 		TimeUnit:         &timeUnit,
 	})
-}
-
-func postgresLogErrors(pRecord *RawRecord) {
-	severity := fetch(pRecord, "level")
-	name := fetch(pRecord, "name")
-	measureValue := fetchMV(pRecord)
-
-	if severity == "FATAL" {
-		fmt.Println("[POSTGRES] Error: Fatal postgres error")
-	}
-
-	if name == "up" && measureValue == "0.0" {
-		fmt.Println("[POSTGRES] Error: Postgres server is down")
-	}
-
 }
 
 func buildPostgresMetricRecord(pRecord *RawRecord) {

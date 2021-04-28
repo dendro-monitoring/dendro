@@ -6,6 +6,25 @@ import (
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
+func nginxLogErrors(pRecord *RawRecord) {
+	statusCode := fetch(pRecord, "status")
+	severity := fetch(pRecord, "severity")
+	name := fetch(pRecord, "name")
+	measureValue := fetchMV(pRecord)
+
+	if statusCode == "500" {
+		fmt.Println("[NGINX] Error: Status code 500")
+	}
+
+	if severity == "emerg" {
+		fmt.Println("[NGINX] Error: Fatal nginx error")
+	}
+
+	if name == "up" && measureValue == "0.0" {
+		fmt.Println("[NGINX] Error: Nginx web server is down")
+	}
+}
+
 func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	var dimensions []*timestreamwrite.Dimension
 	var timestamp string
@@ -42,27 +61,6 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 		Time:             &unixTime,
 		TimeUnit:         &timeUnit,
 	})
-}
-
-func nginxLogErrors(pRecord *RawRecord) {
-	// record := *pRecord
-	statusCode := fetch(pRecord, "status")
-	severity := fetch(pRecord, "severity")
-	name := fetch(pRecord, "name")
-	measureValue := fetchMV(pRecord)
-
-	if statusCode == "500" {
-		fmt.Println("[NGINX] Error: Status code 500")
-	}
-
-	if severity == "emerg" {
-		fmt.Println("[NGINX] Error: Fatal nginx error")
-	}
-
-	if name == "up" && measureValue == "0.0" {
-		fmt.Println("[NGINX] Error: Nginx web server is down")
-	}
-
 }
 
 func buildNginxErrorLogRecord(pRecord *RawRecord) {
