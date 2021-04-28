@@ -18,7 +18,178 @@ export default function Home({ services }: Props) {
     lastIngestionTime: 1619559593345,
     uploadSequenceToken: '49609674868583835627285480401395376777896376309679495170',
     arn: 'arn:aws:logs:us-east-1:141351053848:log-group:/aws/lambda/_deployableLambdaFunction:log-stream:2021/04/27/[$LATEST]fabf572782014d7093c92acdf639435a',
-    storedBytes: 0
+    storedBytes: 0,
+    events: [ {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 86\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 87\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 88\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 89\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 90\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 86\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 87\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 88\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 89\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 90\n',
+      'ingestionTime': 1619559477143
+    },
+    ]
   },
   {
     logStreamName: '2021/04/27/[$LATEST]99f4cac93c4d40d795bf52a6fc91105a',
@@ -28,7 +199,92 @@ export default function Home({ services }: Props) {
     lastIngestionTime: 1619559503849,
     uploadSequenceToken: '49612743790005277477902513225953506941073727052862736322',
     arn: 'arn:aws:logs:us-east-1:141351053848:log-group:/aws/lambda/_deployableLambdaFunction:log-stream:2021/04/27/[$LATEST]99f4cac93c4d40d795bf52a6fc91105a',
-    storedBytes: 0
+    storedBytes: 0,
+    events: [ {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 86\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 87\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 88\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 89\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '},\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': '{\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'Reason: "A record already exists with the same time, dimensions, measure name, and record version. A higher record version must be specified in order to update the measure value. Specifying record version is supported by the latest SDKs.",\n',
+      'ingestionTime': 1619559477143
+    },
+    {
+      'timestamp': 1619559476944,
+      'message': 'RecordIndex: 90\n',
+      'ingestionTime': 1619559477143
+    },]
   }] });
   useEffect(() => {
     (async () => {
