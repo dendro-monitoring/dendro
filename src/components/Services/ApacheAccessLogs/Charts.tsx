@@ -13,7 +13,11 @@ export default function Chart({ name }: { name: string }) {
     ]
   };
 
-  const chartData: ChartData[] = [chart1, chart1];
+  const chartData: ChartData[] = [
+    { ...chart1, stroke: '#8B5CF6' },
+    { ...chart1, stroke: '#EC4899' },
+    chart1
+  ];
 
   return <ChartCard name={name} charts={chartData}/>;
 }

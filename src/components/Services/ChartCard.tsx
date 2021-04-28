@@ -23,17 +23,17 @@ export default function ChartCard({ name: camelCaseName, charts }: Props) {
 
       <div className="bg-gray-50 shadow rounded mt-2">
         <div className="max-w-7xl mx-auto lg:flex lg:items-center lg:justify-center">
-          {charts.map(({ labelText, dataPoints }) => (
+          {charts.map(({ labelText, dataPoints, stroke }) => (
             <VictoryChart
-              style={{ parent: { maxWidth: '50%', height: '300px' } }}
+              style={{ parent: { maxWidth: '50%', /* height: '300px' */ } }}
               theme={VictoryTheme.material}
               key="hi"
             >
               <VictoryLabel text={labelText} x={180} y={30} textAnchor="middle"/>
               <VictoryLine
                 style={{
-                  data: { stroke: '#c43a31' },
-                  parent: { border: '1px solid #ccc' }
+                  data: { stroke: stroke || '#EF4444' },
+                  parent: { border: '1px solid #9CA3AF' }
                 }}
                 data={dataPoints}
               />
