@@ -1,6 +1,8 @@
 package main
 
-import "github.com/aws/aws-sdk-go/service/timestreamwrite"
+import (
+	"github.com/aws/aws-sdk-go/service/timestreamwrite"
+)
 
 func buildHostMetricRecord(pRecord *RawRecord) {
 	record := *pRecord

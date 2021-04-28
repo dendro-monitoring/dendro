@@ -1,6 +1,29 @@
 package main
 
-import "github.com/aws/aws-sdk-go/service/timestreamwrite"
+import (
+	"fmt"
+
+	"github.com/aws/aws-sdk-go/service/timestreamwrite"
+)
+
+func nginxLogErrors(pRecord *RawRecord) {
+	statusCode := fetch(pRecord, "status")
+	severity := fetch(pRecord, "severity")
+	name := fetch(pRecord, "name")
+	measureValue := fetchMV(pRecord)
+
+	if statusCode == "500" {
+		fmt.Println("[NGINX] Error: Status code 500")
+	}
+
+	if severity == "emerg" {
+		fmt.Println("[NGINX] Error: Fatal nginx error")
+	}
+
+	if name == "up" && measureValue == "0.0" {
+		fmt.Println("[NGINX] Error: Nginx web server is down")
+	}
+}
 
 func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	var dimensions []*timestreamwrite.Dimension
@@ -27,6 +50,8 @@ func buildNginxAccessLogRecord(pRecord *RawRecord) {
 	measureName := "statusCode"
 	measureValueType := "VARCHAR"
 	measureValue := statusCode
+
+	nginxLogErrors(pRecord)
 
 	nginxAccessLogRecords = append(nginxAccessLogRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
@@ -59,6 +84,8 @@ func buildNginxErrorLogRecord(pRecord *RawRecord) {
 	measureValueType := "VARCHAR"
 	measureValue := severity
 
+	nginxLogErrors(pRecord)
+
 	nginxErrorLogRecords = append(nginxErrorLogRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
 		MeasureName:      &measureName,
@@ -85,6 +112,8 @@ func buildNginxMetricRecord(pRecord *RawRecord) {
 	measureName := name
 	measureValue := fetchMeasureValue(pRecord)
 	measureValueType := "DOUBLE"
+
+	nginxLogErrors(pRecord)
 
 	nginxMetricRecords = append(nginxMetricRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
