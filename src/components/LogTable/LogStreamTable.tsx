@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Row from './Row';
 import Footer from '../QueryTable/Footer';
 
-export default function LogStreamTable({ logStream }) {
+export default function LogStreamTable(props: any) {
+  const { logStream } = props;
   const [page, setPage] = useState(1);
 
   const start = logStream.events.length > 0 ? 10 * (page - 1) + 1 : 0;
@@ -32,7 +33,7 @@ export default function LogStreamTable({ logStream }) {
               </thead>
 
               <tbody className="bg-white divide-y divide-gray-200">
-                {logStream.events.slice(start - 1, end).map((log) => <Row log={log} key={log.TIME} />)}
+                {logStream.events.slice(start - 1, end).map((log: any) => <Row log={log} key={log.TIME} />)}
               </tbody>
 
             </table>
