@@ -13,7 +13,8 @@ export default function Chart() {
     (async () => {
       const res = await fetch(
         '/api/query',
-        { method: 'POST',
+        {
+          method: 'POST',
           body: JSON.stringify({
             query: 'SELECT BIN(time, 1s) AS x, COUNT(*) AS y \
                    FROM DendroTimestreamDB.nginxAccessLogs \
@@ -44,6 +45,7 @@ export default function Chart() {
           parent: { border: '1px solid #ccc' }
         }}
         data={rpsData.map(record => record.x = new Date(record.x))}
+        // domain={} // get filtered min and max dates here
       />
       <VictoryAxis
         tickValues={rpsData.map(d => new Date(d.x))}
