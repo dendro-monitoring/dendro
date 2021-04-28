@@ -51,10 +51,10 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
       return <NginxLogsCharts />;
     case 'nginx-metrics':
       return <NginxMetricsCharts />;
-    case 'postgres-logs':
+    case 'postgresLogs':
       return <PostgresLogsCharts />;
-    case 'postgres-metrics':
-      return <PostgresMetricsCharts />;
+    case 'postgresMetrics':
+      return <PostgresMetricsCharts name={name} />;
     default:
       return <Error />;
   }
