@@ -49,7 +49,7 @@ func nginxLogErrors(pRecord *RawRecord) {
 	statusCode := fetch(pRecord, "status")
 	severity := fetch(pRecord, "severity")
 	name := fetch(pRecord, "name")
-	measureValue := fetchMeasureValue(pRecord)
+	measureValue := fetchMV(pRecord)
 
 	if statusCode == "500" {
 		fmt.Println("[NGINX] Error: Status code 500")

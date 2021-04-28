@@ -50,7 +50,7 @@ func apacheLogErrors(pRecord *RawRecord) {
 	// record := *pRecord
 	severity := fetch(pRecord, "level")
 	name := fetch(pRecord, "name")
-	measureValue := fetchMeasureValue(pRecord)
+	measureValue := fetchMV(pRecord)
 
 	if keyExists(*pRecord, "parsed") {
 		parsed := (*pRecord)["parsed"].(map[string]interface{})
