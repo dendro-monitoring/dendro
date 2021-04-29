@@ -31,7 +31,8 @@ export default function Chart() {
     const until = new Date(Date.now()).toISOString(); // today
     const from = new Date(d.setDate(d.getDate() - 7)).toISOString(); // a week ago
 
-    const interval = 15 * 60;
+    const interval = 15 * 60; // minutes * seconds
+    // const interval = 1; // minutes * seconds
     const keyName = 'y';
     const series = new Series({ from, until, interval, keyName });
 
@@ -57,20 +58,24 @@ export default function Chart() {
   return <>
     <VictoryChart
       style={{ parent:{ maxWidth: '50%', } }}
-      theme={VictoryTheme.material}
+      // theme={VictoryTheme.material}
       scale={{ x: 'time', y: 'linear' }}
-      domain={{ y: [0, 800] }}
+      domain={{ y: [0, 600] }}
     >
       <VictoryLabel text="Requests per Second (past 7 days)" x={185} y={30} textAnchor="middle"/>
       <VictoryLine
         style={{
-          data: { stroke: '#c43a31' },
+          data: { stroke: '#8dd9d4' },
           parent: { border: '1px solid #ccc' }
         }}
         data={rpsData}
       />
       <VictoryAxis
         tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
+        style={{
+          axisLabel: { fontSize: 20, padding: 30, stroke: '#161b64' },
+          tickLabels: { fontSize: 15, padding: 5 }
+        }}
       />
       <VictoryAxis dependentAxis />
     </VictoryChart>
