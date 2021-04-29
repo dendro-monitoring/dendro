@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Sidebar from '../components/sidebar';
 import List from '../components/QueryTable/Table';
 import fileDownload from 'js-file-download';
+import formatTSQueryResult from '../components/Services/formatTSQueryResult';
 
 export default function Query() {
-  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.postgres-metrics LIMIT 10');
+  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.nginxAccessLogs LIMIT 10');
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
   const [rawData, setRawData] = useState('');
@@ -14,18 +15,21 @@ export default function Query() {
     console.log(query);
 
     const res = await fetch(
-      "/api/query",
+      '/api/query',
       { method: 'POST', body: JSON.stringify({ query }) }
     );
 
     const { data } = await res.json();
     setHeaders(data.ColumnInfo);
     setRows(data.Rows);
-    setRawData(JSON.stringify(data, null, 2));
+    setRawData(data);
   };
 
   const handleExport = async () => {
-    const blob = new Blob([rawData], { type : 'application/json' });
+    const formattedExport = formatTSQueryResult(rawData);
+    // console.log(formattedExport);
+    const exportString = JSON.stringify(formattedExport, null, 2);
+    const blob = new Blob([exportString], { type : 'application/json' });
     fileDownload(blob, 'export.json');
   };
 
@@ -73,7 +77,7 @@ export default function Query() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="pb-4">
+          <div className="pb-4 overflow-scroll">
             <List headers={headers} rows={rows} />
           </div>
         </div>
