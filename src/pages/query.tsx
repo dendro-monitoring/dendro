@@ -77,7 +77,7 @@ export default function Query() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <div className="pb-4">
+          <div className="pb-4 overflow-scroll">
             <List headers={headers} rows={rows} />
           </div>
         </div>
