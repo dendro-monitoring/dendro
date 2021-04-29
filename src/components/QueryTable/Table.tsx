@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Row from "./Row";
-import Footer from "./Footer";
-import Headers from "./Headers";
+import { useState } from 'react';
+import Row from './Row';
+import Footer from './Footer';
+import Headers from './Headers';
 import { QueryData, QueryHeader } from '../../constants/frontendTypes';
 
 interface Props {
@@ -11,6 +11,8 @@ interface Props {
 
 export default function Table({ headers, rows }: Props) {
   const [page, setPage] = useState(1);
+
+  if (!rows) return;
 
   const start = rows.length > 0 ? 10 * (page - 1) + 1 : 0;
   const end = rows.length >= 10 ? page * 10 : rows.length;

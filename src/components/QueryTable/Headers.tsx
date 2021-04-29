@@ -14,9 +14,9 @@ function Header({ text }: { text: string }) {
 export default function Headers({ headers }: { headers: QueryHeader[] }) {
   return (
     <tr>
-      {headers.length > 0
+      {headers?.length > 0
         ? headers.map(({ Name }) => <Header text={Name} key={Name} />)
-        : <Header text={"No Data"} />}
+        : <Header text={'No Data'} />}
     </tr>
   );
 }
