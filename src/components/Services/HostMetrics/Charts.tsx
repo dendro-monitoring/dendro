@@ -13,19 +13,23 @@ limit 500';
 const query2 = 'select host, measure_value::double, time from "DendroTimestreamDB"."hostMetrics" \
 where measure_name = \'load15\' \
 --group by host \
-limit 50';
-
+limit 500';
 export default function Chart() {
-  const [data, setData] = useState([]);
+  const [queryData, setQueryData] = useState([]);
   const name = 'angel';
 
   useEffect(() => {
-    fetch('/api/query', { method: 'POST', body: JSON.stringify({ query }) }).then( res => res.json()).then( ({ data }) => {
-      setData(data?.Rows?.map( ({ Data }) => ({ x: new Date(Data[0].ScalarValue).valueOf() || 0, y: Data[1].ScalarValue || 0 })));
+    fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: query2 }) }).then( res => res.json()).then( ({ data }) => {
+      const results = {};
+      data?.Rows?.forEach( ({ Data }: any) => {
+        if (!results[Data[0].ScalarValue]) results[Data[0].ScalarValue] = [];
+        results[Data[0].ScalarValue].push({ x: new Date(Data[2].ScalarValue).valueOf(), y: Number(Data[1].ScalarValue) || 0 });
+      });
+      setQueryData(Object.keys(results).map( key => results[key]));
     });
   }, []);
 
-  console.log(data);
+  console.log(queryData);
 
   return (
     <>
@@ -36,14 +40,17 @@ export default function Chart() {
           style={{ parent: { maxWidth: '50%', } }}
           theme={VictoryTheme.material}
         >
-          <VictoryLabel text={'Average Query Duration (s)'} x={180} y={30} textAnchor="middle"/>
-          <VictoryLine
-            style={{
-              data: { stroke: '#EF4444' },
-              parent: { border: '1px solid #9CA3AF' }
-            }}
-            data={data}
-          />
+          <VictoryLabel text={'Load15'} x={180} y={30} textAnchor="middle"/>
+          {queryData.map( temp => (
+            <VictoryLine
+              style={{
+                data: { stroke: '#EF4444' },
+                parent: { border: '1px solid #9CA3AF' }
+              }}
+              data={temp}
+              key={temp}
+            />
+          ))}
         </VictoryChart>
         <></>
       </ChartCard>
