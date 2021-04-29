@@ -27,16 +27,16 @@ export default function Chart() {
     //   setRpsData(formattedResult);
     // })();
 
-    const until = new Date(Date.now()).toISOString();
     const d = new Date();
-    const from = new Date(d.setDate(d.getDate() - 7)).toISOString();
+    const until = new Date(Date.now()).toISOString(); // today
+    const from = new Date(d.setDate(d.getDate() - 7)).toISOString(); // a week ago
 
     const interval = 15 * 60;
     const keyName = 'y';
     const series = new Series({ from, until, interval, keyName });
 
     const mean = 300;
-    const variance = 100;
+    const variance = 75;
 
     const data = series.gaussian({ mean, variance }).map(record => {
       const newRecord = {};
@@ -51,7 +51,6 @@ export default function Chart() {
       return record;
     });
 
-    console.log(remappedData);
     setRpsData(remappedData);
   }, []);
 
@@ -70,7 +69,9 @@ export default function Chart() {
         }}
         data={rpsData}
       />
-      <VictoryAxis />
+      <VictoryAxis
+        tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
+      />
       <VictoryAxis dependentAxis />
     </VictoryChart>
   </>;
