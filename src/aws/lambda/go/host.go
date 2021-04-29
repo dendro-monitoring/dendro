@@ -37,7 +37,7 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 
 	measureName := name
 	// TODO: If name doesn't exist, return? Record fails?
-	measureValueType := "VARCHAR"
+	measureValueType := "DOUBLE"
 	measureValue := fetchMeasureValue(pRecord)
 
 	hostMetricRecords = append(hostMetricRecords, &timestreamwrite.Record{

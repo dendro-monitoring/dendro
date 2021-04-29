@@ -40,7 +40,7 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
       return <ApacheMetricsCharts />;
     case 'custom-application':
       return <CustomApplicationCharts />;
-    case 'host-metrics':
+    case 'hostMetrics':
       return <HostMetricsCharts />;
     case 'mongo-logs':
       return <MongoLogsCharts />;
