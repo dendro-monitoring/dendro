@@ -21,7 +21,7 @@ export default function Chart() {
 
   useEffect(() => {
     fetch('/api/query', { method: 'POST', body: JSON.stringify({ query }) }).then( res => res.json()).then( ({ data }) => {
-      setData(data?.Rows?.map( ({ Data }) => ({ x: new Date(Data[0].ScalarValue) || 0, y: Data[1].ScalarValue || 0 })));
+      setData(data?.Rows?.map( ({ Data }) => ({ x: new Date(Data[0].ScalarValue).valueOf() || 0, y: Data[1].ScalarValue || 0 })));
     });
   }, []);
 
