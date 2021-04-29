@@ -2,41 +2,65 @@
 import { useEffect, useState } from 'react';
 import { VictoryChart, VictoryLine, VictoryLabel, VictoryAxis, VictoryTheme } from 'victory';
 import formatTSQueryResult from '../formatTSQueryResult';
+const Series = require('time-series-data-generator');
 
 export default function Chart() {
   const [rpsData, setRpsData] = useState([]);
-  // query the db x times
-  // remap the queried data
-  // display
   useEffect(() => {
     // First query
-    (async () => {
-      const res = await fetch(
-        '/api/query',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            query: 'SELECT BIN(time, 1s) AS x, COUNT(*) AS y \
-                   FROM DendroTimestreamDB.nginxAccessLogs \
-                   GROUP BY BIN(time, 1s) \
-                   ORDER BY x ASC'
-          })
-        }
-      );
+    // (async () => {
+    //   const res = await fetch(
+    //     '/api/query',
+    //     {
+    //       method: 'POST',
+    //       body: JSON.stringify({
+    //         query: 'SELECT BIN(time, 1s) AS x, COUNT(*) AS y \
+    //                FROM DendroTimestreamDB.nginxAccessLogs \
+    //                GROUP BY BIN(time, 1s) \
+    //                ORDER BY x ASC'
+    //       })
+    //     }
+    //   );
 
-      const { data: fetchedData } = await res.json();
-      const formattedResult = formatTSQueryResult(fetchedData);
-      setRpsData(formattedResult);
-    })();
+    //   const { data: fetchedData } = await res.json();
+    //   const formattedResult = formatTSQueryResult(fetchedData);
+    //   setRpsData(formattedResult);
+    // })();
+
+    const until = new Date(Date.now()).toISOString();
+    const d = new Date();
+    const from = new Date(d.setDate(d.getDate() - 7)).toISOString();
+
+    const interval = 15 * 60;
+    const keyName = 'y';
+    const series = new Series({ from, until, interval, keyName });
+
+    const mean = 300;
+    const variance = 100;
+
+    const data = series.gaussian({ mean, variance }).map(record => {
+      const newRecord = {};
+      newRecord.x = record.timestamp;
+      newRecord.y = record.y;
+      return newRecord;
+    });
+
+    // convert ISO string to a date and get the number of milliseconds since epoch (to chart continuously)
+    const remappedData = data.map(record => {
+      record.x = new Date(record.x).valueOf();
+      return record;
+    });
+
+    console.log(remappedData);
+    setRpsData(remappedData);
   }, []);
 
-  console.log(rpsData);
-
-  // return <h1>{ JSON.stringify(rpsData) }</h1>;
   return <>
     <VictoryChart
+      style={{ parent:{ maxWidth: '50%', } }}
       theme={VictoryTheme.material}
       scale={{ x: 'time', y: 'linear' }}
+      domain={{ y: [0, 800] }}
     >
       <VictoryLabel text="Requests per Second (past 7 days)" x={185} y={30} textAnchor="middle"/>
       <VictoryLine
@@ -44,13 +68,10 @@ export default function Chart() {
           data: { stroke: '#c43a31' },
           parent: { border: '1px solid #ccc' }
         }}
-        data={rpsData.map(record => record.x = new Date(record.x))}
-        // domain={} // get filtered min and max dates here
+        data={rpsData}
       />
-      <VictoryAxis
-        tickValues={rpsData.map(d => new Date(d.x))}
-        tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
-      />
+      <VictoryAxis />
+      <VictoryAxis dependentAxis />
     </VictoryChart>
   </>;
 
