@@ -41,18 +41,13 @@ export default function Chart() {
 
     const data = series.gaussian({ mean, variance }).map(record => {
       const newRecord = {};
-      newRecord.x = record.timestamp;
+      newRecord.x = new Date(record.timestamp).valueOf();
+      // convert ISO string to a date and get the number of milliseconds since epoch (to chart continuously)
       newRecord.y = record.y;
       return newRecord;
     });
 
-    // convert ISO string to a date and get the number of milliseconds since epoch (to chart continuously)
-    const remappedData = data.map(record => {
-      record.x = new Date(record.x).valueOf();
-      return record;
-    });
-
-    setRpsData(remappedData);
+    setRpsData(data);
   }, []);
 
   return <>
@@ -62,7 +57,7 @@ export default function Chart() {
       scale={{ x: 'time', y: 'linear' }}
       domain={{ y: [0, 600] }}
     >
-      <VictoryLabel text="Requests per Second (past 7 days)" x={185} y={30} textAnchor="middle"/>
+      <VictoryLabel text="Requests per Second (past 7 days)" x={230} y={30} textAnchor="middle"/>
       <VictoryLine
         style={{
           data: { stroke: '#8dd9d4' },
@@ -73,11 +68,14 @@ export default function Chart() {
       <VictoryAxis
         tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
         style={{
-          axisLabel: { fontSize: 20, padding: 30, stroke: '#161b64' },
-          tickLabels: { fontSize: 15, padding: 5 }
+          tickLabels: { fontSize: 12, padding: 5 }
         }}
       />
-      <VictoryAxis dependentAxis />
+      <VictoryAxis dependentAxis
+        style={{
+          tickLabels: { fontSize: 12, padding: 5 }
+        }}
+      />
     </VictoryChart>
   </>;
 
