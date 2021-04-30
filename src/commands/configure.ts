@@ -142,6 +142,9 @@ export default class Configure extends Command {
     storeDebugLogs();
 
     console.clear();
+
+    store.clean();
+
     const monitoringSelections: string[] = (await servicesToMonitor()).sources;
 
     if (monitoringSelections.includes('nginx')) { await this.nginxConfig(); }

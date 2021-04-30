@@ -1,0 +1,10 @@
+127.0.0.1 - - [26/Apr/2021:06:47:11 -0400] "GET / HTTP/1.1" 200 481
+127.0.0.1 - - [26/Apr/2021:06:47:12 -0400] "GET /icons/blank.gif HTTP/1.1" 200 148
+127.0.0.1 - - [26/Apr/2021:06:47:12 -0400] "GET /favicon.ico HTTP/1.1" 404 1092
+localhost - - [26/Apr/2021:06:47:22 -0400] "GET /server-status HTTP/1.1" 403 963
+localhost - - [26/Apr/2021:06:47:59 -0400] "GET /server-status HTTP/1.1" 403 963
+localhost - - [26/Apr/2021:06:48:00 -0400] "GET /server-status HTTP/1.1" 403 963
+localhost - - [26/Apr/2021:06:48:01 -0400] "GET / HTTP/1.1" 200 481
+localhost - - [26/Apr/2021:06:48:02 -0400] "GET /?C=M;O=A HTTP/1.1" 200 481
+localhost - - [26/Apr/2021:06:48:14 -0400] "GET /server-status HTTP/1.1" 403 963
+127.0.0.1 - - [26/Apr/2021:06:49:07 -0400] "GET /server-status HTTP/1.1" 200 3883

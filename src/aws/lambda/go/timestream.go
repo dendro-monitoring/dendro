@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"math/rand"
 	"strconv"
 	"time"
 
@@ -11,98 +9,89 @@ import (
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
 
-// TODO: Is this pass by value?
-func buildGenericRecord(record *map[string]interface{}) *timestreamwrite.Record {
-	name1 := "host"
-	val1 := "hello-world"
-	dim1 := timestreamwrite.Dimension{
-		Name:  &name1,
-		Value: &val1,
+func keyExists(decoded map[string]interface{}, key string) bool {
+	val, ok := decoded[key]
+	return ok && val != nil && val != ""
+}
+
+func dimension(name string, val string) *timestreamwrite.Dimension {
+	return &timestreamwrite.Dimension{
+		Name:  &name,
+		Value: &val,
+	}
+}
+
+func fetch(record *RawRecord, key string) string {
+	if keyExists((*record), key) {
+		return (*record)[key].(string)
 	}
 
-	name2 := "IP"
-	val2 := "192.168.1.1"
-	dim2 := timestreamwrite.Dimension{
-		Name:  &name2,
-		Value: &val2,
+	return ""
+}
+
+func appendDimension(
+	pRecord *RawRecord,
+	dimensions []*timestreamwrite.Dimension,
+	key string,
+) []*timestreamwrite.Dimension {
+	record := *pRecord
+
+	if keyExists(record, key) {
+		return append(dimensions, dimension(key, record[key].(string)))
 	}
 
-	name3 := "RANDOMNUMBER"
-	val3 := strconv.Itoa(rand.Int())
-	dim3 := timestreamwrite.Dimension{
-		Name:  &name3,
-		Value: &val3,
-	}
+	return dimensions
+}
 
-	measureName := "rawData"
-	measureValueType := "VARCHAR"
-	unixTime := fmt.Sprint(time.Now().Unix())
-	timeUnit := timestreamwrite.TimeUnitSeconds
-
-	out, err := json.Marshal(record)
+func toUnix(timestamp string) string {
+	t, err := time.Parse(time.RFC3339, timestamp)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		// If some error, just do time .now
+		return fmt.Sprint(time.Now().Unix())
 	}
-	measureValue := string(out)
+	return fmt.Sprint(t.Unix())
+}
 
-	return &timestreamwrite.Record{
-		Dimensions:       []*timestreamwrite.Dimension{&dim1, &dim2, &dim3},
-		MeasureName:      &measureName,
-		MeasureValueType: &measureValueType,
-		MeasureValue:     &measureValue,
-		Time:             &unixTime,
-		TimeUnit:         &timeUnit,
+func fetchMV(record *RawRecord) string {
+	val, ok := (*record)["counter"]
+	if ok {
+		return fmt.Sprintf(
+			"%f",
+			val.(RawRecord)["value"].(float64),
+		)
 	}
+
+	val, ok = (*record)["gauge"]
+	if ok {
+		return fmt.Sprintf(
+			"%f",
+			val.(RawRecord)["value"].(float64),
+		)
+	}
+
+	return ""
 }
 
-func buildApacheLogRecord(record *map[string]interface{}) {
-	apacheLogRecords = append(apacheLogRecords, buildGenericRecord(record))
+func fetchMeasureValue(record *RawRecord) string {
+	mv := fetchMV(record)
+
+	if mv == "" {
+		fmt.Printf("\nError: No counter or gauge for record: %s", (*record)["name"])
+	}
+
+	return mv
 }
 
-func buildApacheMetricRecord(record *map[string]interface{}) {
-	apacheMetricRecords = append(apacheMetricRecords, buildGenericRecord(record))
-}
-
-func buildCustomAppRecord(record *map[string]interface{}) {
-	customAppRecords = append(customAppRecords, buildGenericRecord(record))
-}
-
-func buildHostMetricRecord(record *map[string]interface{}) {
-	hostMetricRecords = append(hostMetricRecords, buildGenericRecord(record))
-}
-
-func buildMongoLogRecord(record *map[string]interface{}) {
-	mongoLogRecords = append(mongoLogRecords, buildGenericRecord(record))
-}
-
-func buildMongoMetricRecord(record *map[string]interface{}) {
-	mongoMetricRecords = append(mongoMetricRecords, buildGenericRecord(record))
-}
-
-func buildNginxLogRecord(record *map[string]interface{}) {
-	nginxLogRecords = append(nginxLogRecords, buildGenericRecord(record))
-}
-
-func buildNginxMetricRecord(record *map[string]interface{}) {
-	nginxMetricRecords = append(nginxMetricRecords, buildGenericRecord(record))
-}
-
-func buildPostgresLogRecord(record *map[string]interface{}) {
-	postgresLogRecords = append(postgresLogRecords, buildGenericRecord(record))
-}
-
-func buildPostgresMetricRecord(record *map[string]interface{}) {
-	postgresMetricRecords = append(postgresMetricRecords, buildGenericRecord(record))
-}
-
-func buildRecordTypes(rawRecords *[]map[string]interface{}) {
+func buildRecordTypes(rawRecords *[]RawRecord) {
 	for i := range *rawRecords {
 		record := (*rawRecords)[i]
 
-		// TODO: Check if key was missing?
 		switch record["type"] {
-		case VECTOR_APACHE_LOGS_TYPE:
-			buildApacheLogRecord(&record)
+		case VECTOR_APACHE_ACCESS_LOGS_TYPE:
+			buildApacheAccessLogRecord(&record)
+		case VECTOR_APACHE_ERROR_LOGS_TYPE:
+			buildApacheErrorLogRecord(&record)
 		case VECTOR_APACHE_METRICS_TYPE:
 			buildApacheMetricRecord(&record)
 		case VECTOR_CUSTOM_APPLICATION_TYPE:
@@ -113,8 +102,10 @@ func buildRecordTypes(rawRecords *[]map[string]interface{}) {
 			buildMongoLogRecord(&record)
 		case VECTOR_MONGO_METRICS_TYPE:
 			buildMongoMetricRecord(&record)
-		case VECTOR_NGINX_LOGS_TYPE:
-			buildNginxLogRecord(&record)
+		case VECTOR_NGINX_ACCESS_LOGS_TYPE:
+			buildNginxAccessLogRecord(&record)
+		case VECTOR_NGINX_ERROR_LOGS_TYPE:
+			buildNginxErrorLogRecord(&record)
 		case VECTOR_NGINX_METRICS_TYPE:
 			buildNginxMetricRecord(&record)
 		case VECTOR_POSTGRES_LOGS_TYPE:
@@ -134,8 +125,11 @@ func WriteRecords(
 ) {
 	_, err := svc.WriteRecords(recordInput)
 	if err != nil {
+		fmt.Println("Failed to write records.")
 		fmt.Println(err)
-		panic(err)
+		// TODO: Should we panic and crash when we fail to write a batch?
+		// panic(err)
+		return
 	}
 
 	fmt.Printf(
@@ -158,7 +152,7 @@ func writeAllRecords(
 	}
 
 	fmt.Printf(
-		"Writing %s records for table %s\n",
+		"Writing %v records for table %s\n",
 		strconv.Itoa(totalLen),
 		vectorType,
 	)
@@ -184,7 +178,7 @@ func writeAllRecords(
 	}
 }
 
-func writeAllRecordsTypes(rawRecords *[]map[string]interface{}) {
+func writeAllRecordsTypes(rawRecords *[]RawRecord) {
 	mySession := session.Must(session.NewSession())
 	svc := timestreamwrite.New(mySession)
 

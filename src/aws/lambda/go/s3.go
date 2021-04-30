@@ -36,12 +36,12 @@ func getS3ObjectBody(buffer *io.ReadCloser) string {
 	return buf.String()
 }
 
-func getParsedS3ObjectBody(buffer *io.ReadCloser) []map[string]interface{} {
+func getParsedS3ObjectBody(buffer *io.ReadCloser) []RawRecord {
 	body := getS3ObjectBody(buffer)
 
 	parseableBody := "[" + REGEX.ReplaceAllString(body, "},{") + "]"
 
-	var parsedBody []map[string]interface{}
+	var parsedBody []RawRecord
 	err := json.Unmarshal(
 		[]byte(parseableBody),
 		&parsedBody,

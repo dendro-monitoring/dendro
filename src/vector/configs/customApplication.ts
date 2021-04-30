@@ -1,5 +1,6 @@
 import store from '../../store';
 import log from '../../utils/log';
+import trim from '../../utils/trim';
 import { CustomApplicationData } from '../../store/vector/customApplication';
 import {
   AWS_REGION,
@@ -14,7 +15,7 @@ const logConfig = ({ name, filepath }: CustomApplicationData): string => {
 
 [sources.custom_application_${name}_logs]
   type = "file"
-  include = ["${filepath}"]
+  include = ["${trim(filepath)}"]
   read_from = "beginning"
 
 [transforms.custom_application_${name}_transform]
