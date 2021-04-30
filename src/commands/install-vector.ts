@@ -1,5 +1,6 @@
 import { Command } from '@oclif/command';
 import chalk from 'chalk';
+import { DENDRO_ASCII_ART } from '../constants';
 const { Select } = require('enquirer');
 import log from '../utils/log';
 
@@ -22,6 +23,9 @@ export default class InstallVector extends Command {
     });
 
     const choice = await prompt.run();
+
+    console.clear();
+    console.log(DENDRO_ASCII_ART);
 
     log.info(instructions);
     if (choice.includes('Homebrew')) {

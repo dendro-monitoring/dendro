@@ -13,6 +13,7 @@ import {
   logTimestream,
   logTimestreamTables
 } from '../utils/list';
+import { DENDRO_ASCII_ART } from '../constants';
 
 export default class ListCommand extends Command {
   static description = 'describe the command here';
@@ -55,6 +56,10 @@ Timestream
     const parsed = this.parse(ListCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
+
+    console.clear();
+    console.log(DENDRO_ASCII_ART);
+
     let spinner: ora.Ora | undefined;
     const callback = (msg: string) => spinner?.succeed(msg);
 
