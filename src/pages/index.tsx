@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import TrafficList from "../components/traffic";
-import ServicesList from "../components/Services/List";
-import LogTable from '../components/LogTable/Table';
+import TrafficList from '../components/traffic';
+import ServicesList from '../components/Services/List';
+import LogTable from '../components/LogTable/CloudWatchLogs';
 
 import { MonitoredService } from '../constants/frontendTypes';
 
@@ -10,19 +10,13 @@ interface Props {
 }
 
 export default function Home({ services }: Props) {
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState({ logStreams: [] });
   useEffect(() => {
     (async () => {
-      // const res = await fetch('http://localhost:3000/api/logs');
-      // const { logs: fetchedLogs } = await res.json();
+      const res = await fetch('http://localhost:3000/api/logs');
+      const { logs: fetchedLogs } = await res.json();
 
-      const fetchedLogs: any = [
-        {
-          TIME: 1618341535723,
-          message: '2021-04-13T19:18:55.723Z\tundefined\tINFO\tLoading function\n',
-          ingestionTime: 1618341544834
-        }
-      ];
+      console.log(fetchedLogs);
 
       setLogs(fetchedLogs);
     })();
