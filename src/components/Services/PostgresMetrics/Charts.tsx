@@ -1,42 +1,21 @@
 import { ChartDataPoint } from '../../../constants/frontendTypes';
+import cacheHitQuery from './cacheHitQuery';
+import connectionsQuery from './connectionsQuery';
 import ChartCard from '../ChartCard';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryAxis } from 'victory';
 import formatTSQueryResult from '../formatTSQueryResult';
 import { useEffect, useState } from 'react';
 
 export default function Chart({ name }: { name: string }) {
-  const [rpsData, setRpsData] = useState([]);
+  const [cacheHitData, setCacheHitData] = useState([]);
+  // const [readHitData, setReadHitData] = useState([]);
+  const [cacheHitRatioData, setCacheHitRatioData] = useState([]);
+  const [connectionsData, setConnectionsData] = useState([]);
 
   useEffect(() => {
-    // First query
-    (async () => {
-      const res = await fetch(
-        '/api/query',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            query: 'SELECT BIN(time, 1s) AS x, COUNT(*) AS y \
-                   FROM DendroTimestreamDB.postgresMetrics \
-                   GROUP BY BIN(time, 1s) \
-                   ORDER BY x ASC'
-          })
-        }
-      );
-
-      const { data: fetchedData } = await res.json();
-      const formattedResult = formatTSQueryResult(fetchedData);
-      setRpsData(formattedResult);
-    })();
+    cacheHitQuery(setCacheHitRatioData);
+    connectionsQuery(setConnectionsData);
   }, []);
-
-  console.log(rpsData)
-  const chartData1: ChartDataPoint[] = [
-    { x: 1, y: 2 },
-    { x: 2, y: 3 },
-    { x: 3, y: 5 },
-    { x: 4, y: 4 },
-    { x: 5, y: 7 }
-  ];
 
   return (
     <>
@@ -46,70 +25,49 @@ export default function Chart({ name }: { name: string }) {
         <>
           {/* Chart 1 */}
           <VictoryChart
+            scale={{ x: "time", y: "linear" }}
             style={{ parent: { maxWidth: '50%', } }}
-            theme={VictoryTheme.material}
-            key="hi"
+            // theme={VictoryTheme.material}
+            domain={{ y: [0.9, 1] }}
           >
-            <VictoryLabel text={'Average Query Duration (s)'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Cache Hit Ratio'} x={180} y={30} textAnchor="middle" />
             <VictoryLine
               style={{
                 data: { stroke: '#EF4444' },
                 parent: { border: '1px solid #9CA3AF' }
               }}
-              data={chartData1}
+              data={cacheHitRatioData}
             />
+            <VictoryAxis
+              // tickCount={10}
+              tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
+            />
+            <VictoryAxis dependentAxis />
           </VictoryChart>
 
           {/* Chart 2 */}
           <VictoryChart
+            scale={{ x: "time", y: "linear" }}
             style={{ parent: { maxWidth: '50%', } }}
-            theme={VictoryTheme.material}
-            key="hi"
+            domain={{ y: [75, 140] }}
           >
-            <VictoryLabel text={'Average Query Duration (s)'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Number of Connections'} x={180} y={30} textAnchor="middle" />
             <VictoryLine
               style={{
                 data: { stroke: '#EF4444' },
                 parent: { border: '1px solid #9CA3AF' }
               }}
-              data={chartData1}
+              data={connectionsData}
             />
+            <VictoryAxis
+              // tickCount={10}
+              tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
+            />
+            <VictoryAxis dependentAxis />
           </VictoryChart>
         </>
 
-        {/* Child 2 */}
         <>
-          {/* Chart 3 */}
-          <VictoryChart
-            style={{ parent: { maxWidth: '50%', } }}
-            theme={VictoryTheme.material}
-            key="hi"
-          >
-            <VictoryLabel text={'Average Query Duration (s)'} x={180} y={30} textAnchor="middle" />
-            <VictoryLine
-              style={{
-                data: { stroke: '#EF4444' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
-              data={chartData1}
-            />
-          </VictoryChart>
-
-          {/* Chart 4 */}
-          <VictoryChart
-            style={{ parent: { maxWidth: '50%', } }}
-            theme={VictoryTheme.material}
-            key="hi"
-          >
-            <VictoryLabel text={'Average Query Duration (s)'} x={180} y={30} textAnchor="middle" />
-            <VictoryLine
-              style={{
-                data: { stroke: '#EF4444' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
-              data={chartData1}
-            />
-          </VictoryChart>
         </>
       </ChartCard>
     </>
