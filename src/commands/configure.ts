@@ -16,6 +16,7 @@ import {
 import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
 import chalk from 'chalk';
+import { DENDRO_ASCII_ART } from '../constants';
 
 export default class Configure extends Command {
   static description = 'configuring collector/agent setup of log sources';
@@ -154,6 +155,8 @@ export default class Configure extends Command {
     await promptCredentials();
 
     console.clear();
+    console.log(DENDRO_ASCII_ART);
+
     log.info('Saving selections to cache');
     log.info(`To review your selections, please run ${chalk.bold.yellow('dendro review')}`);
     log.info(`To clear your current configuration, please run ${chalk.bold.yellow('dendro clean')}`);

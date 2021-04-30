@@ -9,6 +9,7 @@ import orchestrator from '../aws/orchestrator';
 import { ensureCredentials } from '../utils/aws';
 import { alarmEmailsPrompt, confirmAlarms } from '../prompts';
 import store from '../store';
+import { DENDRO_ASCII_ART } from '../constants';
 
 export default class DeployCommand extends Command {
   static flags = {
@@ -40,6 +41,8 @@ export default class DeployCommand extends Command {
     }
 
     console.clear();
+
+    console.log(DENDRO_ASCII_ART);
 
     let spinner;
     try {
