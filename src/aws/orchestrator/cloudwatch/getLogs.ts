@@ -1,24 +1,22 @@
 import describeLogGroups from './describeLogGroups';
 import describeLogStreams from './describeLogStreams';
 import getEvents from '../../cloudwatch/getLogEvents';
+import { AWS_LAMBDA_FUNCTION_NAME } from '../../../constants';
 
 export default function getLogs(): Promise<void>{
   return new Promise(async resolve => {
-    const results: any = {};
     const logGroups = await describeLogGroups();
-    logGroups.forEach( (group: { logGroupName: string}) => results[group.logGroupName] = group);
+    const logGroup: any = logGroups.filter( group => group.logGroupName === `/aws/lambda/${AWS_LAMBDA_FUNCTION_NAME}`)[0];
 
-    for (const logGroupName of Object.keys(results)) {
-      const logGroup = results[logGroupName];
+    if (!logGroup) return;
 
-      logGroup.logStreams = await describeLogStreams(logGroupName);
+    logGroup.logStreams = await describeLogStreams(logGroup.logGroupName);
 
-      for (const logStream of logGroup.logStreams) {
-        const events = await(getEvents(logGroupName, logStream.logStreamName));
+    for (const logStream of logGroup.logStreams) {
+      const events = await(getEvents(logGroup.logGroupName, logStream.logStreamName));
 
-        logStream.events = events;
-      }
+      logStream.events = events;
     }
-    resolve(results);
+    resolve(logGroup);
   });
 }

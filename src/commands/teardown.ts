@@ -7,14 +7,14 @@ const { Confirm } = require('enquirer');
 import {
   logRoles,
   logBuckets,
-  logDeliveryStreams,
+  logDeliveryStream,
   logLambdas,
   logTimestream,
   logTimestreamTables
 } from '../utils/list';
 
 function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>): boolean {
-  return roles.length === 0 && buckets.length === 0 && streams.length === 0 && functions.length === 0 && databases.length === 0;
+  return roles.length === 0 && buckets.length === 0 && !streams && functions.length === 0 && databases.length === 0;
 }
 
 export default class Teardown extends Command {
@@ -51,8 +51,8 @@ export default class Teardown extends Command {
       const Buckets = await AWSWrapper.listBuckets();
       await logBuckets(Buckets, callback);
 
-      const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
-      await logDeliveryStreams(DeliveryStreamNames, callback);
+      const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
+      await logDeliveryStream(DeliveryStreamNames, callback);
 
       const Functions = await AWSWrapper.listFunctions();
       await logLambdas(Functions, callback);
@@ -94,7 +94,7 @@ export default class Teardown extends Command {
         spinner.succeed();
       }
 
-      if (DeliveryStreamNames.length > 0) {
+      if (DeliveryStreamNames) {
         spinner = log.spin('Deleting firehose...');
         const firehoseError = await orchestrator.deleteFirehose();
         if (firehoseError) {
