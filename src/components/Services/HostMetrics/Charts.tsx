@@ -5,7 +5,6 @@ const Series = require('time-series-data-generator');
 
 const load15 = 'select host, measure_value::double, time from "DendroTimestreamDB"."hostMetrics" \
 where measure_name = \'load15\' \
---group by host \
 limit 500';
 
 const utilization = 'select host, time, (1 - sum(case when cpuMode = \'idle\' and time <= h.time then measure_value::double end) / sum(case when time <= h.time then measure_value::double end)) * 100 as utilization \
@@ -50,7 +49,7 @@ export default function Chart() {
         results[Data[0].ScalarValue].push({ x: new Date(Data[2].ScalarValue).valueOf(), y: Number(Data[1].ScalarValue) || 0 });
       });
       setLoad15Data(Object.keys(results).map( key => results[key]));
-    });
+    }).catch( err => console.log(err));
 
     fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: utilization }) }).then(data => data.json()).then( ( { data: Rows } ) => {
       const results = {};
@@ -59,16 +58,15 @@ export default function Chart() {
         results[Data[0].ScalarValue].push( { x: new Date(Data[1].ScalarValue).valueOf(), y: Number(Data[2].ScalarValue) });
       });
       setUtilizationData(Object.keys(results).map( key => results[key]));
-    });
+    }).catch( err => console.log(err));
 
     fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: userCount }) }).then(data => data.json()).then( ( { data: Rows } ) => {
       const results = [];
       Rows.Rows.forEach( ({ Data }) => {
         results.push( { x: new Date(Data[0].ScalarValue).valueOf(), y: Number(Data[1].ScalarValue) });
       });
-
       setUserCountData(results);
-    });
+    }).catch( err => console.log(err));
   }, []);
 
   return (
@@ -125,6 +123,7 @@ export default function Chart() {
               scale={{ x: 'time', y: 'linear' }}
               style={{ parent: { maxWidth: '50%', } }}
               theme={VictoryTheme.material}
+              domain={{ y: [-1, 3] }}
               key="userCount"
             >
               <VictoryLabel text={'Unique machines monitored over last 15 seconds'} x={180} y={30} textAnchor="middle"/>
