@@ -134,8 +134,8 @@ export default class Teardown extends Command {
       }
 
       if (Topics.length > 0) {
-        spinner = log.spin('Deleting SNS Topic...');
-        await AWSWrapper.deleteTopic(Topics[0]);
+        spinner = log.spin('Deleting alarms...');
+        await orchestrator.deleteAlarms(Topics[0]);
         spinner.succeed();
       }
 
