@@ -1,3 +1,4 @@
+import { APACHE_ALARM, HOST_ALARM, MONGO_ALARM, NGINX_ALARM, POSTGRES_ALARM } from '../../../constants';
 import store from '../../../store';
 import createAlarm from '../../cloudwatch/createAlarm';
 
@@ -23,7 +24,7 @@ export default async function createAlarms(): Promise<void> {
 
   const apacheParams = {
     ...baseParams,
-    AlarmName: 'DendroApacheAlarm',
+    AlarmName: APACHE_ALARM,
     MetricName: 'DendroApache',
   };
 
@@ -35,25 +36,25 @@ export default async function createAlarms(): Promise<void> {
 
   const hostParams = {
     ...baseParams,
-    AlarmName: 'DendroHostAlarm',
+    AlarmName: HOST_ALARM,
     MetricName: 'DendroHost',
   };
 
   const mongoParams = {
     ...baseParams,
-    AlarmName: 'DendroMongoAlarm',
+    AlarmName: MONGO_ALARM,
     MetricName: 'DendroMongo',
   };
 
   const nginxParams = {
     ...baseParams,
-    AlarmName: 'DendroNginxAlarm',
+    AlarmName: NGINX_ALARM,
     MetricName: 'DendroNginx',
   };
 
   const postgresParams = {
     ...baseParams,
-    AlarmName: 'DendroPostgresAlarm',
+    AlarmName: POSTGRES_ALARM,
     MetricName: 'DendroPostgres',
   };
 

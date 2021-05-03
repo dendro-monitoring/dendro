@@ -11,7 +11,8 @@ import {
   logDeliveryStream,
   logLambdas,
   logTimestream,
-  logTimestreamTables
+  logTimestreamTables,
+  logTopic
 } from '../utils/list';
 
 export default class ListCommand extends Command {
@@ -49,7 +50,7 @@ Timestream
 
   static args = [];
 
-  async run(): Promise<void>{
+  async run(): Promise<void> {
     ensureCredentials();
 
     const parsed = this.parse(ListCommand);
@@ -78,10 +79,13 @@ Timestream
     const Databases = await AWSWrapper.listDatabases();
     await logTimestream(Databases, callback);
 
-    if ( Databases.length > 0 ) {
+    if (Databases.length > 0) {
       spinner = log.spin('Listing Timestream tables...\n');
       const Tables = await AWSWrapper.listTables();
       await logTimestreamTables(Tables, callback);
     }
+
+    const topics = await AWSWrapper.listTopics();
+    await logTopic(topics, callback)
   }
 }

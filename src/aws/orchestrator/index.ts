@@ -8,6 +8,7 @@ import getLogs from './cloudwatch/getLogs';
 import setupLambda from './lambda/setupLambda';
 import setupFirehose from './firehose/setupFirehose';
 import setupAlarms from './alarms/setupAlarms';
+import deleteAlarms from './alarms/deleteAlarms';
 import detachRolePolicies from './iam/detachRolePolicies';
 import deleteRole from './iam/deleteRole';
 import deleteBucket from './s3/deleteBucket';
@@ -26,6 +27,7 @@ export default {
   setupLambda,
   setupFirehose,
   setupAlarms,
+  deleteAlarms,
   detachRolePolicies,
   deleteRole,
   deleteBucket,

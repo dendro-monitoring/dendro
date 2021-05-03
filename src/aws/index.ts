@@ -37,6 +37,7 @@ import putMetricFilter from './cloudwatch/putMetricFilter';
 import createTopic from './sns/createTopic';
 import subscribe from './sns/subscribe';
 import deleteTopic from './sns/deleteTopic';
+import listTopics from './sns/listTopics';
 
 export default {
   createBucket,
@@ -78,4 +79,5 @@ export default {
   createTopic,
   subscribe,
   deleteTopic,
+  listTopics,
 };
