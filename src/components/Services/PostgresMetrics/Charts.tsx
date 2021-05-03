@@ -1,20 +1,17 @@
 import { ChartDataPoint } from '../../../constants/frontendTypes';
-import cacheHitQuery from './cacheHitQuery';
-import connectionsQuery from './connectionsQuery';
 import ChartCard from '../ChartCard';
 import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryAxis } from 'victory';
-import formatTSQueryResult from '../formatTSQueryResult';
 import { useEffect, useState } from 'react';
+import getConnectionsData from './connectionsQuery';
+import getCacheHitData from './cacheHitQuery';
 
 export default function Chart({ name }: { name: string }) {
-  const [cacheHitData, setCacheHitData] = useState([]);
-  // const [readHitData, setReadHitData] = useState([]);
   const [cacheHitRatioData, setCacheHitRatioData] = useState([]);
   const [connectionsData, setConnectionsData] = useState([]);
 
   useEffect(() => {
-    cacheHitQuery(setCacheHitRatioData);
-    connectionsQuery(setConnectionsData);
+    setCacheHitRatioData(getCacheHitData);
+    setConnectionsData(getConnectionsData);
   }, []);
 
   return (
@@ -33,7 +30,7 @@ export default function Chart({ name }: { name: string }) {
             <VictoryLabel text={'Cache Hit Ratio'} x={180} y={30} textAnchor="middle" />
             <VictoryLine
               style={{
-                data: { stroke: '#EF4444' },
+                data: { stroke: '#1144F1' },
                 parent: { border: '1px solid #9CA3AF' }
               }}
               data={cacheHitRatioData}
@@ -49,12 +46,12 @@ export default function Chart({ name }: { name: string }) {
           <VictoryChart
             scale={{ x: "time", y: "linear" }}
             style={{ parent: { maxWidth: '50%', } }}
-            domain={{ y: [75, 140] }}
+            domain={{ y: [80, 120] }}
           >
             <VictoryLabel text={'Number of Connections'} x={180} y={30} textAnchor="middle" />
             <VictoryLine
               style={{
-                data: { stroke: '#EF4444' },
+                data: { stroke: '#1144F1' },
                 parent: { border: '1px solid #9CA3AF' }
               }}
               data={connectionsData}

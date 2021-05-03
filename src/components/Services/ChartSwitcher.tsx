@@ -45,8 +45,8 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
       return <HostMetricsCharts />;
     case 'mongo-logs':
       return <MongoLogsCharts />;
-    case 'mongo-metrics':
-      return <MongoMetricsCharts />;
+    case 'mongoMetrics':
+      return <MongoMetricsCharts name={name} />;
     case 'nginx-logs':
       return <NginxLogsCharts />;
     case 'nginx-metrics':

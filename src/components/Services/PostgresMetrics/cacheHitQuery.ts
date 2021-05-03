@@ -1,4 +1,6 @@
 const Series = require("time-series-data-generator");
+import { Dispatch, SetStateAction } from 'react';
+import formatTSQueryResult from '../formatTSQueryResult';
 
 const cacheBlocksHitQuery = "SELECT concat(host, '-', database) AS source, time AS x, measure_value::double AS y \
   FROM DendroTimestreamDB.postgresMetrics \
@@ -28,7 +30,7 @@ const cacheHitRatioQuery = "SELECT concat(host, '-', database) AS source, time A
   GROUP BY measure_name, measure_value::double, time, host, database \
   ORDER BY time ASC"
 
-export default function cacheHitQuery(setCacheHitRatioData: Dispatch<SetStateAction<never[]>>) {
+export default function getCacheHitData() {
   const d = new Date();
   const until = new Date(Date.now()).toISOString(); // today
   const from = new Date(d.setDate(d.getDate() - 7)).toISOString(); // a week ago
@@ -42,7 +44,8 @@ export default function cacheHitQuery(setCacheHitRatioData: Dispatch<SetStateAct
     ".97": 3,
     ".965": 1,
   }
-  setCacheHitRatioData((() => {
+
+  const fakeData = (() => {
     let newData: any = [];
     for (let count = 1; count <= 50; count++) {
       newData = newData.concat(cacheHitSeries.ratio(cacheHitWeights).map(record => {
@@ -54,7 +57,9 @@ export default function cacheHitQuery(setCacheHitRatioData: Dispatch<SetStateAct
     }
     return newData;
   }
-  )());
+  )();
+
+  return fakeData
 
   // First query
 
@@ -97,6 +102,8 @@ export default function cacheHitQuery(setCacheHitRatioData: Dispatch<SetStateAct
   //     return entry;
   //   }));
   // })();
+
+  // // performs the calculation for the cache hit ratio
   // (async () => {
   //   let ratioData = readHitData.map((entry, idx) => {
   //     entry.y = cacheHitData[idx].y / (cacheHitData[idx].y + entry.y);

@@ -2,12 +2,10 @@ const Series = require("time-series-data-generator");
 import { Dispatch, SetStateAction } from 'react';
 import formatTSQueryResult from '../formatTSQueryResult';
 
-const connectionsQuery = "SELECT concat(host, '-', database) AS source, time AS x, measure_value::double AS y \
-  FROM DendroTimestreamDB.postgresMetrics \
-  WHERE measure_name = 'pg_stat_database_numbackends' \
-  AND database IS NOT NULL \
-  AND database = 'postgres' \
-  GROUP BY measure_name, measure_value::double, time, host, database \
+const connectionsQuery = "SELECT host AS source, time AS x, measure_value::double AS y \
+  FROM DendroTimestreamDB.mongoMetrics \
+  WHERE measure_name = 'connections' \
+  GROUP BY measure_name, measure_value::double, time, host \
   ORDER BY time ASC"
 
 export default function getConnectionsData() {
