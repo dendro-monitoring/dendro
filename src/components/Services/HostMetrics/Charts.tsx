@@ -126,7 +126,7 @@ export default function Chart() {
               domain={{ y: [-1, 3] }}
               key="userCount"
             >
-              <VictoryLabel text={'Unique machines monitored over last 15 seconds'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Unique machines monitored'} x={180} y={30} textAnchor="middle"/>
               <VictoryLine
                 style={{
                   data: { stroke: '#EF4444' },
