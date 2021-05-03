@@ -53,7 +53,7 @@ func toUnix(timestamp string) string {
 	return fmt.Sprint(t.Unix())
 }
 
-func fetchMeasureValue(record *RawRecord) string {
+func fetchMV(record *RawRecord) string {
 	val, ok := (*record)["counter"]
 	if ok {
 		return fmt.Sprintf(
@@ -70,8 +70,17 @@ func fetchMeasureValue(record *RawRecord) string {
 		)
 	}
 
-	fmt.Printf("\nError: No counter or gauge for record: %s", (*record)["name"])
 	return ""
+}
+
+func fetchMeasureValue(record *RawRecord) string {
+	mv := fetchMV(record)
+
+	if mv == "" {
+		fmt.Printf("\nError: No counter or gauge for record: %s", (*record)["name"])
+	}
+
+	return mv
 }
 
 func buildRecordTypes(rawRecords *[]RawRecord) {

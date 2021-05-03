@@ -1,8 +1,28 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
+
+func mongoLogErrors(pRecord *RawRecord) {
+	name := fetch(pRecord, "name")
+	measureValue := fetchMV(pRecord)
+
+	if keyExists(*pRecord, "parsed") {
+		parsed := (*pRecord)["parsed"].(map[string]interface{})
+		severity := fetch(&parsed, "s")
+
+		if severity == "F" {
+			fmt.Println("[MONGO] Error: Fatal mongo error")
+		}
+	}
+
+	if name == "up" && measureValue == "0.0" {
+		fmt.Println("[MONGO] Error: Mongo server is down")
+	}
+}
 
 func buildMongoLogRecord(pRecord *RawRecord) {
 	record := *pRecord
@@ -40,6 +60,8 @@ func buildMongoLogRecord(pRecord *RawRecord) {
 	measureValue := severity
 	measureValueType := "VARCHAR"
 
+	mongoLogErrors(pRecord)
+
 	mongoLogRecords = append(mongoLogRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
 		MeasureName:      &measureName,
@@ -66,6 +88,8 @@ func buildMongoMetricRecord(pRecord *RawRecord) {
 	measureName := name
 	measureValue := fetchMeasureValue(pRecord)
 	measureValueType := "DOUBLE"
+
+	mongoLogErrors(pRecord)
 
 	mongoMetricRecords = append(mongoMetricRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,

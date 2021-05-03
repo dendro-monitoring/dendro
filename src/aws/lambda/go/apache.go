@@ -1,8 +1,34 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/aws/aws-sdk-go/service/timestreamwrite"
 )
+
+func apacheLogErrors(pRecord *RawRecord) {
+	severity := fetch(pRecord, "level")
+	name := fetch(pRecord, "name")
+	measureValue := fetchMV(pRecord)
+
+	if keyExists(*pRecord, "parsed") {
+		parsed := (*pRecord)["parsed"].(map[string]interface{})
+
+		statusCode := fetch(&parsed, "status")
+
+		if statusCode == "500" {
+			fmt.Println("[APACHE] Error: Status code 500")
+		}
+	}
+
+	if severity == "emerg" {
+		fmt.Println("[APACHE] Error: Fatal apache error")
+	}
+
+	if name == "up" && measureValue == "0.0" {
+		fmt.Println("[APACHE] Error: Apache web server is down")
+	}
+}
 
 func buildApacheAccessLogRecord(pRecord *RawRecord) {
 	record := *pRecord
@@ -31,6 +57,8 @@ func buildApacheAccessLogRecord(pRecord *RawRecord) {
 	measureName := "statusCode"
 	measureValueType := "VARCHAR"
 	measureValue := statusCode
+
+	apacheLogErrors(pRecord)
 
 	apacheAccessLogRecords = append(apacheAccessLogRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
@@ -66,6 +94,8 @@ func buildApacheErrorLogRecord(pRecord *RawRecord) {
 	measureValueType := "VARCHAR"
 	measureValue := severity
 
+	apacheLogErrors(pRecord)
+
 	apacheErrorLogRecords = append(apacheErrorLogRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,
 		MeasureName:      &measureName,
@@ -93,6 +123,8 @@ func buildApacheMetricRecord(pRecord *RawRecord) {
 	measureName := name
 	measureValue := fetchMeasureValue(pRecord)
 	measureValueType := "DOUBLE"
+
+	apacheLogErrors(pRecord)
 
 	apacheMetricRecords = append(apacheMetricRecords, &timestreamwrite.Record{
 		Dimensions:       dimensions,

@@ -33,24 +33,24 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
     .join(' ');
 
   switch (camelCaseName) {
-    case 'apache-logs':
-      return <ApacheLogsCharts />;
     case 'apacheAccessLogs':
       return <ApacheAccessLogsCharts name={name} />;
-    case 'apache-metrics':
+    case 'ApacheLogs':
+      return <ApacheLogsCharts />;
+    case 'apacheMetrics':
       return <ApacheMetricsCharts />;
-    case 'custom-application':
+    case 'customApplication':
       return <CustomApplicationCharts />;
-    case 'host-metrics':
+    case 'hostMetrics':
       return <HostMetricsCharts />;
-    case 'mongo-logs':
+    case 'mongoLogs':
       return <MongoLogsCharts />;
     case 'mongoMetrics':
       return <MongoMetricsCharts name={name} />;
-    case 'nginx-logs':
-      return <NginxLogsCharts />;
-    case 'nginx-metrics':
+    case 'nginxMetrics':
       return <NginxMetricsCharts />;
+    case 'nginxAccessLogs':
+      return <NginxAccessLogsCharts name={name} />;
     case 'postgresLogs':
       return <PostgresLogsCharts />;
     case 'postgresMetrics':
