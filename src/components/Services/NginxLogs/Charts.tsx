@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ChartDataPoint } from '../../../constants/frontendTypes';
 import ChartCard from '../ChartCard';
 import { VictoryChart, VictoryLine, VictoryBar, VictoryArea, VictoryStack, VictoryLabel, VictoryAxis } from 'victory';
 import formatTSQueryResult from '../formatTSQueryResult';
@@ -52,7 +51,7 @@ function loadRpsData(setterFunc: any) {
 }
 
 function loadLatencyData(setterFunc: any) {
-  const interval = 2 * 60 * 60;
+  const interval = 3 * 60 * 60;
   const mean = .200;
   const variance = .03;
 
@@ -181,6 +180,7 @@ export default function Chart({ name }: { name: string }) {
             <VictoryLabel text={'Slowest Paths (s)'} x={230} y={30} textAnchor="middle"/>
             <VictoryBar horizontal
               style={{ data: { fill: '#161D6F' } }}
+              labels={({ datum }) => `  ${datum.y}s`}
               data={ [
                 { x: '/boo', y: .2 },
                 { x: '/bleh', y: .5 },
