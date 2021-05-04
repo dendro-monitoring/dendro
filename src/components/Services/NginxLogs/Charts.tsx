@@ -35,10 +35,10 @@ function loadRpsData(setterFunc: any) {
   //     {
   //       method: 'POST',
   //       body: JSON.stringify({
-  //         query: 'SELECT BIN(time, 1s) AS x, COUNT(*) AS y \
+  //         query: 'SELECT BIN(time, 900s) AS x, COUNT(*) AS y \
   //                FROM DendroTimestreamDB.nginxAccessLogs \
   //                WHERE time > ago(168h) \
-  //                GROUP BY BIN(time, 1s), ip \
+  //                GROUP BY BIN(time, 900s), ip \
   //                ORDER BY x ASC'
   //       })
   //     }
@@ -64,15 +64,15 @@ function loadLatencyData(setterFunc: any) {
   //     {
   //       method: 'POST',
   //       body: JSON.stringify({
-  //         query: 'SELECT host, BIN(time, 30s) \
+  //         query: 'SELECT host, BIN(time, 900s) as interval_15m, \
   //                   ROUND(AVG(CAST(request_time AS double)), 2) AS avg_request_time, \
   //                   ROUND(APPROX_PERCENTILE(CAST(request_time AS double), 0.9), 2) AS p90_request_time, \
   //                   ROUND(APPROX_PERCENTILE(CAST(request_time AS double), 0.95), 2) AS p95_request_time, \
   //                   ROUND(APPROX_PERCENTILE(CAST(request_time AS double), 0.99), 2) AS p99_request_time \
   //                 FROM DendroTimestreamDB.nginxAccessLogs \
   //                 WHERE time > ago(168h) \
-  //                 GROUP BY host, BIN(time, 30s) \
-  //                 ORDER BY BIN(time, 30s) ASC'
+  //                 GROUP BY host, BIN(time, 900s) \
+  //                 ORDER BY BIN(time, 900s) ASC'
   //       })
   //     }
   //   );
@@ -139,9 +139,7 @@ export default function Chart({ name }: { name: string }) {
               tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
               style={{ tickLabels: { fontSize: 12, padding: 5 } }}
             />
-            <VictoryAxis dependentAxis
-              style={{ tickLabels: { fontSize: 12, padding: 5 } }}
-            />
+            <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 12, padding: 5 } }} />
           </VictoryChart>
 
           {/* Chart 2 */}
@@ -163,9 +161,7 @@ export default function Chart({ name }: { name: string }) {
               tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
               style={{ tickLabels: { fontSize: 12, padding: 5 } }}
             />
-            <VictoryAxis dependentAxis
-              style={{ tickLabels: { fontSize: 12, padding: 5 } }}
-            />
+            <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 12, padding: 5 } }} />
           </VictoryChart>
         </>
 
@@ -208,9 +204,7 @@ export default function Chart({ name }: { name: string }) {
               tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
               style={{ tickLabels: { fontSize: 12, padding: 5 } }}
             />
-            <VictoryAxis dependentAxis
-              style={{ tickLabels: { fontSize: 12, padding: 5 } }}
-            />
+            <VictoryAxis dependentAxis style={{ tickLabels: { fontSize: 12, padding: 5 } }} />
           </VictoryChart>
         </>
       </ChartCard>
