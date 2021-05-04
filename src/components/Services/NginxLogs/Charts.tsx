@@ -95,7 +95,14 @@ function loadStatusCodeData(setterFunc: any) {
   //     {
   //       method: 'POST',
   //       body: JSON.stringify({
-  //         query: ''
+  //         query: "SELECT host, BIN(time, 900s) as interval_15m, \
+  //                   COUNT(CASE WHEN measure_value::varchar LIKE '2%' then 1 ELSE NULL END) as r2xx, \
+  //                   COUNT(CASE WHEN measure_value::varchar LIKE '4%' then 1 ELSE NULL END) as r4xx, \
+  //                   COUNT(CASE WHEN measure_value::varchar LIKE '5%' then 1 ELSE NULL END) as r5xx \
+  //                 FROM DendroTimestreamDB.nginxAccessLogs \
+  //                 WHERE time > ago(168h) \
+  //                 GROUP BY host, BIN(time, 900s) \
+  //                 ORDER BY BIN(time, 900s) ASC"
   //       })
   //     }
   //   );
