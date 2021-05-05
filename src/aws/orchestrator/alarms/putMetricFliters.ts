@@ -57,7 +57,7 @@ const mongoParams: any = {
 };
 
 const nginxParams: any = {
-  filterName: 'Ngninx',
+  filterName: 'Nginx',
   filterPattern: '"[NGINX]"',
   logGroupName: AWS_CLOUDWATCH_LOG_GROUP_NAME,
   metricTransformations: [
