@@ -10,11 +10,17 @@ import {
   logDeliveryStream,
   logLambdas,
   logTimestream,
-  logTimestreamTables
+  logTimestreamTables,
+  logTopic,
 } from '../utils/list';
 
-function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>): boolean {
-  return roles.length === 0 && buckets.length === 0 && !streams && functions.length === 0 && databases.length === 0;
+function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>, topics: Array<any>): boolean {
+  return roles.length === 0
+    && buckets.length === 0
+    && streams.length === 0
+    && functions.length === 0
+    && databases.length === 0
+    && topics.length === 0;
 }
 
 export default class Teardown extends Command {
@@ -65,7 +71,10 @@ export default class Teardown extends Command {
         await logTimestreamTables(Tables, callback);
       }
 
-      if (noResourcesFound(Roles, Buckets, DeliveryStreamNames, Functions, Databases)) return log.info('No resources to delete');
+      const Topics = await AWSWrapper.listTopics();
+      await logTopic(Topics, callback);
+
+      if (noResourcesFound(Roles, Buckets, DeliveryStreamNames, Functions, Databases, Topics)) return log.info('No resources to delete');
 
       const prompt = new Confirm({
         name: 'confirm-delete',
@@ -75,6 +84,12 @@ export default class Teardown extends Command {
       const choice = await prompt.run();
 
       if (!choice) return;
+
+      if (Databases.length > 0) {
+        spinner = log.spin('Deleting timestream...');
+        await orchestrator.deleteTimestream();
+        spinner.succeed();
+      }
 
       if (Roles.length > 0) {
         spinner = log.spin('Deleting role...');
@@ -94,7 +109,7 @@ export default class Teardown extends Command {
         spinner.succeed();
       }
 
-      if (DeliveryStreamNames) {
+      if (DeliveryStreamNames.length > 0) {
         spinner = log.spin('Deleting firehose...');
         const firehoseError = await orchestrator.deleteFirehose();
         if (firehoseError) {
@@ -115,6 +130,12 @@ export default class Teardown extends Command {
       if (Databases.length > 0) {
         spinner = log.spin('Deleting timestream...');
         await orchestrator.deleteTimestream();
+        spinner.succeed();
+      }
+
+      if (Topics.length > 0) {
+        spinner = log.spin('Deleting alarms...');
+        await orchestrator.deleteAlarms(Topics[0]);
         spinner.succeed();
       }
 
