@@ -8,10 +8,11 @@ import { ensureCredentials } from '../utils/aws';
 import {
   logRoles,
   logBuckets,
-  logDeliveryStreams,
+  logDeliveryStream,
   logLambdas,
   logTimestream,
-  logTimestreamTables
+  logTimestreamTables,
+  logTopic
 } from '../utils/list';
 
 export default class ListCommand extends Command {
@@ -49,7 +50,7 @@ Timestream
 
   static args = [];
 
-  async run(): Promise<void>{
+  async run(): Promise<void> {
     ensureCredentials();
 
     const parsed = this.parse(ListCommand);
@@ -67,8 +68,8 @@ Timestream
     await logBuckets(Buckets, callback);
 
     spinner = log.spin('Listing Firehose stream...\n');
-    const DeliveryStreamNames = await AWSWrapper.listDeliveryStreams();
-    await logDeliveryStreams(DeliveryStreamNames, callback);
+    const DeliveryStreamNames = await AWSWrapper.describeDeliveryStream();
+    await logDeliveryStream(DeliveryStreamNames, callback);
 
     spinner = log.spin('Listing Lambda function...\n');
     const Functions = await AWSWrapper.listFunctions();
@@ -78,10 +79,13 @@ Timestream
     const Databases = await AWSWrapper.listDatabases();
     await logTimestream(Databases, callback);
 
-    if ( Databases.length > 0 ) {
+    if (Databases.length > 0) {
       spinner = log.spin('Listing Timestream tables...\n');
       const Tables = await AWSWrapper.listTables();
       await logTimestreamTables(Tables, callback);
     }
+
+    const topics = await AWSWrapper.listTopics();
+    await logTopic(topics, callback)
   }
 }

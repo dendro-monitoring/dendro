@@ -30,7 +30,7 @@ class Store {
    * Cache is located at `~/.config/dendro-cli/config.json`
    */
   dump() {
-    log.debug(`Dumping store data:`);
+    log.debug('Dumping store data:');
     log.debug(this as unknown as string);
     config.set('state', this);
   }
@@ -40,6 +40,14 @@ class Store {
    */
   clean() {
     config.delete('state');
+    this.Vector = new Vector({
+      Postgres: {},
+      Nginx: {},
+      Apache: {},
+      Host: {},
+      Mongo: {},
+      CustomApplications: []
+    });
   }
 }
 
@@ -74,7 +82,7 @@ const diskCache = config.get('state') as CacheData;
 export const storeDebugLogs = (): void => {
   if (diskCache) {
     log.debug('Found cache data');
-    log.debug(`Store data:`);
+    log.debug('Store data:');
     log.debug(diskCache as unknown as string);
   } else {
     log.debug('No cache data found');

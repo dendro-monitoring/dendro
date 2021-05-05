@@ -62,3 +62,10 @@ export const ALL_TIMESTREAM_DATABASE_TABLES = [
 ];
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/* Alarm Names */
+export const APACHE_ALARM = 'DendroApacheAlarm';
+export const HOST_ALARM = 'DendroHostAlarm';
+export const MONGO_ALARM = 'DendroMongoAlarm';
+export const NGINX_ALARM = 'DendroNginxAlarm';
+export const POSTGRES_ALARM = 'DendroPostgresAlarm';

@@ -3,13 +3,14 @@ import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/sidebar';
+import '../css/accordion.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [services, setServices] = useState([]);
 
   useEffect(()=> {
     (async () => {
-      const res = await fetch("/api/tables");
+      const res = await fetch('/api/tables');
       const { data } = await res.json();
       setServices(data);
     })();

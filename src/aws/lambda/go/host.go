@@ -1,6 +1,8 @@
 package main
 
-import "github.com/aws/aws-sdk-go/service/timestreamwrite"
+import (
+	"github.com/aws/aws-sdk-go/service/timestreamwrite"
+)
 
 func buildHostMetricRecord(pRecord *RawRecord) {
 	record := *pRecord
@@ -35,7 +37,7 @@ func buildHostMetricRecord(pRecord *RawRecord) {
 
 	measureName := name
 	// TODO: If name doesn't exist, return? Record fails?
-	measureValueType := "VARCHAR"
+	measureValueType := "DOUBLE"
 	measureValue := fetchMeasureValue(pRecord)
 
 	hostMetricRecords = append(hostMetricRecords, &timestreamwrite.Record{
