@@ -20,7 +20,7 @@ import listDatabases from './timestream/listDatabases';
 import listTables from './timestream/listTables';
 
 import createDeliveryStream from './firehose/createDeliveryStream';
-import listDeliveryStreams from './firehose/listDeliveryStreams';
+import describeDeliveryStream from './firehose/describeDeliveryStream';
 import deleteDeliveryStream from './firehose/deleteDeliveryStream';
 
 import createRole from './iam/createRole';
@@ -37,6 +37,7 @@ import putMetricFilter from './cloudwatch/putMetricFilter';
 import createTopic from './sns/createTopic';
 import subscribe from './sns/subscribe';
 import deleteTopic from './sns/deleteTopic';
+import listTopics from './sns/listTopics';
 
 export default {
   createBucket,
@@ -61,7 +62,7 @@ export default {
   listTables,
 
   createDeliveryStream,
-  listDeliveryStreams,
+  describeDeliveryStream,
   deleteDeliveryStream,
 
   createRole,
@@ -78,4 +79,5 @@ export default {
   createTopic,
   subscribe,
   deleteTopic,
+  listTopics,
 };

@@ -63,32 +63,36 @@ export const ALL_TIMESTREAM_DATABASE_TABLES = [
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const DENDRO_ASCII_ART = `
-                    :syhhhhhhhhhhysso/:\`                              
-                   ym+/+osyhddhyo/:/+oydds/\`                          
-                   my\`\`\`\`\`\`\`\`\`-/oydho:..-/ymy:                        
-                   mh/::-.:ymmh/\`\`\`-+ydy/..-odh:                      
-                   mh+oosyNNNNNN:\`\`\`\`\`\`:yds:..oms\`                    
-                   my\`\`\`\`.dNNNNmdho:\`\`\`\`\`.+dh/.:mh\`                   
-                   my.../my---+ms-/yds:\`\`\`\`\`/hh::mh                   
-                   mdshNmdys+-\`-dh-\`\`/hd/\`\`\`\`\`/my+N+                  
-                 \`/Nhomo\`\`\`-/shyohm/\`\`\`-ym/\`\`\`\`.ymNmh+                
-                .mNNNNh\`\`\`\`\`\`\`\`.+hNNy\`\`\`\`-hd-\`\`\`dNNNNN/               
-                :NNNNNmhhs+:\`\`\`\`\`\`-yNd-\`\`\`\`+m+:smNNNNd.               
-                 -sNd+.\`\`-/shy/\`\`\`\`\`-ymsso:+dNm/..md:                 
-                   my\`\`\`\`\`\`\`\`-sdo\`\`\`\`oNNNNNh:-ms\`:No                  
-                   mmhys+-\`\`\`\`\`.sd/\`\`oNNNNN+\`\`-momd\`                  
-                   my\`\`./sdo.\`\`\`\`:mo\`\`-osms\`\`\`\`oNm.                   
-                   my\`\`\`\`\`.om+\`\`\`\`-mo\`\`\`\`+m-\`\`:dh\`                    
-                   mmy+.\`\`\`\`-mo\`\`\`\`/N-\`\`\`\`ds-ym/                      
-                   my-omo\`\`\`\`/N-\`\`\`\`ds\`\`\`.hNd+\`                       
-                   hd:./N-\`\`\`\`m+\`\`\`\`yd+sdds-                          
-                   \`odddmdhhhhmdhdddhso:.                             
-                                                                      
-                                                                      
-                   hh                 :h+                             
-               \`oyyNN .oyy+\`-ooyy: :syhNs.o+ss\`oyys-                  
-               yNo.mN\`mNsyNs+Ny:Nd.NN-+Ns:NN+-hN+-mm\`                 
-               yNs:NN\`mNs+s-+No\`Nd.NN:sNs:Nm  hN+:mm\`                 
-               \`oso+o \`+ss+.-o-\`o+ -ss+o:.o+  \`/ss+.                  
+/* Alarm Names */
+export const APACHE_ALARM = 'DendroApacheAlarm';
+export const HOST_ALARM = 'DendroHostAlarm';
+export const MONGO_ALARM = 'DendroMongoAlarm';
+export const NGINX_ALARM = 'DendroNginxAlarm';
+export const POSTGRES_ALARM = 'DendroPostgresAlarm';
+
+export const DENDRO_ASCII_ART = `                      &&&&&&&&&&&&                                          
+                 &&&&&&&&&&&&&&&&&&&&&&&&&&%                               
+                &&&           &&&&&&&     &&&&                            
+                &&&       &&&&&&    &&&&&&    &&&                         
+                &&&&&&&&&&&&&&&&&        &&&&   &&&                       
+                &&&      &&&&&&&&&&&        &&&&  &&&                     
+                &&&    &&&    &&& %&&&&&       &&&& &&                    
+                &&&&&&&&&&&&&   &&&   &&&&&      &&&&&&&                   
+             &%&&&&&&      &&&&&&&&&    &&&&      &&&&&&&                  
+              &&&&&&&           &&&&&&     &&&&    &&&&&&&&                
+              &&&&&&&&&&&&&         &&&&     &&&&&&&&&&&&&&                
+                &&&       &&&&&       &&&&&&&&&&&&   &&&                   
+                &&&           &&&&    &&&&&&&&  &&&  &&&                   
+                &&&&&&&&&       &&&&  &&&&&&&&   &&&&&&                    
+                &&&     &&&&      &&&     &&&     &&&                      
+                &&&        &&&     &&&     &&&  &&&&                       
+                &&&&&&&     &&&     &&&     &&&&&&                         
+                &&&  &&&     &&&     &&   &&&&&                            
+                 &&&&&&&&&&&&&&&&&&&&&&&&&&                                
+                     _                _           
+                    | |              | |          
+                  __| | ___ _ __   __| |_ __ ___  
+                 / _  |/ _ \\ '_ \\ / _\` | '__/ _ \\ 
+                | (_| |  __/ | | | (_| | | | (_) |         
+                 \\____|\\___|_| |_|\\____|_|  \\___/           
 `;
