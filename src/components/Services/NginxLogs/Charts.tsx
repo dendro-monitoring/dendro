@@ -1,25 +1,8 @@
 import { useEffect, useState } from 'react';
 import ChartCard from '../ChartCard';
 import { VictoryChart, VictoryLine, VictoryBar, VictoryArea, VictoryStack, VictoryLabel, VictoryAxis } from 'victory';
+import generateGaussianData from '../../../utils/sampleData';
 import formatTSQueryResult from '../formatTSQueryResult';
-const Series = require('time-series-data-generator');
-
-function generateGaussianData(interval: number, mean: number, variance: number) {
-  const d = new Date();
-  const until = new Date(Date.now()).toISOString(); // today
-  const from = new Date(d.setDate(d.getDate() - 7)).toISOString(); // a week ago
-  const keyName = 'y';
-  const series = new Series({ from, until, interval, keyName });
-
-  const data = series.gaussian({ mean, variance }).map((record: any) => {
-    const newRecord = {};
-    newRecord.x = new Date(record.timestamp).valueOf(); // convert ISO string to a date and get UNIX time
-    newRecord.y = record.y;
-    return newRecord;
-  });
-
-  return data;
-}
 
 function loadRpsData(setterFunc: any) {
   const interval = 60 * 60;
