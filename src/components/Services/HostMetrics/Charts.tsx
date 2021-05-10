@@ -28,13 +28,15 @@ export default function Chart() {
   let mean= 2;
   let variance = 8;
 
-  const sampleLoadData = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
+  const sampleLoad1Data = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
+  const sampleLoad2Data = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
 
   interval = 60 * 60 * 3;
   mean= 35;
   variance = 8;
 
-  const sampleCPUData = generateGaussianData(interval, mean, variance);
+  const sampleCPU1Data = generateGaussianData(interval, mean, variance);
+  const sampleCPU2Data = generateGaussianData(interval, mean, variance);
 
   interval = 60 * 60 * 12;
   mean= 2;
@@ -81,16 +83,25 @@ export default function Chart() {
               theme={VictoryTheme.material}
               key="load15"
             >
-              <VictoryLabel text={'Load averaged over the last 15 seconds'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={180} y={30} textAnchor="middle"/>
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
-                  data: { stroke: '#EF4444' },
+                  data: { stroke: '#98DED9' },
                   parent: { border: '1px solid #9CA3AF' }
                 }}
-                data={sampleLoadData}
+                data={sampleLoad1Data}
                 // data={temp}
-                key={sampleLoadData}
+                key={sampleLoad1Data}
+              />
+              <VictoryLine
+                style={{
+                  data: { stroke: '#161D6F' },
+                  parent: { border: '1px solid #9CA3AF' }
+                }}
+                data={sampleLoad2Data}
+                // data={temp}
+                key={sampleLoad2Data}
               />
               {/* ))} */}
               <VictoryAxis
@@ -108,10 +119,18 @@ export default function Chart() {
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
-                  data: { stroke: '#EF4444' },
+                  data: { stroke: '#161D6F' },
                   parent: { border: '1px solid #9CA3AF' }
                 }}
-                data={sampleCPUData}
+                data={sampleCPU1Data}
+                // data={temp}
+              />
+              <VictoryLine
+                style={{
+                  data: { stroke: '#98DED9' },
+                  parent: { border: '1px solid #9CA3AF' }
+                }}
+                data={sampleCPU2Data}
                 // data={temp}
               />
               {/* ))} */}
@@ -126,11 +145,11 @@ export default function Chart() {
               theme={VictoryTheme.material}
               key="hosts"
             >
-              <VictoryLabel text={'Unique machines monitored'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Unique Machines Monitored'} x={180} y={30} textAnchor="middle"/>
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
-                  data: { stroke: '#EF4444' },
+                  data: { stroke: '#161D6F' },
                   parent: { border: '1px solid #9CA3AF' }
                 }}
                 data={sampleHostData}

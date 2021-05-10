@@ -51,6 +51,11 @@ export const promptCredentials = async (): Promise<void> => {
   }
 };
 
+export const IAMPrompt = new Confirm({
+  name: 'IAM',
+  message: 'Do your keys have access to the following policies? \n * IAMFullAccess \n * AmazonS3FullAccess \n * AmazonKinesisFirehoseFullAccess \n * AmazonTimestreamFullAccess \n * AWSLambda_FullAccess \n'
+});
+
 export const confirmAlarms = new Confirm({
   name: 'question',
   message: 'Would you like to enable email alerts when errors occur?',
