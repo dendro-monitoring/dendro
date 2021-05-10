@@ -9,6 +9,7 @@ import orchestrator from '../aws/orchestrator';
 import { ensureCredentials } from '../utils/aws';
 import { alarmEmailsPrompt, confirmAlarms } from '../prompts';
 import store from '../store';
+import { IAMPrompt } from '../prompts/AWS';
 
 export default class DeployCommand extends Command {
   static flags = {
@@ -32,6 +33,10 @@ export default class DeployCommand extends Command {
     const parsed = this.parse(DeployCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
+
+    const iam = await IAMPrompt.run();
+
+    if (!iam) return;
 
     const alarms = await confirmAlarms.run();
     if (alarms) {
