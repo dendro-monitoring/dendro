@@ -7,8 +7,8 @@ export default function generateGaussianData(interval: number, mean: number, var
   const keyName = 'y';
   const series = new Series({ from, until, interval, keyName });
 
-  const data = series.gaussian({ mean, variance }).map((record: any) => {
-    const newRecord = {};
+  const data = series.gaussian({ mean, variance }).map((record: { x: number, y: number, timestamp: string}) => {
+    const newRecord = { } as any;
     newRecord.x = new Date(record.timestamp).valueOf(); // convert ISO string to a date and get UNIX time
     newRecord.y = record.y;
     return newRecord;

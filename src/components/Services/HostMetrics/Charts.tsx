@@ -28,7 +28,7 @@ export default function Chart() {
   let mean= 2;
   let variance = 8;
 
-  const sampleLoadData = generateGaussianData(interval, mean, variance).filter( record => record.y >= 1 && record.y <= 10);
+  const sampleLoadData = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
 
   interval = 60 * 60 * 3;
   mean= 35;
@@ -40,7 +40,7 @@ export default function Chart() {
   mean= 2;
   variance = 1;
 
-  const sampleHostData = generateGaussianData(interval, mean, variance).filter( record => record.y > 0);
+  const sampleHostData = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y > 0);
 
   useEffect(() => {
     // fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: load15 }) }).then( res => res.json()).then( ({ data }) => {
