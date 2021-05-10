@@ -12,9 +12,9 @@ export default function Service({ service, active, inactive }: Props) {
   const router = useRouter();
   const { slug } = router.query;
 
-  const name = service.name.split("-")
+  const name = service.name.split('-')
     .map((i) => i[0].toUpperCase() + i.slice(1))
-    .join(" ");
+    .join(' ');
 
   return (
     <Link

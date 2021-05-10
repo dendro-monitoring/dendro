@@ -1,4 +1,4 @@
-import ChartSwitcher from "../../components/Services/ChartSwitcher";
+import ChartSwitcher from '../../components/Services/ChartSwitcher';
 import { useRouter } from 'next/router';
 
 const Services = () => {
