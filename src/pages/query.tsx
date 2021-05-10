@@ -5,7 +5,7 @@ import fileDownload from 'js-file-download';
 import formatTSQueryResult from '../components/Services/formatTSQueryResult';
 
 export default function Query() {
-  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.nginxAccessLogs LIMIT 10');
+  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.hostMetrics LIMIT 10');
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
   const [rawData, setRawData] = useState('');
@@ -21,8 +21,8 @@ export default function Query() {
 
     const { data } = await res.json();
     setHeaders(data.ColumnInfo);
-    setRows(data.Rows);
-    setRawData(data);
+    setRows(data.Rows ? data.Rows : []);
+    setRawData(JSON.stringify(data, null, 2));
   };
 
   const handleExport = async () => {

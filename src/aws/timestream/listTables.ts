@@ -9,12 +9,13 @@ export default async function listTables(DatabaseName: string = AWS_TIMESTREAM_D
     };
 
     AWS_TIMESTREAM_WRITE.listTables(params, function (err, data) {
+      store.AWS.Timestream.NextToken = data.NextToken;
+
       if (err) {
         reject(err);
         return;
       }
 
-      store.AWS.Timestream.NextToken = data.NextToken;
       resolve(data.Tables);
     });
   });

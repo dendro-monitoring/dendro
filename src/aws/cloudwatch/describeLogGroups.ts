@@ -7,9 +7,9 @@ export default function describeLogGroups(): Promise<any> {
       nextToken: store.AWS.Cloudwatch.NextToken
     };
     AWS_CLOUDWATCH.describeLogGroups(params as unknown as any, function(err, data) {
+      store.AWS.Cloudwatch.NextToken = data.nextToken;
       if (err) reject(err);
       else {
-        store.AWS.Cloudwatch.NextToken = data.nextToken;
         resolve(data.logGroups);
       }
     });
