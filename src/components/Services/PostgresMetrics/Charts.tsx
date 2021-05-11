@@ -16,18 +16,18 @@ export default function Chart({ name }: { name: string }) {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">{name}</h1>
+      <h1 className='text-3xl font-semibold'>{name}</h1>
       <ChartCard name={name}>
         {/* Child 1 */}
         <>
           {/* Chart 1 */}
           <VictoryChart
-            scale={{ x: "time", y: "linear" }}
+            scale={{ x: 'time', y: 'linear' }}
             style={{ parent: { maxWidth: '50%', } }}
             // theme={VictoryTheme.material}
             domain={{ y: [0.9, 1] }}
           >
-            <VictoryLabel text={'Cache Hit Ratio'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Cache Hit Ratio'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
               style={{
                 data: { stroke: '#1144F1' },
@@ -44,11 +44,11 @@ export default function Chart({ name }: { name: string }) {
 
           {/* Chart 2 */}
           <VictoryChart
-            scale={{ x: "time", y: "linear" }}
+            scale={{ x: 'time', y: 'linear' }}
             style={{ parent: { maxWidth: '50%', } }}
             domain={{ y: [80, 120] }}
           >
-            <VictoryLabel text={'Number of Connections'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Number of Connections'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
               style={{
                 data: { stroke: '#1144F1' },

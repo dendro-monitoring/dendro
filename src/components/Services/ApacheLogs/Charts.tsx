@@ -137,7 +137,7 @@ export default function Chart({ name }: { name: string }) {
             domain={{ y: [0, 600] }}
             key='rps'
           >
-            <VictoryLabel text="Requests per Second (past 7 days)" x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text="Requests per Second (past 7 days)" x={240} y={30} textAnchor="middle"/>
             <VictoryLine
               style={{ data: { stroke: '#98DED9' }, parent: { border: '1px solid #ccc' } }}
               data={rpsData}
@@ -156,7 +156,7 @@ export default function Chart({ name }: { name: string }) {
             domain={{ y: [0, 1] }}
             key='latency'
           >
-            <VictoryLabel text={'Avg. HTTP Response Time (s)'} x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text={'Avg. HTTP Response Time (s)'} x={240} y={30} textAnchor="middle"/>
             <VictoryLine
               style={{
                 data: { stroke: '#98DED9' },
@@ -180,7 +180,7 @@ export default function Chart({ name }: { name: string }) {
             domainPadding={{ x: 10 }}
             key='slowest'
           >
-            <VictoryLabel text={'Slowest Paths (s)'} x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text={'Slowest Paths (s)'} x={240} y={30} textAnchor="middle"/>
             <VictoryBar horizontal
               style={{ data: { fill: '#161D6F' } }}
               labels={({ datum }) => `  ${datum.y}s`}
@@ -201,7 +201,7 @@ export default function Chart({ name }: { name: string }) {
             domain={{ y: [0, 800] }}
             key='status'
           >
-            <VictoryLabel text={'Status Code Responses (Avg. Count)'} x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text={'Status Code Responses (Avg. Count)'} x={240} y={30} textAnchor="middle"/>
             <VictoryLegend x={380} y={20}
               orientation="vertical"
               rowGutter={{ top: 0, bottom: -15 }}
