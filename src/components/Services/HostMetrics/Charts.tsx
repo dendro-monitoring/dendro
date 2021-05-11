@@ -18,11 +18,10 @@ from "DendroTimestreamDB"."hostMetrics" \
 group by bin(time, 15s) \
 limit 500';
 
-export default function Chart() {
+export default function Chart({ name }: { name: string }) {
   const [load15Data, setLoad15Data] = useState([]);
   const [utilizationData, setUtilizationData] = useState([]);
   const [userCountData, setUserCountData] = useState([]);
-  const name = 'angel';
 
   let interval = 60 * 60 * 5;
   let mean= 2;
@@ -74,6 +73,7 @@ export default function Chart() {
 
   return (
     <>
+      <h1 className="text-3xl font-semibold">{name}</h1>
       <ChartCard name={name}>
         {[
           <>
