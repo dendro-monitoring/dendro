@@ -1,7 +1,8 @@
 import { Command } from '@oclif/command';
 import chalk from 'chalk';
 import { DENDRO_ASCII_ART } from '../constants';
-const { Select } = require('enquirer');
+import { cli } from 'cli-ux';
+const { Select, Confirm } = require('enquirer');
 import log from '../utils/log';
 
 export default class InstallVector extends Command {
@@ -37,6 +38,16 @@ export default class InstallVector extends Command {
       console.log('   ' + codeBlock(rpm));
     } else if (choice.includes('Other')) {
       console.log(other);
+    }
+
+    const customTransforms = new Confirm({
+      name: 'customTransforms',
+      message: 'Would you like to transform your logs before sending them?'
+    });
+
+    if(await customTransforms.run()) {
+      log.info('Please visit:');
+      cli.url('- Vector\'s Remap Function', 'https://vector.dev/docs/reference/configuration/transforms/remap/');
     }
   }
 }

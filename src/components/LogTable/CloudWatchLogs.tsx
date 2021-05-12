@@ -1,8 +1,7 @@
 import React from 'react';
-import { CloudWatchLog } from '../../constants/frontendTypes';
 import LogStreamTable from './LogStreamTable';
 
-export default function CloudWatchLogs({ logs }: { logs: CloudWatchLog[] }) {
+export default function CloudWatchLogs({ logs }: { logs: {logStreams: Array<any>} }) {
   return (
     <>
       <div className="w-full md:w-5/5 mx-auto p-8">

@@ -1,4 +1,5 @@
 import { Command, flags } from '@oclif/command';
+import cli from 'cli-ux';
 import store, { storeDebugLogs } from '../store';
 import log, { LevelNames } from '../utils/log';
 const { Confirm, Form } = require('enquirer');
@@ -163,6 +164,16 @@ export default class Configure extends Command {
     log.info('Saving selections to cache');
     log.info(`To review your selections, please run ${chalk.bold.yellow('dendro review')}`);
     log.info(`To clear your current configuration, please run ${chalk.bold.yellow('dendro clean')}`);
+
+    if (store.Vector.Apache.monitorAccessLogs || store.Vector.Apache.monitorErrorLogs) {
+      log.info('For more information on how Apache logs are formatted by default, please check:');
+      cli.url('Apache\'s Error Log Format', 'https://httpd.apache.org/docs/2.4/mod/core.html#errorlogformat');
+    }
+
+    if (store.Vector.Nginx.monitorAccessLogs || store.Vector.Nginx.monitorErrorLogs) {
+      log.info('For more information on how NginX logs are formatted by default, please check:');
+      cli.url('NginX\'s ngx_http_log_module', 'http://nginx.org/en/docs/http/ngx_http_log_module.html');
+    }
 
     store.dump();
 

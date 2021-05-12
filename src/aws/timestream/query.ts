@@ -10,12 +10,12 @@ export default function query(QueryString: string): Promise<any> {
       NextToken: store.AWS.Timestream.NextToken
     };
     AWS_TIMESTREAM_QUERY.query(params as unknown as any, function(err: AWSError, data) {
+      store.AWS.Timestream.NextToken = data.NextToken || '';
+
       if (err) {
         reject(err);
         return;
       }
-
-      store.AWS.Timestream.NextToken = data.NextToken || '';
       resolve(data);
     });
   });

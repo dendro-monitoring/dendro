@@ -10,9 +10,9 @@ export default function describeLogStreams(logGroupName = `/aws/lambda/${AWS_LAM
       descending,
     };
     AWS_CLOUDWATCH.describeLogStreams(params as unknown as any, function(err: AWSError, data) {
+      store.AWS.Cloudwatch.NextToken = data.nextToken;
       if (err) reject(err);
       else {
-        store.AWS.Cloudwatch.NextToken = data.nextToken;
         resolve(data.logStreams);
       }
     });
