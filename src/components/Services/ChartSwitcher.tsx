@@ -25,7 +25,7 @@ export default function ChartSwitcher({ name: camelCaseName }: Props) {
     case 'postgresLogs':
       return <PostgresMetricsCharts name={name} />;
     case 'hostMetrics':
-      return <HostMetricsCharts />;
+      return <HostMetricsCharts name={name} />;
     default:
       return null;
   }

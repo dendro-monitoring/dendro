@@ -24,6 +24,8 @@ function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array
 }
 
 export default class Teardown extends Command {
+  static description = 'Permanently deletes the logging pipeline deployed on AWS';
+
   static flags = {
     help: flags.help({ char: 'h' }),
     level: flags.string({

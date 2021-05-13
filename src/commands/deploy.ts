@@ -9,9 +9,13 @@ import orchestrator from '../aws/orchestrator';
 import { ensureCredentials } from '../utils/aws';
 import { alarmEmailsPrompt, confirmAlarms } from '../prompts';
 import store from '../store';
+import { DENDRO_ASCII_ART } from '../constants';
 import { IAMPrompt } from '../prompts/AWS';
+import chalk from 'chalk';
 
 export default class DeployCommand extends Command {
+  static description = `Deploy the dendro logging pipeline on AWS. Run ${chalk.yellow.bold('configure')} prior to this command otherwise database tables will not be set`;
+
   static flags = {
     help: flags.help({ char: 'h' }),
     level: flags.string({
@@ -27,6 +31,7 @@ export default class DeployCommand extends Command {
       default: 'info',
     }),
   };
+
   async run(): Promise<void> {
     ensureCredentials();
 
@@ -45,6 +50,8 @@ export default class DeployCommand extends Command {
     }
 
     console.clear();
+
+    console.log(DENDRO_ASCII_ART);
 
     let spinner;
     try {
@@ -80,8 +87,3 @@ export default class DeployCommand extends Command {
     }
   }
 }
-
-DeployCommand.description = `Describe the command here
-...
-Extra documentation goes here
-`;

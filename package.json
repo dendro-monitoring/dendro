@@ -1,7 +1,7 @@
 {
   "name": "dendro-cli",
   "version": "0.0.11",
-  "description": "Core CLI for dendroflumechuck",
+  "description": "Dendro CLI",
   "keywords": [
     "oclif",
     "time-series",

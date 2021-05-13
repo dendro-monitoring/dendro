@@ -21,11 +21,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Create Next App</title>
+        <title>Dendro</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="App h-screen flex overflow-hidden bg-gray-100">
-        <Sidebar services={services} />
+        <Sidebar />
 
         <main className="flex-1 relative z-0 overflow-y-auto focus:outline-none">
           <Component {...pageProps} />

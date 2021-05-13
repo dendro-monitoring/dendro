@@ -12,7 +12,11 @@ function generateGaussianData(interval: number, mean: number, variance: number) 
   const series = new Series({ from, until, interval, keyName });
 
   const data = series.gaussian({ mean, variance }).map((record: any) => {
-    const newRecord = {};
+    const newRecord: Record<'x'|'y', number | undefined> = {
+      x: undefined,
+      y: undefined,
+    };
+
     newRecord.x = new Date(record.timestamp).valueOf(); // convert ISO string to a date and get UNIX time
     newRecord.y = record.y;
     return newRecord;
@@ -126,7 +130,7 @@ export default function Chart({ name }: { name: string }) {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">{name}</h1>
+      <h1 className="text-3xl font-semibold" id='apacheAccessLogs'>{name}</h1>
       <ChartCard name={name}>
         {/* Child 1 */}
         <>
