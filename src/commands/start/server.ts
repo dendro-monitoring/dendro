@@ -1,8 +1,8 @@
 import { Command, flags } from '@oclif/command';
-const startServer = require("../../startServer");
+const startServer = require('../../startServer');
 
 export default class StartServer extends Command {
-  static description = 'describe the command here';
+  static description = 'Start dendro\'s dashboard for viewing live metrics';
 
   static flags = {
     help: flags.help({ char: 'h' })
@@ -11,7 +11,7 @@ export default class StartServer extends Command {
   static args = [];
 
   async run() {
-    const { args, flags } = this.parse(StartServer);
+    this.parse(StartServer);
 
     process.env.NODE_ENV = 'production';
 

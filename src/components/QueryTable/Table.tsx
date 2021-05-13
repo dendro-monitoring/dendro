@@ -12,7 +12,7 @@ interface Props {
 export default function Table({ headers, rows }: Props) {
   const [page, setPage] = useState(1);
 
-  if (!rows) return;
+  if (!rows) return null;
 
   const start = rows.length > 0 ? 10 * (page - 1) + 1 : 0;
   const end = rows.length >= 10 ? page * 10 : rows.length;
