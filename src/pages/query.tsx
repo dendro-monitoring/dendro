@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/sidebar';
-import List from '../components/QueryTable/Table';
+import Table from '../components/QueryTable/Table';
 import fileDownload from 'js-file-download';
 import formatTSQueryResult from '../components/Services/formatTSQueryResult';
 
@@ -78,7 +77,7 @@ export default function Query() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="pb-4 overflow-scroll">
-            <List headers={headers} rows={rows} />
+            <Table headers={headers} rows={rows} />
           </div>
         </div>
       </div>

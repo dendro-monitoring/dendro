@@ -18,7 +18,7 @@ from "DendroTimestreamDB"."hostMetrics" \
 group by bin(time, 15s) \
 limit 500';
 
-export default function Chart({ name }) {
+export default function Chart({ name }: {name: string}) {
   const [load15Data, setLoad15Data] = useState([]);
   const [utilizationData, setUtilizationData] = useState([]);
   const [userCountData, setUserCountData] = useState([]);

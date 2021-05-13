@@ -20,7 +20,7 @@ import chalk from 'chalk';
 import { DENDRO_ASCII_ART } from '../constants';
 
 export default class Configure extends Command {
-  static description = 'configuring collector/agent setup of log sources';
+  static description = 'Configure Vector to monitor services and log sources';
   static examples = [];
 
   static flags = {
