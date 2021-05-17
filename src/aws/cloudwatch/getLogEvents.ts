@@ -20,13 +20,13 @@ export default function getLogEvents(
       startTime
     };
     AWS_CLOUDWATCH.getLogEvents(params as unknown as any, function(err: AWSError, data: any) {
-      if (err) return reject(err);
-
       if (data.events.length === 0) {
         store.AWS.Cloudwatch.NextToken = null;
       } else {
         store.AWS.Cloudwatch.NextToken = data.nextForwardToken;
       }
+
+      if (err) return reject(err);
 
       resolve(data.events);
 

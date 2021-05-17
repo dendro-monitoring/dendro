@@ -11,13 +11,11 @@ const Services = ({ services }: Props) => {
 
   return (
     <div className="px-2">
-      {services.map(({ name }) => {
-        return (
-          <div className="py-4 px-4" key={name}>
-            <ChartSwitcher name={name} />
-          </div>
-        );
-      })}
+      {services.map(({ name }) => (
+        <div className="py-4 px-4" key={name}>
+          <ChartSwitcher name={name} />
+        </div>
+      ))}
     </div>
   );
 

@@ -14,26 +14,13 @@ import {
   logTimestreamTables,
   logTopic
 } from '../utils/list';
+import { DENDRO_ASCII_ART } from '../constants';
 
 export default class ListCommand extends Command {
-  static description = 'describe the command here';
-
-  static examples = [
-    `$ dendro list
-Roles
-Buckets
-Firehose streams
-Lambda
-Timestream
-`,
-  ];
+  static description = 'List existing AWS resources';
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-    // name: flags.string({ char: 'n', description: 'name to log' }),
-    // flag with no value (-f, --force)
-    // force: flags.boolean({ char: 'f' }),
     level: flags.string({
       char: 'L',
       description: 'set the log level',
@@ -56,6 +43,10 @@ Timestream
     const parsed = this.parse(ListCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
+
+    console.clear();
+    console.log(DENDRO_ASCII_ART);
+
     let spinner: ora.Ora | undefined;
     const callback = (msg: string) => spinner?.succeed(msg);
 
@@ -86,6 +77,6 @@ Timestream
     }
 
     const topics = await AWSWrapper.listTopics();
-    await logTopic(topics, callback)
+    await logTopic(topics, callback);
   }
 }

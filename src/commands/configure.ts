@@ -1,4 +1,5 @@
 import { Command, flags } from '@oclif/command';
+import cli from 'cli-ux';
 import store, { storeDebugLogs } from '../store';
 import log, { LevelNames } from '../utils/log';
 const { Confirm, Form } = require('enquirer');
@@ -16,9 +17,10 @@ import {
 import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
 import chalk from 'chalk';
+import { DENDRO_ASCII_ART } from '../constants';
 
 export default class Configure extends Command {
-  static description = 'configuring collector/agent setup of log sources';
+  static description = 'Configure Vector to monitor services and log sources';
   static examples = [];
 
   static flags = {
@@ -157,9 +159,21 @@ export default class Configure extends Command {
     await promptCredentials();
 
     console.clear();
+    console.log(DENDRO_ASCII_ART);
+
     log.info('Saving selections to cache');
     log.info(`To review your selections, please run ${chalk.bold.yellow('dendro review')}`);
     log.info(`To clear your current configuration, please run ${chalk.bold.yellow('dendro clean')}`);
+
+    if (store.Vector.Apache.monitorAccessLogs || store.Vector.Apache.monitorErrorLogs) {
+      log.info('For more information on how Apache logs are formatted by default, please check:');
+      cli.url('Apache\'s Error Log Format', 'https://httpd.apache.org/docs/2.4/mod/core.html#errorlogformat');
+    }
+
+    if (store.Vector.Nginx.monitorAccessLogs || store.Vector.Nginx.monitorErrorLogs) {
+      log.info('For more information on how NginX logs are formatted by default, please check:');
+      cli.url('NginX\'s ngx_http_log_module', 'http://nginx.org/en/docs/http/ngx_http_log_module.html');
+    }
 
     store.dump();
 
