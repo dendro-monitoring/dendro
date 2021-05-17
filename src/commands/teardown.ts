@@ -111,7 +111,7 @@ export default class Teardown extends Command {
         spinner.succeed();
       }
 
-      if (DeliveryStreamNames.length > 0) {
+      if (DeliveryStreamNames) {
         spinner = log.spin('Deleting firehose...');
         const firehoseError = await orchestrator.deleteFirehose();
         if (firehoseError) {
