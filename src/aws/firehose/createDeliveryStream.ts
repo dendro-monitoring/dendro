@@ -21,7 +21,9 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
       },
     };
     let finished = false;
-    await retry(13, () => {
+    const TIMES_TO_RETRY = 10;
+    const RETRY_INTERVAL = 3000; // in milliseconds
+    await retry(TIMES_TO_RETRY, () => {
       AWS_FIREHOSE.createDeliveryStream(params, (err: AWSError, data) => {
         if (err && err.code !== 'ResourceInUseException' && err.code !== 'InvalidArgumentException') {
           return reject(err);
@@ -31,7 +33,7 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
           resolve(data);
         }
       })
-    }, finished);
+    }, finished, RETRY_INTERVAL);
 
     if (!finished) {
       throw new Error('Could not create Firehose Delivery Stream');
