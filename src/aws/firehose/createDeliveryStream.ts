@@ -25,10 +25,12 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
     const RETRY_INTERVAL = 3000; // in milliseconds
     await retry(TIMES_TO_RETRY, () => {
       AWS_FIREHOSE.createDeliveryStream(params, (err: AWSError, data) => {
-        if (err && err.code !== 'ResourceInUseException' && err.code !== 'InvalidArgumentException') {
+        if (err && err.code === 'ResourceInUseException') {
+          finished = true;
+          resolve(null);
+        } else if (err && err.code !== 'InvalidArgumentException') {
           return reject(err);
-        }
-        else if (data) {
+        } else if (data) {
           finished = true;
           resolve(data);
         }
