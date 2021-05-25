@@ -1,8 +1,9 @@
 import { AWSError } from 'aws-sdk';
 import { AWS_FIREHOSE } from '../../constants';
+import retry from '../../utils/retry';
 
 export default function createDeliveryStream(DeliveryStreamName: string, BucketName: string, RoleARN: string): Promise<any> {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const params = {
       DeliveryStreamName, /* required */
       DeliveryStreamType: 'DirectPut',
@@ -19,10 +20,26 @@ export default function createDeliveryStream(DeliveryStreamName: string, BucketN
         },
       },
     };
-    AWS_FIREHOSE.createDeliveryStream(params, (err: AWSError, data) => {
-      if (err && err.code !== 'ResourceInUseException') return reject(err);
-      else resolve(data);
-    });
+    let finished = false;
+    const TIMES_TO_RETRY = 10;
+    const RETRY_INTERVAL = 3000; // in milliseconds
+    await retry(TIMES_TO_RETRY, () => {
+      AWS_FIREHOSE.createDeliveryStream(params, (err: AWSError, data) => {
+        if (err && err.code === 'ResourceInUseException') {
+          finished = true;
+          resolve(null);
+        } else if (err && err.code !== 'InvalidArgumentException') {
+          return reject(err);
+        } else if (data) {
+          finished = true;
+          resolve(data);
+        }
+      })
+    }, finished, RETRY_INTERVAL);
+
+    if (!finished) {
+      throw new Error('Could not create Firehose Delivery Stream');
+    }
   });
 }
 

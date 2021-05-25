@@ -17,7 +17,7 @@ import {
 function noResourcesFound(roles: Array<any>, buckets: Array<any>, streams: Array<any>, functions: Array<any>, databases: Array<any>, topics: Array<any>): boolean {
   return roles.length === 0
     && buckets.length === 0
-    && streams.length === 0
+    && !streams
     && functions.length === 0
     && databases.length === 0
     && topics.length === 0;
@@ -111,7 +111,7 @@ export default class Teardown extends Command {
         spinner.succeed();
       }
 
-      if (DeliveryStreamNames.length > 0) {
+      if (DeliveryStreamNames) {
         spinner = log.spin('Deleting firehose...');
         const firehoseError = await orchestrator.deleteFirehose();
         if (firehoseError) {

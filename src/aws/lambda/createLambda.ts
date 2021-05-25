@@ -44,7 +44,7 @@ export default function createLambda({
     };
 
     AWS_LAMBDA.createFunction(params, (err: AWSError, data) => {
-      if (err && err.code !== 'ResourceConflictException') throw new Error(String(err));
+      if (err && err.code !== 'ResourceConflictException' && err.code !== 'ResourceInUseException') throw new Error(String(err));
       else resolve(data);
     });
   });
