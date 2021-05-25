@@ -29,10 +29,7 @@ export default function Chart({ name }: { name: string }) {
           >
             <VictoryLabel text={'Cache Hit Ratio'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={cacheHitRatioData}
             />
             <VictoryAxis
@@ -50,10 +47,7 @@ export default function Chart({ name }: { name: string }) {
           >
             <VictoryLabel text={'Number of Connections'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={connectionsData}
             />
             <VictoryAxis
