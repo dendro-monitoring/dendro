@@ -2,16 +2,18 @@ import Link from 'next/link';
 import { MonitoredService } from '../../constants/frontendTypes';
 
 const COLORS = {
-  "apache-metrics": "red-600",
-  "apache-logs": "red-600",
-  "custom-application": "pink-600",
-  "host-metrics": "yellow-600",
-  "mongo-metrics": "purple-600",
-  "mongo-logs": "purple-600",
-  "nginx-metrics": "green-600",
-  "nginx-logs": "green-600",
-  "postgres-metrics": "indigo-600",
-  "postgres-logs": "indigo-600",
+  'apacheMetrics': 'red-600',
+  'apacheAccessLogs': 'red-600',
+  'apacheErrorLogs': 'red-600',
+  'customApplication': 'pink-600',
+  'hostMetrics': 'yellow-600',
+  'mongoMetrics': 'purple-600',
+  'mongoLogs': 'purple-600',
+  'nginxMetrics': 'green-600',
+  'nginxAccessLogs': 'green-600',
+  'nginxErrorLogs': 'green-600',
+  'postgresMetrics': 'indigo-600',
+  'postgresLogs': 'indigo-600',
 };
 
 const Card = ({ service }: { service: MonitoredService }) => {
@@ -25,25 +27,24 @@ const Card = ({ service }: { service: MonitoredService }) => {
   //   "bg-indigo-600",
   // ];
 
-  const initials = service.name.split("-")
-    .slice(0, 2)
-    .map((i) => i[0])
-    .join("")
-    .toUpperCase();
+  const name = service.name.replace(/([a-z])([A-Z])/g, '$1 $2')
+    .split(' ')
+    .map((i) => i[0].toUpperCase() + i.slice(1))
+    .join(' ');
 
   return (
-    <Link href={`/services/${service.name}`}>
+    <Link href={`/metrics#${service.name}`}>
       <a>
         <li className="col-span-1 flex shadow-sm hover:shadow-md rounded-md">
           <div
             className={`flex-shrink-0 flex items-center justify-center w-16 text-white text-sm font-medium rounded-l-md bg-${COLORS[service.name]}`}
           >
-            {initials}
+            {name[0]}
           </div>
           <div className="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
             <div className="flex-1 px-4 py-2 text-sm truncate">
               <p className="text-gray-900 font-medium">
-                {service.name}
+                {name}
               </p>
               <p className={`text-${COLORS[service.name]}`}>{' '}</p>
             </div>

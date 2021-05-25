@@ -16,7 +16,7 @@ export default function Chart({ name }: { name: string }) {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold">{name}</h1>
+      <h1 className="text-3xl font-semibold" id='mongoMetrics'>{name}</h1>
       <ChartCard name={name}>
         {/* Child 1 */}
         <>

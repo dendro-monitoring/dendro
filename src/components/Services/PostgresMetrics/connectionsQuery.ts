@@ -1,14 +1,14 @@
-const Series = require("time-series-data-generator");
+const Series = require('time-series-data-generator');
 import { Dispatch, SetStateAction } from 'react';
 import formatTSQueryResult from '../formatTSQueryResult';
 
-const connectionsQuery = "SELECT concat(host, '-', database) AS source, time AS x, measure_value::double AS y \
+const connectionsQuery = 'SELECT concat(host, \'-\', database) AS source, time AS x, measure_value::double AS y \
   FROM DendroTimestreamDB.postgresMetrics \
-  WHERE measure_name = 'pg_stat_database_numbackends' \
+  WHERE measure_name = \'pg_stat_database_numbackends\' \
   AND database IS NOT NULL \
-  AND database = 'postgres' \
+  AND database = \'postgres\' \
   GROUP BY measure_name, measure_value::double, time, host, database \
-  ORDER BY time ASC"
+  ORDER BY time ASC';
 
 export default function getConnectionsData() {
   const d = new Date();
@@ -20,15 +20,19 @@ export default function getConnectionsData() {
   const mean = 100;
   const variance = 5.3;
   const decimalDigits = 3;
-  const fakeData = series.gaussian({ mean, variance, decimalDigits }).map(record => {
-    const newRecord = {};
+
+  const fakeData = series.gaussian({ mean, variance, decimalDigits }).map((record: any) => {
+    const newRecord: Record<'x'|'y', number | undefined> = {
+      x: undefined,
+      y: undefined,
+    };
+
     newRecord.x = new Date(record.timestamp).valueOf();
-    newRecord.y = Number(record.y);
+    newRecord.y = +(record.y);
     return newRecord;
-  })
+  });
+
   return fakeData;
-
-
 
   // const connectionsSeries = new Series({ from, until, interval, keyName, type: "random" });
   // const connectionsWeights = {

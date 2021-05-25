@@ -4,14 +4,10 @@ import store from '../store';
 import log from '../utils/log';
 
 export default class Review extends Command {
-  static description = 'describe the command here';
+  static description = 'Pretty print the Vector config of monitored services';
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({ char: 'n', description: 'name to print' }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: 'f' }),
   };
 
   static args = [{ name: 'file' }];
@@ -28,7 +24,7 @@ export default class Review extends Command {
 
     if (!monitorMetrics && !monitorErrorLogs && !monitorAccessLogs) return;
 
-    const str = chalk.bold("Apache Data:\n") +
+    const str = chalk.bold('Apache Data:\n') +
       `    URL: ${chalk.green(url)}\n` +
       `    Port: ${chalk.green(port)}\n` +
       `    Monitor Access Logs: ${chalk.green(monitorAccessLogs)}\n` +
@@ -50,7 +46,7 @@ export default class Review extends Command {
 
     if (!monitorMetrics && !monitorLogs) return;
 
-    const str = chalk.bold("MongoDB Data:\n") +
+    const str = chalk.bold('MongoDB Data:\n') +
       `    URL: ${chalk.green(url)}\n` +
       `    Port: ${chalk.green(port)}\n` +
       `    Monitor Logs: ${chalk.green(monitorLogs)}\n` +
@@ -72,7 +68,7 @@ export default class Review extends Command {
 
     if (!monitorMetrics && !monitorErrorLogs && !monitorAccessLogs) return;
 
-    const str = chalk.bold("Nginx Data:\n") +
+    const str = chalk.bold('Nginx Data:\n') +
       `    URL: ${chalk.green(url)}\n` +
       `    Port: ${chalk.green(port)}\n` +
       `    Monitor Access Logs: ${chalk.green(monitorAccessLogs)}\n` +
@@ -94,7 +90,7 @@ export default class Review extends Command {
 
     if (!monitorMetrics && !monitorErrorLogs) return;
 
-    const str = chalk.bold("PostgreSQL Data:\n") +
+    const str = chalk.bold('PostgreSQL Data:\n') +
       `    URL: ${chalk.green(url)}\n` +
       `    Port: ${chalk.green(port)}\n` +
       `    Monitor Error Logs: ${chalk.green(monitorErrorLogs)}\n` +
@@ -118,7 +114,7 @@ export default class Review extends Command {
       scrapeIntervalSeconds
     } = store.Vector.Host;
 
-    const str = chalk.bold("Host Data:\n") +
+    const str = chalk.bold('Host Data:\n') +
       `    Montior CPU: ${chalk.green(cpu)}\n` +
       `    Montior Disk: ${chalk.green(disk)}\n` +
       `    Montior Filesystem: ${chalk.green(filesystem)}\n` +
@@ -147,7 +143,8 @@ export default class Review extends Command {
   }
 
   async run() {
-    // const { args, flags } = this.parse(Review);
+    this.parse(Review);
+
     this.apacheData();
     this.mongoData();
     this.nginxData();

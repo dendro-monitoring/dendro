@@ -1,13 +1,15 @@
-export type VectorService = 'apache-metrics'
-| 'apache-logs'
-| 'custom-application'
-| 'host-metrics'
-| 'mongo-metrics'
-| 'mongo-logs'
-| 'nginx-metrics'
-| 'nginx-logs'
-| 'postgres-metrics'
-| 'postgres-logs';
+export type VectorService = 'apacheMetrics'
+| 'apacheAccessLogs'
+| 'apacheErrorLogs'
+| 'customApplication'
+| 'hostMetrics'
+| 'mongoMetrics'
+| 'mongoLogs'
+| 'nginxMetrics'
+| 'nginxAccessLogs'
+| 'nginxErrorLogs'
+| 'postgresMetrics'
+| 'postgresLogs';
 
 export interface MonitoredService {
   name: VectorService
