@@ -42,7 +42,8 @@ export default function Chart({ name }: { name: string }) {
   mean = 2.5;
   variance = 3;
 
-  const sampleHostData = generateGaussianData(interval, mean, variance).filter((record: any) => record.y > 0);
+  const sampleHostData1 = generateGaussianData(interval, mean, variance).filter((record: any) => record.y > 0);
+  const sampleHostData2 = generateGaussianData(interval, mean, variance).filter((record: any) => record.y > 0);
 
   useEffect(() => {
     // fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: load15 }) }).then( res => res.json()).then( ({ data }) => {
@@ -84,14 +85,14 @@ export default function Chart({ name }: { name: string }) {
               theme={VictoryTheme.material}
               key="load15"
             >
-              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={180} y={30} textAnchor="middle" />
+              <VictoryLabel text={'Load'} x={180} y={30} textAnchor="middle" />
               {/* {load15Data.map( temp => ( */}
-              <VictoryLegend x={280} y={20}
+              <VictoryLegend x={250} y={20}
                 orientation="vertical"
                 rowGutter={{ top: 0, bottom: -15 }}
                 data={[
-                  { name: '2xx', symbol: { fill: '#161D6F' } },
-                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                  { name: 'postgres-1', symbol: { fill: '#161D6F' } },
+                  { name: 'nginx-1', symbol: { fill: '#98DED9' } }
                 ]}
               />
               <VictoryLine
@@ -135,12 +136,12 @@ export default function Chart({ name }: { name: string }) {
                 data={sampleCPU1Data}
               // data={temp}
               />
-              <VictoryLegend x={280} y={20}
+              <VictoryLegend x={250} y={20}
                 orientation="vertical"
                 rowGutter={{ top: 0, bottom: -15 }}
                 data={[
-                  { name: '2xx', symbol: { fill: '#161D6F' } },
-                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                  { name: 'postgres-1', symbol: { fill: '#161D6F' } },
+                  { name: 'nginx-1', symbol: { fill: '#98DED9' } }
                 ]}
               />
               <VictoryLine
@@ -165,12 +166,12 @@ export default function Chart({ name }: { name: string }) {
             >
               <VictoryLabel text={'Network Usage (MB/s)'} x={180} y={30} textAnchor="middle" />
               {/* {load15Data.map( temp => ( */}
-              <VictoryLegend x={280} y={20}
+              <VictoryLegend x={250} y={20}
                 orientation="vertical"
                 rowGutter={{ top: 0, bottom: -15 }}
                 data={[
-                  { name: '2xx', symbol: { fill: '#161D6F' } },
-                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                  { name: 'postgres-1', symbol: { fill: '#161D6F' } },
+                  { name: 'nginx-1', symbol: { fill: '#98DED9' } }
                 ]}
               />
               <VictoryLine
@@ -178,9 +179,18 @@ export default function Chart({ name }: { name: string }) {
                   data: { stroke: '#161D6F' },
                   parent: { border: '1px solid #9CA3AF' }
                 }}
-                data={sampleHostData}
+                data={sampleHostData1}
                 // data={temp}
-                key={sampleHostData}
+                key={sampleHostData1}
+              />
+              <VictoryLine
+                style={{
+                  data: { stroke: '#98DED9' },
+                  parent: { border: '1px solid #9CA3AF' }
+                }}
+                data={sampleHostData2}
+                // data={temp}
+                key={sampleHostData2}
               />
               {/* ))} */}
               <VictoryAxis

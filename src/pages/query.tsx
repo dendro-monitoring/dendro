@@ -4,7 +4,7 @@ import fileDownload from 'js-file-download';
 import formatTSQueryResult from '../components/Services/formatTSQueryResult';
 
 export default function Query() {
-  const [query, setQuery] = useState('SELECT * FROM DendroTimestreamDB.hostMetrics LIMIT 10');
+  const [query, setQuery] = useState("SELECT * FROM DendroTimestreamDB.nginxAccessLogs\n  WHERE measure_value::varchar='500' \n  AND time > ago(2h)\n  LIMIT 10");
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
   const [rawData, setRawData] = useState('');
@@ -28,7 +28,7 @@ export default function Query() {
     const formattedExport = formatTSQueryResult(rawData);
     // console.log(formattedExport);
     const exportString = JSON.stringify(formattedExport, null, 2);
-    const blob = new Blob([exportString], { type : 'application/json' });
+    const blob = new Blob([exportString], { type: 'application/json' });
     fileDownload(blob, 'export.json');
   };
 
@@ -38,14 +38,14 @@ export default function Query() {
         <div className="py-6">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-2xl font-semibold text-gray-900">
-                Query
+              Query
             </h1>
           </div>
           <div className="px-4 sm:px-6 lg:px-8 pb-2 flex w-full justify-end">
             <button
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
             >
-                Submit
+              Submit
             </button>
           </div>
 

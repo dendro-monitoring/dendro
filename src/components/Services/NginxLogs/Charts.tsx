@@ -7,7 +7,7 @@ import formatTSQueryResult from '../formatTSQueryResult';
 
 function loadRpsData(setterFunc: any) {
   const interval = 60 * 60;
-  const mean = 250;
+  const mean = 600;
   const variance = 75;
 
   const data = generateGaussianData(interval, mean, variance);
@@ -36,8 +36,8 @@ function loadRpsData(setterFunc: any) {
 
 function loadLatencyData(setterFunc: any) {
   const interval = 3 * 60 * 60;
-  const mean = .200;
-  const variance = .03;
+  const mean = 200;
+  const variance = 30;
 
   const data = generateGaussianData(interval, mean, variance);
   setterFunc(data);
@@ -68,9 +68,27 @@ function loadLatencyData(setterFunc: any) {
 }
 
 function loadStatusCodeData(setterFunc: any) {
-  const data200 = generateGaussianData(60 * 60, 400, 60);
+  const d = new Date();
+  const oneDayAgo = new Date(d.setDate(d.getDate() - 1)).valueOf();
+
+  const data200 = generateGaussianData(60 * 60, 400, 60).map((entry) => {
+    console.log(entry.x, oneDayAgo)
+    if (entry.x > oneDayAgo) {
+      entry.y = entry.y / 3;
+      return entry
+    }
+    return entry;
+  });
   const data400 = generateGaussianData(60 * 60, 50, 25);
-  const data500 = generateGaussianData(60 * 60, 30, 10);
+  const data500 = generateGaussianData(60 * 60, 30, 10).map((entry) => {
+    console.log(entry.x, oneDayAgo)
+    if (entry.x > oneDayAgo) {
+      entry.y = entry.y * 4;
+      return entry
+    }
+    return entry;
+  });
+
 
   setterFunc([data200, data400, data500]);
   // (async () => {
@@ -118,10 +136,10 @@ export default function Chart({ name }: { name: string }) {
           <VictoryChart
             style={{ parent: { maxWidth: '50%', } }}
             scale={{ x: 'time', y: 'linear' }}
-            domain={{ y: [0, 600] }}
+            domain={{ y: [300, 1000] }}
             key='rps'
           >
-            <VictoryLabel text="Requests per Second (past 7 days)" x={240} y={30} textAnchor="middle" />
+            <VictoryLabel text="Requests per Minute (past 7 days)" x={240} y={30} textAnchor="middle" />
             <VictoryLine
               style={{ data: { stroke: '#98DED9' }, parent: { border: '1px solid #ccc' } }}
               data={rpsData}
@@ -137,10 +155,10 @@ export default function Chart({ name }: { name: string }) {
           <VictoryChart
             style={{ parent: { maxWidth: '50%', } }}
             scale={{ x: 'time', y: 'linear' }}
-            domain={{ y: [0, 1] }}
+            domain={{ y: [0, 1000] }}
             key='latency'
           >
-            <VictoryLabel text={'Avg. HTTP Response Time (s)'} x={240} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Avg. HTTP Response Time (ms)'} x={240} y={30} textAnchor="middle" />
             <VictoryLine
               style={{ data: { stroke: '#98DED9' } }}
               data={latencyData}
@@ -161,16 +179,16 @@ export default function Chart({ name }: { name: string }) {
             domainPadding={{ x: 10 }}
             key='slowest'
           >
-            <VictoryLabel text={'Slowest Paths (s)'} x={240} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Slowest Paths (ms)'} x={240} y={30} textAnchor="middle" />
             <VictoryBar horizontal
               style={{ data: { fill: '#161D6F' } }}
-              labels={({ datum }) => `  ${datum.y}s`}
+              labels={({ datum }) => `  ${datum.y}`}
               data={[
-                { x: '/boo', y: .2 },
-                { x: '/bleh', y: .5 },
-                { x: '/blah', y: .8 },
-                { x: '/api', y: 1.3 },
-                { x: '/index', y: 1.8 },
+                { x: '/', y: 200 },
+                { x: '/login', y: 500 },
+                { x: '/users', y: 800 },
+                { x: '/home', y: 1300 },
+                { x: '/stats', y: 1800 },
               ]}
             />
           </VictoryChart>
