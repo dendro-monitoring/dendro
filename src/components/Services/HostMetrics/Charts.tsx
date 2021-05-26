@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ChartCard from '../ChartCard';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryAxis } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryAxis, VictoryLegend } from 'victory';
 import generateGaussianData from '../../../utils/sampleData';
 
 const load15 = 'select host, measure_value::double, time from "DendroTimestreamDB"."hostMetrics" \
@@ -18,31 +18,31 @@ from "DendroTimestreamDB"."hostMetrics" \
 group by bin(time, 15s) \
 limit 500';
 
-export default function Chart({ name }: {name: string}) {
+export default function Chart({ name }: { name: string }) {
   const [load15Data, setLoad15Data] = useState([]);
   const [utilizationData, setUtilizationData] = useState([]);
   const [userCountData, setUserCountData] = useState([]);
   // const name = 'angel';
 
   let interval = 60 * 60 * 5;
-  let mean= 2;
+  let mean = 2;
   let variance = 8;
 
-  const sampleLoad1Data = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
-  const sampleLoad2Data = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y >= 1 && record.y <= 10);
+  const sampleLoad1Data = generateGaussianData(interval, mean, variance).filter((record: any) => record.y >= 1 && record.y <= 10);
+  const sampleLoad2Data = generateGaussianData(interval, mean, variance).filter((record: any) => record.y >= 1 && record.y <= 10);
 
   interval = 60 * 60 * 3;
-  mean= 35;
+  mean = 35;
   variance = 8;
 
   const sampleCPU1Data = generateGaussianData(interval, mean, variance);
   const sampleCPU2Data = generateGaussianData(interval, mean, variance);
 
-  interval = 60 * 60 * 12;
-  mean= 2;
-  variance = 1;
+  interval = 60 * 60 * 3;
+  mean = 2.5;
+  variance = 3;
 
-  const sampleHostData = generateGaussianData(interval, mean, variance).filter( (record: any) => record.y > 0);
+  const sampleHostData = generateGaussianData(interval, mean, variance).filter((record: any) => record.y > 0);
 
   useEffect(() => {
     // fetch('/api/query', { method: 'POST', body: JSON.stringify({ query: load15 }) }).then( res => res.json()).then( ({ data }) => {
@@ -84,8 +84,16 @@ export default function Chart({ name }: {name: string}) {
               theme={VictoryTheme.material}
               key="load15"
             >
-              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={180} y={30} textAnchor="middle" />
               {/* {load15Data.map( temp => ( */}
+              <VictoryLegend x={280} y={20}
+                orientation="vertical"
+                rowGutter={{ top: 0, bottom: -15 }}
+                data={[
+                  { name: '2xx', symbol: { fill: '#161D6F' } },
+                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                ]}
+              />
               <VictoryLine
                 style={{
                   data: { stroke: '#98DED9' },
@@ -109,6 +117,7 @@ export default function Chart({ name }: {name: string}) {
                 tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
               />
               <VictoryAxis dependentAxis />
+
             </VictoryChart>
             <VictoryChart
               scale={{ x: 'time', y: 'linear' }}
@@ -116,7 +125,7 @@ export default function Chart({ name }: {name: string}) {
               theme={VictoryTheme.material}
               key="utilization"
             >
-              <VictoryLabel text={'CPU Utilization'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'CPU Utilization'} x={180} y={30} textAnchor="middle" />
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
@@ -124,7 +133,15 @@ export default function Chart({ name }: {name: string}) {
                   parent: { border: '1px solid #9CA3AF' }
                 }}
                 data={sampleCPU1Data}
-                // data={temp}
+              // data={temp}
+              />
+              <VictoryLegend x={280} y={20}
+                orientation="vertical"
+                rowGutter={{ top: 0, bottom: -15 }}
+                data={[
+                  { name: '2xx', symbol: { fill: '#161D6F' } },
+                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                ]}
               />
               <VictoryLine
                 style={{
@@ -132,7 +149,7 @@ export default function Chart({ name }: {name: string}) {
                   parent: { border: '1px solid #9CA3AF' }
                 }}
                 data={sampleCPU2Data}
-                // data={temp}
+              // data={temp}
               />
               {/* ))} */}
               <VictoryAxis
@@ -146,8 +163,16 @@ export default function Chart({ name }: {name: string}) {
               theme={VictoryTheme.material}
               key="hosts"
             >
-              <VictoryLabel text={'Unique Machines Monitored'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Network Usage (MB/s)'} x={180} y={30} textAnchor="middle" />
               {/* {load15Data.map( temp => ( */}
+              <VictoryLegend x={280} y={20}
+                orientation="vertical"
+                rowGutter={{ top: 0, bottom: -15 }}
+                data={[
+                  { name: '2xx', symbol: { fill: '#161D6F' } },
+                  { name: '5xx', symbol: { fill: '#98DED9' } }
+                ]}
+              />
               <VictoryLine
                 style={{
                   data: { stroke: '#161D6F' },
