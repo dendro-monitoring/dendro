@@ -17,7 +17,8 @@ export default function deleteBucket(Bucket: string): Promise<any> {
           finished = true;
           resolve(null);
         }
-      })
+      });
+      return finished;
     }, finished);
 
     if (!finished) {
