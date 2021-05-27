@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ChartCard from '../ChartCard';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryLabel, VictoryAxis } from 'victory';
+import { VictoryChart, VictoryLine, VictoryLabel, VictoryAxis } from 'victory';
 import generateGaussianData from '../../../utils/sampleData';
 
 const load15 = 'select host, measure_value::double, time from "DendroTimestreamDB"."hostMetrics" \
@@ -18,11 +18,10 @@ from "DendroTimestreamDB"."hostMetrics" \
 group by bin(time, 15s) \
 limit 500';
 
-export default function Chart({ name }: {name: string}) {
+export default function Chart({ name }: { name: string }) {
   const [load15Data, setLoad15Data] = useState([]);
   const [utilizationData, setUtilizationData] = useState([]);
   const [userCountData, setUserCountData] = useState([]);
-  // const name = 'angel';
 
   let interval = 60 * 60 * 5;
   let mean= 2;
@@ -81,10 +80,9 @@ export default function Chart({ name }: {name: string}) {
             <VictoryChart
               scale={{ x: 'time', y: 'linear' }}
               style={{ parent: { maxWidth: '50%', } }}
-              theme={VictoryTheme.material}
               key="load15"
             >
-              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Load Averaged Over 15 Seconds'} x={240} y={30} textAnchor="middle"/>
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
@@ -113,10 +111,9 @@ export default function Chart({ name }: {name: string}) {
             <VictoryChart
               scale={{ x: 'time', y: 'linear' }}
               style={{ parent: { maxWidth: '50%', } }}
-              theme={VictoryTheme.material}
               key="utilization"
             >
-              <VictoryLabel text={'CPU Utilization'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'CPU Utilization'} x={240} y={30} textAnchor="middle"/>
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{
@@ -143,10 +140,9 @@ export default function Chart({ name }: {name: string}) {
             <VictoryChart
               scale={{ x: 'time', y: 'linear' }}
               style={{ parent: { maxWidth: '50%', } }}
-              theme={VictoryTheme.material}
               key="hosts"
             >
-              <VictoryLabel text={'Unique Machines Monitored'} x={180} y={30} textAnchor="middle"/>
+              <VictoryLabel text={'Unique Machines Monitored'} x={240} y={30} textAnchor="middle"/>
               {/* {load15Data.map( temp => ( */}
               <VictoryLine
                 style={{

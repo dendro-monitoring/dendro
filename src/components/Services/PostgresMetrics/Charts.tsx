@@ -16,6 +16,7 @@ export default function Chart({ name }: { name: string }) {
 
   return (
     <>
+
       <h1 className="text-3xl font-semibold" id='postgresLogs'>{name}</h1>
       <ChartCard name={name}>
         {/* Child 1 */}
@@ -27,12 +28,9 @@ export default function Chart({ name }: { name: string }) {
             // theme={VictoryTheme.material}
             domain={{ y: [0.9, 1] }}
           >
-            <VictoryLabel text={'Cache Hit Ratio'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Cache Hit Ratio'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={cacheHitRatioData}
             />
             <VictoryAxis
@@ -48,12 +46,9 @@ export default function Chart({ name }: { name: string }) {
             style={{ parent: { maxWidth: '50%', } }}
             domain={{ y: [80, 120] }}
           >
-            <VictoryLabel text={'Number of Connections'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Number of Connections'} x={240} y={30} textAnchor='middle' />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={connectionsData}
             />
             <VictoryAxis

@@ -27,12 +27,9 @@ export default function Chart({ name }: { name: string }) {
             // theme={VictoryTheme.material}
             domain={{ y: [400, 600] }}
           >
-            <VictoryLabel text={'Operations Queued Due to Lock'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Operations Queued Due to Lock'} x={240} y={30} textAnchor="middle" />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={queuedOperationsData}
             />
             <VictoryAxis
@@ -48,12 +45,9 @@ export default function Chart({ name }: { name: string }) {
             style={{ parent: { maxWidth: '50%', } }}
             domain={{ y: [80, 120] }}
           >
-            <VictoryLabel text={'Number of Connections'} x={180} y={30} textAnchor="middle" />
+            <VictoryLabel text={'Number of Connections'} x={240} y={30} textAnchor="middle" />
             <VictoryLine
-              style={{
-                data: { stroke: '#1144F1' },
-                parent: { border: '1px solid #9CA3AF' }
-              }}
+              style={{ data: { stroke: '#98DED9' } }}
               data={connectionsData}
             />
             <VictoryAxis

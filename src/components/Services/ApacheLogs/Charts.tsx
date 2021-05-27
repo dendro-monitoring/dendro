@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ChartCard from '../ChartCard';
-import { VictoryChart, VictoryLine, VictoryBar, VictoryArea, VictoryStack, VictoryLabel, VictoryAxis } from 'victory';
+import { VictoryChart, VictoryLine, VictoryBar, VictoryArea, VictoryStack, VictoryLabel, VictoryLegend, VictoryAxis } from 'victory';
 import formatTSQueryResult from '../formatTSQueryResult';
 const Series = require('time-series-data-generator');
 
@@ -88,9 +88,9 @@ function loadLatencyData(setterFunc: any) {
 }
 
 function loadStatusCodeData(setterFunc: any) {
-  const data200 = generateGaussianData(60 * 60, .200, .03);
-  const data400 = generateGaussianData(60 * 60, .110, .01);
-  const data500 = generateGaussianData(60 * 60, .120, .021);
+  const data200 = generateGaussianData(60 * 60, 400, 60);
+  const data400 = generateGaussianData(60 * 60, 50, 25);
+  const data500 = generateGaussianData(60 * 60, 30, 10);
 
   setterFunc([data200, data400, data500]);
   // (async () => {
@@ -141,7 +141,7 @@ export default function Chart({ name }: { name: string }) {
             domain={{ y: [0, 600] }}
             key='rps'
           >
-            <VictoryLabel text="Requests per Second (past 7 days)" x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text="Requests per Second (past 7 days)" x={240} y={30} textAnchor="middle"/>
             <VictoryLine
               style={{ data: { stroke: '#98DED9' }, parent: { border: '1px solid #ccc' } }}
               data={rpsData}
@@ -160,7 +160,7 @@ export default function Chart({ name }: { name: string }) {
             domain={{ y: [0, 1] }}
             key='latency'
           >
-            <VictoryLabel text={'Avg. HTTP Response Time (s)'} x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text={'Avg. HTTP Response Time (s)'} x={240} y={30} textAnchor="middle"/>
             <VictoryLine
               style={{
                 data: { stroke: '#98DED9' },
@@ -184,7 +184,7 @@ export default function Chart({ name }: { name: string }) {
             domainPadding={{ x: 10 }}
             key='slowest'
           >
-            <VictoryLabel text={'Slowest Paths (s)'} x={230} y={30} textAnchor="middle"/>
+            <VictoryLabel text={'Slowest Paths (s)'} x={240} y={30} textAnchor="middle"/>
             <VictoryBar horizontal
               style={{ data: { fill: '#161D6F' } }}
               labels={({ datum }) => `  ${datum.y}s`}
@@ -202,15 +202,39 @@ export default function Chart({ name }: { name: string }) {
           <VictoryChart
             style={{ parent: { maxWidth: '50%', } }}
             scale={{ x: 'time', y: 'linear' }}
-            domain={{ y: [0, 1] }}
+            domain={{ y: [0, 800] }}
             key='status'
           >
-            <VictoryLabel text={'Status Code Responses'} x={230} y={30} textAnchor="middle"/>
-            <VictoryStack colorScale={['#161D6F', '#c7ffd8', '#98DED9']} >
+            <VictoryLabel text={'Status Code Responses (Avg. Count)'} x={240} y={30} textAnchor="middle"/>
+            <VictoryLegend x={380} y={20}
+              orientation="vertical"
+              rowGutter={{ top: 0, bottom: -15 }}
+              data={[
+                { name: '2xx', symbol: { fill: '#161D6F' } },
+                { name: '4xx', symbol: { fill: '#904E55' } },
+                { name: '5xx', symbol: { fill: '#98DED9' } }
+              ]}
+            />
+
+            {/* <VictoryStack colorScale={['#161D6F', '#c7ffd8', '#98DED9']} >
               <VictoryArea data={statusCodeData[0]} />
               <VictoryArea data={statusCodeData[1]} />
               <VictoryArea data={statusCodeData[2]} />
-            </VictoryStack>
+            </VictoryStack> */}
+
+            <VictoryLine
+              data={statusCodeData[0]}
+              style={{ data: { stroke: '#161D6F' } }}
+            />
+            <VictoryLine
+              data={statusCodeData[1]}
+              style={{ data: { stroke: '#904E55' } }}
+            />
+            <VictoryLine
+              data={statusCodeData[2]}
+              style={{ data: { stroke: '#98DED9' } }}
+            />
+
             <VictoryAxis
               tickFormat={t => `${t.getUTCMonth() + 1}/${t.getUTCDate()}`}
               style={{ tickLabels: { fontSize: 12, padding: 5 } }}
