@@ -3,10 +3,7 @@ export default function asyncRetry(numberOfRetries: number, callback: (input: st
     let retriesArray = Array(numberOfRetries).fill(true);
     for (let item in retriesArray) {
       finished = await callback(item);
-      console.log("finished: ", finished)
-      console.log("time to wait: ", timeToWait);
       if (finished) return resolve();
-      console.log("waiting after return resolve before setTimeout...")
       await new Promise((resolve) => setTimeout(resolve, timeToWait));
       timeToWait *= 2;
     }
