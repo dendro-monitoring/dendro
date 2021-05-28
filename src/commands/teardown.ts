@@ -87,12 +87,6 @@ export default class Teardown extends Command {
 
       if (!choice) return;
 
-      if (Databases.length > 0) {
-        spinner = log.spin('Deleting timestream...');
-        await orchestrator.deleteTimestream();
-        spinner.succeed();
-      }
-
       if (Roles.length > 0) {
         spinner = log.spin('Deleting role...');
         const roleError = await orchestrator.deleteRole();
