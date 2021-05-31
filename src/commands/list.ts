@@ -14,7 +14,6 @@ import {
   logTimestreamTables,
   logTopic
 } from '../utils/list';
-import { DENDRO_ASCII_ART } from '../constants';
 
 export default class ListCommand extends Command {
   static description = 'List existing AWS resources';
@@ -45,7 +44,6 @@ export default class ListCommand extends Command {
     log.setLevel(level as LevelNames);
 
     console.clear();
-    console.log(DENDRO_ASCII_ART);
 
     let spinner: ora.Ora | undefined;
     const callback = (msg: string) => spinner?.succeed(msg);
