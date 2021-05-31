@@ -5,7 +5,7 @@ import { MonitoredService, VectorService } from '../../constants/frontendTypes';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
   try {
-    if ((await listDatabases()).length === 0) return res.status(200).json({ data: '' });
+    if ((await listDatabases()).length === 0) return res.status(200).json({ data: [] });
 
     const tables = await listTables();
 
