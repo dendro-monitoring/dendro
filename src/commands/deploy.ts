@@ -12,6 +12,7 @@ import store from '../store';
 import { DENDRO_ASCII_ART } from '../constants';
 import { IAMPrompt } from '../prompts/AWS';
 import chalk from 'chalk';
+import { cli } from 'cli-ux';
 
 export default class DeployCommand extends Command {
   static description = `Deploy the dendro logging pipeline on AWS. Run ${chalk.yellow.bold('configure')} prior to this command otherwise database tables will not be set`;
@@ -38,6 +39,9 @@ export default class DeployCommand extends Command {
     const parsed = this.parse(DeployCommand);
     const { level } = parsed.flags;
     log.setLevel(level as LevelNames);
+
+    log.info('To make sure you have the right permissions, take a look at this page:');
+    cli.url('- AWS IAM Dashboard\n', 'https://console.aws.amazon.com/iam/home?region=us-east-1#/home');
 
     const iam = await IAMPrompt.run();
 
