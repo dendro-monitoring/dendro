@@ -16,8 +16,9 @@ import {
 } from '../prompts';
 import { PromptAnswers } from '../constants/cliTypes';
 import { writeVectorConfig } from '../vector';
+import { updateTables } from './update';
 import chalk from 'chalk';
-import { DENDRO_ASCII_ART } from '../constants';
+import listDatabases from '../aws/timestream/listDatabases';
 
 export default class Configure extends Command {
   static description = 'Configure Vector to monitor services and log sources';
@@ -159,7 +160,6 @@ export default class Configure extends Command {
     await promptCredentials();
 
     console.clear();
-    console.log(DENDRO_ASCII_ART);
 
     log.info('Saving selections to cache');
     log.info(`To review your selections, please run ${chalk.bold.yellow('dendro review')}`);
@@ -176,6 +176,10 @@ export default class Configure extends Command {
     }
 
     store.dump();
+
+    if ((await listDatabases()).length > 0) {
+      await updateTables();
+    }
 
     await writeVectorConfig();
   }
