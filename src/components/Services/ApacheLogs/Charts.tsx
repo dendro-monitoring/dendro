@@ -189,11 +189,11 @@ export default function Chart({ name }: { name: string }) {
               style={{ data: { fill: '#161D6F' } }}
               labels={({ datum }) => `  ${datum.y}s`}
               data={ [
-                { x: '/boo', y: .2 },
-                { x: '/bleh', y: .5 },
-                { x: '/blah', y: .8 },
-                { x: '/api', y: 1.3 },
-                { x: '/index', y: 1.8 },
+                { x: '/home', y: .2 },
+                { x: '/dash', y: .5 },
+                { x: '/index', y: .8 },
+                { x: '/find', y: 1.3 },
+                { x: '/api', y: 1.8 },
               ] }
             />
           </VictoryChart>
