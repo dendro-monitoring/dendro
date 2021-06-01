@@ -165,9 +165,9 @@ export default function Chart({ name }: { name: string }) {
               style={{ data: { fill: '#161D6F' } }}
               labels={({ datum }) => `  ${datum.y}s`}
               data={ [
-                { x: '/boo', y: .2 },
-                { x: '/bleh', y: .5 },
-                { x: '/blah', y: .8 },
+                { x: '/cart', y: .2 },
+                { x: '/sales', y: .5 },
+                { x: '/stats', y: .8 },
                 { x: '/api', y: 1.3 },
                 { x: '/index', y: 1.8 },
               ] }
@@ -198,15 +198,15 @@ export default function Chart({ name }: { name: string }) {
             </VictoryStack> */}
 
             <VictoryLine
-                data={statusCodeData[0]} 
-                style={{ data: { stroke: '#161D6F' } }}
+              data={statusCodeData[0]}
+              style={{ data: { stroke: '#161D6F' } }}
             />
             <VictoryLine
-              data={statusCodeData[1]} 
+              data={statusCodeData[1]}
               style={{ data: { stroke: '#904E55' } }}
             />
             <VictoryLine
-              data={statusCodeData[2]} 
+              data={statusCodeData[2]}
               style={{ data: { stroke: '#98DED9' } }}
             />
 
