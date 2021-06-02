@@ -19,7 +19,7 @@ $ npm install -g dendro-cli
 $ dendro COMMAND
 running command...
 $ dendro (-v|--version|version)
-dendro-cli/0.0.11 linux-x64 node-v14.15.3
+dendro-cli/0.0.11 darwin-x64 node-v12.18.1
 $ dendro --help [COMMAND]
 USAGE
   $ dendro COMMAND
@@ -30,18 +30,18 @@ USAGE
 <!-- commands -->
 * [`dendro clean`](#dendro-clean)
 * [`dendro configure`](#dendro-configure)
-* [`dendro deleteResources`](#dendro-deleteresources)
 * [`dendro deploy`](#dendro-deploy)
 * [`dendro help [COMMAND]`](#dendro-help-command)
+* [`dendro install-vector`](#dendro-install-vector)
 * [`dendro list`](#dendro-list)
-* [`dendro logs`](#dendro-logs)
-* [`dendro query [QUERYSTRING]`](#dendro-query-querystring)
 * [`dendro review [FILE]`](#dendro-review-file)
 * [`dendro start:server`](#dendro-startserver)
+* [`dendro teardown`](#dendro-teardown)
+* [`dendro update`](#dendro-update)
 
 ## `dendro clean`
 
-removes the existing cache from disk
+Removes the existing cache from disk
 
 ```
 USAGE
@@ -56,7 +56,7 @@ _See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blo
 
 ## `dendro configure`
 
-configuring collector/agent setup of log sources
+Configure Vector to monitor services and log sources
 
 ```
 USAGE
@@ -69,18 +69,9 @@ OPTIONS
 
 _See code: [src/commands/configure.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/configure.ts)_
 
-## `dendro deleteResources`
-
-```
-USAGE
-  $ dendro deleteResources
-```
-
-_See code: [src/commands/deleteResources.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/deleteResources.ts)_
-
 ## `dendro deploy`
 
-Describe the command here
+Deploy the dendro logging pipeline on AWS. Run [33m[1mconfigure[22m[39m prior to this command otherwise database tables will not be set
 
 ```
 USAGE
@@ -89,10 +80,6 @@ USAGE
 OPTIONS
   -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
   -h, --help                               show CLI help
-
-DESCRIPTION
-  ...
-  Extra documentation goes here
 ```
 
 _See code: [src/commands/deploy.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/deploy.ts)_
@@ -114,9 +101,20 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
+## `dendro install-vector`
+
+Install Vector to collect and ship logs and metrics
+
+```
+USAGE
+  $ dendro install-vector
+```
+
+_See code: [src/commands/install-vector.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/install-vector.ts)_
+
 ## `dendro list`
 
-describe the command here
+List existing AWS resources
 
 ```
 USAGE
@@ -125,67 +123,27 @@ USAGE
 OPTIONS
   -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
   -h, --help                               show CLI help
-
-EXAMPLE
-  $ dendro list
-  Roles
-  Buckets
-  Firehose streams
-  Lambda
-  Timestream
 ```
 
 _See code: [src/commands/list.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/list.ts)_
 
-## `dendro logs`
-
-logs cloudwatch logs
-
-```
-USAGE
-  $ dendro logs
-
-OPTIONS
-  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
-  -h, --help                               show CLI help
-```
-
-_See code: [src/commands/logs.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/logs.ts)_
-
-## `dendro query [QUERYSTRING]`
-
-queries the database
-
-```
-USAGE
-  $ dendro query [QUERYSTRING]
-
-OPTIONS
-  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
-  -h, --help                               show CLI help
-```
-
-_See code: [src/commands/query.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/query.ts)_
-
 ## `dendro review [FILE]`
 
-describe the command here
+Pretty print the Vector config of monitored services
 
 ```
 USAGE
   $ dendro review [FILE]
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 ```
 
 _See code: [src/commands/review.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/review.ts)_
 
 ## `dendro start:server`
 
-describe the command here
+Start dendro's dashboard for viewing live metrics
 
 ```
 USAGE
@@ -196,4 +154,30 @@ OPTIONS
 ```
 
 _See code: [src/commands/start/server.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/start/server.ts)_
+
+## `dendro teardown`
+
+Permanently deletes the logging pipeline deployed on AWS
+
+```
+USAGE
+  $ dendro teardown
+
+OPTIONS
+  -L, --level=debug|info|warn|error|fatal  [default: info] set the log level
+  -h, --help                               show CLI help
+```
+
+_See code: [src/commands/teardown.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/teardown.ts)_
+
+## `dendro update`
+
+Creates any new Timestream tables as neccessary
+
+```
+USAGE
+  $ dendro update
+```
+
+_See code: [src/commands/update.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/update.ts)_
 <!-- commandsstop -->
