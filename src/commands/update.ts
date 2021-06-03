@@ -6,8 +6,12 @@ import listTables from '../aws/orchestrator/timestream/listTables';
 import * as constants from '../constants';
 
 export async function updateTables(): Promise<void> {
-  const listedTables = {};
+  interface tables {
+    [key: string]: boolean
+  }
   const promises: Array<Promise<any>> = [];
+
+  const listedTables: tables = {};
 
   function pushCreateTablePromise(TableName: string) {
     promises.push(createTable({
