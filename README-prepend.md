@@ -6,7 +6,7 @@ To get started, install Dendro using:
 $ npm i -g dendro-cli
 ```
 
-Then run `dendro configure` to select which services you want to monitor. Here you will be prompted to input any neccessary credencials.
+Then run `dendro configure` to select which services you want to monitor. Here you will be prompted to input any neccessary credentials.
 
 To deploy the AWS cloud pipeline, run:
 
