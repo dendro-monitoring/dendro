@@ -26,10 +26,16 @@ Next, you need to install our log and metric collector Vector. We've provided a 
 $ dendro install-vector
 ```
 
-Finally, lets begin sending off logs and metrics to the pipeline using:
+Now, lets begin sending off logs and metrics to the pipeline using:
 
 ```console
 $ ./vector --config=./vector-config.toml
 ```
 
 Now that we have data being processed by the pipeline and being stored into the database, let's now visualize it. Run `dendro start:server` and point your browser to http://localhost:3000/
+
+And finally to clean up, run:
+
+```console
+$ dendro teardown
+```
