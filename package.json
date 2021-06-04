@@ -42,7 +42,7 @@
     "build:oclif": "oclif-dev manifest && oclif-dev readme",
     "build:tsc": "tsc --noEmit false",
     "build:move_zip": "mv ./src/aws/lambda/go/function.zip ./lib/aws/lambda/function.zip",
-    "prepack": "npm run build:oclif && npm run build:next && npm run build:tsc && npm run zip:go && npm run build:move_zip",
+    "prepack": "npm run build:oclif && npm run build:next && npm run build:tsc && npm run zip:go && npm run build:move_zip && sed -i -e  '/<!-- usagestop -->/ r README-prepend.md' README.md",
     "postpack": "rm -f oclif.manifest.json",
     "start": "NODE_ENV=production node ./src/server.js",
     "version": "oclif-dev readme && git add README.md",
