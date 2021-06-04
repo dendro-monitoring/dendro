@@ -15,11 +15,11 @@ Bundled CLI and exploration platform/server for Dendro
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g dendro-cli
+$ npm install -g @dendro-monitoring/dendro
 $ dendro COMMAND
 running command...
 $ dendro (-v|--version|version)
-dendro-cli/0.0.11 darwin-x64 node-v12.18.1
+@dendro-monitoring/dendro/0.1.0 linux-x64 node-v14.15.3
 $ dendro --help [COMMAND]
 USAGE
   $ dendro COMMAND
@@ -134,7 +134,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/clean.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/clean.ts)_
+_See code: [src/commands/clean.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/clean.ts)_
 
 ## `dendro configure`
 
@@ -149,7 +149,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/configure.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/configure.ts)_
+_See code: [src/commands/configure.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/configure.ts)_
 
 ## `dendro deploy`
 
@@ -164,7 +164,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/deploy.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/deploy.ts)_
+_See code: [src/commands/deploy.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/deploy.ts)_
 
 ## `dendro help [COMMAND]`
 
@@ -192,7 +192,7 @@ USAGE
   $ dendro install-vector
 ```
 
-_See code: [src/commands/install-vector.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/install-vector.ts)_
+_See code: [src/commands/install-vector.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/install-vector.ts)_
 
 ## `dendro list`
 
@@ -207,7 +207,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/list.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/list.ts)_
 
 ## `dendro review [FILE]`
 
@@ -221,7 +221,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/review.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/review.ts)_
+_See code: [src/commands/review.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/review.ts)_
 
 ## `dendro start:server`
 
@@ -235,7 +235,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/start/server.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/start/server.ts)_
+_See code: [src/commands/start/server.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/start/server.ts)_
 
 ## `dendro teardown`
 
@@ -250,7 +250,7 @@ OPTIONS
   -h, --help                               show CLI help
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/teardown.ts)_
 
 ## `dendro update`
 
@@ -261,5 +261,5 @@ USAGE
   $ dendro update
 ```
 
-_See code: [src/commands/update.ts](https://github.com/dendro-naap/dendro-cli/blob/v0.0.11/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/dendro-monitoring/cli/blob/v0.1.0/src/commands/update.ts)_
 <!-- commandsstop -->
