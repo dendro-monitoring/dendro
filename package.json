@@ -1,7 +1,7 @@
 {
-  "name": "dendro-cli",
-  "version": "0.0.11",
-  "description": "Dendro CLI",
+  "name": "@dendro-monitoring/dendro",
+  "version": "0.1.1",
+  "description": "This is the CLI for Dendro. Dendro is an open-source, serverless monitoring framework for small, distributed applications. Stream logs and metrics from your various servers to a central time-series store.",
   "keywords": [
     "oclif",
     "time-series",
@@ -9,11 +9,11 @@
     "serverless",
     "logs"
   ],
-  "homepage": "https://github.com/dendro-naap/dendro-cli",
-  "bugs": "https://github.com/dendro-naap/dendro-cli/issues",
-  "repository": "dendro-naap/dendro-cli",
+  "homepage": "https://getdendro.com/",
+  "bugs": "https://github.com/dendro-monitoring/dendro/issues",
+  "repository": "dendro-monitoring/cli",
   "license": "MIT",
-  "author": "team-naap",
+  "author": "dendro-monitoring",
   "main": "lib/index.js",
   "bin": {
     "dendro": "./bin/run"
