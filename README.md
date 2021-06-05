@@ -7,7 +7,7 @@ Bundled CLI and exploration platform/server for Dendro
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/dendro-cli.svg)](https://npmjs.org/package/dendro-cli)
-[![Downloads/week](https://img.shields.io/npm/dw/dendro-cli.svg)](https://npmjs.org/package/dendro-cli)
+[![Downloads/week](https://img.shields.io/npm/dw/dendro-cli.svg)](https://npmjs.org/package/@dendro-monitoring/dendro)
 [![License](https://img.shields.io/npm/l/dendro-cli.svg)](https://github.com/dendro-monitoring/dendro/blob/main/package.json)
 
 <!-- toc -->
