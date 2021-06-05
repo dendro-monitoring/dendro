@@ -1,3 +1,5 @@
+[![dendro](public/logo_with_text_aside.png)](www.getdendro.com)
+
 Dendro
 ==========
 
