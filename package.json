@@ -1,6 +1,6 @@
 {
   "name": "@dendro-monitoring/dendro",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "This is the CLI for Dendro. Dendro is an open-source, serverless monitoring framework for small, distributed applications. Stream logs and metrics from your various servers to a central time-series store.",
   "keywords": [
     "oclif",
@@ -42,7 +42,7 @@
     "build:oclif": "oclif-dev manifest && oclif-dev readme",
     "build:tsc": "tsc --noEmit false",
     "build:move_zip": "mv ./src/aws/lambda/go/function.zip ./lib/aws/lambda/function.zip",
-    "prepack": "npm run build:oclif && npm run build:next && npm run build:tsc && npm run zip:go && npm run build:move_zip && sed -i '' '/<!-- usagestop -->/ r README-prepend.md' README.md",
+    "prepack": "npm run build:oclif && npm run build:next && npm run build:tsc && npm run zip:go && npm run build:move_zip",
     "postpack": "rm -f oclif.manifest.json",
     "start": "NODE_ENV=production node ./src/server.js",
     "version": "oclif-dev readme && git add README.md",
