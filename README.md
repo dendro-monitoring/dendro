@@ -25,7 +25,7 @@ $ npm install -g @dendro-monitoring/dendro
 $ dendro COMMAND
 running command...
 $ dendro (-v|--version|version)
-@dendro-monitoring/dendro/0.1.2 linux-x64 node-v14.15.3
+@dendro-monitoring/dendro/0.1.2 darwin-x64 node-v12.18.1
 $ dendro --help [COMMAND]
 USAGE
   $ dendro COMMAND
@@ -39,7 +39,7 @@ USAGE
 To get started, install Dendro using:
 
 ```console
-$ npm i -g dendro-cli
+$ npm i -g @dendro-monitoring/dendro
 ```
 
 Then run `dendro configure` to select which services you want to monitor. Here you will be prompted to input any neccessary credentials.
